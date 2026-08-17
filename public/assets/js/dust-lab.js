@@ -121,6 +121,6 @@
   if (slider) slider.addEventListener('input', function () {
     window.BookDust.setAmount(+slider.value);
     var out = document.querySelector('[data-amount-out]');
-    if (out) out.textContent = AMOUNT.toFixed(1) + '×';
+    if (out) out.textContent = (+slider.value).toFixed(2).replace(/0$/, '') + '×';
   });
 })();

@@ -44,25 +44,62 @@
   function foldReader(bookEl) {
     var prev = null;
     return function (rect) {
-      var sh = bookEl.querySelector('.stf__outerShadow');
-      var flipping = null;
+      // StPageFlip sets display, zIndex and clipPath as inline styles, so
+      // these can be read straight off .style. Going through
+      // getComputedStyle here forces a style recalc on every item on every
+      // frame of the animation, which is expensive enough to cost frames.
       var items = bookEl.querySelectorAll('.stf__item');
+      var flipping = null, clipped = false;
       for (var i = 0; i < items.length; i++) {
-        var cs = getComputedStyle(items[i]);
-        if (cs.display !== 'none' && cs.clipPath && cs.clipPath !== 'none' && (+cs.zIndex || 0) >= 5) {
-          flipping = items[i]; break;
-        }
+        var st = items[i].style;
+        if (st.display === 'none' || !st.display || (+st.zIndex || 0) < 5) continue;
+        flipping = items[i];
+        // note: StPageFlip writes clipPath as the literal string 'none' on a
+        // hard cover, so truthiness alone would call every cover a soft fold
+        clipped = !!st.clipPath && st.clipPath !== 'none';
+        break;
       }
-      if (!sh || !flipping) { prev = null; return null; }
-      var sr = sh.getBoundingClientRect(), fr = flipping.getBoundingClientRect();
-      if (!sr.width && !fr.width) { prev = null; return null; }
+      if (!flipping) { prev = null; return null; }
 
-      var x = (sr.left + sr.width / 2) - rect.left;      // the crease
+      var fr = flipping.getBoundingClientRect();
+      if (!fr.width && !fr.height) { prev = null; return null; }
+
+      var x;
+      if (clipped) {
+        // A soft page: StPageFlip draws .stf__outerShadow along the crease,
+        // which is exactly where the paper is bending.
+        var sh = bookEl.querySelector('.stf__outerShadow');
+        var sr = sh && sh.getBoundingClientRect();
+        if (!sr || !sr.width) { prev = null; return null; }
+        x = (sr.left + sr.width / 2) - rect.left;
+      } else {
+        // A hard cover: no crease at all, it swings as a board. There is a
+        // .stf__hardShadow instead, and the edge that matters is whichever
+        // side of the board is furthest from the spine.
+        var blk = bookEl.querySelector('.stf__block');
+        var br = blk ? blk.getBoundingClientRect() : fr;
+        var cx = br.left + br.width / 2;
+        var far = Math.abs(fr.left - cx) > Math.abs(fr.right - cx) ? fr.left : fr.right;
+        x = far - rect.left;
+      }
+
       var top = fr.top - rect.top, bot = fr.bottom - rect.top;
       var v = prev === null ? 0 : x - prev;
       prev = x;
-      return { x: x, top: top, bottom: bot, v: v, h: Math.max(1, bot - top) };
+      return { x: x, top: top, bottom: bot, v: v, h: Math.max(1, bot - top), hard: !clipped };
     };
+  }
+
+  /* Dust does not just get dragged along behind the page — the page slaps
+     the air and it goes everywhere. Up, down and left freely, with only a
+     little to the right, and only a small share of the crease's own motion. */
+  function throwVel(f, base) {
+    var ang = Math.random() * 6.283;
+    var cx = Math.cos(ang), sy = Math.sin(ang);
+    if (cx > 0) cx *= 0.30;
+    var sp = base * (0.3 + Math.pow(Math.random(), 0.6) * 1.6);
+    return { vx: cx * sp + f.v * 0.16 + rnd(-0.15, 0.15),
+             vy: sy * sp - 0.2 };
   }
 
   /* =====================================================================
@@ -78,12 +115,13 @@
         // Fine and numerous rather than few and large — a handful of big
         // sprites reads as bubbles no matter how you fade them.
         var n = Math.round(rnd(9, 21) * power * AMOUNT);
+        if (ps.length > 900) ps.splice(0, ps.length - 900);
         for (var i = 0; i < n; i++) {
           var y = f.top + Math.pow(Math.random(), 0.8) * f.h;
+          var v = throwVel(f, 1.15);
           ps.push({
-            x: f.x + rnd(-7, 7), y: y,
-            vx: f.v * rnd(0.25, 0.75) + rnd(-0.6, 0.6),
-            vy: rnd(-1.2, -0.15),
+            x: f.x + rnd(-9, 9), y: y,
+            vx: v.vx, vy: v.vy,
             s: rnd(3.5, 17) * (0.75 + power * 0.4),
             grow: rnd(1.003, 1.013),
             rot: rnd(0, 6.28), spin: rnd(-0.014, 0.014),
@@ -98,15 +136,23 @@
         for (var i = ps.length - 1; i >= 0; i--) {
           var p = ps[i];
           p.x += p.vx; p.y += p.vy;
-          p.vx *= 0.99; p.vy = p.vy * 0.99 + 0.004;
+          p.vx *= 0.992; p.vy = p.vy * 0.992 + 0.0022;
           p.s *= p.grow; p.rot += p.spin; p.life += p.fade;
           if (p.life >= 1) { ps.splice(i, 1); continue; }
           var k = p.life < 0.18 ? p.life / 0.18 : 1 - (p.life - 0.18) / 0.82;
           var im = sprites[p.img];
           if (!im.complete || !im.naturalWidth) continue;
           ctx.globalAlpha = k * p.peak * edgeFade(p.x, p.y, W, H);
-          ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
-          ctx.drawImage(im, -p.s / 2, -p.s / 2, p.s, p.s); ctx.restore();
+          if (p.s < 8) {
+            // too small for the rotation to be visible, and skipping the
+            // transform saves the save/restore pair
+            ctx.drawImage(im, p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
+          } else {
+            var c = Math.cos(p.rot), n2 = Math.sin(p.rot);
+            ctx.setTransform(c, n2, -n2, c, p.x, p.y);
+            ctx.drawImage(im, -p.s / 2, -p.s / 2, p.s, p.s);
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+          }
         }
         ctx.globalAlpha = 1;
         return ps.length;
@@ -134,8 +180,7 @@
           var y = f.top + Math.pow(Math.random(), 0.75) * f.h;
           ps.push({
             x: f.x + rnd(-8, 8), y: y,
-            vx: f.v * rnd(0.3, 0.8) + rnd(-0.6, 0.6),
-            vy: rnd(-1.3, -0.2),
+            vx: throwVel(f, 1.2).vx, vy: throwVel(f, 1.2).vy,
             s: rnd(16, 52) * (0.7 + power * 0.5),
             grow: rnd(1.006, 1.022),
             life: 0, fade: rnd(0.007, 0.017),
@@ -188,12 +233,14 @@
     return {
       emit: function (f, power) {
         var n = Math.round(rnd(95, 200) * power * AMOUNT);
+        if (ps.length > 3200) ps.splice(0, ps.length - 3200);
         for (var i = 0; i < n; i++) {
           var y = f.top + Math.random() * f.h;
+          var v = throwVel(f, 1.6);
           ps.push({
-            x: f.x + rnd(-10, 10), y: y,
-            vx: f.v * rnd(0.2, 0.9) + rnd(-0.7, 0.7),
-            vy: rnd(-1.6, -0.1),
+            x: f.x + rnd(-12, 12), y: y,
+            vx: v.vx, vy: v.vy,
+            cx: 0, cy: 0, off: (Math.random() * 3) | 0,
             s: rnd(0.7, 2.1),
             life: 1, decay: rnd(0.004, 0.013),
             a: rnd(0.12, 0.4),
@@ -203,37 +250,42 @@
       },
       frame: function (t, skipClear) {
         if (!skipClear) ctx.clearRect(0, 0, W, H);
-        // Thousands of motes a frame, so: fillRect rather than arc (an arc
-        // is an order of magnitude more expensive at this size), and two
-        // passes so fillStyle is set twice instead of thousands of times.
-        for (var pass = 0; pass < 2; pass++) {
-          ctx.fillStyle = pass ? '#fff6e0' : '#6f5a3e';
-          for (var i = ps.length - 1; i >= 0; i--) {
-            var p = ps[i];
-            if (!!p.pale !== !!pass) continue;
-            if (pass === 0) {
-              var c = curl(p.x * 0.018, p.y * 0.018, t * 0.00028);
-              p.vx += c[0] * 1.5; p.vy += c[1] * 1.5;
-              p.x += p.vx; p.y += p.vy;
-              p.vx *= 0.983; p.vy = p.vy * 0.983 + 0.007;
-              p.life -= p.decay;
-            }
-            if (p.life <= 0) continue;
-            ctx.globalAlpha = p.life * p.a * edgeFade(p.x, p.y, W, H);
-            ctx.fillRect(p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
+        // Thousands of motes a frame. Two things make that affordable:
+        // fillRect instead of arc, and bucketing by opacity so globalAlpha
+        // is set about sixteen times a frame rather than three thousand.
+        var B = 8, buckets = [], bi;
+        for (bi = 0; bi < B * 2; bi++) buckets.push(null);
+
+        var tick3 = (t / 16) | 0;
+        for (var i = ps.length - 1; i >= 0; i--) {
+          var p = ps[i];
+          // curl noise is four noise lookups a go; at three thousand motes
+          // that is the whole frame budget. Each particle refreshes its own
+          // flow vector every third frame and coasts on it in between.
+          if (((tick3 + p.off) % 3) === 0) {
+            var c = curl(p.x * 0.018, p.y * 0.018, t * 0.00028);
+            p.cx = c[0]; p.cy = c[1];
           }
+          p.vx += p.cx * 1.5; p.vy += p.cy * 1.5;
+          p.x += p.vx; p.y += p.vy;
+          p.vx *= 0.986; p.vy = p.vy * 0.986 + 0.004;
+          p.life -= p.decay;
+          if (p.life <= 0) { ps.splice(i, 1); continue; }
+          var a = p.life * p.a * edgeFade(p.x, p.y, W, H);
+          if (a <= 0.012) continue;
+          var b = Math.min(B - 1, (a * B) | 0) + (p.pale ? B : 0);
+          (buckets[b] || (buckets[b] = [])).push(p);
         }
-        // pale motes move in their own pass, then everything dead is culled
-        for (var j = ps.length - 1; j >= 0; j--) {
-          var q = ps[j];
-          if (q.pale) {
-            var c2 = curl(q.x * 0.018, q.y * 0.018, t * 0.00028);
-            q.vx += c2[0] * 1.5; q.vy += c2[1] * 1.5;
-            q.x += q.vx; q.y += q.vy;
-            q.vx *= 0.983; q.vy = q.vy * 0.983 + 0.007;
-            q.life -= q.decay;
+
+        for (bi = 0; bi < B * 2; bi++) {
+          var list = buckets[bi];
+          if (!list) continue;
+          ctx.globalAlpha = ((bi % B) + 0.5) / B;
+          ctx.fillStyle = bi >= B ? '#fff6e0' : '#6f5a3e';
+          for (var j = 0; j < list.length; j++) {
+            var q = list[j];
+            ctx.fillRect(q.x - q.s / 2, q.y - q.s / 2, q.s, q.s);
           }
-          if (q.life <= 0) ps.splice(j, 1);
         }
         ctx.globalAlpha = 1;
         return ps.length;
@@ -276,7 +328,8 @@
           e.setAttribute('cy', f.top + Math.pow(Math.random(), 0.8) * f.h);
           e.setAttribute('rx', r); e.setAttribute('ry', r * rnd(0.7, 1.1));
           e.setAttribute('fill', 'rgba(132,108,76,' + rnd(0.20, 0.42).toFixed(3) + ')');
-          var dx = f.v * rnd(8, 20) + rnd(-34, 34), dy = rnd(-92, -26);
+          var sv = throwVel(f, 1.0);
+          var dx = sv.vx * 34, dy = sv.vy * 34;
           var dur = rnd(1500, 2900);
           e.animate([
             { transform: 'translate(0,0) scale(.35)', opacity: 0 },

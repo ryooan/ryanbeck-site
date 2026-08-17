@@ -199,12 +199,25 @@ BookDust.attach(bookEl, hostEl, flip, { kind: 'cloud' })
 `dust-lab.html` runs all four side by side with a density slider, so they can
 be compared directly.
 
-All four are fed the same signal, and this is the part that matters: StPageFlip
-draws a `.stf__outerShadow` element **along the crease**, so reading its box
-every frame gives the live position and speed of the fold. Dust is born there
-and thrown outward, inheriting the crease's velocity. It is not an overlay
-playing on a timer — that was the flaw in the tsParticles version, whose
-emitters fire on flip events and have no idea where the page actually is.
+All of them are fed the same signal, and this is the part that matters:
+StPageFlip draws a `.stf__outerShadow` element **along the crease**, so reading
+its box every frame gives the live position and speed of the fold. Dust is born
+there. It is not an overlay playing on a timer — that was the flaw in the
+tsParticles version, whose emitters fire on flip events and have no idea where
+the page actually is.
+
+Hard covers have no crease: StPageFlip swings them as a board, with a
+`.stf__hardShadow` and **no clip-path**. `foldReader` detects that case and
+uses the edge of the board furthest from the spine, so opening the book raises
+dust too. Watch out for one trap — StPageFlip writes `clipPath` as the literal
+string `'none'` on a hard page, so a truthiness check calls every cover a soft
+fold, finds no outer shadow, and silently emits nothing.
+
+Direction comes from `throwVel()`: a random angle over the full circle with the
+rightward component scaled to 0.3, a slight overall lift, and only ~16% of the
+crease's own velocity mixed in. Inheriting more than that drags everything
+sideways and the dust just streams away from the page instead of billowing off
+it.
 
 | kind | technique |
 |---|---|
@@ -221,9 +234,25 @@ Puff sprites are deliberately small (3.5–17px); larger ones read as bubbles no
 matter how they are faded, which was the first version's problem.
 
 `both` shares one canvas between two engines, so it clears once and passes
-`skipClear` to each. `mist` draws with `fillRect` in two colour passes rather
-than `arc` per particle — at three thousand motes a frame that difference
-matters.
+`skipClear` to each.
+
+Performance, in order of what actually mattered (measured, headless, software
+rendering — real hardware is better):
+
+1. **`foldReader` must read inline styles, not `getComputedStyle`.** StPageFlip
+   writes `display`, `zIndex` and `clipPath` inline, and going through computed
+   styles forces a style recalc on every page on every frame. Fixing this alone
+   took a cover open from 41 to 56 fps.
+2. **The curl field is the hot loop in `mist`** — four noise lookups per
+   particle per frame at three thousand particles. Each mote refreshes its flow
+   vector every third frame and coasts in between.
+3. `fillRect` rather than `arc`, bucketed into eight opacity bands so
+   `globalAlpha` is set ~16 times a frame instead of three thousand.
+4. Ceilings of 900 puffs / 3200 motes, oldest dropped first.
+
+With all that, the dust costs about 4 fps: a soft page turn measures ~33 fps
+with the dust disabled entirely, because that is what StPageFlip's fold
+rendering costs on its own.
 
 Note on `cloud`: it accumulates with plain `source-over`. An earlier version
 used `lighter` plus a `contrast()` filter to fuse the blobs and the book caught
