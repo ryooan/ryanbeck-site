@@ -37,6 +37,7 @@
 
     var edgeL = el('span', 'edge left'), edgeR = el('span', 'edge right');
     var backCover = el('div', 'back-cover');
+    var castR = el('span', 'cast r'), castL = el('span', 'cast l');
 
     // In spread mode a leaf carries two pages; on a phone it carries one and
     // the verso is never seen, because it swings off the left of the screen.
@@ -53,6 +54,9 @@
     book.appendChild(backCover);
     book.appendChild(edgeL);
     book.appendChild(edgeR);
+    book.appendChild(castL);
+    book.appendChild(castR);
+    root._cast = { l: castL, r: castR };
     stage.appendChild(book);
 
 
@@ -206,6 +210,7 @@
 
     setTimeout(function () {
       leaf.classList.remove('turning', 'turn-fwd', 'turn-back', 'past-half');
+      if (root._cast) { root._cast.l.style.opacity = '0'; root._cast.r.style.opacity = '0'; }
       uncurl(leaf);
       leaf.style.animation = 'none';
       leaf.offsetHeight;                                 // flush, then rest
@@ -335,6 +340,14 @@
       turning.style.setProperty('--curl', (k * 4.4).toFixed(2) + 'deg');
       turning.style.setProperty('--k', k.toFixed(3));
       turning.classList.toggle('past-half', Math.abs(ang) > Math.PI / 2);
+
+      // the shadow the sheet throws on the page below it — its own element,
+      // so the sheet itself never needs a filter
+      var c = Math.cos(ang), over = c >= 0 ? root._cast.r : root._cast.l;
+      var idle = c >= 0 ? root._cast.l : root._cast.r;
+      over.style.opacity = (0.30 + 0.55 * Math.sin(Math.PI * prog)).toFixed(3);
+      over.style.transform = 'scaleX(' + Math.abs(c).toFixed(3) + ')';
+      idle.style.opacity = '0';
     }
     // the free edge of the sheet, which is where the dust actually comes off
     var edge = g.spine + Math.cos(ang) * g.page * dir;

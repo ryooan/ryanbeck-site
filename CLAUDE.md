@@ -231,10 +231,15 @@ symptom — vertical lines down the turning page:
    continuous ramp and each slice shows its slot of it. A gradient inside a
    slice restarts at every seam (a sawtooth of eight hard edges); even a *flat*
    tint stepped by slice index bands visibly on a plain cream field.
-2. **No `filter` on a `.cslice`.** `filter` flattens
-   `transform-style: preserve-3d`, so every slice gets composited as its own
-   2D layer and the seams show. The drop-shadow goes on `.leaf`, outside the
-   3D chain.
+2. **No `filter` anywhere on the turning sheet — slice *or* leaf.** On a
+   slice it flattens `transform-style: preserve-3d` and the seams show. On the
+   leaf it makes Chromium rasterise the whole sheet to a bitmap at its
+   *untransformed* size and then 3D-transform that bitmap, so the text and the
+   free edge come out soft — that was the "blurry edge". The shadow the sheet
+   throws is drawn as its own `.cast` element on the page below, positioned
+   and scaled from the rotation angle. `will-change: transform` is off the
+   leaf for the same reason: the sheet re-rasterises per frame and stays
+   crisp.
 3. **`.face.curled` needs `transform-style: preserve-3d`** (and `overflow:
    visible`, since overflow forces flattening too) or the slices collapse into
    the face's plane.

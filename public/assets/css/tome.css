@@ -100,7 +100,6 @@ html:has(.tome-page){ overflow-x:clip }
   position:absolute; left:50%; top:.6%; width:50%; height:98.8%;
   transform-origin:left center; transform-style:preserve-3d;
   transform:rotateY(0deg);
-  will-change:transform;
 }
 .leaf.flipped{ transform:rotateY(-180deg) }
 
@@ -177,7 +176,7 @@ html:has(.tome-page){ overflow-x:clip }
   backface-visibility:hidden;
 }
 .cslice .cslice{ left:100%; width:100% }
-.cclip{ position:absolute; top:0; bottom:0; left:0; right:-0.6px; overflow:hidden; backface-visibility:hidden }
+.cclip{ position:absolute; top:0; bottom:0; left:0; right:-1px; overflow:hidden; backface-visibility:hidden }
 /* the texture lives on the wrap, which is a whole page wide, so it runs
    continuously across the slices instead of restarting at every seam */
 .cwrap{
@@ -212,10 +211,19 @@ html:has(.tome-page){ overflow-x:clip }
   transition:opacity .28s ease;
 }
 .leaf.turning .sheen{ opacity:1 }
-/* NO filter on a .cslice — filter flattens transform-style:preserve-3d, so
-   every slice gets composited as its own 2D layer and you see the seams.
-   The shadow goes on the leaf, which is outside the 3D chain. */
-.leaf.turning{ filter:drop-shadow(0 12px 20px rgba(50,32,14,.26)) }
+/* NO filter anywhere on the turning sheet. On a slice it flattens
+   transform-style:preserve-3d and you get seams; on the leaf it forces the
+   whole sheet to be rasterised to a bitmap at its untransformed size and then
+   3D-transformed, which is what made the page and its edges look soft. The
+   shadow the sheet casts is drawn as its own element on the page below. */
+.cast{
+  position:absolute; top:1.2%; height:97.6%; z-index:3; pointer-events:none;
+  opacity:0; transform:scaleX(0);
+  background:linear-gradient(90deg, rgba(48,30,12,.34) 0%, rgba(48,30,12,.16) 48%, rgba(48,30,12,0) 100%);
+}
+.cast.r{ left:50%; width:50%; transform-origin:left center }
+.cast.l{ left:0;   width:50%; transform-origin:right center;
+         background:linear-gradient(270deg, rgba(48,30,12,.34) 0%, rgba(48,30,12,.16) 48%, rgba(48,30,12,0) 100%) }
 
 /* ---------- page contents ---------- */
 .sheet{
