@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Book: hand-built vs libraries · Ryan Beck</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#e9dac9">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/tome.css">
+<link rel="stylesheet" href="assets/css/tome-lib.css">
+<style>
+  .vs-head{ text-align:center; padding:clamp(24px,4vw,48px) 0 clamp(8px,1.6vw,16px) }
+  .vs-head h1{ margin:0 0 10px }
+  .vs-head p{ margin:0 auto; max-width:60ch; color:var(--ink-soft) }
+  .vs-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:clamp(22px,3vw,52px);
+    align-items:start; margin-top:clamp(22px,4vw,44px);
+  }
+  @media (max-width:980px){
+    .vs-grid{ grid-template-columns:1fr; gap:clamp(44px,9vw,76px) }
+    .vs-col .tome{ width:min(330px,76vw) !important; margin:0 auto }
+    .vs-col .libtome{ width:min(340px,78vw); margin:0 auto }
+  }
+  .vs-col > header{ text-align:center; margin-bottom:18px }
+  .vs-tag{
+    display:inline-block; font-family:var(--sans); font-size:.62rem; letter-spacing:.24em;
+    text-transform:uppercase; padding:4px 12px; border-radius:99px; border:1px solid var(--rule);
+    color:var(--ink-faint); margin-bottom:10px;
+  }
+  .vs-tag.lib{ border-color:#a5561c; color:#a5561c }
+  .vs-col h2{ font-size:1.15rem; margin:0 0 6px }
+  .vs-col header p{ font-size:.86rem; color:var(--ink-soft); margin:0 auto; max-width:38ch }
+  /* both books fill their column so the comparison is like for like */
+  .vs-col .tome{ width:100% !important; max-width:none }
+  .vs-col .libtome{ width:100% }
+  .vs-col .tome-controls{ margin-top:clamp(14px,2vw,24px) }
+  .vs-note{ margin-top:clamp(40px,6vw,80px) }
+  .vs-table{ width:100%; border-collapse:collapse; font-size:.92rem; margin-top:14px }
+  .vs-table th, .vs-table td{ text-align:left; padding:10px 12px; border-bottom:1px solid var(--rule); vertical-align:top }
+  .vs-table th{ font-family:var(--sans); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint) }
+  .vs-table td:first-child{ font-family:var(--sans); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); white-space:nowrap }
+</style>
+</head>
+<body class="tome-page">
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="projects.html">Projects</a>
+      <a href="writing.html">Fiction</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap vs-head">
+    <span class="runic">Side by side</span>
+    <h1>Two ways to build the book</h1>
+    <p>Same pages, same leather, same paper. The only difference is what is doing
+    the work: hand-written CSS and canvas on the left, StPageFlip and tsParticles
+    on the right. Turn a few pages in each — and on the right, try dragging a
+    corner.</p>
+  </div>
+
+  <div class="wrap">
+    <div class="vs-grid">
+
+      <section class="vs-col">
+        <header>
+          <span class="vs-tag">Hand-built</span>
+          <h2>CSS 3D + canvas</h2>
+          <p>Eight nested slices for the curl, a hand-written particle system for the dust. No dependencies.</p>
+        </header>
+        <div class="tome" data-tome data-nokeys>
+          <div class="tome-fallback">
+
+
+      <article class="page-src" data-type="cover">
+        <img class="cover-mark" src="assets/tome/wordmark-gilt.svg" alt="Ryan Beck" width="825" height="112">
+        <div class="cover-portrait"><img src="assets/covers/portrait.jpg" alt="Ryan Beck" width="640" height="782"></div>
+        <span class="cover-sub">About the author</span>
+      </article>
+
+      <article class="page-src" data-type="plate">
+        <figure class="plate">
+          <img src="assets/covers/portrait.jpg" alt="Ryan Beck" width="640" height="782" loading="lazy">
+          <figcaption>Ryan Beck &mdash; Iowa</figcaption>
+        </figure>
+        <p class="folio">Frontispiece</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Chapter the first</p>
+        <h2>The short version</h2>
+        <p class="drop">I write science fiction, I think about forecasting for a living, and I have never once managed to have only one hobby at a time.</p>
+        <p><em>Placeholder copy &mdash; rewrite this in your own voice.</em> The through-line, if there is one, is a stubborn interest in the gap between a model and the thing the model is about. Bridges taught me that gap has consequences. Forecasting taught me how to put a number on it. Fiction is where I get to ask what happens when nobody bothers.</p>
+        <p class="marginal">Everything in this book is scaffolding until you replace it.</p>
+        <p class="folio">Page 1</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Chapter the second</p>
+        <h2>Before this</h2>
+        <p class="drop">For about a decade I designed and inspected bridges across Iowa.</p>
+        <p>It is a profession that makes you honest. A load path either exists or it doesn't. A tolerance is not a matter of opinion. You learn to ask what you would have to believe for your own analysis to be wrong, and then you go and check, because the alternative is unacceptable.</p>
+        <p>I think about that habit constantly in work that has far softer feedback.</p>
+        <p class="folio">Page 2</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Chapter the third</p>
+        <h2>Now</h2>
+        <p class="drop">These days I coordinate forecasting programs at Metaculus.</p>
+        <p>Most of the job is not prediction. It is writing questions that can actually resolve, arguing about wording until the ambiguity is gone, and then finding out in public whether the crowd was right. It turns out that "what exactly would count as this happening?" is one of the more useful questions you can ask about almost anything.</p>
+        <p class="marginal">Calibration is a habit, not a talent.</p>
+        <p class="folio">Page 3</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Chapter the fourth</p>
+        <h2>The fiction</h2>
+        <p class="drop">SEER began as a question I couldn't put down.</p>
+        <p>If a system could reliably predict what you wanted &mdash; not guess, not nudge, but <em>know</em> &mdash; would you still call it wanting? The novel follows Maria, who finds the seam in it, and then has to decide whether tearing it open is worth what comes after.</p>
+        <p><em>Not Human</em> is a shorter, colder cousin of the same question: the first person to have her mind copied to a machine, and a copy that insists it is her.</p>
+        <p class="folio">Page 4</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Chapter the fifth</p>
+        <h2>The Missing Nuance</h2>
+        <p class="drop">The newsletter is where the arguments go.</p>
+        <p>It's named for the thing that gets sanded off when a position is repeated enough times &mdash; the caveat that made it true in the first place. Mostly forecasting, occasionally technology, occasionally an essay I couldn't place anywhere else.</p>
+        <p><a href="https://themissingnuance.substack.com">themissingnuance.substack.com</a></p>
+        <p class="folio">Page 5</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Chapter the sixth</p>
+        <h2>Off the clock</h2>
+        <p class="drop">Married, with daughters, in Iowa.</p>
+        <p>The serial-hobbyist thing is not a bit. There is always some half-learned skill in progress and a shelf of evidence from the last one. Reading, mostly; building things that didn't need to exist; and a persistent belief that this is the year I finish everything I start.</p>
+        <p class="folio">Page 6</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Chapter the seventh</p>
+        <h2>Elsewhere</h2>
+        <ul>
+          <li><a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a></li>
+          <li><a href="https://themissingnuance.substack.com">The Missing Nuance</a></li>
+          <li><a href="https://www.goodreads.com/ryanbeckauthor">Goodreads</a></li>
+          <li><a href="https://twitter.com/ryanbeck111">Twitter</a></li>
+          <li><a href="https://www.facebook.com/ryanbeckauthor">Facebook</a></li>
+        </ul>
+        <p>The fastest way to reach me is email. I read all of it and answer most of it.</p>
+        <p class="folio">Page 7</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Colophon</p>
+        <h2>About this book</h2>
+        <p>Set in the same hand as the doors. The lettering was drawn rather than typeset; the leather, the page stock and the dust are generated, not photographed.</p>
+        <p><a href="about-plain.html">Prefer it as a plain page?</a></p>
+        <p class="folio">Fin</p>
+      </article>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="vs-col">
+        <header>
+          <span class="vs-tag lib">Libraries</span>
+          <h2>StPageFlip + tsParticles</h2>
+          <p>Real fold geometry with drag-a-corner, and a configured particle engine. 233&nbsp;KB of vendor code.</p>
+        </header>
+        <div class="libtome" data-tome-lib>
+          <div class="tome-fallback">
+
+
+      <article class="page-src" data-type="cover">
+        <img class="cover-mark" src="assets/tome/wordmark-gilt.svg" alt="Ryan Beck" width="825" height="112">
+        <div class="cover-portrait"><img src="assets/covers/portrait.jpg" alt="Ryan Beck" width="640" height="782"></div>
+        <span class="cover-sub">About the author</span>
+      </article>
+
+      <article class="page-src" data-type="plate">
+        <figure class="plate">
+          <img src="assets/covers/portrait.jpg" alt="Ryan Beck" width="640" height="782" loading="lazy">
+          <figcaption>Ryan Beck &mdash; Iowa</figcaption>
+        </figure>
+        <p class="folio">Frontispiece</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Chapter the first</p>
+        <h2>The short version</h2>
+        <p class="drop">I write science fiction, I think about forecasting for a living, and I have never once managed to have only one hobby at a time.</p>
+        <p><em>Placeholder copy &mdash; rewrite this in your own voice.</em> The through-line, if there is one, is a stubborn interest in the gap between a model and the thing the model is about. Bridges taught me that gap has consequences. Forecasting taught me how to put a number on it. Fiction is where I get to ask what happens when nobody bothers.</p>
+        <p class="marginal">Everything in this book is scaffolding until you replace it.</p>
+        <p class="folio">Page 1</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Chapter the second</p>
+        <h2>Before this</h2>
+        <p class="drop">For about a decade I designed and inspected bridges across Iowa.</p>
+        <p>It is a profession that makes you honest. A load path either exists or it doesn't. A tolerance is not a matter of opinion. You learn to ask what you would have to believe for your own analysis to be wrong, and then you go and check, because the alternative is unacceptable.</p>
+        <p>I think about that habit constantly in work that has far softer feedback.</p>
+        <p class="folio">Page 2</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Chapter the third</p>
+        <h2>Now</h2>
+        <p class="drop">These days I coordinate forecasting programs at Metaculus.</p>
+        <p>Most of the job is not prediction. It is writing questions that can actually resolve, arguing about wording until the ambiguity is gone, and then finding out in public whether the crowd was right. It turns out that "what exactly would count as this happening?" is one of the more useful questions you can ask about almost anything.</p>
+        <p class="marginal">Calibration is a habit, not a talent.</p>
+        <p class="folio">Page 3</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Chapter the fourth</p>
+        <h2>The fiction</h2>
+        <p class="drop">SEER began as a question I couldn't put down.</p>
+        <p>If a system could reliably predict what you wanted &mdash; not guess, not nudge, but <em>know</em> &mdash; would you still call it wanting? The novel follows Maria, who finds the seam in it, and then has to decide whether tearing it open is worth what comes after.</p>
+        <p><em>Not Human</em> is a shorter, colder cousin of the same question: the first person to have her mind copied to a machine, and a copy that insists it is her.</p>
+        <p class="folio">Page 4</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Chapter the fifth</p>
+        <h2>The Missing Nuance</h2>
+        <p class="drop">The newsletter is where the arguments go.</p>
+        <p>It's named for the thing that gets sanded off when a position is repeated enough times &mdash; the caveat that made it true in the first place. Mostly forecasting, occasionally technology, occasionally an essay I couldn't place anywhere else.</p>
+        <p><a href="https://themissingnuance.substack.com">themissingnuance.substack.com</a></p>
+        <p class="folio">Page 5</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Chapter the sixth</p>
+        <h2>Off the clock</h2>
+        <p class="drop">Married, with daughters, in Iowa.</p>
+        <p>The serial-hobbyist thing is not a bit. There is always some half-learned skill in progress and a shelf of evidence from the last one. Reading, mostly; building things that didn't need to exist; and a persistent belief that this is the year I finish everything I start.</p>
+        <p class="folio">Page 6</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Chapter the seventh</p>
+        <h2>Elsewhere</h2>
+        <ul>
+          <li><a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a></li>
+          <li><a href="https://themissingnuance.substack.com">The Missing Nuance</a></li>
+          <li><a href="https://www.goodreads.com/ryanbeckauthor">Goodreads</a></li>
+          <li><a href="https://twitter.com/ryanbeck111">Twitter</a></li>
+          <li><a href="https://www.facebook.com/ryanbeckauthor">Facebook</a></li>
+        </ul>
+        <p>The fastest way to reach me is email. I read all of it and answer most of it.</p>
+        <p class="folio">Page 7</p>
+      </article>
+
+      <article class="page-src" data-type="text">
+        <p class="kicker">Colophon</p>
+        <h2>About this book</h2>
+        <p>Set in the same hand as the doors. The lettering was drawn rather than typeset; the leather, the page stock and the dust are generated, not photographed.</p>
+        <p><a href="about-plain.html">Prefer it as a plain page?</a></p>
+        <p class="folio">Fin</p>
+      </article>
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <div class="wrap vs-note">
+    <hr class="rule">
+    <h2>What actually differs</h2>
+    <table class="vs-table">
+      <thead><tr><th>&nbsp;</th><th>Hand-built</th><th>StPageFlip + tsParticles</th></tr></thead>
+      <tbody>
+        <tr><td>Ships</td><td>~4 KB of JS, no dependencies</td><td>233 KB minified / 65 KB gzipped, 5 packages</td></tr>
+        <tr><td>The fold</td><td>Eight rotated slices approximating a cylinder</td><td>Proper fold geometry with a computed crease</td></tr>
+        <tr><td>Drag a corner</td><td>No — click or arrow keys only</td><td>Yes, and it follows the pointer</td></tr>
+        <tr><td>Shadows</td><td>Hand-placed gradients</td><td>Drawn from the fold, so they track it</td></tr>
+        <tr><td>Dust</td><td>Emits from the moving free edge, inherits its velocity</td><td>Emitters fire on flip events; not tied to the page position</td></tr>
+        <tr><td>Tuning</td><td>Anything, but you write it</td><td>A config object, but only what it exposes</td></tr>
+        <tr><td>In three years</td><td>Still works; it's plain CSS</td><td>Needs the packages to still install and behave</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:22px"><a href="about.html">← back to the about page</a></p>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <span>© 2026 Ryan Beck</span>
+    <span><a href="index.html">← back to the hall</a></span>
+  </div>
+</footer>
+
+<script src="assets/js/nav.js" defer></script>
+<script src="assets/js/tome.js" defer></script>
+<script src="assets/vendor/lib-tome.bundle.js" defer></script>
+<script src="assets/js/tome-lib.js" defer></script>
+</body>
+</html>

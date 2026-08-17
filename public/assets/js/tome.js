@@ -455,6 +455,7 @@
     });
 
     document.addEventListener('keydown', function (e) {
+      if (root.hasAttribute('data-nokeys')) return;
       if (e.key === 'ArrowRight' || e.key === 'PageDown') { next(); }
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { prev(); }
       else return;
