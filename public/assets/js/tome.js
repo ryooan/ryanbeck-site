@@ -103,9 +103,10 @@
   }
 
   /* ---------------------------------------------------------- state */
-  function layout() {
+  function layout(skip) {
     var n = leaves.length;
     leaves.forEach(function (leaf, i) {
+      if (leaf === skip) return;          // mid-flight, leave it alone
       var flipped = i < index;
       leaf.classList.toggle('flipped', flipped);
       // Unflipped pages stack to the right with the current one on top;
@@ -131,21 +132,33 @@
     busy = true;
 
     var leaf = leaves[dir > 0 ? index : target];
-    leaf.classList.add('turning');
-    index = target;
-    layout();
+    var fwd = dir > 0;
 
-    puff(dir, .9);
-    setTimeout(function () { puff(dir, .7); }, 330);
-    setTimeout(function () { puff(dir, .5); }, 700);
+    leaf.classList.add('turning');
+    leaf.style.zIndex = String(leaves.length + 5);     // the turning sheet is on top
+    leaf.classList.remove('flipped');
+    leaf.classList.add(fwd ? 'turn-fwd' : 'turn-back');
+
+    index = target;
+    // everything except the sheet in flight settles into its new place now
+    layout(leaf);
+
+    puff(dir, .85);
+    setTimeout(function () { puff(dir, .8); },  340);
+    setTimeout(function () { puff(dir, .7); },  760);
+    setTimeout(function () { puff(dir, .55); }, 1200);
 
     setTimeout(function () {
-      leaf.classList.remove('turning');
+      leaf.classList.remove('turning', 'turn-fwd', 'turn-back');
+      leaf.style.animation = 'none';
+      leaf.offsetHeight;                                 // flush, then rest
+      leaf.style.animation = '';
+      layout();
       book.classList.add('thump');
-      puff(dir, 1);                       // the sheet lands and lifts the dust
+      puff(dir, 1.1);                     // the sheet lands and lifts the dust
       setTimeout(function () { book.classList.remove('thump'); }, 520);
       busy = false;
-    }, 1250);
+    }, 1900);
   }
   function next() { turn(1); }
   function prev() { turn(-1); }
@@ -162,7 +175,7 @@
       var g = c.getContext('2d');
       var rg = g.createRadialGradient(32, 32, 0, 32, 32, 32);
       rg.addColorStop(0, 'rgba(' + rgb + ',1)');
-      rg.addColorStop(soft ? 0.35 : 0.5, 'rgba(' + rgb + ',0.6)');
+      rg.addColorStop(soft ? 0.18 : 0.42, 'rgba(' + rgb + ',' + (soft ? 0.5 : 0.55) + ')');
       rg.addColorStop(1, 'rgba(' + rgb + ',0)');
       g.fillStyle = rg;
       g.fillRect(0, 0, 64, 64);
@@ -171,7 +184,7 @@
     sprites = {
       pale: sprite('255,247,228', false),
       dark: sprite('124,100,68', false),
-      haze: sprite('146,122,88', true)
+      haze: sprite('158,136,102', true)
     };
   }
 
@@ -191,33 +204,44 @@
     scale = scale === undefined ? 1 : scale;
     var r = canvas.getBoundingClientRect();
     var spineX = r.width * 0.5;
-    var count = Math.round((spread ? 150 : 105) * scale);
-
-    for (var i = 0; i < count; i++) {
-      // most of it comes off the spine and the leading edge of the sheet
-      var t = Math.pow(Math.random(), 0.6);
-      var x = spineX + dir * t * r.width * 0.44 * (Math.random() < .82 ? 1 : -0.35);
-      var y = r.height * (0.10 + Math.random() * 0.82);
-      var speed = (0.6 + Math.random() * 3.1) * (0.6 + scale * 0.6);
-      parts.push({
-        x: x, y: y,
-        vx: dir * speed * (0.45 + Math.random()) + (Math.random() - .5) * 1.3,
-        vy: -speed * (0.3 + Math.random() * 0.85),
-        s: (3 + Math.random() * 13) * (spread ? 1 : .8),
-        life: 1, decay: 0.0035 + Math.random() * 0.009,
-        pale: Math.random() < 0.45,
-        a: 0.20 + Math.random() * 0.34
+    // Lots of very small particles clustered around a few origins reads as a
+    // cloud. A few big ones reads as confetti, which is what this used to be.
+    var clumps = 5 + Math.round(4 * scale);
+    var count = Math.round((spread ? 620 : 420) * scale);
+    var origins = [];
+    for (var c = 0; c < clumps; c++) {
+      origins.push({
+        x: spineX + dir * Math.pow(Math.random(), 0.55) * r.width * 0.42,
+        y: r.height * (0.10 + Math.random() * 0.80),
+        r: r.width * (0.03 + Math.random() * 0.075)
       });
     }
-    // a slow cloud that hangs where the page was
-    for (var h = 0; h < Math.round(4 * scale); h++) {
+
+    for (var i = 0; i < count; i++) {
+      var o = origins[(Math.random() * origins.length) | 0];
+      var ang = Math.random() * 6.283, rad = Math.pow(Math.random(), 0.6) * o.r;
+      var speed = (0.25 + Math.random() * 1.5) * (0.55 + scale * 0.55);
+      parts.push({
+        x: o.x + Math.cos(ang) * rad,
+        y: o.y + Math.sin(ang) * rad * 0.8,
+        vx: dir * speed * (0.35 + Math.random() * 0.9) + (Math.random() - .5) * 0.75,
+        vy: -speed * (0.25 + Math.random() * 0.7),
+        s: (1.4 + Math.random() * 4.6) * (spread ? 1 : .85),
+        life: 1, decay: 0.0035 + Math.random() * 0.010,
+        pale: Math.random() < 0.40,
+        a: 0.20 + Math.random() * 0.30
+      });
+    }
+    // the soft body of the cloud, sitting under all those specks
+    for (var h = 0; h < Math.round(16 * scale); h++) {
+      var oh = origins[(Math.random() * origins.length) | 0];
       haze.push({
-        x: spineX + dir * Math.random() * r.width * 0.3,
-        y: r.height * (0.2 + Math.random() * 0.6),
-        s: r.width * (0.10 + Math.random() * 0.16),
-        grow: 1 + Math.random() * 0.9,
-        vx: dir * (0.2 + Math.random() * 0.6), vy: -0.12 - Math.random() * 0.2,
-        life: 1, decay: 0.006 + Math.random() * 0.006
+        x: oh.x + (Math.random() - .5) * r.width * 0.08,
+        y: oh.y + (Math.random() - .5) * r.height * 0.08,
+        s: r.width * (0.055 + Math.random() * 0.13),
+        grow: 1.7 + Math.random() * 1.5,
+        vx: dir * (0.12 + Math.random() * 0.42), vy: -0.09 - Math.random() * 0.16,
+        life: 1, decay: 0.0055 + Math.random() * 0.006
       });
     }
     if (!raf) raf = requestAnimationFrame(tick);
@@ -226,15 +250,24 @@
   function ambient() {
     if (!ctx || document.hidden) return;
     var r = canvas.getBoundingClientRect();
-    if (parts.length < 46) {
+    if (parts.length < 90) {
       parts.push({
         x: Math.random() * r.width, y: r.height * (0.15 + Math.random() * 0.85),
         vx: (Math.random() - .5) * .25, vy: -0.06 - Math.random() * 0.14,
-        s: 3 + Math.random() * 7, life: .6, decay: 0.0013 + Math.random() * 0.0022,
-        pale: Math.random() < 0.5, a: 0.16 + Math.random() * 0.16
+        s: 1.2 + Math.random() * 2.6, life: .6, decay: 0.0013 + Math.random() * 0.0022,
+        pale: Math.random() < 0.5, a: 0.12 + Math.random() * 0.14
       });
       if (!raf) raf = requestAnimationFrame(tick);
     }
+  }
+
+  // Without this the cloud gets sliced off in a straight line at the canvas
+  // border, which instantly gives the game away.
+  function edgeFade(x, y, r) {
+    var m = Math.min(r.width, r.height) * 0.14;
+    var fx = Math.min(x, r.width - x) / m;
+    var fy = Math.min(y, r.height - y) / m;
+    return Math.max(0, Math.min(1, Math.min(fx, fy)));
   }
 
   function tick() {
@@ -249,17 +282,17 @@
       p.x += p.vx; p.y += p.vy; p.s *= 1 + (p.grow - 1) * 0.012;
       p.life -= p.decay;
       if (p.life <= 0) { haze.splice(i, 1); continue; }
-      ctx.globalAlpha = Math.max(0, p.life) * 0.11;
+      ctx.globalAlpha = Math.max(0, p.life) * 0.14 * edgeFade(p.x, p.y, r);
       ctx.drawImage(sprites.haze, p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
     }
 
     for (i = parts.length - 1; i >= 0; i--) {
       p = parts[i];
       p.x += p.vx; p.y += p.vy;
-      p.vx *= 0.982; p.vy = p.vy * 0.982 + 0.014;   // drag, then it settles
+      p.vx *= 0.977; p.vy = p.vy * 0.977 + 0.010;   // drag, then it settles
       p.life -= p.decay;
       if (p.life <= 0 || p.y > r.height * 1.25) { parts.splice(i, 1); continue; }
-      ctx.globalAlpha = Math.max(0, Math.min(1, p.life)) * p.a;
+      ctx.globalAlpha = Math.max(0, Math.min(1, p.life)) * p.a * edgeFade(p.x, p.y, r);
       ctx.drawImage(p.pale ? sprites.pale : sprites.dark, p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
     }
     ctx.globalAlpha = 1;

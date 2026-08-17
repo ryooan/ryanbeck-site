@@ -5,7 +5,10 @@
    reduced motion on) you just read the articles.
    ============================================================ */
 
-.tome-page{ background:#e9dac9; }
+/* clip, not hidden: hidden here would make the body a scroll container and
+   break the sticky topbar. This stops turned pages swinging off the left of a
+   phone from creating a horizontal scrollbar. */
+.tome-page{ background:#e9dac9; overflow-x:clip; }
 .tome-page main{ padding-bottom:clamp(40px,7vw,90px) }
 
 .tome-head{ text-align:center; padding:clamp(26px,5vw,54px) 0 clamp(10px,2vw,20px) }
@@ -15,19 +18,20 @@
 /* ---------- the stage ---------- */
 .tome{
   position:relative; margin:0 auto;
-  width:min(1060px, 94vw, calc((100svh - 340px) * 1.42));
+  width:min(900px, 88vw, calc((100svh - 350px) * 1.42));
   touch-action:pan-y;
 }
-.tome-viewport{ position:relative; width:100%; overflow:hidden; padding-bottom:4%; }
+.tome-viewport{ position:relative; width:100%; padding-bottom:5%; }
 .tome-stage{
   position:relative; width:100%; aspect-ratio:1.42/1; margin:0 auto;
 }
-.book::after{                     /* the shadow the book casts on the table */
-  content:""; position:absolute; left:calc(50% - 4%); right:2%; bottom:-3%; height:6%;
-  background:radial-gradient(60% 50% at 50% 50%, rgba(48,32,18,.45), transparent 72%);
-  filter:blur(9px); z-index:0; transition:left 1.05s cubic-bezier(.55,.06,.28,1);
+.book::after{                     /* the soft shadow it throws on the paper */
+  content:""; position:absolute; z-index:-2;
+  left:calc(50% - 5%); right:-3%; bottom:-6%; height:16%;
+  background:radial-gradient(58% 50% at 50% 34%, rgba(64,44,24,.34), transparent 70%);
+  filter:blur(16px); transition:left 1.05s cubic-bezier(.55,.06,.28,1);
 }
-.tome[data-open="1"] .book::after{ left:2% }
+.tome[data-open="1"] .book::after{ left:-3% }
 
 /* Perspective lives here, and the book itself stays FLAT. That is the whole
    trick: with transform-style:preserve-3d on the book, the five coplanar
@@ -38,7 +42,7 @@
   position:absolute; inset:0;
   perspective:2400px; perspective-origin:50% 45%;
   transform:translateX(var(--shift,-25%));
-  transition:transform 1.25s cubic-bezier(.55,.06,.28,1);
+  transition:transform 1.9s cubic-bezier(.55,.06,.28,1);
   will-change:transform;
 }
 .book.thump{ animation:tome-thump .5s cubic-bezier(.3,1.5,.5,1) }
@@ -54,37 +58,83 @@
   position:absolute; top:1.5%; height:97%; z-index:1; pointer-events:none;
   background:
     repeating-linear-gradient(to right,
-      #e7dbc4 0 1px, #cdbb9c 1px 2px, #f0e6d2 2px 3px, #d8c8ab 3px 4px);
-  box-shadow:0 2px 6px rgba(40,26,14,.4);
+      #ddceb2 0 1px, #bda98a 1px 2px, #e4d8bf 2px 3px, #c7b494 3px 4px);
+  box-shadow:0 2px 6px rgba(40,26,14,.45), inset 0 0 8px rgba(70,48,24,.35);
   transition:width 1.05s cubic-bezier(.55,.06,.28,1);
 }
-.edge.right{ left:calc(100% - 2px); width:calc(var(--right,1) * 2.6%); border-radius:0 3px 3px 0 }
-.edge.left { right:calc(100% - 2px); width:calc(var(--left,0) * 2.6%); border-radius:3px 0 0 3px }
+.edge.right{ left:calc(100% - 2px); width:calc(var(--right,1) * 2.2%); border-radius:0 2px 2px 0 }
+.edge.left { right:calc(100% - 2px); width:calc(var(--left,0) * 2.2%); border-radius:2px 0 0 2px }
 
+/* The boards: the leather sticks out past the paper on every side, which is
+   most of what makes this read as an object rather than an embed. */
 .back-cover{
-  position:absolute; left:50%; top:0; width:50%; height:100%; z-index:0;
+  position:absolute; z-index:0;
+  left:calc(50% - 1.1%); top:-1.5%; width:calc(50% + 2.2%); height:103%;
   background:#2a1713 url("../tome/leather.jpg") center/cover;
-  border-radius:2px 7px 7px 2px;
-  box-shadow:0 26px 50px -20px rgba(30,18,10,.75);
+  border-radius:3px 9px 9px 3px;
+  box-shadow:
+    0 1px 0 rgba(255,226,190,.10) inset,
+    0 18px 26px -18px rgba(30,18,10,.85),
+    0 44px 60px -30px rgba(40,26,14,.55);
+  transition:left 1.05s cubic-bezier(.55,.06,.28,1), width 1.05s cubic-bezier(.55,.06,.28,1);
 }
+.tome[data-open="1"] .back-cover{ left:-1.1%; width:calc(100% + 2.2%); border-radius:9px }
+
+/* contact shadow — a tight dark line where the book meets the paper */
+.book::before{
+  content:""; position:absolute; z-index:-1;
+  left:calc(50% + 1%); right:1%; bottom:-1.2%; height:3%;
+  background:linear-gradient(to bottom, rgba(46,30,16,.45), transparent);
+  filter:blur(4px);
+  transition:left 1.05s cubic-bezier(.55,.06,.28,1);
+}
+.tome[data-open="1"] .book::before{ left:1% }
 
 /* ---------- leaves ---------- */
 .leaf{
-  position:absolute; left:50%; top:0; width:50%; height:100%;
+  position:absolute; left:50%; top:.6%; width:50%; height:98.8%;
   transform-origin:left center; transform-style:preserve-3d;
   transform:rotateY(0deg);
-  transition:transform 1.25s cubic-bezier(.55,.06,.28,1);
   will-change:transform;
 }
 .leaf.flipped{ transform:rotateY(-180deg) }
 
+/* Keyframes rather than a transition, because an easing curve can't do what
+   this needs: move slowly through the angles where the sheet is actually
+   visible, hurry through edge-on where there's nothing to see, and still
+   start and land heavily. The sheet also lifts toward you mid-arc. */
+@keyframes leaf-fwd{
+  0%   { transform:translateZ(0)     rotateY(0deg) }
+  8%   { transform:translateZ(6px)   rotateY(-6deg) }
+  25%  { transform:translateZ(20px)  rotateY(-34deg) }
+  42%  { transform:translateZ(28px)  rotateY(-66deg) }
+  55%  { transform:translateZ(30px)  rotateY(-92deg) }
+  64%  { transform:translateZ(28px)  rotateY(-118deg) }
+  82%  { transform:translateZ(16px)  rotateY(-150deg) }
+  94%  { transform:translateZ(4px)   rotateY(-173deg) }
+  100% { transform:translateZ(0)     rotateY(-180deg) }
+}
+@keyframes leaf-back{
+  0%   { transform:translateZ(0)     rotateY(-180deg) }
+  8%   { transform:translateZ(6px)   rotateY(-174deg) }
+  25%  { transform:translateZ(20px)  rotateY(-146deg) }
+  42%  { transform:translateZ(28px)  rotateY(-114deg) }
+  55%  { transform:translateZ(30px)  rotateY(-88deg) }
+  64%  { transform:translateZ(28px)  rotateY(-62deg) }
+  82%  { transform:translateZ(16px)  rotateY(-30deg) }
+  94%  { transform:translateZ(4px)   rotateY(-7deg) }
+  100% { transform:translateZ(0)     rotateY(0deg) }
+}
+.leaf.turn-fwd { animation:leaf-fwd  1.9s linear forwards }
+.leaf.turn-back{ animation:leaf-back 1.9s linear forwards }
+
 .face{
   position:absolute; inset:0; backface-visibility:hidden; overflow:hidden;
   background:#efe4cd url("../tome/page.jpg") center/cover;
-  border-radius:2px 6px 6px 2px;
-  box-shadow:inset 0 0 34px rgba(112,84,44,.30);
+  border-radius:1px 5px 5px 1px;
+  box-shadow:inset 0 0 34px rgba(112,84,44,.30), 0 1px 3px rgba(60,40,18,.25);
 }
-.face.back{ transform:rotateY(180deg); border-radius:6px 2px 2px 6px }
+.face.back{ transform:rotateY(180deg); border-radius:1px 5px 5px 1px }
 
 /* the gutter shadow, so pages look bound rather than floating */
 .face::after{
@@ -101,6 +151,7 @@
   transition:opacity .28s ease;
 }
 .leaf.turning .sheen{ opacity:1 }
+.leaf.turning .face{ box-shadow:inset 0 0 34px rgba(112,84,44,.30), 0 14px 34px -10px rgba(50,32,14,.5) }
 
 /* ---------- page contents ---------- */
 .sheet{
@@ -184,7 +235,7 @@
 .tome[data-open="1"] .cover-dust{ opacity:0 }
 
 /* ---------- dust canvas ---------- */
-.dust{ position:absolute; inset:-6% -4%; width:108%; height:112%; pointer-events:none; z-index:40 }
+.dust{ position:absolute; inset:-16% -9%; width:118%; height:132%; pointer-events:none; z-index:40 }
 
 /* ---------- controls ---------- */
 .tome-controls{
@@ -227,6 +278,10 @@
   .sheet p{ max-width:none }
   .face, .face.back{ border-radius:2px 6px 6px 2px }
   .edge.left{ display:none }
+  /* the stage is two pages wide here, so it has to be clipped or a turned
+     page hanging off the left creates a horizontal scrollbar */
+  .tome-viewport{ overflow:hidden; padding-bottom:6% }
+  .dust{ inset:0; width:100%; height:100% }
 }
 
 /* ---------- no JS / reduced motion: just read it ----------
