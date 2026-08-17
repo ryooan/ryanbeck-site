@@ -33,6 +33,7 @@ public/               everything that gets served
                       #e9dac9 with only the doorways punched out, which is
                       why it blends into the page with no visible edge
   css/site.css        all styling, one file
+  wordmark.svg        RYAN BECK, drawn to match the carved door lintels
   js/portal.js        touch-device behaviour for the doors
   js/substack.js      pulls live posts from /api/substack
   js/nav.js           highlights the current nav item
@@ -43,7 +44,7 @@ public/               everything that gets served
   covers/              book covers + portrait <- swap these
   og.jpg               social card
 worker/index.js       /api/substack and /api/subscribe
-tools/                make-fire.py, check-links.mjs
+tools/                make-fire.py, make-wordmark.py, check-links.mjs
 wrangler.toml         Cloudflare config
 CLAUDE.md             architecture notes for Claude Code
 HOSTING.md            where to deploy it and why

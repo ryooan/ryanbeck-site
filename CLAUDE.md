@@ -25,7 +25,8 @@ public/            everything served to a browser
     scenes/                 what's behind each door + the fire ring textures
     cards/  covers/         placeholder art
 worker/index.js    /api/substack and /api/subscribe. Static files never reach it
-tools/             make-fire.py (regenerates the flames), check-links.mjs (CI)
+tools/             make-fire.py (flames), make-wordmark.py (the RYAN BECK
+                   lettering), check-links.mjs (CI)
 wrangler.toml      Cloudflare config
 ```
 

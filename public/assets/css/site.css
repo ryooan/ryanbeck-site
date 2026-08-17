@@ -48,8 +48,17 @@ body.hall-page{
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   padding:clamp(12px,3vw,32px) 0;
 }
+.hall-mark{
+  width:min(860px, 68vw, calc((100svh - 215px) * .95)); margin:0 auto clamp(4px,1.6vw,18px); padding:0;
+  font-size:0; line-height:0;
+}
+.hall-mark img{width:100%;height:auto}
+
 .hall{
-  position:relative; width:min(1240px,100%);
+  position:relative;
+  /* the third term keeps the wordmark + artwork inside one screen — the
+     artwork is 4:3, so height drives width once the viewport is short */
+  width:min(1240px, 100%, calc((100svh - 215px) * 1.334));
   aspect-ratio:1448/1086; margin:0 auto;
   isolation:isolate;
 }
@@ -173,13 +182,16 @@ body.hall-page{
 }
 .hall:hover .wizard-hint{opacity:.55}
 
-/* mobile fallback nav under the art */
+/* On phones the nav sits ON the artwork — down on the sand, where there's
+   nothing to cover — so it can never be pushed off the bottom of the screen. */
 .hall-nav{
-  display:none; gap:clamp(14px,4vw,28px); flex-wrap:wrap; justify-content:center;
-  margin-top:4px; font-family:var(--sans); font-size:.78rem; letter-spacing:.2em;
+  display:none; gap:clamp(12px,3.4vw,26px); flex-wrap:nowrap; justify-content:center;
+  font-family:var(--sans); font-size:clamp(.62rem,2.6vw,.78rem); letter-spacing:.18em;
   text-transform:uppercase;
+  position:absolute; left:50%; transform:translateX(-50%);
+  width:100vw; bottom:19%; z-index:5; padding:0 10px;
 }
-.hall-nav a{color:#6b5a45;text-decoration:none;padding:10px 2px;border-bottom:1px solid rgba(107,90,69,.3)}
+.hall-nav a{color:#5c4c3a;text-decoration:none;padding:9px 2px;white-space:nowrap;border-bottom:1px solid rgba(92,76,58,.35);text-shadow:0 1px 0 rgba(255,250,240,.55)}
 .hall-nav a:active{color:#241c14}
 @media (max-width:760px){ .hall-nav{display:flex} .wizard-hint{display:none} }
 
@@ -189,7 +201,7 @@ body.hall-page{
 @media (max-width:760px) and (orientation:portrait){
   body.hall-page{overflow-x:hidden}
   .hall{width:152%;margin-left:-26%}
-  .hall-nav{margin-top:-2vh}
+  .hall-mark{width:84vw}
 }
 
 /* ============================================================
@@ -201,12 +213,9 @@ body.hall-page{
   border-bottom:1px solid var(--rule);
 }
 .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:62px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;letter-spacing:.02em}
-.brand .glyph{
-  width:26px;height:26px;border-radius:50%;flex:none;
-  background:radial-gradient(circle at 35% 32%, #3a2c1e, #0e0b08 70%);
-  box-shadow:0 0 0 1px rgba(36,28,20,.25), inset 0 0 6px rgba(255,180,90,.5);
-}
+.brand{display:flex;align-items:center;text-decoration:none;flex:none}
+.brand img{width:clamp(124px,17vw,168px);height:auto;opacity:.92;transition:opacity .2s}
+.brand:hover img{opacity:1}
 .nav{display:flex;gap:clamp(12px,2.4vw,26px);font-family:var(--sans);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
 .nav a{text-decoration:none;color:var(--ink-soft);padding:6px 0;border-bottom:1px solid transparent;transition:.2s}
 .nav a:hover{color:var(--ink);border-color:var(--ink)}
