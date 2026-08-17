@@ -180,8 +180,12 @@ Two things learned wiring StPageFlip up:
 - It renders a **closed** book as a single page inside a full-width block, so
   anything drawn behind it (our leather boards) has to follow the *visible*
   half, or a closed book looks twice as wide as it is. `sizeBoards()` does it.
-- `usePortrait` handles phones by itself, but page type still has to be shrunk
-  to fit its sheet — `fitSheets()`.
+- `usePortrait` handles phones by itself, but page type still has to be sized
+  to fit — `fitSheets()`. It works from **geometry, not measurement**: pages
+  StPageFlip is not currently showing are `display:none` and measure as zero,
+  so measuring them silently does nothing and those pages overflow when they
+  appear. The base size comes from the block width; visible pages that still
+  overrun get nudged down after.
 
 ## The dust
 
@@ -204,12 +208,22 @@ emitters fire on flip events and have no idea where the page actually is.
 
 | kind | technique |
 |---|---|
-| `puffs` | sprite billboards — generated PNG clouds that grow, spin and fade |
-| `cloud` | the same particles drawn translucent and overlapping, then blurred so they fuse into one mass |
+| `puffs` | sprite billboards — small, numerous, growing and fading |
 | `mist` | a few thousand single pixels advected by a curl-noise flow field |
+| `both` | puffs for body with mist over it for grain — **what the site uses** |
+| `cloud` | translucent overlapping particles blurred into one mass |
 | `smoke` | SVG ellipses through `feTurbulence`, animated outward and discarded |
 
-Density is one number — `AMOUNT`, exposed as `BookDust.setAmount()`.
+Density is one number — `AMOUNT`, exposed as `BookDust.setAmount()`. The
+per-engine counts are **rebased**: `1.0×` is roughly where the lab slider sat
+at 2.2× in the first round, because that is where it was judged to look right.
+Puff sprites are deliberately small (3.5–17px); larger ones read as bubbles no
+matter how they are faded, which was the first version's problem.
+
+`both` shares one canvas between two engines, so it clears once and passes
+`skipClear` to each. `mist` draws with `fillRect` in two colour passes rather
+than `arc` per particle — at three thousand motes a frame that difference
+matters.
 
 Note on `cloud`: it accumulates with plain `source-over`. An earlier version
 used `lighter` plus a `contrast()` filter to fuse the blobs and the book caught

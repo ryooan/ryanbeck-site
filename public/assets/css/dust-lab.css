@@ -44,4 +44,8 @@
 .lab-controls .tome-progress{ min-width:7ch }
 
 /* page dressing, shared with the library book */
-.lab-cell .page .sheet{ font-size:clamp(.6rem,.85vw,.8rem); padding:clamp(12px,2.2vw,26px) }
+.lab-cell .page .sheet{ font-size:var(--sheet-fs, clamp(.6rem,.85vw,.8rem)); padding:clamp(12px,2.2vw,26px) }
+
+/* the combined one gets the hero slot under the pair */
+.lab-cell.wide{ grid-column:1/-1; max-width:min(560px,100%); margin:0 auto }
+@media (max-width:900px){ .lab-cell.wide{ max-width:100% } }

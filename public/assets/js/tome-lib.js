@@ -60,13 +60,20 @@
   /* same trick as the hand-built version: the content is fixed and the page
      size isn't, so shrink type until it fits */
   function fitSheets() {
-    root.querySelectorAll('.sheet').forEach(function (sheet) {
-      sheet.style.fontSize = '';
-      var base = parseFloat(getComputedStyle(sheet).fontSize);
-      var size = base, guard = 0;
-      while (sheet.scrollHeight > sheet.clientHeight + 1 && guard++ < 16 && size > base * 0.55) {
-        size *= 0.955;
-        sheet.style.fontSize = size.toFixed(2) + 'px';
+    var blk = bookEl.querySelector('.stf__block');
+    if (!blk) return;
+    var r = blk.getBoundingClientRect();
+    if (!r.width) return;
+    var pw = flip.getOrientation() === 'landscape' ? r.width / 2 : r.width;
+    // hidden pages measure as zero, so the base size comes from geometry
+    root.style.setProperty('--sheet-fs', (pw * 0.0385).toFixed(2) + 'px');
+    // then anything on screen that still overruns gets nudged down
+    root.querySelectorAll('.sheet').forEach(function (sh) {
+      if (!sh.clientHeight) return;
+      sh.style.fontSize = '';
+      var size = parseFloat(getComputedStyle(sh).fontSize), guard = 0;
+      while (sh.scrollHeight > sh.clientHeight + 1 && guard++ < 14) {
+        size *= 0.955; sh.style.fontSize = size.toFixed(2) + 'px';
       }
     });
   }

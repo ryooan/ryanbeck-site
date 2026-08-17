@@ -65,11 +65,20 @@
     }
 
     function fit() {
+      var blk = bookEl.querySelector('.stf__block');
+      if (!blk) return;
+      var r = blk.getBoundingClientRect();
+      if (!r.width) return;
+      var pw = flip.getOrientation() === 'landscape' ? r.width / 2 : r.width;
+      // hidden pages measure as zero, so the base size comes from geometry
+      cell.style.setProperty('--sheet-fs', (pw * 0.0385).toFixed(2) + 'px');
+      // then anything on screen that still overruns gets nudged down
       cell.querySelectorAll('.sheet').forEach(function (sh) {
+        if (!sh.clientHeight) return;
         sh.style.fontSize = '';
-        var base = parseFloat(getComputedStyle(sh).fontSize), size = base, guard = 0;
-        while (sh.scrollHeight > sh.clientHeight + 1 && guard++ < 18 && size > base * 0.5) {
-          size *= 0.95; sh.style.fontSize = size.toFixed(2) + 'px';
+        var size = parseFloat(getComputedStyle(sh).fontSize), guard = 0;
+        while (sh.scrollHeight > sh.clientHeight + 1 && guard++ < 14) {
+          size *= 0.955; sh.style.fontSize = size.toFixed(2) + 'px';
         }
       });
     }

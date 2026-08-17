@@ -75,24 +75,26 @@
     var ps = [];
     return {
       emit: function (f, power) {
-        var n = Math.round(rnd(2, 5) * power * AMOUNT);
+        // Fine and numerous rather than few and large — a handful of big
+        // sprites reads as bubbles no matter how you fade them.
+        var n = Math.round(rnd(9, 21) * power * AMOUNT);
         for (var i = 0; i < n; i++) {
           var y = f.top + Math.pow(Math.random(), 0.8) * f.h;
           ps.push({
-            x: f.x + rnd(-6, 6), y: y,
-            vx: f.v * rnd(0.25, 0.7) + rnd(-0.5, 0.5),
-            vy: rnd(-1.1, -0.15),
-            s: rnd(10, 44) * (0.7 + power * 0.5),
-            grow: rnd(1.004, 1.019),
-            rot: rnd(0, 6.28), spin: rnd(-0.01, 0.01),
-            life: 0, fade: rnd(0.006, 0.016),
-            peak: rnd(0.05, 0.14),
+            x: f.x + rnd(-7, 7), y: y,
+            vx: f.v * rnd(0.25, 0.75) + rnd(-0.6, 0.6),
+            vy: rnd(-1.2, -0.15),
+            s: rnd(3.5, 17) * (0.75 + power * 0.4),
+            grow: rnd(1.003, 1.013),
+            rot: rnd(0, 6.28), spin: rnd(-0.014, 0.014),
+            life: 0, fade: rnd(0.006, 0.017),
+            peak: rnd(0.06, 0.17),
             img: (Math.random() * sprites.length) | 0
           });
         }
       },
-      frame: function () {
-        ctx.clearRect(0, 0, W, H);
+      frame: function (t, skipClear) {
+        if (!skipClear) ctx.clearRect(0, 0, W, H);
         for (var i = ps.length - 1; i >= 0; i--) {
           var p = ps[i];
           p.x += p.vx; p.y += p.vy;
@@ -185,7 +187,7 @@
     var ps = [];
     return {
       emit: function (f, power) {
-        var n = Math.round(rnd(40, 90) * power * AMOUNT);
+        var n = Math.round(rnd(95, 200) * power * AMOUNT);
         for (var i = 0; i < n; i++) {
           var y = f.top + Math.random() * f.h;
           ps.push({
@@ -199,19 +201,39 @@
           });
         }
       },
-      frame: function (t) {
-        ctx.clearRect(0, 0, W, H);
-        for (var i = ps.length - 1; i >= 0; i--) {
-          var p = ps[i];
-          var c = curl(p.x * 0.018, p.y * 0.018, t * 0.00028);
-          p.vx += c[0] * 1.5; p.vy += c[1] * 1.5;
-          p.x += p.vx; p.y += p.vy;
-          p.vx *= 0.983; p.vy = p.vy * 0.983 + 0.007;
-          p.life -= p.decay;
-          if (p.life <= 0) { ps.splice(i, 1); continue; }
-          ctx.globalAlpha = p.life * p.a * edgeFade(p.x, p.y, W, H);
-          ctx.fillStyle = p.pale ? '#fff6e0' : '#6f5a3e';
-          ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, 6.283); ctx.fill();
+      frame: function (t, skipClear) {
+        if (!skipClear) ctx.clearRect(0, 0, W, H);
+        // Thousands of motes a frame, so: fillRect rather than arc (an arc
+        // is an order of magnitude more expensive at this size), and two
+        // passes so fillStyle is set twice instead of thousands of times.
+        for (var pass = 0; pass < 2; pass++) {
+          ctx.fillStyle = pass ? '#fff6e0' : '#6f5a3e';
+          for (var i = ps.length - 1; i >= 0; i--) {
+            var p = ps[i];
+            if (!!p.pale !== !!pass) continue;
+            if (pass === 0) {
+              var c = curl(p.x * 0.018, p.y * 0.018, t * 0.00028);
+              p.vx += c[0] * 1.5; p.vy += c[1] * 1.5;
+              p.x += p.vx; p.y += p.vy;
+              p.vx *= 0.983; p.vy = p.vy * 0.983 + 0.007;
+              p.life -= p.decay;
+            }
+            if (p.life <= 0) continue;
+            ctx.globalAlpha = p.life * p.a * edgeFade(p.x, p.y, W, H);
+            ctx.fillRect(p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
+          }
+        }
+        // pale motes move in their own pass, then everything dead is culled
+        for (var j = ps.length - 1; j >= 0; j--) {
+          var q = ps[j];
+          if (q.pale) {
+            var c2 = curl(q.x * 0.018, q.y * 0.018, t * 0.00028);
+            q.vx += c2[0] * 1.5; q.vy += c2[1] * 1.5;
+            q.x += q.vx; q.y += q.vy;
+            q.vx *= 0.983; q.vy = q.vy * 0.983 + 0.007;
+            q.life -= q.decay;
+          }
+          if (q.life <= 0) ps.splice(j, 1);
         }
         ctx.globalAlpha = 1;
         return ps.length;
@@ -276,11 +298,29 @@
   }
 
 
+  /* =====================================================================
+     STRATEGY 5 — BOTH
+     Puffs for body, mist on top for grain. They share one canvas, so the
+     wrapper clears it once and tells each engine not to.
+     ===================================================================== */
+  function both(ctx, W, H) {
+    var a = puffs(ctx, W, H), b = mist(ctx, W, H);
+    return {
+      emit: function (f, power) { a.emit(f, power * 0.8); b.emit(f, power * 0.65); },
+      frame: function (t) {
+        ctx.clearRect(0, 0, W, H);
+        return a.frame(t, true) + b.frame(t, true);
+      },
+      clear: function () { a.clear(); b.clear(); }
+    };
+  }
+
   var STRATEGIES = {
     puffs: { label: 'Puffs', make: puffs, kind: 'canvas' },
     cloud: { label: 'Cloud', make: cloud, kind: 'canvas' },
     mist:  { label: 'Mist',  make: mist,  kind: 'canvas' },
-    smoke: { label: 'Smoke', make: smoke, kind: 'svg'  }
+    smoke: { label: 'Smoke', make: smoke, kind: 'svg'  },
+    both:  { label: 'Both',  make: both,  kind: 'canvas' }
   };
 
   function attach(bookEl, host, flip, opts) {
