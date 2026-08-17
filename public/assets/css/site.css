@@ -183,13 +183,15 @@ body.hall-page{
 .hall:hover .wizard-hint{opacity:.55}
 
 /* On phones the nav sits ON the artwork — down on the sand, where there's
-   nothing to cover — so it can never be pushed off the bottom of the screen. */
+   nothing to cover — so it can never be pushed off the bottom of the screen.
+   The drawing's rocks run out at about 78% of the frame, so the nav starts
+   just below that and clears the wizard entirely. */
 .hall-nav{
   display:none; gap:clamp(12px,3.4vw,26px); flex-wrap:nowrap; justify-content:center;
   font-family:var(--sans); font-size:clamp(.62rem,2.6vw,.78rem); letter-spacing:.18em;
   text-transform:uppercase;
   position:absolute; left:50%; transform:translateX(-50%);
-  width:100vw; bottom:19%; z-index:5; padding:0 10px;
+  width:100vw; bottom:13%; z-index:5; padding:0 10px;
 }
 .hall-nav a{color:#5c4c3a;text-decoration:none;padding:9px 2px;white-space:nowrap;border-bottom:1px solid rgba(92,76,58,.35);text-shadow:0 1px 0 rgba(255,250,240,.55)}
 .hall-nav a:active{color:#241c14}
