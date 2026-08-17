@@ -1,0 +1,325 @@
+/* ============================================================
+   Ryan Beck — shared styles
+   ============================================================ */
+:root{
+  --ink:#241c14;
+  --ink-soft:#4a3d30;
+  --ink-faint:#7a6a58;
+  --parchment:#f4ead9;
+  --parchment-2:#eadcc6;
+  --parchment-edge:#d9c7ab;
+  --void:#0a0908;
+  --ember:#c8722a;
+  --ember-hot:#f2a44c;
+  --gold:#c9a227;
+  --rule:rgba(36,28,20,.16);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Times New Roman",serif;
+  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  --maxw:1120px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; font-family:var(--serif); color:var(--ink);
+  background:var(--parchment);
+  line-height:1.6; font-size:clamp(16px,1.05vw + 13px,18.5px);
+  text-rendering:optimizeLegibility;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+
+/* ---------- display type ---------- */
+.runic{font-family:var(--serif);text-transform:uppercase;letter-spacing:.34em;font-size:.72rem;color:var(--ink-faint)}
+h1,h2,h3{line-height:1.15;font-weight:600;margin:0 0 .5em}
+h1{font-size:clamp(2.1rem,4.6vw,3.5rem);letter-spacing:-.015em}
+h2{font-size:clamp(1.5rem,2.6vw,2.1rem)}
+h3{font-size:1.15rem}
+.lede{font-size:clamp(1.05rem,1.5vw,1.28rem);color:var(--ink-soft);max-width:62ch}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--rule)12%,var(--rule) 88%,transparent);border:0;margin:clamp(38px,6vw,72px) 0}
+
+/* ============================================================
+   THE HALL (landing page)
+   ============================================================ */
+body.hall-page{
+  background:
+    radial-gradient(120% 90% at 50% 42%, #171310 0%, #0c0a09 55%, #060505 100%);
+  color:#e8ddca; min-height:100svh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:clamp(12px,3vw,32px) 0;
+}
+.hall{
+  position:relative; width:min(1240px,100%);
+  aspect-ratio:1448/1086; margin:0 auto;
+  isolation:isolate;
+}
+.hall-art, .hall picture{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:contain; pointer-events:none; z-index:3;
+  filter:drop-shadow(0 24px 60px rgba(0,0,0,.65));
+}
+.hall-defs{position:absolute;width:0;height:0;overflow:hidden}
+
+/* --- a doorway --- */
+.portal{
+  position:absolute; z-index:2; display:block; text-decoration:none;
+  left:var(--l); top:var(--t); width:var(--w); height:var(--h);
+  clip-path:var(--clip);
+  overflow:hidden; background:#050403;
+  -webkit-tap-highlight-color:transparent; cursor:pointer;
+}
+.portal > *{position:absolute;inset:0;display:block;pointer-events:none}
+
+/* the world beyond the door */
+.portal .scene{
+  inset:-11%;
+  background-size:cover; background-position:center 46%;
+  transform:scale(1);
+  filter:brightness(.07) saturate(.22) contrast(1.2) blur(2.4px);
+  transition:transform 1.35s cubic-bezier(.19,.75,.2,1), filter .9s ease;
+  will-change:transform,filter;
+}
+/* the darkness that sits over it */
+.portal .veil{
+  background:radial-gradient(125% 100% at 50% 46%, rgba(4,3,2,.86) 0%, rgba(2,2,1,.98) 52%, #000 100%);
+  transition:opacity .85s ease;
+}
+/* an ember that never quite goes out */
+.portal .ember{
+  background:radial-gradient(58% 42% at 50% 74%, rgba(210,118,40,.5), transparent 72%);
+  mix-blend-mode:screen; opacity:.18;
+  animation:ember-breathe 7.5s ease-in-out infinite;
+  transition:opacity .6s ease;
+}
+/* the ring of fire, licking the inside of the doorframe */
+.portal .swirl{
+  transform:translateY(-50%) scaleY(1.14);
+  inset:auto; left:-32%; top:50%; width:164%; height:auto; aspect-ratio:1;
+  background:image-set(url("../scenes/fire-a.webp") type("image/webp"), url("../scenes/fire-a.png") type("image/png")) center/100% 100% no-repeat;
+  mix-blend-mode:screen; opacity:0;
+  filter:saturate(1.15) contrast(1.05);
+  animation:fire-spin 24s linear infinite;
+  transition:opacity .75s ease;
+}
+.portal .swirl.b{
+  left:-42%; width:184%;
+  background-image:image-set(url("../scenes/fire-b.webp") type("image/webp"), url("../scenes/fire-b.png") type("image/png"));
+  filter:blur(6px) saturate(1.2);
+  animation:fire-spin-r 15s linear infinite;
+}
+
+/* inner frame that opens up as the scene pushes out — the vertigo pull */
+.portal .rim{
+  box-shadow:inset 0 0 20px 12px rgba(0,0,0,.95), inset 0 0 56px 26px rgba(0,0,0,.7);
+  transform:scale(1.16);
+  transition:transform 1.35s cubic-bezier(.19,.75,.2,1), box-shadow .9s ease;
+}
+
+/* ---- awake ---- */
+.portal:is(:hover,:focus-visible,.is-awake) .scene{
+  transform:scale(1.17);
+  filter:brightness(1.02) saturate(1) contrast(1) blur(0);
+  animation:portal-drift 13s ease-in-out 1.35s infinite alternate;
+}
+.portal:is(:hover,:focus-visible,.is-awake) .veil{opacity:.10}
+.portal:is(:hover,:focus-visible,.is-awake) .ember{opacity:0}
+.portal:is(:hover,:focus-visible,.is-awake) .swirl{opacity:.92;animation:fire-spin 24s linear infinite, flare 6s ease-in-out infinite}
+.portal:is(:hover,:focus-visible,.is-awake) .swirl.b{opacity:.55;animation:fire-spin-r 15s linear infinite, flare-b 4.4s ease-in-out infinite}
+.portal:is(:hover,:focus-visible,.is-awake) .rim{
+  transform:scale(1);
+  box-shadow:inset 0 0 14px 4px rgba(0,0,0,.55), inset 0 0 52px 14px rgba(120,44,0,.4);
+}
+.portal:focus-visible{outline:2px solid rgba(255,200,120,.9);outline-offset:3px}
+
+@keyframes fire-spin{from{transform:translateY(-50%) scaleY(1.14) rotate(0deg)}to{transform:translateY(-50%) scaleY(1.14) rotate(360deg)}}
+@keyframes fire-spin-r{from{transform:translateY(-50%) scaleY(1.14) rotate(360deg)}to{transform:translateY(-50%) scaleY(1.14) rotate(0deg)}}
+@keyframes flare{0%,100%{opacity:.82}50%{opacity:1}}
+@keyframes flare-b{0%,100%{opacity:.4}50%{opacity:.72}}
+@keyframes portal-drift{
+  from{transform:scale(1.17) translate3d(0,0,0)}
+  to{transform:scale(1.30) translate3d(0,-2%,0)}
+}
+@keyframes ember-breathe{0%,100%{opacity:.08}50%{opacity:.22}}
+
+/* --- the wizard --- */
+.wizard{
+  position:absolute; z-index:4; display:block;
+  left:28.5%; top:46%; width:16%; height:25%;
+  clip-path:url(#clip-wizard);
+  background-image:image-set(url("../portal-hall.webp") type("image/webp"), url("../portal-hall.png") type("image/png"));
+  background-size:625% 400%;
+  background-position:33.93% 61.33%;
+  background-repeat:no-repeat;
+  filter:none; transition:filter .55s ease, transform .55s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.wizard::after{
+  content:""; position:absolute; inset:0;
+  background:radial-gradient(60% 50% at 48% 40%, rgba(255,196,102,.55), transparent 72%);
+  opacity:0; transition:opacity .55s ease; mix-blend-mode:screen;
+}
+.wizard:is(:hover,:focus-visible){
+  filter:drop-shadow(0 0 14px rgba(255,190,110,.85)) drop-shadow(0 0 34px rgba(255,150,60,.45)) brightness(1.06);
+  transform:translateY(-.4%);
+}
+.wizard:is(:hover,:focus-visible)::after{opacity:1}
+.wizard:focus-visible{outline:2px solid rgba(255,200,120,.9);outline-offset:4px}
+
+/* wizard hint label */
+.wizard-hint{
+  position:absolute; z-index:4; left:28.5%; top:72.5%; width:16%;
+  text-align:center; font-family:var(--sans); font-size:clamp(9px,.8vw,12px);
+  letter-spacing:.22em; text-transform:uppercase; color:#c9b48d;
+  opacity:.0; transition:opacity .5s ease; pointer-events:none;
+}
+.hall:hover .wizard-hint{opacity:.55}
+
+/* mobile fallback nav under the art */
+.hall-nav{
+  display:none; gap:clamp(14px,4vw,28px); flex-wrap:wrap; justify-content:center;
+  margin-top:4px; font-family:var(--sans); font-size:.78rem; letter-spacing:.2em;
+  text-transform:uppercase;
+}
+.hall-nav a{color:#b9a684;text-decoration:none;padding:10px 2px;border-bottom:1px solid rgba(185,166,132,.25)}
+.hall-nav a:active{color:#f0d9ac}
+@media (max-width:760px){ .hall-nav{display:flex} .wizard-hint{display:none} }
+
+/* ============================================================
+   INTERIOR PAGES
+   ============================================================ */
+.topbar{
+  position:sticky; top:0; z-index:50;
+  background:rgba(244,234,217,.86); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule);
+}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:62px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;letter-spacing:.02em}
+.brand .glyph{
+  width:26px;height:26px;border-radius:50%;flex:none;
+  background:radial-gradient(circle at 35% 32%, #3a2c1e, #0e0b08 70%);
+  box-shadow:0 0 0 1px rgba(36,28,20,.25), inset 0 0 6px rgba(255,180,90,.5);
+}
+.nav{display:flex;gap:clamp(12px,2.4vw,26px);font-family:var(--sans);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
+.nav a{text-decoration:none;color:var(--ink-soft);padding:6px 0;border-bottom:1px solid transparent;transition:.2s}
+.nav a:hover{color:var(--ink);border-color:var(--ink)}
+.nav a[aria-current="page"]{color:var(--ink);border-color:var(--ember)}
+
+.page-head{padding:clamp(46px,8vw,96px) 0 clamp(26px,4vw,44px)}
+.page-head .runic{display:block;margin-bottom:14px}
+main{padding-bottom:clamp(60px,10vw,120px)}
+
+.site-foot{
+  border-top:1px solid var(--rule); padding:34px 0 60px;
+  font-size:.86rem; color:var(--ink-faint);
+}
+.site-foot .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+.site-foot a{color:var(--ink-soft)}
+
+/* ---------- cards ---------- */
+.card-grid{
+  display:grid; gap:clamp(18px,2.4vw,30px);
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));
+}
+.card{
+  position:relative; display:flex; flex-direction:column; overflow:hidden;
+  background:var(--parchment-2); border:1px solid var(--parchment-edge);
+  border-radius:3px; text-decoration:none; color:inherit;
+  transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .35s;
+  box-shadow:0 1px 2px rgba(36,28,20,.06);
+}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 36px -18px rgba(36,28,20,.55);border-color:#c3ab88}
+.card .thumb{aspect-ratio:16/10;overflow:hidden;background:#171310}
+.card .thumb img{width:100%;height:100%!important;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1);filter:saturate(.92)}
+.card:hover .thumb img{transform:scale(1.07)}
+.card .body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:12px}
+.tag{
+  font-family:var(--sans);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 8px;border:1px solid var(--rule);border-radius:99px;color:var(--ink-faint);
+}
+.card h3{margin:0}
+.card p{margin:0;color:var(--ink-soft);font-size:.95rem}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--sans);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:12px 22px;border-radius:2px;text-decoration:none;
+  background:var(--ink);color:var(--parchment);border:1px solid var(--ink);
+  transition:.22s;
+}
+.btn:hover{background:transparent;color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--parchment)}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+
+/* ---------- book / writing ---------- */
+.book{
+  display:grid; gap:clamp(24px,4vw,56px);
+  grid-template-columns:minmax(0,320px) minmax(0,1fr);
+  align-items:start;
+}
+@media (max-width:720px){.book{grid-template-columns:1fr}}
+.book .cover{
+  border-radius:2px; overflow:hidden;
+  box-shadow:0 24px 50px -22px rgba(36,28,20,.7), 0 2px 0 rgba(255,255,255,.35) inset;
+  transform:perspective(1200px) rotateY(-6deg); transition:transform .6s cubic-bezier(.2,.7,.2,1);
+}
+.book .cover:hover{transform:perspective(1200px) rotateY(0deg) translateY(-4px)}
+.book .meta{font-family:var(--sans);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint)}
+blockquote.pull{
+  margin:clamp(30px,5vw,56px) 0; padding:0 0 0 clamp(18px,3vw,30px);
+  border-left:2px solid var(--ember); font-size:clamp(1.15rem,2vw,1.5rem);
+  font-style:italic; color:var(--ink-soft); max-width:34ch;
+}
+.signup{
+  background:linear-gradient(180deg,#efe3cd,#e7d8bd);
+  border:1px solid var(--parchment-edge); border-radius:3px;
+  padding:clamp(24px,4vw,42px);
+}
+.signup form{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.signup input[type=email]{
+  flex:1 1 240px;min-width:0;padding:12px 14px;font:inherit;font-size:.95rem;
+  border:1px solid var(--parchment-edge);background:#fbf5ea;border-radius:2px;color:var(--ink);
+}
+.signup input[type=email]:focus{outline:2px solid var(--ember);outline-offset:1px}
+
+/* ---------- post list ---------- */
+.posts{list-style:none;margin:0;padding:0}
+.posts li{border-bottom:1px solid var(--rule)}
+.posts a{
+  display:grid;grid-template-columns:1fr auto;gap:6px 24px;align-items:baseline;
+  padding:20px 0;text-decoration:none;transition:.25s;
+}
+.posts a:hover{padding-left:10px}
+.posts .t{font-size:1.12rem;font-weight:600}
+.posts .d{font-family:var(--sans);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);white-space:nowrap}
+.posts .x{grid-column:1/-1;color:var(--ink-soft);font-size:.95rem;margin:0}
+.source-pill{
+  display:inline-block;font-family:var(--sans);font-size:.62rem;letter-spacing:.14em;
+  text-transform:uppercase;padding:2px 7px;border-radius:99px;margin-right:9px;vertical-align:2px;
+  border:1px solid var(--rule);color:var(--ink-faint);
+}
+.source-pill.substack{border-color:#d98b4a;color:#a5561c}
+
+/* ---------- about ---------- */
+.about-grid{display:grid;gap:clamp(28px,5vw,60px);grid-template-columns:minmax(0,260px) minmax(0,1fr);align-items:start}
+@media (max-width:720px){.about-grid{grid-template-columns:1fr}}
+/* portrait keeps its own ratio */
+.portrait{border-radius:3px;overflow:hidden;border:1px solid var(--parchment-edge);box-shadow:0 18px 40px -22px rgba(36,28,20,.6)}
+.facts{list-style:none;margin:22px 0 0;padding:0;font-size:.92rem}
+.facts li{display:flex;gap:10px;padding:7px 0;border-bottom:1px dotted var(--rule)}
+.facts b{font-family:var(--sans);font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);min-width:78px;padding-top:3px}
+.prose p{max-width:68ch}
+.timeline{list-style:none;margin:0;padding:0;border-left:1px solid var(--rule)}
+.timeline li{position:relative;padding:0 0 26px 26px}
+.timeline li::before{content:"";position:absolute;left:-4.5px;top:9px;width:8px;height:8px;border-radius:50%;background:var(--ember)}
+.timeline .yr{font-family:var(--sans);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+
+/* ---------- motion & contrast prefs ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.12s!important}
+  .portal .scene{transform:scale(1.02)!important}
+  .portal:is(:hover,:focus-visible,.is-awake) .scene{transform:scale(1.08)!important}
+}

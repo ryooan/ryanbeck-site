@@ -1,0 +1,24 @@
+name = "ryanbeck-site"
+main = "worker/index.js"
+compatibility_date = "2026-08-01"
+
+# Static files are served straight from the edge and cost nothing —
+# they never touch the Worker unless no file matches the path.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+not_found_handling = "404-page"
+
+[observability]
+enabled = true
+
+# Uncomment once the domain is pointed at Cloudflare:
+# [[routes]]
+# pattern = "ryanbeck.com"
+# custom_domain = true
+
+# A Postgres connection (Neon) for the first project that needs one.
+# Create it with:  npx wrangler hyperdrive create ryanbeck-db --connection-string="postgres://..."
+# [[hyperdrive]]
+# binding = "DB"
+# id = "<hyperdrive-id>"
