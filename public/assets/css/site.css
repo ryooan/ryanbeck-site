@@ -43,9 +43,8 @@ h3{font-size:1.15rem}
    THE HALL (landing page)
    ============================================================ */
 body.hall-page{
-  background:
-    radial-gradient(120% 90% at 50% 42%, #171310 0%, #0c0a09 55%, #060505 100%);
-  color:#e8ddca; min-height:100svh;
+  background:#e9dac9;              /* sampled from the artwork's own paper */
+  color:#4a3d30; min-height:100svh;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   padding:clamp(12px,3vw,32px) 0;
 }
@@ -57,7 +56,6 @@ body.hall-page{
 .hall-art, .hall picture{
   position:absolute; inset:0; width:100%; height:100%;
   object-fit:contain; pointer-events:none; z-index:3;
-  filter:drop-shadow(0 24px 60px rgba(0,0,0,.65));
 }
 .hall-defs{position:absolute;width:0;height:0;overflow:hidden}
 
@@ -95,7 +93,7 @@ body.hall-page{
 /* the ring of fire, licking the inside of the doorframe */
 .portal .swirl{
   transform:translateY(-50%) scaleY(1.14);
-  inset:auto; left:-32%; top:50%; width:164%; height:auto; aspect-ratio:1;
+  inset:auto; left:-35%; top:50%; width:170%; height:auto; aspect-ratio:1;
   background:image-set(url("../scenes/fire-a.webp") type("image/webp"), url("../scenes/fire-a.png") type("image/png")) center/100% 100% no-repeat;
   mix-blend-mode:screen; opacity:0;
   filter:saturate(1.15) contrast(1.05);
@@ -103,7 +101,7 @@ body.hall-page{
   transition:opacity .75s ease;
 }
 .portal .swirl.b{
-  left:-42%; width:184%;
+  left:-48%; width:196%;
   background-image:image-set(url("../scenes/fire-b.webp") type("image/webp"), url("../scenes/fire-b.png") type("image/png"));
   filter:blur(6px) saturate(1.2);
   animation:fire-spin-r 15s linear infinite;
@@ -118,17 +116,17 @@ body.hall-page{
 
 /* ---- awake ---- */
 .portal:is(:hover,:focus-visible,.is-awake) .scene{
-  transform:scale(1.17);
-  filter:brightness(1.02) saturate(1) contrast(1) blur(0);
+  transform:scale(1.46);
+  filter:brightness(1.22) saturate(1.06) contrast(1.02) blur(0);
   animation:portal-drift 13s ease-in-out 1.35s infinite alternate;
 }
-.portal:is(:hover,:focus-visible,.is-awake) .veil{opacity:.10}
+.portal:is(:hover,:focus-visible,.is-awake) .veil{opacity:.02}
 .portal:is(:hover,:focus-visible,.is-awake) .ember{opacity:0}
 .portal:is(:hover,:focus-visible,.is-awake) .swirl{opacity:.92;animation:fire-spin 24s linear infinite, flare 6s ease-in-out infinite}
 .portal:is(:hover,:focus-visible,.is-awake) .swirl.b{opacity:.55;animation:fire-spin-r 15s linear infinite, flare-b 4.4s ease-in-out infinite}
 .portal:is(:hover,:focus-visible,.is-awake) .rim{
   transform:scale(1);
-  box-shadow:inset 0 0 14px 4px rgba(0,0,0,.55), inset 0 0 52px 14px rgba(120,44,0,.4);
+  box-shadow:inset 0 0 10px 2px rgba(0,0,0,.35), inset 0 0 44px 10px rgba(120,44,0,.28);
 }
 .portal:focus-visible{outline:2px solid rgba(255,200,120,.9);outline-offset:3px}
 
@@ -137,8 +135,8 @@ body.hall-page{
 @keyframes flare{0%,100%{opacity:.82}50%{opacity:1}}
 @keyframes flare-b{0%,100%{opacity:.4}50%{opacity:.72}}
 @keyframes portal-drift{
-  from{transform:scale(1.17) translate3d(0,0,0)}
-  to{transform:scale(1.30) translate3d(0,-2%,0)}
+  from{transform:scale(1.46) translate3d(0,0,0)}
+  to{transform:scale(1.62) translate3d(0,-2.4%,0)}
 }
 @keyframes ember-breathe{0%,100%{opacity:.08}50%{opacity:.22}}
 
@@ -170,7 +168,7 @@ body.hall-page{
 .wizard-hint{
   position:absolute; z-index:4; left:28.5%; top:72.5%; width:16%;
   text-align:center; font-family:var(--sans); font-size:clamp(9px,.8vw,12px);
-  letter-spacing:.22em; text-transform:uppercase; color:#c9b48d;
+  letter-spacing:.22em; text-transform:uppercase; color:#8a7862;
   opacity:.0; transition:opacity .5s ease; pointer-events:none;
 }
 .hall:hover .wizard-hint{opacity:.55}
@@ -181,9 +179,18 @@ body.hall-page{
   margin-top:4px; font-family:var(--sans); font-size:.78rem; letter-spacing:.2em;
   text-transform:uppercase;
 }
-.hall-nav a{color:#b9a684;text-decoration:none;padding:10px 2px;border-bottom:1px solid rgba(185,166,132,.25)}
-.hall-nav a:active{color:#f0d9ac}
+.hall-nav a{color:#6b5a45;text-decoration:none;padding:10px 2px;border-bottom:1px solid rgba(107,90,69,.3)}
+.hall-nav a:active{color:#241c14}
 @media (max-width:760px){ .hall-nav{display:flex} .wizard-hint{display:none} }
+
+/* On a portrait phone the artwork is landscape, so it leaves a lot of empty
+   page. Scale it past the viewport and let the faded edges crop — the page is
+   the same colour as the paper, so there's nothing to see out there anyway. */
+@media (max-width:760px) and (orientation:portrait){
+  body.hall-page{overflow-x:hidden}
+  .hall{width:152%;margin-left:-26%}
+  .hall-nav{margin-top:-2vh}
+}
 
 /* ============================================================
    INTERIOR PAGES

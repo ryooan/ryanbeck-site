@@ -29,7 +29,9 @@ public/               everything that gets served
   robots.txt  sitemap.xml  site.webmanifest  favicon.ico
 
   assets/
-  portal-hall.webp    the drawing (webp) + .png fallback
+  portal-hall.webp    the drawing (webp) + .png fallback. Flattened onto
+                      #e9dac9 with only the doorways punched out, which is
+                      why it blends into the page with no visible edge
   css/site.css        all styling, one file
   js/portal.js        touch-device behaviour for the doors
   js/substack.js      pulls live posts from /api/substack

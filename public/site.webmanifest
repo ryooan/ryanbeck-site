@@ -5,8 +5,8 @@
     { "src": "/assets/icon-180.png", "sizes": "180x180", "type": "image/png" },
     { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ],
-  "theme_color": "#0a0908",
-  "background_color": "#0a0908",
+  "theme_color": "#e9dac9",
+  "background_color": "#e9dac9",
   "display": "standalone",
   "start_url": "/"
 }

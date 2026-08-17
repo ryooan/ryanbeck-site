@@ -44,7 +44,14 @@ degrades gracefully when `/api/substack` 404s.
 
 This is the part that will bite you if you change it carelessly.
 
-`portal-hall.png` is a drawing whose **three doorways are fully transparent**.
+`portal-hall.png` is a drawing whose **three doorways are fully transparent**. The
+rest of it has been flattened onto `#e9dac9` — the paper colour sampled from the
+original's own fade zone — and `body.hall-page` uses that exact value, so the
+vignette dissolves into the page with no visible edge. **If you re-export the
+artwork, flatten it onto that same colour and punch out only the doorways**, or
+the seam comes back. `tools/` has no script for this; the recipe is: flood-fill
+from the border to find the outside, treat the remaining transparent regions as
+the doorways, composite everything else over `#e9dac9`.
 The three portals are `<a>` elements sitting *behind* the artwork (`z-index: 2`
 vs the image's `3`, and the image is `pointer-events: none`). Each is clipped
 to the exact traced outline of its doorway:
@@ -84,9 +91,12 @@ Six stacked spans inside each portal, back to front: `.scene`, `.veil`, `.rim`,
 `.ember`, `.swirl.b`, `.swirl`. Order matters — `.rim` is a dark inset shadow
 and must sit *under* the flames or it mudddies them.
 
-- `.scene` goes from `scale(1)` + `brightness(.07)` to `scale(1.17)` + full
-  brightness, then keeps drifting to `1.30` on a 13s alternating loop. It's a
-  continuous dolly, not a one-shot zoom — that's what Ryan asked for.
+- `.scene` goes from `scale(1)` + `brightness(.07)` to `scale(1.46)` +
+  `brightness(1.22)`, then keeps drifting to `1.62` on a 13s alternating loop.
+  It's a continuous dolly, not a one-shot zoom — that's what Ryan asked for.
+  The scene art itself is pre-brightened with a soft-knee highlight rolloff so
+  it doesn't bloom at that exposure; if you swap in new art and it looks blown
+  out, that's why.
 - `.rim`'s inset shadow *opens outward* as the scene pushes in. That opposition
   is what reads as vertigo. Don't "simplify" it away.
 - `.swirl` / `.swirl.b` are two rotating ring-of-fire PNGs (24s forward, 15s
@@ -96,7 +106,9 @@ and must sit *under* the flames or it mudddies them.
   wobbles.
 
 Sizing rule: the flame texture's hole is 60% of its width, so the element width
-that makes the ring hug the frame is roughly `door_width / 0.60` ≈ 164%. Change
+that makes the ring hug the frame is roughly `door_width / 0.60` ≈ 170%. Larger
+shows more picture but pushes the flames outside the frame where they get
+clipped into two orange smudges; smaller closes the ring in over the art. Change
 `inner=` in `tools/make-fire.py` and you have to change that percentage too.
 
 ### Touch devices
