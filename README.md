@@ -22,7 +22,8 @@ public/               everything that gets served
   projects.html       card grid
   writing.html        fiction / author page
   blog.html           Substack feed + older archive
-  about.html          about page (template copy — rewrite it)
+  about.html          the tome — a dusty book you click through
+  about-plain.html    the same content as an ordinary page
   404.html
   _headers            caching + security headers
   _redirects          old ryanbeckauthor.com paths, extensionless URLs
@@ -44,7 +45,8 @@ public/               everything that gets served
   covers/              book covers + portrait <- swap these
   og.jpg               social card
 worker/index.js       /api/substack and /api/subscribe
-tools/                make-fire.py, make-wordmark.py, check-links.mjs
+tools/                make-fire.py, make-wordmark.py,
+                      make-tome-textures.py, check-links.mjs
 wrangler.toml         Cloudflare config
 CLAUDE.md             architecture notes for Claude Code
 HOSTING.md            where to deploy it and why
@@ -121,6 +123,16 @@ has a ~10 line serverless handler in its header comment — drop it in when you
 deploy somewhere that runs functions.
 
 Until then the page shows the static list, which is a fine place to start.
+
+## The tome
+
+The about page is an experiment: the content as a book you click through, with
+a dust puff on every turn. Pages are authored as plain `<article>` elements in
+`about.html` — the book is assembled from them at runtime, so with JS off or
+reduced motion on, you just read the articles. `about-plain.html` is the
+earlier straightforward version if you'd rather ship that.
+
+See CLAUDE.md for how the page turn is built and the one CSS trap in it.
 
 ## Things left as placeholders
 

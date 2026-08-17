@@ -14,19 +14,25 @@ is ~15 KB of CSS and ~4 KB of JS; the constraint is doing real work.
 ```
 public/            everything served to a browser
   index.html       the hall — the landing page, and the interesting one
-  projects.html  writing.html  blog.html  about.html  404.html
+  projects.html  writing.html  blog.html  404.html
+  about.html       the tome — a book you click through
+  about-plain.html the same content as an ordinary page
   _headers  _redirects  robots.txt  sitemap.xml  site.webmanifest
   assets/
     portal-hall.webp/.png   the drawing the whole site hangs off
     css/site.css            all styling
+    css/tome.css            the book
+    tome/                   leather, page stock, gilt wordmark
     js/portal.js            touch behaviour for the doors
+    js/tome.js              the book: page turns and dust
     js/substack.js          fetches /api/substack
     js/nav.js               marks the current nav item
     scenes/                 what's behind each door + the fire ring textures
     cards/  covers/         placeholder art
 worker/index.js    /api/substack and /api/subscribe. Static files never reach it
-tools/             make-fire.py (flames), make-wordmark.py (the RYAN BECK
-                   lettering), check-links.mjs (CI)
+tools/             make-fire.py (flames), make-wordmark.py (lettering),
+                   make-tome-textures.py (leather + page stock),
+                   check-links.mjs (CI)
 wrangler.toml      Cloudflare config
 ```
 

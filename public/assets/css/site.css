@@ -222,6 +222,11 @@ body.hall-page{
 .nav a{text-decoration:none;color:var(--ink-soft);padding:6px 0;border-bottom:1px solid transparent;transition:.2s}
 .nav a:hover{color:var(--ink);border-color:var(--ink)}
 .nav a[aria-current="page"]{color:var(--ink);border-color:var(--ember)}
+@media (max-width:640px){
+  .topbar .wrap{flex-wrap:wrap;gap:6px;padding-top:10px;padding-bottom:8px;min-height:0}
+  .brand img{width:116px}
+  .nav{width:100%;justify-content:space-between;gap:8px;font-size:.68rem;letter-spacing:.1em}
+}
 
 .page-head{padding:clamp(46px,8vw,96px) 0 clamp(26px,4vw,44px)}
 .page-head .runic{display:block;margin-bottom:14px}

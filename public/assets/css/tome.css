@@ -1,0 +1,265 @@
+/* ============================================================
+   The tome — about page
+   A five-leaf book. Pages are authored as plain <article>s and
+   the book is assembled from them at runtime, so with JS off (or
+   reduced motion on) you just read the articles.
+   ============================================================ */
+
+.tome-page{ background:#e9dac9; }
+.tome-page main{ padding-bottom:clamp(40px,7vw,90px) }
+
+.tome-head{ text-align:center; padding:clamp(26px,5vw,54px) 0 clamp(10px,2vw,20px) }
+.tome-head .runic{ display:block; margin-bottom:10px }
+.tome-head h1{ margin:0; font-size:clamp(1.6rem,3vw,2.3rem) }
+
+/* ---------- the stage ---------- */
+.tome{
+  position:relative; margin:0 auto;
+  width:min(1060px, 94vw, calc((100svh - 340px) * 1.42));
+  touch-action:pan-y;
+}
+.tome-viewport{ position:relative; width:100%; overflow:hidden; padding-bottom:4%; }
+.tome-stage{
+  position:relative; width:100%; aspect-ratio:1.42/1; margin:0 auto;
+}
+.book::after{                     /* the shadow the book casts on the table */
+  content:""; position:absolute; left:calc(50% - 4%); right:2%; bottom:-3%; height:6%;
+  background:radial-gradient(60% 50% at 50% 50%, rgba(48,32,18,.45), transparent 72%);
+  filter:blur(9px); z-index:0; transition:left 1.05s cubic-bezier(.55,.06,.28,1);
+}
+.tome[data-open="1"] .book::after{ left:2% }
+
+/* Perspective lives here, and the book itself stays FLAT. That is the whole
+   trick: with transform-style:preserve-3d on the book, the five coplanar
+   leaves z-fight and the compositor paints half of one and half of another.
+   Flat + plain z-index composites them like the sheets of paper they are,
+   while each leaf still gets its own 3D space for its two faces. */
+.book{
+  position:absolute; inset:0;
+  perspective:2400px; perspective-origin:50% 45%;
+  transform:translateX(var(--shift,-25%));
+  transition:transform 1.25s cubic-bezier(.55,.06,.28,1);
+  will-change:transform;
+}
+.book.thump{ animation:tome-thump .5s cubic-bezier(.3,1.5,.5,1) }
+@keyframes tome-thump{
+  0%{ transform:translateX(var(--shift,-25%)) translateY(0) }
+  35%{ transform:translateX(var(--shift,-25%)) translateY(.55%) scale(.997) }
+  100%{ transform:translateX(var(--shift,-25%)) translateY(0) }
+}
+
+/* the slab of pages at the fore-edges — this is most of the "weight".
+   These live inside .book so they travel with it when it opens. */
+.edge{
+  position:absolute; top:1.5%; height:97%; z-index:1; pointer-events:none;
+  background:
+    repeating-linear-gradient(to right,
+      #e7dbc4 0 1px, #cdbb9c 1px 2px, #f0e6d2 2px 3px, #d8c8ab 3px 4px);
+  box-shadow:0 2px 6px rgba(40,26,14,.4);
+  transition:width 1.05s cubic-bezier(.55,.06,.28,1);
+}
+.edge.right{ left:calc(100% - 2px); width:calc(var(--right,1) * 2.6%); border-radius:0 3px 3px 0 }
+.edge.left { right:calc(100% - 2px); width:calc(var(--left,0) * 2.6%); border-radius:3px 0 0 3px }
+
+.back-cover{
+  position:absolute; left:50%; top:0; width:50%; height:100%; z-index:0;
+  background:#2a1713 url("../tome/leather.jpg") center/cover;
+  border-radius:2px 7px 7px 2px;
+  box-shadow:0 26px 50px -20px rgba(30,18,10,.75);
+}
+
+/* ---------- leaves ---------- */
+.leaf{
+  position:absolute; left:50%; top:0; width:50%; height:100%;
+  transform-origin:left center; transform-style:preserve-3d;
+  transform:rotateY(0deg);
+  transition:transform 1.25s cubic-bezier(.55,.06,.28,1);
+  will-change:transform;
+}
+.leaf.flipped{ transform:rotateY(-180deg) }
+
+.face{
+  position:absolute; inset:0; backface-visibility:hidden; overflow:hidden;
+  background:#efe4cd url("../tome/page.jpg") center/cover;
+  border-radius:2px 6px 6px 2px;
+  box-shadow:inset 0 0 34px rgba(112,84,44,.30);
+}
+.face.back{ transform:rotateY(180deg); border-radius:6px 2px 2px 6px }
+
+/* the gutter shadow, so pages look bound rather than floating */
+.face::after{
+  content:""; position:absolute; top:0; bottom:0; width:13%; pointer-events:none;
+  background:linear-gradient(to right, rgba(76,52,26,.34), rgba(76,52,26,.04) 55%, transparent);
+}
+.face.front::after{ left:0 }
+.face.back::after{ right:0; transform:scaleX(-1) }
+
+/* light rolling across the page as it turns */
+.sheen{
+  position:absolute; inset:0; pointer-events:none; opacity:0;
+  background:linear-gradient(102deg, rgba(255,250,232,.86) 0%, rgba(255,244,216,.15) 38%, rgba(58,36,14,.16) 62%, rgba(48,30,12,.44) 100%);
+  transition:opacity .28s ease;
+}
+.leaf.turning .sheen{ opacity:1 }
+
+/* ---------- page contents ---------- */
+.sheet{
+  position:absolute; inset:0; display:flex; flex-direction:column;
+  padding:clamp(20px,3.4vw,46px) clamp(20px,3.6vw,50px);
+  color:#3b2f22; font-size:clamp(.74rem,1.02vw,1rem); line-height:1.62;
+}
+.face.front .sheet{ padding-left:clamp(30px,5vw,68px) }
+.face.back  .sheet{ padding-right:clamp(30px,5vw,68px) }
+.sheet h2{
+  font-size:clamp(1.05rem,1.7vw,1.6rem); margin:0 0 .55em; letter-spacing:-.01em; color:#2f2418;
+}
+.sheet .kicker{
+  font-family:var(--sans); font-size:.6rem; letter-spacing:.3em; text-transform:uppercase;
+  color:#8a7457; margin:0 0 14px;
+}
+.sheet p{ margin:0 0 .85em; max-width:46ch }
+.sheet p.drop::first-letter{
+  float:left; font-size:3.1em; line-height:.82; padding:.06em .1em 0 0; color:#7a4a1e; font-weight:600;
+}
+.sheet .folio{
+  margin-top:auto; padding-top:14px; font-family:var(--sans); font-size:.58rem;
+  letter-spacing:.26em; text-transform:uppercase; color:#9c8768;
+}
+.face.back .folio{ text-align:right }
+.sheet ul{ margin:.2em 0 .9em; padding-left:1.1em }
+.sheet li{ margin:.3em 0 }
+.sheet a{ color:#7a4a1e; text-underline-offset:3px }
+.sheet .marginal{
+  font-style:italic; color:#7c6a52; border-left:2px solid rgba(122,74,30,.35);
+  padding-left:12px; margin:.4em 0 1em; max-width:38ch;
+}
+.plate{
+  width:min(62%,230px); align-self:center; margin:auto 0;
+  border:1px solid rgba(90,66,36,.4); padding:7px; background:rgba(255,250,238,.55);
+  box-shadow:0 12px 26px -14px rgba(60,40,18,.7);
+}
+.plate img{ width:100%; height:auto; filter:sepia(.34) contrast(1.03) }
+.plate figcaption{
+  font-family:var(--sans); font-size:.56rem; letter-spacing:.22em; text-transform:uppercase;
+  color:#8a7457; text-align:center; margin-top:8px;
+}
+
+/* ---------- the cover ---------- */
+.face.cover{
+  background:#2a1713 url("../tome/leather.jpg") center/cover;
+  box-shadow:inset 0 0 60px rgba(0,0,0,.55), inset 2px 0 0 rgba(255,220,170,.06);
+  border-radius:2px 8px 8px 2px;
+}
+.cover-inner{
+  position:absolute; inset:clamp(12px,2vw,26px);
+  border:1.5px solid rgba(214,172,104,.42);
+  border-radius:2px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:clamp(10px,2vw,22px); padding:clamp(14px,2.6vw,30px);
+}
+.cover-inner::before{
+  content:""; position:absolute; inset:6px; border:1px solid rgba(214,172,104,.22); border-radius:2px;
+}
+.cover-mark{ width:min(78%,320px) }
+.cover-portrait{
+  width:min(52%,190px); aspect-ratio:1/1.22; overflow:hidden;
+  border:1px solid rgba(214,172,104,.5);
+  box-shadow:0 0 0 5px rgba(20,10,6,.55), inset 0 0 26px rgba(0,0,0,.6), 0 14px 30px -14px #000;
+}
+.cover-portrait img{
+  width:100%; height:100%; object-fit:cover;
+  filter:sepia(.62) contrast(1.08) brightness(.86) saturate(.7);
+}
+.cover-sub{
+  font-family:var(--sans); font-size:clamp(.52rem,.78vw,.68rem); letter-spacing:.42em;
+  text-transform:uppercase; color:#c9a86e;
+}
+.cover-dust{
+  position:absolute; inset:0; pointer-events:none; transition:opacity 1.4s ease;
+  background:
+    radial-gradient(38% 26% at 24% 18%, rgba(226,214,190,.20), transparent 70%),
+    radial-gradient(46% 30% at 74% 76%, rgba(226,214,190,.16), transparent 72%),
+    radial-gradient(30% 22% at 62% 32%, rgba(226,214,190,.13), transparent 70%);
+}
+.tome[data-open="1"] .cover-dust{ opacity:0 }
+
+/* ---------- dust canvas ---------- */
+.dust{ position:absolute; inset:-6% -4%; width:108%; height:112%; pointer-events:none; z-index:40 }
+
+/* ---------- controls ---------- */
+.tome-controls{
+  display:flex; align-items:center; justify-content:center; gap:clamp(12px,2.4vw,26px);
+  margin:clamp(18px,3vw,32px) auto 0; font-family:var(--sans);
+}
+.tome-btn{
+  appearance:none; border:1px solid rgba(58,44,28,.35); background:rgba(255,250,240,.5);
+  color:#3b2f22; font:inherit; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+  padding:10px 18px; border-radius:2px; cursor:pointer; transition:.2s;
+}
+.tome-btn:hover:not(:disabled){ background:#3b2f22; color:#f2e8d6; border-color:#3b2f22 }
+.tome-btn:disabled{ opacity:.32; cursor:default }
+.tome-progress{
+  font-size:.64rem; letter-spacing:.24em; text-transform:uppercase; color:#8a7457; min-width:9ch; text-align:center;
+}
+.tome-hint{
+  text-align:center; font-family:var(--sans); font-size:.62rem; letter-spacing:.24em;
+  text-transform:uppercase; color:#9c8768; margin-top:14px; transition:opacity .6s;
+}
+.tome[data-open="1"] ~ .tome-hint{ opacity:0 }
+
+/* click zones sit over the book */
+.turn-zone{
+  position:absolute; top:0; height:100%; width:50%; z-index:35; cursor:pointer;
+  background:transparent; border:0; padding:0;
+}
+.turn-zone.prev{ left:0 } .turn-zone.next{ right:0 }
+.turn-zone:disabled{ cursor:default }
+
+/* ---------- one page at a time on a phone ----------
+   The stage stays two pages wide so the leaf geometry is identical; we just
+   slide it left by a page and clip, so only the recto is ever on screen and
+   turned pages swing away off the left edge. */
+@media (max-width:820px){
+  .tome{ width:min(430px, 92vw, calc((100svh - 300px) * .74)) }
+  .tome-stage{ width:200%; transform:translateX(-50%); aspect-ratio:1.48/1 }
+  .book{ --shift:0% !important; perspective:1500px }
+  .sheet{ font-size:clamp(.84rem,3.6vw,1.02rem) }
+  .sheet p{ max-width:none }
+  .face, .face.back{ border-radius:2px 6px 6px 2px }
+  .edge.left{ display:none }
+}
+
+/* ---------- no JS / reduced motion: just read it ----------
+   If this block is on screen at all, the book never got built, so it can be
+   styled as the plain document it is. */
+.tome-fallback{ max-width:64ch; margin:0 auto }
+.tome-fallback .page-src{ margin:0 0 clamp(26px,4.5vw,46px) }
+.tome-fallback .page-src[data-type="cover"]{ display:none }
+.tome-fallback .folio{ display:none }
+.tome-fallback .kicker{
+  font-family:var(--sans); font-size:.6rem; letter-spacing:.3em; text-transform:uppercase;
+  color:var(--ink-faint); margin:0 0 8px;
+}
+.tome-fallback h2{ font-size:clamp(1.3rem,2.2vw,1.75rem); margin:0 0 .5em }
+.tome-fallback p{ margin:0 0 .9em }
+.tome-fallback .marginal{
+  font-style:italic; color:var(--ink-soft);
+  border-left:2px solid rgba(122,74,30,.35); padding-left:14px; margin:1em 0 1.2em;
+}
+.tome-fallback .plate{
+  width:min(260px,62%); margin:0 auto 8px; padding:8px;
+  border:1px solid var(--parchment-edge); background:rgba(255,250,238,.6);
+}
+.tome-fallback .plate figcaption{
+  font-family:var(--sans); font-size:.6rem; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--ink-faint); text-align:center; margin-top:8px;
+}
+.tome-fallback .plate img{ filter:sepia(.3) }
+body:has(.tome-fallback) .tome-hint{ display:none }
+.tome[hidden]{ display:none }
+
+@media (prefers-reduced-motion:reduce){
+  .book,.leaf,.edge{ transition-duration:.001ms !important }
+  .book.thump{ animation:none }
+}
+
