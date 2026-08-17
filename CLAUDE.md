@@ -120,12 +120,138 @@ clipped into two orange smudges; smaller closes the ring in over the art. Change
 
 ### Touch devices
 
-No hover on a phone, and the doors render ~40px wide there. `portal.js` cycles
-which door is awake every 3.6s and a tap navigates; `.hall-nav` under the
-artwork is a plain text nav that only shows below 760px. **Don't remove the
-text nav** — it's the accessible path in, not a fallback.
+No hover on a phone. `portal.js` cycles which door is awake every 3.6s and a
+tap navigates. Below 760px the artwork is also scaled to 152% of the viewport
+and its faded edges are allowed to crop, which makes the doors a real tap
+target — that only works because the page is the same colour as the paper.
+
+`.hall-nav` is a plain text nav that shows below 760px. It is positioned
+**absolutely inside `.hall`, at `bottom: 13%`** — the drawing's rocks run out
+around 78% of the frame, so that puts it on clean sand below the wizard. It
+used to sit below the artwork in normal flow and got pushed off short screens.
+Keep it on the art. **Don't remove it** — it's the accessible path in, not a
+fallback.
 
 Everything honours `prefers-reduced-motion`.
+
+## The wordmark
+
+`assets/wordmark.svg` is the RYAN BECK lettering above the artwork and in the
+interior topbar. It is **not a font** — the letters on the door lintels are a
+carved dwarvish style we don't have a typeface for, so `tools/make-wordmark.py`
+builds each glyph from three primitives (a flared stem, a flared arm, a mitred
+polyline) and emits SVG paths. `tome/wordmark-gilt.svg` is the same thing in
+gold for the book cover.
+
+Two things to know if you touch it:
+
+- Fill is `nonzero`, and every solid loop is wound the same direction while
+  counters are wound the opposite way. That's what lets overlapping strokes
+  union instead of cancelling. `orient()` enforces it; if you add a glyph and
+  it comes out with white notches where strokes cross, that's the winding.
+- To change the text: `build('SOME TEXT')`. Only the eight letters in
+  RYAN BECK exist in `GLYPHS`. Anything else needs drawing, and the reference
+  is the lintel lettering in the artwork itself.
+
+Regenerate with `python3 tools/make-wordmark.py > public/assets/wordmark.svg`.
+
+## The tome (about page)
+
+`about.html` is an experiment: the about content as a dusty book you click
+through. `about-plain.html` is the earlier straightforward version, still
+linked from the tome's colophon. If the experiment doesn't earn its keep,
+swapping the two filenames is the whole rollback.
+
+**Content lives in the HTML, not in JS.** Each page is an
+`<article class="page-src">` inside `.tome-fallback`. `tome.js` reads those,
+builds the book, and replaces them. If the script never runs — no JS, or
+`prefers-reduced-motion` — the articles stay put and you read a perfectly
+ordinary document. Add or reorder a page by editing the articles; nothing
+else needs to change.
+
+Two pages per leaf on a wide screen, one per leaf on a phone, rebuilt on
+crossing the 821px breakpoint.
+
+### The thing that will bite you
+
+`.book` deliberately does **not** have `transform-style: preserve-3d`. It has
+`perspective` instead, and each `.leaf` gets its own `preserve-3d` for its two
+faces. With `preserve-3d` on the book, the coplanar leaves z-fight and the
+compositor paints half of one leaf and half of another — you get the cover on
+the right and page three on the left, in the same box. Flat book plus plain
+`z-index` composites them like the sheets of paper they are. Don't "fix" the
+missing `preserve-3d`.
+
+### Weight, and seeing the turn
+
+The turn is a **keyframe animation, not a transition** (`leaf-fwd` /
+`leaf-back`, 1.9s, `linear`). A cubic-bezier can't do what this needs: linger
+at the angles where the lifted sheet is worth looking at (roughly 30–70° and
+110–150°), hurry through edge-on where there's nothing to see, and still start
+and land heavily. The keyframe spacing encodes that — measured trace: 5° at
+170ms, 36° at 530ms, 73° at 900ms, 131° at 1400ms, 169° at 1790ms. The sheet
+also lifts on `translateZ` through the arc so it comes off the page instead of
+pivoting flat in it.
+
+Because it's an animation, `turn()` drives the classes by hand: add
+`turn-fwd`, let it run with `fill-mode: forwards`, then strip the class and
+call `layout()` to put the leaf in its resting `flipped` state. `layout()`
+takes a `skip` argument so the sheet in flight isn't yanked into place
+mid-animation. Then `.book` gets a `thump` keyframe.
+
+### Dust
+
+`tools/make-dust.py` generates four irregular puff sprites — fractal noise
+shaped by a radial falloff, with holes eaten through it and the silhouette
+warped so it ends in wisps rather than a circle. `tome.js` uses them as
+**billboards**: each puff spawns small, grows, rotates, drifts and fades.
+
+This replaced a particle system made of dots, which is worth knowing because
+the dots looked wrong at every size and density that was tried. Dust is a
+volume; a scatter of points reads as static or as confetti no matter how you
+tune it. If it ever needs to look denser, add puffs — do not go back to
+points. A handful of 1–3px specks ride along on top purely for sparkle.
+
+The emitter runs **continuously through the turn**, not in fixed bursts: each
+frame it reads the turning sheet's rotation off its transform matrix, works
+out where the free edge of the page currently is, and spawns there. So the
+dust comes off the moving edge and follows it, instead of appearing over the
+book as a flat overlay. Velocity is biased away from the book's centre, and
+growth-over-time is doing double duty — a billboard that scales up reads as
+approaching the viewer, which is what sells "off the book" rather than "on
+the page".
+
+The canvas is a child of `.tome`, deliberately **not** of the clipped stage,
+so dust can leave the book. `edgeFade()` is not optional — without it the
+cloud gets sliced in a straight line at the canvas border and the illusion
+dies.
+
+Density knobs, all in `tome.js`: `peak` (per-puff alpha, ~0.11–0.26), `burst`
+in `emit()`, and the size multiplier in `addPuff`. Tuned so the text stays
+readable through the turn.
+
+### Sitting on the page
+
+The book is meant to look like an object on the paper, not an embed. What does
+that work, in rough order of importance: `.back-cover` is sized *larger* than
+the page block so leather sticks out past the paper on every side and animates
+from one board to two when it opens; a tight contact shadow (`.book::before`)
+plus a wide soft cast shadow (`.book::after`); a half-degree rotation on
+`.tome-stage`, so it looks set down rather than pasted in; enough width margin
+that paper shows on both sides; the fore-edge page stacks; and the pages inset
+slightly inside the boards. Remove the board overhang and it goes straight back
+to looking like a video player.
+
+`fitSheets()` shrinks a page's type until it fits its sheet. The content is
+fixed and the book's size isn't, so without it a long page overflows and clips
+— which is exactly what makes it look like a broken embed.
+
+## Substack
+
+Substack's RSS feed sends no CORS headers, so a browser can't read it
+directly. `assets/js/substack.js` calls `/api/substack` on your own origin and
+silently falls back to the hand-written list if that route is missing. The
+Worker implements it: fetch, parse, decode entities, cache 30 minutes.
 
 ## Conventions
 
@@ -160,7 +286,8 @@ Everything below is scaffolding waiting for real content. None of it is a bug.
 
 - all six project cards (art, titles, copy, links all invented)
 - both book covers and the about-page portrait are generated, not real
-- about-page copy is a template, marked as such in the text
+- the tome's page copy is a template, marked as such in the text
+- the cover portrait is the same generated placeholder
 - the newsletter form posts to `/api/subscribe`, which validates the address and
   returns `{ok: true}` without storing it. See the TODO in `worker/index.js` —
   it needs either a Buttondown token or to be repointed at Substack's own
@@ -173,7 +300,8 @@ Everything below is scaffolding waiting for real content. None of it is a bug.
 1. Wire `/api/subscribe` to a real list, or delete it and point the form at
    Substack.
 2. Replace the three door scenes with real artwork (760×912-ish, subject
-   centred — the fire ring eats the edges).
+   centred — the fire ring eats the edges), and put a real photograph on the
+   tome's cover.
 3. Real project cards. The grid takes any number; the card markup is
    copy-pasteable.
 4. Decide on Astro before the site grows past ~8 pages — the shared header is

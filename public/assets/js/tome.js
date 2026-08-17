@@ -55,8 +55,6 @@
     book.appendChild(edgeR);
     stage.appendChild(book);
 
-    canvas = el('canvas', 'dust');
-    stage.appendChild(canvas);
 
     viewport.appendChild(stage);
 
@@ -68,6 +66,11 @@
     viewport.appendChild(zoneNext);
 
     root.appendChild(viewport);
+
+    // The canvas is a child of .tome, not of the (clipped) stage, so dust can
+    // drift off the book and out over the page.
+    canvas = el('canvas', 'dust');
+    root.appendChild(canvas);
 
     var controls = el('div', 'tome-controls');
     prevBtn  = button('Back', prev);
@@ -82,6 +85,7 @@
     index = 0;
     layout();
     sizeCanvas();
+    fitSheets();
   }
 
   function face(side, article) {
@@ -94,6 +98,20 @@
       if (article.dataset.type === 'cover') f.appendChild(el('span', 'cover-dust'));
     }
     return f;
+  }
+
+  /* A page that overflows its sheet looks broken, and the content is fixed
+     while the book's size isn't. Shrink type until it fits. */
+  function fitSheets() {
+    root.querySelectorAll('.sheet').forEach(function (sheet) {
+      sheet.style.fontSize = '';
+      var base = parseFloat(getComputedStyle(sheet).fontSize);
+      var size = base, guard = 0;
+      while (sheet.scrollHeight > sheet.clientHeight + 1 && guard++ < 14 && size > base * 0.62) {
+        size *= 0.955;
+        sheet.style.fontSize = size.toFixed(2) + 'px';
+      }
+    });
   }
 
   function el(tag, cls) { var n = document.createElement(tag); if (cls) n.className = cls; return n; }
@@ -143,10 +161,7 @@
     // everything except the sheet in flight settles into its new place now
     layout(leaf);
 
-    puff(dir, .85);
-    setTimeout(function () { puff(dir, .8); },  340);
-    setTimeout(function () { puff(dir, .7); },  760);
-    setTimeout(function () { puff(dir, .55); }, 1200);
+    startEmitter(dir, 1900);
 
     setTimeout(function () {
       leaf.classList.remove('turning', 'turn-fwd', 'turn-back');
@@ -155,7 +170,7 @@
       leaf.style.animation = '';
       layout();
       book.classList.add('thump');
-      puff(dir, 1.1);                     // the sheet lands and lifts the dust
+      thumpPuff(dir);                     // the sheet lands and lifts the dust
       setTimeout(function () { book.classList.remove('thump'); }, 520);
       busy = false;
     }, 1900);
@@ -164,29 +179,33 @@
   function prev() { turn(-1); }
 
   /* ---------------------------------------------------------- dust */
-  var parts = [], haze = [], raf = null, dpr = 1, sprites = null;
+  /* Billboard puffs, not points. Dust is a volume — a scatter of dots reads
+     as static no matter how small you make it. Each puff is an irregular
+     alpha cloud that spawns small at the edge of the moving sheet, grows,
+     turns, drifts away from the book and fades. Growth is doing double duty:
+     it's also what makes the dust read as coming off the book toward you. */
+  var puffs = [], specks = [], raf = null, dpr = 1, sprites = [], emitter = null;
 
-  function makeSprites() {
-    // Two motes: a pale one that catches the light and a darker one that
-    // reads against the page. Real dust does both; one alone looks like snow.
-    function sprite(rgb, soft) {
-      var c = document.createElement('canvas');
-      c.width = c.height = 64;
-      var g = c.getContext('2d');
-      var rg = g.createRadialGradient(32, 32, 0, 32, 32, 32);
-      rg.addColorStop(0, 'rgba(' + rgb + ',1)');
-      rg.addColorStop(soft ? 0.18 : 0.42, 'rgba(' + rgb + ',' + (soft ? 0.5 : 0.55) + ')');
-      rg.addColorStop(1, 'rgba(' + rgb + ',0)');
-      g.fillStyle = rg;
-      g.fillRect(0, 0, 64, 64);
-      return c;
+  function loadSprites() {
+    for (var i = 1; i <= 4; i++) {
+      var im = new Image();
+      im.src = 'assets/tome/dust-' + i + '.png';
+      sprites.push(im);
     }
-    sprites = {
-      pale: sprite('255,247,228', false),
-      dark: sprite('124,100,68', false),
-      haze: sprite('158,136,102', true)
-    };
   }
+
+  function speckSprite() {
+    var c = document.createElement('canvas');
+    c.width = c.height = 32;
+    var g = c.getContext('2d');
+    var rg = g.createRadialGradient(16, 16, 0, 16, 16, 16);
+    rg.addColorStop(0, 'rgba(122,100,70,1)');
+    rg.addColorStop(0.45, 'rgba(122,100,70,0.5)');
+    rg.addColorStop(1, 'rgba(122,100,70,0)');
+    g.fillStyle = rg; g.fillRect(0, 0, 32, 32);
+    return c;
+  }
+  var speckImg = null;
 
   function sizeCanvas() {
     if (!canvas) return;
@@ -196,107 +215,162 @@
     canvas.height = Math.max(1, Math.round(r.height * dpr));
     ctx = canvas.getContext('2d');
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    if (!sprites) makeSprites();
+    if (!speckImg) speckImg = speckSprite();
   }
 
-  function puff(dir, scale) {
-    if (!ctx) return;
-    scale = scale === undefined ? 1 : scale;
-    var r = canvas.getBoundingClientRect();
-    var spineX = r.width * 0.5;
-    // Lots of very small particles clustered around a few origins reads as a
-    // cloud. A few big ones reads as confetti, which is what this used to be.
-    var clumps = 5 + Math.round(4 * scale);
-    var count = Math.round((spread ? 620 : 420) * scale);
-    var origins = [];
-    for (var c = 0; c < clumps; c++) {
-      origins.push({
-        x: spineX + dir * Math.pow(Math.random(), 0.55) * r.width * 0.42,
-        y: r.height * (0.10 + Math.random() * 0.80),
-        r: r.width * (0.03 + Math.random() * 0.075)
-      });
-    }
+  /* Where the book actually is, in canvas coordinates. */
+  function geom() {
+    var cr = canvas.getBoundingClientRect();
+    var br = (root.querySelector('.back-cover') || book).getBoundingClientRect();
+    var lr = leaves[0].getBoundingClientRect();
+    return {
+      w: cr.width, h: cr.height,
+      top: br.top - cr.top, bottom: br.bottom - cr.top,
+      left: br.left - cr.left, right: br.right - cr.left,
+      spine: (spread ? (br.left + br.right) / 2 : lr.left) - cr.left,
+      page: lr.width
+    };
+  }
 
-    for (var i = 0; i < count; i++) {
-      var o = origins[(Math.random() * origins.length) | 0];
-      var ang = Math.random() * 6.283, rad = Math.pow(Math.random(), 0.6) * o.r;
-      var speed = (0.25 + Math.random() * 1.5) * (0.55 + scale * 0.55);
-      parts.push({
-        x: o.x + Math.cos(ang) * rad,
-        y: o.y + Math.sin(ang) * rad * 0.8,
-        vx: dir * speed * (0.35 + Math.random() * 0.9) + (Math.random() - .5) * 0.75,
-        vy: -speed * (0.25 + Math.random() * 0.7),
-        s: (1.4 + Math.random() * 4.6) * (spread ? 1 : .85),
-        life: 1, decay: 0.0035 + Math.random() * 0.010,
-        pale: Math.random() < 0.40,
-        a: 0.20 + Math.random() * 0.30
+  function addPuff(x, y, dir, g, opts) {
+    opts = opts || {};
+    var away = (x - (g.left + g.right) / 2) >= 0 ? 1 : -1;
+    puffs.push({
+      x: x, y: y,
+      sprite: (Math.random() * 4) | 0,
+      s: g.page * (0.17 + Math.random() * 0.26) * (opts.big || 1),
+      grow: 1.006 + Math.random() * 0.012,
+      vx: (dir * (0.4 + Math.random() * 1.2) + away * (0.35 + Math.random() * 0.8)) * (opts.push || 1),
+      vy: -(0.26 + Math.random() * 0.8) * (opts.push || 1),
+      rot: Math.random() * 6.283,
+      spin: (Math.random() - 0.5) * 0.012,
+      life: 0, fade: 0.010 + Math.random() * 0.011,
+      peak: 0.11 + Math.random() * 0.15
+    });
+  }
+
+  function addSpecks(x, y, dir, g, n) {
+    for (var i = 0; i < n; i++) {
+      specks.push({
+        x: x + (Math.random() - .5) * g.page * 0.1,
+        y: y + (Math.random() - .5) * g.h * 0.1,
+        vx: dir * (0.3 + Math.random() * 1.5) + (Math.random() - .5) * 0.7,
+        vy: -(0.25 + Math.random() * 1.1),
+        s: 1.1 + Math.random() * 2.4,
+        life: 1, decay: 0.006 + Math.random() * 0.012,
+        a: 0.16 + Math.random() * 0.24
       });
     }
-    // the soft body of the cloud, sitting under all those specks
-    for (var h = 0; h < Math.round(16 * scale); h++) {
-      var oh = origins[(Math.random() * origins.length) | 0];
-      haze.push({
-        x: oh.x + (Math.random() - .5) * r.width * 0.08,
-        y: oh.y + (Math.random() - .5) * r.height * 0.08,
-        s: r.width * (0.055 + Math.random() * 0.13),
-        grow: 1.7 + Math.random() * 1.5,
-        vx: dir * (0.12 + Math.random() * 0.42), vy: -0.09 - Math.random() * 0.16,
-        life: 1, decay: 0.0055 + Math.random() * 0.006
-      });
+  }
+
+  /* Emit continuously along the leading edge of the sheet while it turns,
+     rather than in a few fixed bursts — the dust then follows the page. */
+  function startEmitter(dir, ms) {
+    emitter = { dir: dir, t0: performance.now(), ms: ms };
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+
+  function emit(now) {
+    if (!emitter || !ctx || !leaves.length) return;
+    var t = now - emitter.t0;
+    if (t > emitter.ms) { emitter = null; return; }
+
+    var g = geom();
+    var dir = emitter.dir;
+
+    // read the sheet in flight to find its leading edge
+    var turning = root.querySelector('.leaf.turning');
+    var ang = 0;
+    if (turning) {
+      var m = new DOMMatrix(getComputedStyle(turning).transform);
+      ang = Math.atan2(m.m13, m.m11);           // 0 .. -pi
     }
+    // the free edge of the sheet, which is where the dust actually comes off
+    var edge = g.spine + Math.cos(ang) * g.page * dir;
+
+    var burst = t < 240 ? 2.0 : (t > emitter.ms - 300 ? 1.7 : 0.8);
+    var n = Math.random() < burst % 1 ? Math.ceil(burst) : Math.floor(burst);
+    for (var i = 0; i < n; i++) {
+      var y = g.top + (0.06 + Math.random() * 0.88) * (g.bottom - g.top);
+      var x = edge + (Math.random() - .5) * g.page * 0.16;
+      addPuff(x, y, dir, g, { big: 0.8 + Math.random() * 0.7 });
+    }
+    addSpecks(edge, g.top + Math.random() * (g.bottom - g.top), dir, g, 2);
+  }
+
+  function thumpPuff(dir) {
+    if (!ctx) return;
+    var g = geom();
+    for (var i = 0; i < 10; i++) {
+      var y = g.top + (0.05 + Math.random() * 0.9) * (g.bottom - g.top);
+      var x = g.spine + dir * Math.random() * g.page * 0.9;
+      addPuff(x, y, dir, g, { big: 1.1 + Math.random() * 0.9, push: 1.4 });
+    }
+    addSpecks(g.spine + dir * g.page * 0.4, g.bottom - (g.bottom - g.top) * 0.2, dir, g, 26);
     if (!raf) raf = requestAnimationFrame(tick);
   }
 
   function ambient() {
-    if (!ctx || document.hidden) return;
-    var r = canvas.getBoundingClientRect();
-    if (parts.length < 90) {
-      parts.push({
-        x: Math.random() * r.width, y: r.height * (0.15 + Math.random() * 0.85),
-        vx: (Math.random() - .5) * .25, vy: -0.06 - Math.random() * 0.14,
-        s: 1.2 + Math.random() * 2.6, life: .6, decay: 0.0013 + Math.random() * 0.0022,
-        pale: Math.random() < 0.5, a: 0.12 + Math.random() * 0.14
-      });
-      if (!raf) raf = requestAnimationFrame(tick);
+    if (!ctx || document.hidden || !leaves.length) return;
+    var g = geom();
+    if (puffs.length < 4 && Math.random() < 0.5) {
+      addPuff(g.left + Math.random() * (g.right - g.left),
+              g.top + Math.random() * (g.bottom - g.top), 0, g, { big: 0.7, push: 0.25 });
+      puffs[puffs.length - 1].peak *= 0.30;
+      puffs[puffs.length - 1].fade *= 0.4;
     }
+    if (specks.length < 14) addSpecks(g.left + Math.random() * (g.right - g.left),
+                                      g.top + Math.random() * (g.bottom - g.top), 0, g, 3);
+    if (!raf) raf = requestAnimationFrame(tick);
   }
 
   // Without this the cloud gets sliced off in a straight line at the canvas
   // border, which instantly gives the game away.
   function edgeFade(x, y, r) {
-    var m = Math.min(r.width, r.height) * 0.14;
-    var fx = Math.min(x, r.width - x) / m;
-    var fy = Math.min(y, r.height - y) / m;
-    return Math.max(0, Math.min(1, Math.min(fx, fy)));
+    var m = Math.min(r.w, r.h) * 0.16;
+    return Math.max(0, Math.min(1, Math.min(Math.min(x, r.w - x), Math.min(y, r.h - y)) / m));
   }
 
-  function tick() {
+  function tick(now) {
     raf = null;
     if (!ctx) return;
-    var r = canvas.getBoundingClientRect();
-    ctx.clearRect(0, 0, r.width, r.height);
+    var r = { w: canvas.getBoundingClientRect().width, h: canvas.getBoundingClientRect().height };
+    ctx.clearRect(0, 0, r.w, r.h);
+
+    emit(now || performance.now());
 
     var i, p;
-    for (i = haze.length - 1; i >= 0; i--) {
-      p = haze[i];
-      p.x += p.vx; p.y += p.vy; p.s *= 1 + (p.grow - 1) * 0.012;
-      p.life -= p.decay;
-      if (p.life <= 0) { haze.splice(i, 1); continue; }
-      ctx.globalAlpha = Math.max(0, p.life) * 0.14 * edgeFade(p.x, p.y, r);
-      ctx.drawImage(sprites.haze, p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
+    for (i = puffs.length - 1; i >= 0; i--) {
+      p = puffs[i];
+      p.x += p.vx; p.y += p.vy;
+      p.vx *= 0.985; p.vy = p.vy * 0.985 + 0.006;
+      p.s *= p.grow; p.rot += p.spin;
+      p.life += p.fade;
+      if (p.life >= 1) { puffs.splice(i, 1); continue; }
+      // fade in over the first fifth of its life, then out
+      var k = p.life < 0.2 ? p.life / 0.2 : 1 - (p.life - 0.2) / 0.8;
+      var img = sprites[p.sprite];
+      if (!img || !img.complete || !img.naturalWidth) continue;
+      ctx.globalAlpha = k * p.peak * edgeFade(p.x, p.y, r);
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.drawImage(img, -p.s / 2, -p.s / 2, p.s, p.s);
+      ctx.restore();
     }
 
-    for (i = parts.length - 1; i >= 0; i--) {
-      p = parts[i];
+    for (i = specks.length - 1; i >= 0; i--) {
+      p = specks[i];
       p.x += p.vx; p.y += p.vy;
-      p.vx *= 0.977; p.vy = p.vy * 0.977 + 0.010;   // drag, then it settles
+      p.vx *= 0.978; p.vy = p.vy * 0.978 + 0.010;
       p.life -= p.decay;
-      if (p.life <= 0 || p.y > r.height * 1.25) { parts.splice(i, 1); continue; }
-      ctx.globalAlpha = Math.max(0, Math.min(1, p.life)) * p.a * edgeFade(p.x, p.y, r);
-      ctx.drawImage(p.pale ? sprites.pale : sprites.dark, p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
+      if (p.life <= 0) { specks.splice(i, 1); continue; }
+      ctx.globalAlpha = Math.max(0, p.life) * p.a * edgeFade(p.x, p.y, r);
+      ctx.drawImage(speckImg, p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
     }
+
     ctx.globalAlpha = 1;
-    if (parts.length || haze.length) raf = requestAnimationFrame(tick);
+    if (puffs.length || specks.length || emitter) raf = requestAnimationFrame(tick);
   }
 
   /* ---------------------------------------------------------- input */
@@ -327,7 +401,7 @@
     (mode.addEventListener ? mode.addEventListener.bind(mode, 'change') : mode.addListener.bind(mode))(function () {
       leaves = []; parts = []; build();
     });
-    window.addEventListener('resize', debounce(sizeCanvas, 180));
+    window.addEventListener('resize', debounce(function () { sizeCanvas(); fitSheets(); }, 180));
     setInterval(ambient, 900);
   }
 
@@ -335,6 +409,7 @@
     var t; return function () { clearTimeout(t); t = setTimeout(fn, ms); };
   }
 
+  loadSprites();
   build();
   wire();
 })();

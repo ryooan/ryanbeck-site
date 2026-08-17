@@ -46,7 +46,8 @@ public/               everything that gets served
   og.jpg               social card
 worker/index.js       /api/substack and /api/subscribe
 tools/                make-fire.py, make-wordmark.py,
-                      make-tome-textures.py, check-links.mjs
+                      make-tome-textures.py, make-dust.py,
+                      check-links.mjs
 wrangler.toml         Cloudflare config
 CLAUDE.md             architecture notes for Claude Code
 HOSTING.md            where to deploy it and why
