@@ -1,0 +1,47 @@
+/* ============================================================
+   Dust lab layout. The book styling comes from tome-lib.css —
+   this is just the grid, the labels and the dust surfaces.
+   ============================================================ */
+.lab-head{ text-align:center; padding:clamp(24px,4vw,48px) 0 clamp(6px,1.4vw,14px) }
+.lab-head h1{ margin:0 0 10px }
+.lab-head p{ margin:0 auto; max-width:62ch; color:var(--ink-soft) }
+
+.lab-bar{
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
+  gap:clamp(10px,2vw,20px); margin:clamp(18px,3vw,30px) auto 0;
+  font-family:var(--sans); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.lab-bar input[type=range]{ width:150px; accent-color:#a5561c }
+
+.lab-grid{
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(28px,4vw,60px) clamp(24px,3.4vw,54px);
+  margin-top:clamp(26px,4vw,48px);
+}
+@media (max-width:900px){ .lab-grid{ grid-template-columns:1fr; gap:clamp(44px,9vw,72px) } }
+
+.lab-cell > header{ text-align:center; margin-bottom:14px }
+.lab-cell h2{ font-size:1.05rem; margin:0 0 5px }
+.lab-cell header p{ font-size:.82rem; color:var(--ink-soft); margin:0 auto; max-width:40ch; min-height:2.6em }
+.lab-num{
+  display:inline-block; font-family:var(--sans); font-size:.6rem; letter-spacing:.24em;
+  text-transform:uppercase; color:#a5561c; margin-bottom:8px;
+}
+
+/* the stage is roomy so dust can leave the book and drift over the page */
+.lab-stage{ position:relative; width:100%; padding:13% 17% 16%; box-sizing:border-box }
+.lab-cell .libtome-book{ margin:0 auto; position:relative; z-index:2 }
+.lab-cell .libtome-boards{ z-index:1 }
+.lab-dust{ position:absolute; inset:0; z-index:5; pointer-events:none; overflow:visible }
+.lab-dust canvas{ display:block }
+
+.lab-controls{
+  display:flex; align-items:center; justify-content:center; gap:14px; margin-top:6px;
+  font-family:var(--sans);
+}
+.lab-controls .tome-btn{ padding:8px 14px; font-size:.66rem }
+.lab-controls .tome-progress{ min-width:7ch }
+
+/* page dressing, shared with the library book */
+.lab-cell .page .sheet{ font-size:clamp(.6rem,.85vw,.8rem); padding:clamp(12px,2.2vw,26px) }

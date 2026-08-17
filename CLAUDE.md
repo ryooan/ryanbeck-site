@@ -157,163 +157,101 @@ Regenerate with `python3 tools/make-wordmark.py > public/assets/wordmark.svg`.
 
 ## The tome (about page)
 
-`about.html` is an experiment: the about content as a dusty book you click
-through. `about-plain.html` is the earlier straightforward version, still
-linked from the tome's colophon. If the experiment doesn't earn its keep,
-swapping the two filenames is the whole rollback.
+`about.html` is the about content as a book you click through.
+`about-plain.html` is the plain version, linked from the colophon; swapping
+those two filenames is the whole rollback.
+
+**The book is StPageFlip** (`page-flip`), chosen over a hand-built CSS 3D
+version after a side-by-side — its fold geometry and drag-a-corner beat what
+eight rotated slices could manage. The hand-built implementation is still in
+the repo (`assets/css/tome.css`, `assets/js/tome.js`) because `compare.html`
+shows it; nothing else uses it. Its own notes are kept at the bottom of this
+section in case it is ever revived.
 
 **Content lives in the HTML, not in JS.** Each page is an
-`<article class="page-src">` inside `.tome-fallback`. `tome.js` reads those,
-builds the book, and replaces them. If the script never runs — no JS, or
-`prefers-reduced-motion` — the articles stay put and you read a perfectly
-ordinary document. Add or reorder a page by editing the articles; nothing
-else needs to change.
+`<article class="page-src">` inside `.tome-fallback`. `tome-lib.js` reads
+those, builds StPageFlip pages from them, and replaces them. If the script
+never runs — no JS, or `prefers-reduced-motion` — the articles stay put and
+you read a perfectly ordinary document. Add or reorder a page by editing the
+articles; nothing else needs to change.
 
-Two pages per leaf on a wide screen, one per leaf on a phone, rebuilt on
-crossing the 821px breakpoint.
+Two things learned wiring StPageFlip up:
 
-On a phone the book is a genuinely **one-page-wide book** — not a clipped
-window onto a spread. Once opened it *stays* open: the boards stretch to
-`left: -103%; width: 206%` so the verso and the left board run off the left of
-the screen and remain there. You're looking at the right-hand page of a real
-open book, cropped by the viewport. The earlier version kept the two-page stage and hid the
-left half with `overflow: hidden`, and it read as a frame stuck on the page:
-boards, shadows and dust all got sliced at a straight border. Now `.leaf` is
-`left:0; width:100%`, nothing is clipped, and a turned sheet swings away off
-the left over the paper. `.leaf.flipped` is `visibility:hidden` on phones
-because turned sheets live off-screen and would otherwise pile up there.
-The verso of each phone leaf is intentionally blank — you never see it flat.
+- It renders a **closed** book as a single page inside a full-width block, so
+  anything drawn behind it (our leather boards) has to follow the *visible*
+  half, or a closed book looks twice as wide as it is. `sizeBoards()` does it.
+- `usePortrait` handles phones by itself, but page type still has to be shrunk
+  to fit its sheet — `fitSheets()`.
 
-### The thing that will bite you
+## The dust
 
-`.book` deliberately does **not** have `transform-style: preserve-3d`. It has
-`perspective` instead, and each `.leaf` gets its own `preserve-3d` for its two
-faces. With `preserve-3d` on the book, the coplanar leaves z-fight and the
-compositor paints half of one leaf and half of another — you get the cover on
-the right and page three on the left, in the same box. Flat book plus plain
-`z-index` composites them like the sheets of paper they are. Don't "fix" the
-missing `preserve-3d`.
+`assets/js/book-dust.js` — four interchangeable engines behind one call:
 
-### Weight, and seeing the turn
+```js
+BookDust.attach(bookEl, hostEl, flip, { kind: 'cloud' })
+```
 
-The turn is a **keyframe animation, not a transition** (`leaf-fwd` /
-`leaf-back`, 1.9s, `linear`). A cubic-bezier can't do what this needs: linger
-at the angles where the lifted sheet is worth looking at (roughly 30–70° and
-110–150°), hurry through edge-on where there's nothing to see, and still start
-and land heavily. The keyframe spacing encodes that — measured trace: 5° at
-170ms, 36° at 530ms, 73° at 900ms, 131° at 1400ms, 169° at 1790ms. The sheet
-also lifts on `translateZ` through the arc so it comes off the page instead of
-pivoting flat in it.
+`about.html` picks one with `data-dust-kind` on the container.
+`dust-lab.html` runs all four side by side with a density slider, so they can
+be compared directly.
 
-Because it's an animation, `turn()` drives the classes by hand: add
-`turn-fwd`, let it run with `fill-mode: forwards`, then strip the class and
-call `layout()` to put the leaf in its resting `flipped` state. `layout()`
-takes a `skip` argument so the sheet in flight isn't yanked into place
-mid-animation. Then `.book` gets a `thump` keyframe.
+All four are fed the same signal, and this is the part that matters: StPageFlip
+draws a `.stf__outerShadow` element **along the crease**, so reading its box
+every frame gives the live position and speed of the fold. Dust is born there
+and thrown outward, inheriting the crease's velocity. It is not an overlay
+playing on a timer — that was the flaw in the tsParticles version, whose
+emitters fire on flip events and have no idea where the page actually is.
 
-### The curl
+| kind | technique |
+|---|---|
+| `puffs` | sprite billboards — generated PNG clouds that grow, spin and fade |
+| `cloud` | the same particles drawn translucent and overlapping, then blurred so they fuse into one mass |
+| `mist` | a few thousand single pixels advected by a curl-noise flow field |
+| `smoke` | SVG ellipses through `feTurbulence`, animated outward and discarded |
 
-A rigid rotating plane reads as cardboard. During a turn `curlify()` rebuilds
-each face of the sheet in flight as **eight nested slices**: slice *n* sits at
-`left: 100%` of slice *n−1* and carries `rotateY(var(--curl))`, so the
-rotations accumulate and bend the page into a cylinder. Each slice holds a
-clone of the page inside a clipped wrapper, shifted sideways by its index, so
-the eight of them read as one continuous sheet. `--curl` is set frame by frame
-from the dust loop — `sin(π · progress^0.85) · 4.4°` — so the bend grows into
-the arc and relaxes as the sheet lands. Slices are torn down when the turn
-ends; only the sheet in flight is ever curled.
+Density is one number — `AMOUNT`, exposed as `BookDust.setAmount()`.
 
-Four rules, every one of them learned by breaking it. Each produced the same
-symptom — vertical lines down the turning page:
+Note on `cloud`: it accumulates with plain `source-over`. An earlier version
+used `lighter` plus a `contrast()` filter to fuse the blobs and the book caught
+fire — additive blending turns brown dust into flame. Overlapping translucency
+plus a blur gets the merge without the glow.
 
-1. **All shading lives on `.cwrap`, never on a slice.** Every cwrap is a full
-   page wide and they all share an origin, so a gradient painted there is one
-   continuous ramp and each slice shows its slot of it. A gradient inside a
-   slice restarts at every seam (a sawtooth of eight hard edges); even a *flat*
-   tint stepped by slice index bands visibly on a plain cream field.
-2. **No `filter` anywhere on the turning sheet — slice *or* leaf.** On a
-   slice it flattens `transform-style: preserve-3d` and the seams show. On the
-   leaf it makes Chromium rasterise the whole sheet to a bitmap at its
-   *untransformed* size and then 3D-transform that bitmap, so the text and the
-   free edge come out soft — that was the "blurry edge". The shadow the sheet
-   throws is drawn as its own `.cast` element on the page below, positioned
-   and scaled from the rotation angle. `will-change: transform` is off the
-   leaf for the same reason: the sheet re-rasterises per frame and stays
-   crisp.
-3. **`.face.curled` needs `transform-style: preserve-3d`** (and `overflow:
-   visible`, since overflow forces flattening too) or the slices collapse into
-   the face's plane.
-4. **Which face is showing is decided explicitly, not by backface culling.**
-   Once the subtree is 3D and the back face is mirrored, `backface-visibility`
-   stops reliably hiding the front face's slices and you see the page's text
-   mirrored through the sheet. JS sets `.past-half` past 90° and CSS hides the
-   other face outright.
+The puff sprites come from `tools/make-dust.py`: fractal noise shaped by a
+radial falloff, with holes eaten through it and the silhouette warped so the
+edges end in wisps.
 
-`.cclip` also bleeds `right: -0.6px` to cover hairline gaps between slices at
-fractional widths.
+## The library comparison (`compare.html`)
 
-### Dust
+`noindex`, not in the nav: the same book built two ways, hand-built on the
+left and StPageFlip + tsParticles on the right. Kept as the record of why the
+library won. Its right-hand column pins `data-dust-kind="tsparticles"` so it
+still demonstrates the library's own particle engine.
 
-`tools/make-dust.py` generates four irregular puff sprites — fractal noise
-shaped by a radial falloff, with holes eaten through it and the silhouette
-warped so it ends in wisps rather than a circle. `tome.js` uses them as
-**billboards**: each puff spawns small, grows, rotates, drifts and fades.
+The vendor bundle is built in `libtome/` (`npm install && npm run build`) and
+lands at `public/assets/vendor/lib-tome.bundle.js` — 233 KB minified, 65 KB
+gzipped. `loadSlim()` must run **before** `loadEmittersPlugin()` or tsParticles
+throws "Interactivity Plugin is not loaded".
 
-This replaced a particle system made of dots, which is worth knowing because
-the dots looked wrong at every size and density that was tried. Dust is a
-volume; a scatter of points reads as static or as confetti no matter how you
-tune it. If it ever needs to look denser, add puffs — do not go back to
-points. A handful of 1–3px specks ride along on top purely for sparkle.
+## The hand-built book (retained, unused by the site)
 
-The emitter runs **continuously through the turn**, not in fixed bursts: each
-frame it reads the turning sheet's rotation off its transform matrix, works
-out where the free edge of the page currently is, and spawns there. So the
-dust comes off the moving edge and follows it, instead of appearing over the
-book as a flat overlay. Velocity is biased away from the book's centre, and
-growth-over-time is doing double duty — a billboard that scales up reads as
-approaching the viewer, which is what sells "off the book" rather than "on
-the page".
+Kept for `compare.html`. If it is ever revived, these are the traps, every one
+of them found by breaking it:
 
-The canvas is a child of `.tome`, deliberately **not** of the clipped stage,
-so dust can leave the book. `edgeFade()` is not optional — without it the
-cloud gets sliced in a straight line at the canvas border and the illusion
-dies.
-
-Puffs also carry a `swirl` term — a small per-particle eddy driven by a phase
-that advances each frame — so the cloud curls instead of drifting in a straight
-line, and each new puff inherits a fraction of the *edge velocity* (how fast
-the free edge of the sheet is currently moving). That inheritance is what makes
-the dust look flung off the paper rather than dropped on top of it.
-
-Density knobs, all in `tome.js`: `peak` (per-puff alpha), `burst` in `emit()`,
-and the size multiplier in `addPuff`. Tuned so the text stays readable through
-the turn.
-
-### The leather
-
-`tools/make-tome-textures.py`. The grain is fractal noise crazed into plates,
-then aged deliberately: the rub at the edges and corners is modulated by a
-blotchy noise field so some of the edge survives and some is worn through to
-a lighter hide colour, plus scratches, staining, and a hand-worn patina where
-the book gets held. The gilt tooling and the cover lettering are masked with
-`tome/wear.png` so the gold has rubbed off in patches — that mask is doing a
-lot of the "old" work, and a solid gold rule immediately looks new again.
-
-### Sitting on the page
-
-The book is meant to look like an object on the paper, not an embed. What does
-that work, in rough order of importance: `.back-cover` is sized *larger* than
-the page block so leather sticks out past the paper on every side and animates
-from one board to two when it opens; a tight contact shadow (`.book::before`)
-plus a wide soft cast shadow (`.book::after`); a half-degree rotation on
-`.tome-stage`, so it looks set down rather than pasted in; enough width margin
-that paper shows on both sides; the fore-edge page stacks; and the pages inset
-slightly inside the boards. Remove the board overhang and it goes straight back
-to looking like a video player.
-
-`fitSheets()` shrinks a page's type until it fits its sheet. The content is
-fixed and the book's size isn't, so without it a long page overflows and clips
-— which is exactly what makes it look like a broken embed.
+- `.book` must **not** have `transform-style: preserve-3d` — with it, the
+  coplanar leaves z-fight and the compositor paints half of one and half of
+  another. Perspective on the book, `preserve-3d` only on each leaf.
+- The turn is a keyframe animation, not a transition: an easing curve cannot
+  linger at the angles where the lifted sheet is worth seeing and still hurry
+  through edge-on.
+- The curl is eight nested slices. All shading must live on `.cwrap` (a full
+  page wide, shared origin) — anything painted per slice draws a vertical line
+  at every seam.
+- **No `filter` anywhere on the turning sheet.** On a slice it flattens
+  `preserve-3d`; on the leaf it rasterises the sheet to a bitmap at its
+  untransformed size and then 3D-transforms it, which is what made the edge
+  look blurry.
+- Which face is showing is set explicitly from the rotation angle, because
+  backface culling stops being reliable once the subtree is 3D and mirrored.
 
 ## Substack
 

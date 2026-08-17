@@ -145,6 +145,21 @@
   setTimeout(status, 60);
 
   /* ---------------------------------------------------- the dust */
+  /* Two paths. `tsparticles` is what the compare page uses, to show the
+     library's own particle engine. Everything else goes through
+     book-dust.js, which tracks the crease StPageFlip draws and throws dust
+     off it. */
+  var kind = root.dataset.dustKind || 'cloud';
+
+  if (kind !== 'tsparticles' && window.BookDust) {
+    var dust = window.BookDust.attach(bookEl, dustEl, flip, { kind: kind });
+    window.addEventListener('resize', function () {
+      clearTimeout(root._dt);
+      root._dt = setTimeout(function () { dust.rebuild(); }, 220);
+    });
+    return;
+  }
+
   var container = null;
 
   // slim first: the emitters plugin expects the base bundle to be registered

@@ -26,6 +26,7 @@
 
 <link rel="stylesheet" href="assets/css/site.css">
 <link rel="stylesheet" href="assets/css/tome.css">
+<link rel="stylesheet" href="assets/css/tome-lib.css">
 </head>
 <body class="tome-page">
 <header class="topbar">
@@ -46,7 +47,7 @@
     <h1>About</h1>
   </div>
 
-  <div class="tome" data-tome>
+  <div class="libtome" data-tome-lib data-dust-kind="cloud">
     <div class="tome-fallback">
 
       <article class="page-src" data-type="cover">
@@ -141,7 +142,7 @@
     </div>
   </div>
 
-  <p class="tome-hint">Click the right-hand page, or use ← →</p>
+  <p class="tome-hint">Click a page to turn it — or drag a corner</p>
 </main>
 
 <footer class="site-foot">
@@ -152,6 +153,8 @@
   </div>
 </footer>
 <script src="assets/js/nav.js" defer></script>
-<script src="assets/js/tome.js" defer></script>
+<script src="assets/vendor/lib-tome.bundle.js" defer></script>
+<script src="assets/js/book-dust.js" defer></script>
+<script src="assets/js/tome-lib.js" defer></script>
 </body>
 </html>

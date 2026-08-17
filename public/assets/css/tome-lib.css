@@ -15,7 +15,13 @@
 .stf__outerShadow, .stf__innerShadow, .stf__hardShadow, .stf__hardInnerShadow{ position:absolute; left:0; top:0 }
 
 /* --- our dressing on top of it --- */
-.libtome{ position:relative; margin:0 auto; width:100%; touch-action:pan-y }
+.libtome{
+  position:relative; margin:0 auto; touch-action:pan-y;
+  width:100%;
+  /* the about page gives it a whole column, so cap it; inside the compare
+     grid the column is already narrow and this never bites */
+  max-width:min(880px, 88vw, calc((100svh - 330px) * 1.42));
+}
 .libtome-stage{ position:relative; margin:0 auto; width:100% }
 .libtome-book{ margin:0 auto }
 
