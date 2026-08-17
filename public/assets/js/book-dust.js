@@ -90,16 +90,43 @@
     };
   }
 
-  /* Dust does not just get dragged along behind the page — the page slaps
-     the air and it goes everywhere. Up, down and left freely, with only a
-     little to the right, and only a small share of the crease's own motion. */
+  /* Every turn gets its own gust: a preferred direction, a strength, a
+     density and a size scale. Without this, each flip throws an identical
+     cloud and the repetition is obvious after three or four turns. */
+  function makeGust() {
+    var a = Math.random() * 6.283;
+    return {
+      gx: Math.cos(a), gy: Math.sin(a) * 0.8 - 0.25,   // leans upward on average
+      lean: 0.25 + Math.random() * 0.85,
+      rate: 0.72 + Math.random() * 0.75,
+      size: 0.78 + Math.random() * 0.66,
+      spread: 0.8 + Math.random() * 1.1,
+      yBias: 0.25 + Math.random() * 0.9,
+      life: 0.8 + Math.random() * 0.55
+    };
+  }
+  var FLAT_GUST = makeGust();
+
+  /* Dust does not get dragged along behind the page — the page slaps the air
+     and it goes everywhere. A full circle of directions, the rightward half
+     damped but not suppressed, only a small share of the crease's own motion,
+     and this turn's gust laid over the top. */
   function throwVel(f, base) {
+    var g = f.gust || FLAT_GUST;
     var ang = Math.random() * 6.283;
     var cx = Math.cos(ang), sy = Math.sin(ang);
-    if (cx > 0) cx *= 0.30;
-    var sp = base * (0.3 + Math.pow(Math.random(), 0.6) * 1.6);
-    return { vx: cx * sp + f.v * 0.16 + rnd(-0.15, 0.15),
-             vy: sy * sp - 0.2 };
+    if (cx > 0) cx *= 0.45;
+    var sp = base * g.spread * (0.25 + Math.pow(Math.random(), 0.5) * 2.1);
+    return {
+      vx: cx * sp + g.gx * g.lean * sp * 0.55 + f.v * 0.14 + rnd(-0.3, 0.3),
+      vy: sy * sp + g.gy * g.lean * sp * 0.55 + rnd(-0.25, 0.15)
+    };
+  }
+
+  /* where along the page edge a particle is born — varies per turn */
+  function spawnY(f) {
+    var g = f.gust || FLAT_GUST;
+    return f.top + Math.pow(Math.random(), g.yBias) * f.h;
   }
 
   /* =====================================================================
@@ -114,18 +141,19 @@
       emit: function (f, power) {
         // Fine and numerous rather than few and large — a handful of big
         // sprites reads as bubbles no matter how you fade them.
-        var n = Math.round(rnd(9, 21) * power * AMOUNT);
+        var g = f.gust || FLAT_GUST;
+        var n = Math.round(rnd(9, 21) * power * AMOUNT * g.rate);
         if (ps.length > 900) ps.splice(0, ps.length - 900);
         for (var i = 0; i < n; i++) {
-          var y = f.top + Math.pow(Math.random(), 0.8) * f.h;
+          var y = spawnY(f);
           var v = throwVel(f, 1.15);
           ps.push({
             x: f.x + rnd(-9, 9), y: y,
             vx: v.vx, vy: v.vy,
-            s: rnd(3.5, 17) * (0.75 + power * 0.4),
+            s: rnd(3.5, 17) * (0.75 + power * 0.4) * g.size,
             grow: rnd(1.003, 1.013),
             rot: rnd(0, 6.28), spin: rnd(-0.014, 0.014),
-            life: 0, fade: rnd(0.006, 0.017),
+            life: 0, fade: rnd(0.006, 0.017) / g.life,
             peak: rnd(0.06, 0.17),
             img: (Math.random() * sprites.length) | 0
           });
@@ -232,17 +260,19 @@
     var ps = [];
     return {
       emit: function (f, power) {
-        var n = Math.round(rnd(95, 200) * power * AMOUNT);
-        if (ps.length > 3200) ps.splice(0, ps.length - 3200);
+        // baseline raised to what looked right on the slider at 1.9x
+        var g = f.gust || FLAT_GUST;
+        var n = Math.round(rnd(180, 380) * power * AMOUNT * g.rate);
+        if (ps.length > 4200) ps.splice(0, ps.length - 4200);
         for (var i = 0; i < n; i++) {
-          var y = f.top + Math.random() * f.h;
+          var y = spawnY(f);
           var v = throwVel(f, 1.6);
           ps.push({
             x: f.x + rnd(-12, 12), y: y,
             vx: v.vx, vy: v.vy,
             cx: 0, cy: 0, off: (Math.random() * 3) | 0,
-            s: rnd(0.7, 2.1),
-            life: 1, decay: rnd(0.004, 0.013),
+            s: rnd(0.7, 2.1) * (0.8 + g.size * 0.35),
+            life: 1, decay: rnd(0.004, 0.013) / g.life,
             a: rnd(0.12, 0.4),
             pale: Math.random() < 0.4
           });
@@ -397,13 +427,14 @@
     }
 
     var read = foldReader(bookEl);
-    var raf = null, idleAfter = 0, alive = 0;
+    var raf = null, idleAfter = 0, alive = 0, gust = makeGust();
 
     function loop(t) {
       raf = null;
       if (!engine) return;
       var f = read(host.getBoundingClientRect());
       if (f) {
+        f.gust = gust;
         engine.emit(f, Math.min(1.6, 0.35 + Math.abs(f.v) * 0.12));
         idleAfter = t + 2600;
       }
@@ -412,8 +443,33 @@
     }
     function kick() { if (!raf) raf = requestAnimationFrame(loop); }
 
+    /* A burst the moment a flip starts, independent of the per-frame
+       tracking. Hard covers and backward flips move differently and the
+       tracker can miss the first frames of them; this guarantees that every
+       flip of any kind visibly raises dust. */
+    function burst() {
+      if (!engine) return;
+      var hr = host.getBoundingClientRect();
+      var blk = bookEl.querySelector('.stf__block');
+      var br = blk ? blk.getBoundingClientRect() : hr;
+      var f = read(hr) || {
+        x: (br.left + br.width / 2) - hr.left,
+        top: br.top - hr.top,
+        bottom: br.bottom - hr.top,
+        h: Math.max(1, br.height),
+        v: 0
+      };
+      f.gust = gust;
+      for (var i = 0; i < 7; i++) engine.emit(f, 1.15);
+      kick();
+    }
+
     if (flip && flip.on) {
-      flip.on('changeState', function (e) { if (e.data !== 'read') kick(); });
+      flip.on('changeState', function (e) {
+        if (e.data === 'read') return;
+        gust = makeGust();            // a fresh gust for every turn
+        burst();
+      });
       flip.on('flip', kick);
     }
 

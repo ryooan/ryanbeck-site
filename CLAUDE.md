@@ -214,10 +214,20 @@ string `'none'` on a hard page, so a truthiness check calls every cover a soft
 fold, finds no outer shadow, and silently emits nothing.
 
 Direction comes from `throwVel()`: a random angle over the full circle with the
-rightward component scaled to 0.3, a slight overall lift, and only ~16% of the
-crease's own velocity mixed in. Inheriting more than that drags everything
-sideways and the dust just streams away from the page instead of billowing off
-it.
+rightward component damped to 0.45, and only ~14% of the crease's own velocity
+mixed in. Inheriting more than that drags everything sideways and the dust
+streams off in a fan instead of billowing.
+
+**Every flip draws a fresh gust** (`makeGust()`) — its own preferred direction,
+lean, density, particle size, lifetime and spawn distribution along the page
+edge. Without it every turn throws an identical cloud, which is obvious by the
+third or fourth page.
+
+**A burst fires the instant a flip starts**, independent of the per-frame
+tracking (`burst()`). Hard covers and backward flips move differently and the
+tracker can miss their opening frames, so this guarantees that every flip of
+any kind — forward, back, cover open, cover close — visibly raises dust. If it
+cannot read a fold at all it falls back to the book's own box.
 
 | kind | technique |
 |---|---|
