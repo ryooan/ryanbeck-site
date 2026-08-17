@@ -47,11 +47,11 @@ smooth = np.array(Image.fromarray(np.clip(height * 255, 0, 255).astype(np.uint8)
                   .filter(ImageFilter.GaussianBlur(.7)), np.float32) / 255
 shade = emboss(smooth, 1.15)
 
-deep = np.array([26, 13, 11], np.float32)              # near-black in the creases
-mid  = np.array([78, 40, 32], np.float32)              # oxblood
-worn = np.array([152, 111, 80], np.float32)            # rubbed back to the hide
+deep = np.array([56, 32, 24], np.float32)              # the creases
+mid  = np.array([124, 74, 50], np.float32)             # sun-faded oxblood
+worn = np.array([190, 152, 112], np.float32)           # rubbed back to the hide
 
-col = deep[None, None, :] + (mid - deep)[None, None, :] * (shade[:, :, None] * .78 + height[:, :, None] * .55)
+col = deep[None, None, :] + (mid - deep)[None, None, :] * (shade[:, :, None] * .72 + height[:, :, None] * .70)
 
 # --- wear: edges and corners rub first -----------------------------------
 edge_d = np.minimum(np.minimum(nx, 1 - nx) * (W / H), np.minimum(ny, 1 - ny))
@@ -63,7 +63,7 @@ patch = np.clip((patch - .40) * 3.4, 0, 1)
 rub = np.clip(edge_w * 1.0 + corner * .95, 0, 1) * (.25 + .95 * patch)
 rub = np.clip(rub, 0, 1)
 col = col * (1 - rub[:, :, None] * .92) + worn[None, None, :] * rub[:, :, None] * .92
-col += (rub * shade * 26)[:, :, None]                  # rubbed leather catches light
+col += (rub * shade * 34)[:, :, None]                  # rubbed leather catches light
 
 # --- scuffs and scratches -------------------------------------------------
 rng = np.random.default_rng(101)
@@ -75,18 +75,20 @@ for _ in range(70):
     ds.line([x0, y0, x0 + math.cos(ang) * ln, y0 + math.sin(ang) * ln],
             fill=int(rng.uniform(50, 150)), width=int(rng.uniform(1, 3)))
 scr = np.array(scr.filter(ImageFilter.GaussianBlur(.9)), np.float32) / 255
-col = col * (1 - scr[:, :, None] * .5) + worn[None, None, :] * scr[:, :, None] * .5
+col = col * (1 - scr[:, :, None] * .55) + worn[None, None, :] * scr[:, :, None] * .55
 
 # --- staining -------------------------------------------------------------
 stain = fbm(W, H, 4, seed=16, persistence=.6)
 stain = np.clip((stain - .52) * 4.2, 0, 1) * .5
-col = col * (1 - stain[:, :, None] * .45) + np.array([54, 33, 20], np.float32)[None, None, :] * stain[:, :, None] * .45
+col = col * (1 - stain[:, :, None] * .38) + np.array([96, 62, 38], np.float32)[None, None, :] * stain[:, :, None] * .38
 
 # a hand-worn patina toward the middle where it gets held
 hold = np.exp(-(((nx - .55) / .40) ** 2 + ((ny - .5) / .46) ** 2))
-col *= (1 - hold[:, :, None] * .12)
+col *= (1 - hold[:, :, None] * .07)
 
-col *= np.clip(1 - (np.sqrt(((xx - W / 2) / (W * .95)) ** 2 + ((yy - H / 2) / (H * .99)) ** 2) ** 3.4) * .16, .74, 1)[:, :, None]
+col *= np.clip(1 - (np.sqrt(((xx - W / 2) / (W * 1.05)) ** 2 + ((yy - H / 2) / (H * 1.08)) ** 2) ** 3.6) * .10, .86, 1)[:, :, None]
+bleach = fbm(W, H, 4, seed=17, persistence=.62)
+col = col * (0.86 + 0.30 * bleach[:, :, None])          # unevenly faded by light
 Image.fromarray(np.clip(col, 0, 255).astype(np.uint8)).save('public/assets/tome/leather.jpg', quality=88, optimize=True)
 print('leather')
 

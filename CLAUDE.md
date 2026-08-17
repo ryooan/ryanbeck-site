@@ -173,7 +173,10 @@ Two pages per leaf on a wide screen, one per leaf on a phone, rebuilt on
 crossing the 821px breakpoint.
 
 On a phone the book is a genuinely **one-page-wide book** — not a clipped
-window onto a spread. The earlier version kept the two-page stage and hid the
+window onto a spread. Once opened it *stays* open: the boards stretch to
+`left: -103%; width: 206%` so the verso and the left board run off the left of
+the screen and remain there. You're looking at the right-hand page of a real
+open book, cropped by the viewport. The earlier version kept the two-page stage and hid the
 left half with `overflow: hidden`, and it read as a frame stuck on the page:
 boards, shadows and dust all got sliced at a straight border. Now `.leaf` is
 `left:0; width:100%`, nothing is clipped, and a turned sheet swings away off
@@ -208,6 +211,29 @@ call `layout()` to put the leaf in its resting `flipped` state. `layout()`
 takes a `skip` argument so the sheet in flight isn't yanked into place
 mid-animation. Then `.book` gets a `thump` keyframe.
 
+### The curl
+
+A rigid rotating plane reads as cardboard. During a turn `curlify()` rebuilds
+each face of the sheet in flight as **eight nested slices**: slice *n* sits at
+`left: 100%` of slice *n−1* and carries `rotateY(var(--curl))`, so the
+rotations accumulate and bend the page into a cylinder. Each slice holds a
+clone of the page inside a clipped wrapper, shifted sideways by its index, so
+the eight of them read as one continuous sheet.
+
+Two details that matter:
+
+- The page texture lives on `.cwrap` (a whole page wide), **not** on the clip.
+  Put it on the clip and it restarts at every seam, and you can see all eight
+  of them.
+- No inset shadow on the slices, for the same reason — it draws a dark line at
+  every boundary. Depth comes from a single `drop-shadow` on the slice and the
+  per-slice tint, which steps very gently (0.017 alpha per index).
+
+`--curl` is set frame by frame from the dust loop: `sin(π · progress^0.85) ·
+4.4°`, so the bend grows into the arc and relaxes as the sheet lands. Slices
+are torn down when the turn ends — only the sheet in flight is ever curled, so
+it's ~16 clones per turn and nothing persistent.
+
 ### Dust
 
 `tools/make-dust.py` generates four irregular puff sprites — fractal noise
@@ -235,9 +261,15 @@ so dust can leave the book. `edgeFade()` is not optional — without it the
 cloud gets sliced in a straight line at the canvas border and the illusion
 dies.
 
-Density knobs, all in `tome.js`: `peak` (per-puff alpha, ~0.11–0.26), `burst`
-in `emit()`, and the size multiplier in `addPuff`. Tuned so the text stays
-readable through the turn.
+Puffs also carry a `swirl` term — a small per-particle eddy driven by a phase
+that advances each frame — so the cloud curls instead of drifting in a straight
+line, and each new puff inherits a fraction of the *edge velocity* (how fast
+the free edge of the sheet is currently moving). That inheritance is what makes
+the dust look flung off the paper rather than dropped on top of it.
+
+Density knobs, all in `tome.js`: `peak` (per-puff alpha), `burst` in `emit()`,
+and the size multiplier in `addPuff`. Tuned so the text stays readable through
+the turn.
 
 ### The leather
 

@@ -100,6 +100,45 @@
     return f;
   }
 
+  var CURL_SLICES = 8;
+
+  /* Rebuild a face as nested slices so it can bend. Each slice holds a clone
+     of the page shifted sideways and clipped, so the five of them read as one
+     continuous sheet — but each is rotated a few degrees more than the last,
+     which is what turns a rigid plane into a curled one. */
+  function curlify(leaf) {
+    leaf.querySelectorAll('.face').forEach(function (face) {
+      var sheet = face.querySelector('.sheet, .cover-inner');
+      if (!sheet || face.classList.contains('curled')) return;
+      var leather = face.classList.contains('cover');
+
+      var outer = null, parent = face;
+      for (var i = 0; i < CURL_SLICES; i++) {
+        var slice = el('div', 'cslice');
+        var clip  = el('div', 'cclip');
+        var wrap  = el('div', 'cwrap' + (leather ? ' leather' : ''));
+        clip.style.setProperty('--i', String(i));
+        wrap.style.setProperty('--i', String(i));
+        wrap.appendChild(sheet.cloneNode(true));
+        clip.appendChild(wrap);
+        slice.appendChild(clip);
+        parent.appendChild(slice);
+        parent = slice;
+        if (!outer) outer = slice;
+      }
+      face.classList.add('curled');
+    });
+  }
+
+  function uncurl(leaf) {
+    leaf.querySelectorAll('.face').forEach(function (face) {
+      face.classList.remove('curled');
+      var s = face.querySelector(':scope > .cslice');
+      if (s) s.remove();
+    });
+    leaf.style.removeProperty('--curl');
+  }
+
   /* A page that overflows its sheet looks broken, and the content is fixed
      while the book's size isn't. Shrink type until it fits. */
   function fitSheets() {
@@ -155,6 +194,7 @@
     leaf.classList.add('turning');
     leaf.style.zIndex = String(leaves.length + 5);     // the turning sheet is on top
     leaf.classList.remove('flipped');
+    curlify(leaf);
     leaf.classList.add(fwd ? 'turn-fwd' : 'turn-back');
 
     index = target;
@@ -165,6 +205,7 @@
 
     setTimeout(function () {
       leaf.classList.remove('turning', 'turn-fwd', 'turn-back');
+      uncurl(leaf);
       leaf.style.animation = 'none';
       leaf.offsetHeight;                                 // flush, then rest
       leaf.style.animation = '';
@@ -240,12 +281,15 @@
       sprite: (Math.random() * 4) | 0,
       s: g.page * (0.17 + Math.random() * 0.26) * (opts.big || 1),
       grow: 1.008 + Math.random() * 0.014,
-      vx: (dir * (0.5 + Math.random() * 1.5) + away * (0.55 + Math.random() * 1.15)) * (opts.push || 1),
+      vx: (dir * (0.5 + Math.random() * 1.5) + away * (0.55 + Math.random() * 1.15)) * (opts.push || 1)
+          + (opts.inherit || 0),
       vy: -(0.42 + Math.random() * 1.05) * (opts.push || 1),
+      swirl: (Math.random() - 0.5) * 0.075,        // its own little eddy
+      phase: Math.random() * 6.283,
       rot: Math.random() * 6.283,
       spin: (Math.random() - 0.5) * 0.012,
-      life: 0, fade: 0.0068 + Math.random() * 0.008,
-      peak: 0.11 + Math.random() * 0.15
+      life: 0, fade: 0.0080 + Math.random() * 0.009,
+      peak: 0.14 + Math.random() * 0.20
     });
   }
 
@@ -258,7 +302,7 @@
         vy: -(0.25 + Math.random() * 1.1),
         s: 1.1 + Math.random() * 2.4,
         life: 1, decay: 0.006 + Math.random() * 0.012,
-        a: 0.16 + Math.random() * 0.24
+        a: 0.20 + Math.random() * 0.26
       });
     }
   }
@@ -266,7 +310,7 @@
   /* Emit continuously along the leading edge of the sheet while it turns,
      rather than in a few fixed bursts — the dust then follows the page. */
   function startEmitter(dir, ms) {
-    emitter = { dir: dir, t0: performance.now(), ms: ms };
+    emitter = { dir: dir, t0: performance.now(), ms: ms, edge: null, leaf: null };
     if (!raf) raf = requestAnimationFrame(tick);
   }
 
@@ -284,24 +328,33 @@
     if (turning) {
       var m = new DOMMatrix(getComputedStyle(turning).transform);
       ang = Math.atan2(m.m13, m.m11);           // 0 .. -pi
+      // bend the sheet while we're here — peaks in the middle of the arc
+      var prog = Math.min(1, Math.max(0, t / emitter.ms));
+      var curl = Math.sin(Math.PI * Math.pow(prog, 0.85)) * 4.4;
+      turning.style.setProperty('--curl', curl.toFixed(2) + 'deg');
     }
     // the free edge of the sheet, which is where the dust actually comes off
     var edge = g.spine + Math.cos(ang) * g.page * dir;
 
-    var burst = t < 240 ? 2.0 : (t > emitter.ms - 300 ? 1.7 : 0.8);
-    var n = Math.random() < burst % 1 ? Math.ceil(burst) : Math.floor(burst);
+    // how fast that edge is travelling — new dust inherits some of it, so it
+    // looks flung off the paper rather than dropped in place
+    var ev = emitter.edge === null ? 0 : (edge - emitter.edge);
+    emitter.edge = edge;
+
+    var burst = t < 260 ? 4.2 : (t > emitter.ms - 320 ? 3.4 : 2.2);
+    var n = Math.floor(burst) + (Math.random() < burst % 1 ? 1 : 0);
     for (var i = 0; i < n; i++) {
-      var y = g.top + (0.06 + Math.random() * 0.88) * (g.bottom - g.top);
-      var x = edge + (Math.random() - .5) * g.page * 0.16;
-      addPuff(x, y, dir, g, { big: 0.8 + Math.random() * 0.7 });
+      var y = g.top + (0.04 + Math.random() * 0.92) * (g.bottom - g.top);
+      var x = edge + (Math.random() - .5) * g.page * 0.13;
+      addPuff(x, y, dir, g, { big: 0.8 + Math.random() * 0.8, inherit: ev * (0.35 + Math.random() * 0.5) });
     }
-    addSpecks(edge, g.top + Math.random() * (g.bottom - g.top), dir, g, 2);
+    addSpecks(edge, g.top + Math.random() * (g.bottom - g.top), dir, g, 4);
   }
 
   function thumpPuff(dir) {
     if (!ctx) return;
     var g = geom();
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 18; i++) {
       var y = g.top + (0.05 + Math.random() * 0.9) * (g.bottom - g.top);
       var x = g.spine + dir * Math.random() * g.page * 0.9;
       addPuff(x, y, dir, g, { big: 1.1 + Math.random() * 0.9, push: 1.4 });
@@ -342,6 +395,10 @@
     var i, p;
     for (i = puffs.length - 1; i >= 0; i--) {
       p = puffs[i];
+      // curl the flow field a little so the cloud swirls instead of drifting
+      p.phase += 0.045;
+      p.vx += Math.sin(p.phase + p.y * 0.012) * p.swirl;
+      p.vy += Math.cos(p.phase * 0.8 + p.x * 0.011) * p.swirl * 0.7;
       p.x += p.vx; p.y += p.vy;
       p.vx *= 0.991; p.vy = p.vy * 0.991 + 0.004;
       p.s *= p.grow; p.rot += p.spin;
