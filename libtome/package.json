@@ -1,0 +1,20 @@
+{
+  "name": "libtome-vendor",
+  "version": "1.0.0",
+  "description": "Bundles StPageFlip + tsParticles for the library version of the book. Not part of the site build.",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild src/entry.js --bundle --format=iife --minify --target=es2019 --outfile=../public/assets/vendor/lib-tome.bundle.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tsparticles/engine": "^4.3.2",
+    "@tsparticles/plugin-emitters": "^4.3.2",
+    "@tsparticles/slim": "^4.3.2",
+    "esbuild": "^0.28.2",
+    "page-flip": "^2.0.7"
+  },
+  "private": true
+}
