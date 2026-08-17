@@ -239,12 +239,12 @@
       x: x, y: y,
       sprite: (Math.random() * 4) | 0,
       s: g.page * (0.17 + Math.random() * 0.26) * (opts.big || 1),
-      grow: 1.006 + Math.random() * 0.012,
-      vx: (dir * (0.4 + Math.random() * 1.2) + away * (0.35 + Math.random() * 0.8)) * (opts.push || 1),
-      vy: -(0.26 + Math.random() * 0.8) * (opts.push || 1),
+      grow: 1.008 + Math.random() * 0.014,
+      vx: (dir * (0.5 + Math.random() * 1.5) + away * (0.55 + Math.random() * 1.15)) * (opts.push || 1),
+      vy: -(0.42 + Math.random() * 1.05) * (opts.push || 1),
       rot: Math.random() * 6.283,
       spin: (Math.random() - 0.5) * 0.012,
-      life: 0, fade: 0.010 + Math.random() * 0.011,
+      life: 0, fade: 0.0068 + Math.random() * 0.008,
       peak: 0.11 + Math.random() * 0.15
     });
   }
@@ -343,7 +343,7 @@
     for (i = puffs.length - 1; i >= 0; i--) {
       p = puffs[i];
       p.x += p.vx; p.y += p.vy;
-      p.vx *= 0.985; p.vy = p.vy * 0.985 + 0.006;
+      p.vx *= 0.991; p.vy = p.vy * 0.991 + 0.004;
       p.s *= p.grow; p.rot += p.spin;
       p.life += p.fade;
       if (p.life >= 1) { puffs.splice(i, 1); continue; }

@@ -172,6 +172,15 @@ else needs to change.
 Two pages per leaf on a wide screen, one per leaf on a phone, rebuilt on
 crossing the 821px breakpoint.
 
+On a phone the book is a genuinely **one-page-wide book** — not a clipped
+window onto a spread. The earlier version kept the two-page stage and hid the
+left half with `overflow: hidden`, and it read as a frame stuck on the page:
+boards, shadows and dust all got sliced at a straight border. Now `.leaf` is
+`left:0; width:100%`, nothing is clipped, and a turned sheet swings away off
+the left over the paper. `.leaf.flipped` is `visibility:hidden` on phones
+because turned sheets live off-screen and would otherwise pile up there.
+The verso of each phone leaf is intentionally blank — you never see it flat.
+
 ### The thing that will bite you
 
 `.book` deliberately does **not** have `transform-style: preserve-3d`. It has
@@ -229,6 +238,16 @@ dies.
 Density knobs, all in `tome.js`: `peak` (per-puff alpha, ~0.11–0.26), `burst`
 in `emit()`, and the size multiplier in `addPuff`. Tuned so the text stays
 readable through the turn.
+
+### The leather
+
+`tools/make-tome-textures.py`. The grain is fractal noise crazed into plates,
+then aged deliberately: the rub at the edges and corners is modulated by a
+blotchy noise field so some of the edge survives and some is worn through to
+a lighter hide colour, plus scratches, staining, and a hand-worn patina where
+the book gets held. The gilt tooling and the cover lettering are masked with
+`tome/wear.png` so the gold has rubbed off in patches — that mask is doing a
+lot of the "old" work, and a solid gold rule immediately looks new again.
 
 ### Sitting on the page
 

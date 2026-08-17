@@ -200,28 +200,65 @@ html:has(.tome-page){ overflow-x:clip }
 /* ---------- the cover ---------- */
 .face.cover{
   background:#2a1713 url("../tome/leather.jpg") center/cover;
-  box-shadow:inset 0 0 60px rgba(0,0,0,.55), inset 2px 0 0 rgba(255,220,170,.06);
+  box-shadow:
+    inset 0 0 70px rgba(0,0,0,.6),
+    inset 0 0 22px rgba(0,0,0,.5),
+    inset 2px 0 0 rgba(255,220,170,.05);
   border-radius:2px 8px 8px 2px;
+}
+/* age on top of the leather: uneven darkening and a couple of old stains */
+.face.cover::before{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:2;
+  background:
+    radial-gradient(38% 26% at 78% 16%, rgba(20,10,6,.34), transparent 70%),
+    radial-gradient(30% 22% at 14% 74%, rgba(20,10,6,.30), transparent 72%),
+    radial-gradient(52% 40% at 46% 52%, rgba(150,110,70,.07), transparent 70%),
+    linear-gradient(200deg, rgba(0,0,0,.22), transparent 34%, rgba(0,0,0,.28));
+  mix-blend-mode:multiply;
 }
 .cover-inner{
   position:absolute; inset:clamp(12px,2vw,26px);
-  border:1.5px solid rgba(214,172,104,.42);
-  border-radius:2px;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   gap:clamp(10px,2vw,22px); padding:clamp(14px,2.6vw,30px);
 }
+/* The tooling is masked with the wear map so the gold has rubbed off in
+   patches, the way gilt does. Two rules, an outer and an inner. */
 .cover-inner::before{
-  content:""; position:absolute; inset:6px; border:1px solid rgba(214,172,104,.22); border-radius:2px;
+  content:""; position:absolute; inset:0; pointer-events:none;
+  border:1.5px solid rgba(222,180,110,.72); border-radius:2px;
+  box-shadow:inset 0 0 0 5px transparent, inset 0 0 0 6px rgba(222,180,110,.34);
+  -webkit-mask-image:url("../tome/wear.png"); mask-image:url("../tome/wear.png");
+  -webkit-mask-size:180% 260%; mask-size:180% 260%;
+  -webkit-mask-position:34% 46%; mask-position:34% 46%;
 }
-.cover-mark{ width:min(78%,320px) }
+/* the debossed line under the gilt, so the tooling has depth */
+.cover-inner::after{
+  content:""; position:absolute; inset:-1.5px; pointer-events:none;
+  border:1.5px solid rgba(20,10,6,.5); border-radius:3px; z-index:-1;
+}
+.cover-mark{
+  width:min(78%,320px);
+  -webkit-mask-image:url("../tome/wear.png"); mask-image:url("../tome/wear.png");
+  -webkit-mask-size:210% 620%; mask-size:210% 620%;
+  -webkit-mask-position:28% 38%; mask-position:28% 38%;
+  filter:drop-shadow(0 1px 0 rgba(12,6,3,.7));
+}
 .cover-portrait{
   width:min(52%,190px); aspect-ratio:1/1.22; overflow:hidden;
   border:1px solid rgba(214,172,104,.5);
-  box-shadow:0 0 0 5px rgba(20,10,6,.55), inset 0 0 26px rgba(0,0,0,.6), 0 14px 30px -14px #000;
+  box-shadow:0 0 0 5px rgba(20,10,6,.6), 0 0 0 6px rgba(214,172,104,.18), inset 0 0 26px rgba(0,0,0,.65), 0 14px 30px -14px #000;
+}
+.cover-portrait{ position:relative }
+.cover-portrait::after{      /* an old print, foxed and darkened at the edges */
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(75% 65% at 50% 45%, transparent 40%, rgba(30,16,8,.55) 100%),
+    linear-gradient(160deg, rgba(120,86,48,.22), transparent 45%);
+  mix-blend-mode:multiply;
 }
 .cover-portrait img{
   width:100%; height:100%; object-fit:cover;
-  filter:sepia(.62) contrast(1.08) brightness(.86) saturate(.7);
+  filter:sepia(.85) contrast(1.18) brightness(.62) saturate(.45);
 }
 .cover-sub{
   font-family:var(--sans); font-size:clamp(.52rem,.78vw,.68rem); letter-spacing:.42em;
@@ -237,7 +274,7 @@ html:has(.tome-page){ overflow-x:clip }
 .tome[data-open="1"] .cover-dust{ opacity:0 }
 
 /* ---------- dust canvas ---------- */
-.dust{ position:absolute; left:-9%; top:-14%; width:118%; height:126%; pointer-events:none; z-index:40 }
+.dust{ position:absolute; left:-22%; top:-26%; width:144%; height:150%; pointer-events:none; z-index:40 }
 
 /* ---------- controls ---------- */
 .tome-controls{
@@ -269,21 +306,34 @@ html:has(.tome-page){ overflow-x:clip }
 .turn-zone:disabled{ cursor:default }
 
 /* ---------- one page at a time on a phone ----------
-   The stage stays two pages wide so the leaf geometry is identical; we just
-   slide it left by a page and clip, so only the recto is ever on screen and
-   turned pages swing away off the left edge. */
+   Not a clipped window onto a spread — that's what made it read as a frame
+   stuck on the page. On a phone the book IS one page wide: boards, shadows
+   and dust all sit on the paper, and a turned sheet swings away off to the
+   left over the page rather than being sliced off at a border. */
 @media (max-width:820px){
-  .tome{ width:min(360px, 82vw, calc((100svh - 340px) * .70)) }
-  .tome-stage{ width:200%; transform:translateX(-50%) rotate(-.55deg); aspect-ratio:1.52/1 }
-  .book{ --shift:0% !important; perspective:1500px }
+  .tome{ width:min(330px, 76vw, calc((100svh - 340px) * .70)) }
+  .tome-stage{ width:100%; transform:rotate(-.7deg); aspect-ratio:.72/1 }
+  .tome-viewport{ overflow:visible; padding:3% 0 10% }
+
+  .book{ --shift:0% !important; perspective:1400px }
+  .leaf{ left:0; width:100% }
+  .back-cover,
+  .tome[data-open="1"] .back-cover{
+    left:-1.8%; width:103.6%; border-radius:3px 9px 9px 3px;
+  }
+  .book::before,
+  .tome[data-open="1"] .book::before{ left:2%; right:2% }
+  .book::after,
+  .tome[data-open="1"] .book::after{ left:-6%; right:-6%; bottom:-7%; height:18% }
+
+  /* a turned sheet lives off the left of the book, where nobody can see it */
+  .leaf.flipped{ visibility:hidden }
+
+  .dust{ left:-40%; top:-24%; width:180%; height:146% }
   .sheet{ font-size:clamp(.84rem,3.6vw,1.02rem) }
   .sheet p{ max-width:none }
   .face, .face.back{ border-radius:2px 6px 6px 2px }
   .edge.left{ display:none }
-  /* the stage is two pages wide here, so it has to be clipped or a turned
-     page hanging off the left creates a horizontal scrollbar */
-  .tome-viewport{ overflow:hidden; padding:2% 0 8% }
-  .dust{ left:-12%; top:-10%; width:124%; height:124% }
 }
 
 /* ---------- no JS / reduced motion: just read it ----------

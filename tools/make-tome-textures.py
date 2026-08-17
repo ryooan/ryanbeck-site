@@ -25,23 +25,79 @@ def emboss(height, strength=1.0):
     return np.clip(0.5 + (gx * -1.0 - gy * 1.0) * strength * 26, 0, 1)
 
 # ---------------------------------------------------------------- leather
+# A book nobody has opened in thirty years: rubbed corners, a scuffed spine
+# edge, water staining, and a grain that has cracked into plates.
 W, H = 900, 1260
-base = fbm(W, H, 7, seed=11)
-grain = fbm(W, H, 8, seed=12, persistence=.72)
-cell = fbm(W, H, 4, seed=13)
-height = base * .35 + grain * .5 + cell * .15
+yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+nx, ny = xx / W, yy / H
+
+base  = fbm(W, H, 7, seed=11)
+grain = fbm(W, H, 9, seed=12, persistence=.74)
+plate = fbm(W, H, 3, seed=13, persistence=.5)          # big leathery plates
+crack = fbm(W, H, 8, seed=14, persistence=.82)
+
+height = base * .28 + grain * .40 + plate * .22 + crack * .10
 height = (height - height.min()) / (height.max() - height.min())
-smooth = np.array(Image.fromarray((height * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(.8)), np.float32) / 255
-shade = emboss(smooth, .9)
-tone = np.array([74, 40, 33], np.float32)          # oxblood leather
-tone2 = np.array([34, 19, 16], np.float32)
-col = tone2[None, None, :] + (tone - tone2)[None, None, :] * (shade[:, :, None] * .85 + height[:, :, None] * .45)
-# a broad darkening toward the edges, like a well-handled book
-yy, xx = np.mgrid[0:H, 0:W]
-r = np.sqrt(((xx - W / 2) / (W * .78)) ** 2 + ((yy - H / 2) / (H * .82)) ** 2)
-col *= np.clip(1 - (r ** 2.6) * .55, .35, 1)[:, :, None]
-Image.fromarray(np.clip(col, 0, 255).astype(np.uint8)).save('public/assets/tome/leather.jpg', quality=86, optimize=True)
+
+# crazing: where the crack field is near a threshold, cut a fine valley
+craze = np.exp(-((crack - .5) ** 2) / (2 * 0.012 ** 2))
+height -= craze * .16
+
+smooth = np.array(Image.fromarray(np.clip(height * 255, 0, 255).astype(np.uint8))
+                  .filter(ImageFilter.GaussianBlur(.7)), np.float32) / 255
+shade = emboss(smooth, 1.15)
+
+deep = np.array([26, 13, 11], np.float32)              # near-black in the creases
+mid  = np.array([78, 40, 32], np.float32)              # oxblood
+worn = np.array([152, 111, 80], np.float32)            # rubbed back to the hide
+
+col = deep[None, None, :] + (mid - deep)[None, None, :] * (shade[:, :, None] * .78 + height[:, :, None] * .55)
+
+# --- wear: edges and corners rub first -----------------------------------
+edge_d = np.minimum(np.minimum(nx, 1 - nx) * (W / H), np.minimum(ny, 1 - ny))
+edge_w = np.clip(1 - edge_d / .042, 0, 1) ** 1.05
+corner = np.clip(1 - (np.minimum(nx, 1 - nx) * (W / H) + np.minimum(ny, 1 - ny)) / .13, 0, 1) ** 1.15
+# blotchy, so some of the edge survives and some is worn through
+patch = fbm(W, H, 6, seed=15, persistence=.7)
+patch = np.clip((patch - .40) * 3.4, 0, 1)
+rub = np.clip(edge_w * 1.0 + corner * .95, 0, 1) * (.25 + .95 * patch)
+rub = np.clip(rub, 0, 1)
+col = col * (1 - rub[:, :, None] * .92) + worn[None, None, :] * rub[:, :, None] * .92
+col += (rub * shade * 26)[:, :, None]                  # rubbed leather catches light
+
+# --- scuffs and scratches -------------------------------------------------
+rng = np.random.default_rng(101)
+scr = Image.new('L', (W, H), 0); ds = ImageDraw.Draw(scr)
+for _ in range(70):
+    x0, y0 = rng.uniform(0, W), rng.uniform(0, H)
+    ang = rng.uniform(-.5, .5) + (0 if rng.random() < .5 else 1.5708)
+    ln = rng.uniform(30, 300)
+    ds.line([x0, y0, x0 + math.cos(ang) * ln, y0 + math.sin(ang) * ln],
+            fill=int(rng.uniform(50, 150)), width=int(rng.uniform(1, 3)))
+scr = np.array(scr.filter(ImageFilter.GaussianBlur(.9)), np.float32) / 255
+col = col * (1 - scr[:, :, None] * .5) + worn[None, None, :] * scr[:, :, None] * .5
+
+# --- staining -------------------------------------------------------------
+stain = fbm(W, H, 4, seed=16, persistence=.6)
+stain = np.clip((stain - .52) * 4.2, 0, 1) * .5
+col = col * (1 - stain[:, :, None] * .45) + np.array([54, 33, 20], np.float32)[None, None, :] * stain[:, :, None] * .45
+
+# a hand-worn patina toward the middle where it gets held
+hold = np.exp(-(((nx - .55) / .40) ** 2 + ((ny - .5) / .46) ** 2))
+col *= (1 - hold[:, :, None] * .12)
+
+col *= np.clip(1 - (np.sqrt(((xx - W / 2) / (W * .95)) ** 2 + ((yy - H / 2) / (H * .99)) ** 2) ** 3.4) * .16, .74, 1)[:, :, None]
+Image.fromarray(np.clip(col, 0, 255).astype(np.uint8)).save('public/assets/tome/leather.jpg', quality=88, optimize=True)
 print('leather')
+
+# ------------------------------------------------- worn gilt: a wear mask
+W2, H2 = 700, 700
+m = fbm(W2, H2, 7, seed=31, persistence=.68)
+m2 = fbm(W2, H2, 9, seed=32, persistence=.8)
+mask = np.clip((m * .55 + m2 * .45 - .18) * 2.6, 0, 1) ** .7
+mask = np.clip(mask * 1.25, 0, 1)
+Image.fromarray((mask * 255).astype(np.uint8), 'L').convert('LA').save('public/assets/tome/wear.png', optimize=True)
+print('wear mask')
 
 # ------------------------------------------------------------------ page
 W, H = 1000, 1300
