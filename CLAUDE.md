@@ -232,7 +232,7 @@ cannot read a fold at all it falls back to the book's own box.
 | kind | technique |
 |---|---|
 | `puffs` | sprite billboards — small, numerous, growing and fading |
-| `mist` | a few thousand single pixels advected by a curl-noise flow field |
+| `mist` | a few thousand single pixels advected by a curl-noise flow field, lifting off the whole spread and hanging for seconds |
 | `both` | puffs for body with mist over it for grain — **what the site uses** |
 | `cloud` | translucent overlapping particles blurred into one mass |
 | `smoke` | SVG ellipses through `feTurbulence`, animated outward and discarded |
@@ -246,6 +246,14 @@ matter how they are faded, which was the first version's problem.
 `both` shares one canvas between two engines, so it clears once and passes
 `skipClear` to each.
 
+`mist` is deliberately slow and long-lived: about a third of the emission rate
+it had, three times the lifetime, and drag raised from 0.986 to 0.9955 per
+frame so particles carry well past the book instead of stalling a few dozen
+pixels out. Spawn points are split roughly half at the crease and half spread
+across the whole book box (`foldReader` reports `bx0`/`bx1` for that), because
+dust coming only off the fold reads as a jet rather than a sheet being
+disturbed.
+
 Performance, in order of what actually mattered (measured, headless, software
 rendering — real hardware is better):
 
@@ -258,11 +266,15 @@ rendering — real hardware is better):
    vector every third frame and coasts in between.
 3. `fillRect` rather than `arc`, bucketed into eight opacity bands so
    `globalAlpha` is set ~16 times a frame instead of three thousand.
-4. Ceilings of 900 puffs / 3200 motes, oldest dropped first.
+4. Ceilings of 900 puffs / 4800 motes, oldest dropped first.
+5. The dust canvas renders at `RES = 0.7` and CSS scales it up. The surface is
+   much bigger than the book so the cloud can drift clear of it, which makes
+   clearing and filling it the dominant cost; at this softness the resolution
+   drop is invisible and it bought back most of what the larger canvas cost.
 
-With all that, the dust costs about 4 fps: a soft page turn measures ~33 fps
-with the dust disabled entirely, because that is what StPageFlip's fold
-rendering costs on its own.
+With all that the dust costs about 1–2 fps. A soft page turn measures ~30 fps
+with the dust disabled entirely — that is what StPageFlip's fold rendering
+costs on its own, and it is the floor for this book size.
 
 Note on `cloud`: it accumulates with plain `source-over`. An earlier version
 used `lighter` plus a `contrast()` filter to fuse the blobs and the book caught

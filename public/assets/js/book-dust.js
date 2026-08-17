@@ -13,6 +13,7 @@
    ============================================================ */
 (function () {
   var AMOUNT = 1;
+  var RES = 0.7;                        // dust canvas backing-store scale
   var DUST_SRCS = window.__DUST_SRCS || [1, 2, 3, 4].map(function (n) {
     return 'assets/tome/dust-' + n + '.png';
   });
@@ -86,7 +87,12 @@
       var top = fr.top - rect.top, bot = fr.bottom - rect.top;
       var v = prev === null ? 0 : x - prev;
       prev = x;
-      return { x: x, top: top, bottom: bot, v: v, h: Math.max(1, bot - top), hard: !clipped };
+      var blk2 = bookEl.querySelector('.stf__block');
+      var b2 = blk2 ? blk2.getBoundingClientRect() : fr;
+      return {
+        x: x, top: top, bottom: bot, v: v, h: Math.max(1, bot - top), hard: !clipped,
+        bx0: b2.left - rect.left, bx1: b2.right - rect.left
+      };
     };
   }
 
@@ -260,19 +266,26 @@
     var ps = [];
     return {
       emit: function (f, power) {
-        // baseline raised to what looked right on the slider at 1.9x
+        // Fewer born per frame than before but each lives three times as
+        // long, so more of them are in the air at once and they hang around.
         var g = f.gust || FLAT_GUST;
-        var n = Math.round(rnd(180, 380) * power * AMOUNT * g.rate);
-        if (ps.length > 4200) ps.splice(0, ps.length - 4200);
+        var n = Math.round(rnd(60, 140) * power * AMOUNT * g.rate);
+        if (ps.length > 4800) ps.splice(0, ps.length - 4800);
+        var hasBox = f.bx1 > f.bx0;
         for (var i = 0; i < n; i++) {
-          var y = spawnY(f);
-          var v = throwVel(f, 1.6);
+          // Dust lifts off the whole sheet, not just the crease: about half
+          // comes off the fold, the rest from anywhere across the spread.
+          var x;
+          if (!hasBox || Math.random() < 0.45) x = f.x + rnd(-16, 16);
+          else x = rnd(f.bx0, f.bx1);
+          var y = f.top + Math.random() * f.h;
+          var v = throwVel(f, 0.85);
           ps.push({
-            x: f.x + rnd(-12, 12), y: y,
-            vx: v.vx, vy: v.vy,
+            x: x, y: y,
+            vx: v.vx * 0.7, vy: v.vy * 0.7,
             cx: 0, cy: 0, off: (Math.random() * 3) | 0,
             s: rnd(0.7, 2.1) * (0.8 + g.size * 0.35),
-            life: 1, decay: rnd(0.004, 0.013) / g.life,
+            life: 1, decay: rnd(0.0016, 0.0050) / g.life,
             a: rnd(0.12, 0.4),
             pale: Math.random() < 0.4
           });
@@ -296,9 +309,9 @@
             var c = curl(p.x * 0.018, p.y * 0.018, t * 0.00028);
             p.cx = c[0]; p.cy = c[1];
           }
-          p.vx += p.cx * 1.5; p.vy += p.cy * 1.5;
+          p.vx += p.cx * 0.85; p.vy += p.cy * 0.85;
           p.x += p.vx; p.y += p.vy;
-          p.vx *= 0.986; p.vy = p.vy * 0.986 + 0.004;
+          p.vx *= 0.9955; p.vy = p.vy * 0.9955 + 0.0016;
           p.life -= p.decay;
           if (p.life <= 0) { ps.splice(i, 1); continue; }
           var a = p.life * p.a * edgeFade(p.x, p.y, W, H);
@@ -416,11 +429,17 @@
       W = Math.max(2, Math.round(r.width)); H = Math.max(2, Math.round(r.height));
       host.innerHTML = '';
       if (spec.kind === 'canvas') {
+        // The dust surface is deliberately much larger than the book so the
+        // cloud can drift well clear of it, which makes clearing and filling
+        // it the main per-frame cost. Rendering at 0.7 and letting CSS scale
+        // up halves that, and on something this soft it is invisible.
         var canvas = el('canvas');
-        canvas.width = W; canvas.height = H;
+        canvas.width = Math.round(W * RES); canvas.height = Math.round(H * RES);
         canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%';
         host.appendChild(canvas);
-        engine = spec.make(canvas.getContext('2d'), W, H);
+        var c2 = canvas.getContext('2d');
+        c2.scale(RES, RES);
+        engine = spec.make(c2, W, H);
       } else {
         engine = spec.make(host, W, H);
       }

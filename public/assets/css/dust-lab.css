@@ -30,10 +30,10 @@
 }
 
 /* the stage is roomy so dust can leave the book and drift over the page */
-.lab-stage{ position:relative; width:100%; padding:13% 17% 16%; box-sizing:border-box }
+.lab-stage{ position:relative; width:100%; padding:9% 12% 11%; box-sizing:border-box }
 .lab-cell .libtome-book{ margin:0 auto; position:relative; z-index:2 }
 .lab-cell .libtome-boards{ z-index:1 }
-.lab-dust{ position:absolute; inset:0; z-index:5; pointer-events:none; overflow:visible }
+.lab-dust{ position:absolute; inset:-16% -20%; z-index:5; pointer-events:none; overflow:visible }
 .lab-dust canvas{ display:block }
 
 .lab-controls{
