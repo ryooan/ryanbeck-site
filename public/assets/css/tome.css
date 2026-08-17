@@ -155,16 +155,29 @@ html:has(.tome-page){ overflow-x:clip }
    than the last, which bends the page into a cylinder. JS drives --curl
    frame by frame so the bend peaks in the middle of the arc and relaxes at
    both ends. Each slice is shaded a little darker toward the free edge. */
-.face.curled{ background:none; box-shadow:none; overflow:visible }
+.face.curled{
+  background:none; box-shadow:none; overflow:visible;
+  /* the 3D chain has to stay unbroken or the slices flatten into the face */
+  transform-style:preserve-3d;
+}
+/* Backface culling is unreliable once the subtree is 3D and the face is
+   mirrored, so which face is showing is decided explicitly instead: JS adds
+   .past-half once the sheet is more than 90 degrees over. */
+.leaf.turning:not(.past-half) .face.back{ visibility:hidden }
+.leaf.turning.past-half .face.front{ visibility:hidden }
 .face.curled > .sheet, .face.curled > .cover-inner{ display:none }
 .cslice{
   position:absolute; top:0; left:0; width:12.5%; height:100%;
   transform-origin:left center;
   transform:rotateY(var(--curl,0deg));
   transform-style:preserve-3d;
+  /* The face's own backface-visibility stops applying once its subtree is
+     3D, so each slice has to hide its own back or you see the front face's
+     text mirrored through the sheet. */
+  backface-visibility:hidden;
 }
 .cslice .cslice{ left:100%; width:100% }
-.cclip{ position:absolute; inset:0; overflow:hidden }
+.cclip{ position:absolute; top:0; bottom:0; left:0; right:-0.6px; overflow:hidden; backface-visibility:hidden }
 /* the texture lives on the wrap, which is a whole page wide, so it runs
    continuously across the slices instead of restarting at every seam */
 .cwrap{
@@ -174,15 +187,22 @@ html:has(.tome-page){ overflow-x:clip }
 .cclip.leather + *, .cwrap.leather{
   background:#5a3325 url("../tome/leather.jpg") center/cover;
 }
-/* shading across the bend, and a highlight where it catches the light */
-.cclip::after{
+/* Shading across the bend.
+   It has to live on .cwrap, not on the slice. Every cwrap is a full page wide
+   and they all line up on the same origin, so a gradient drawn here is one
+   continuous ramp across the whole sheet — each slice just shows its slot of
+   it. Anything painted per slice (a gradient that restarts, or a flat tint
+   that steps by index) draws a visible vertical line at every seam. That was
+   the artifact. --k is the current curl, 0..1, from JS. */
+.cwrap::after{
   content:""; position:absolute; inset:0; pointer-events:none;
-  background:rgba(58,36,14,calc(var(--i,0) * 0.017));
-}
-.cclip::before{
-  content:""; position:absolute; inset:0; pointer-events:none; z-index:1;
-  background:linear-gradient(92deg, rgba(255,250,232,.26), rgba(255,250,232,0) 85%);
-  opacity:calc(1 - var(--i,0) * 0.075);
+  background:linear-gradient(90deg,
+    rgba(255,250,232,.42) 0%,
+    rgba(255,250,232,.16) 22%,
+    rgba(54,33,12,.05) 52%,
+    rgba(54,33,12,.20) 78%,
+    rgba(54,33,12,.34) 100%);
+  opacity:var(--k,0);
 }
 
 /* light rolling across the page as it turns */
@@ -192,7 +212,10 @@ html:has(.tome-page){ overflow-x:clip }
   transition:opacity .28s ease;
 }
 .leaf.turning .sheen{ opacity:1 }
-.leaf.turning .cslice{ filter:drop-shadow(0 10px 18px rgba(50,32,14,.28)) }
+/* NO filter on a .cslice — filter flattens transform-style:preserve-3d, so
+   every slice gets composited as its own 2D layer and you see the seams.
+   The shadow goes on the leaf, which is outside the 3D chain. */
+.leaf.turning{ filter:drop-shadow(0 12px 20px rgba(50,32,14,.26)) }
 
 /* ---------- page contents ---------- */
 .sheet{

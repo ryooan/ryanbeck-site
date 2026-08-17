@@ -137,6 +137,7 @@
       if (s) s.remove();
     });
     leaf.style.removeProperty('--curl');
+    leaf.style.removeProperty('--k');
   }
 
   /* A page that overflows its sheet looks broken, and the content is fixed
@@ -204,7 +205,7 @@
     startEmitter(dir, 1900);
 
     setTimeout(function () {
-      leaf.classList.remove('turning', 'turn-fwd', 'turn-back');
+      leaf.classList.remove('turning', 'turn-fwd', 'turn-back', 'past-half');
       uncurl(leaf);
       leaf.style.animation = 'none';
       leaf.offsetHeight;                                 // flush, then rest
@@ -330,8 +331,10 @@
       ang = Math.atan2(m.m13, m.m11);           // 0 .. -pi
       // bend the sheet while we're here — peaks in the middle of the arc
       var prog = Math.min(1, Math.max(0, t / emitter.ms));
-      var curl = Math.sin(Math.PI * Math.pow(prog, 0.85)) * 4.4;
-      turning.style.setProperty('--curl', curl.toFixed(2) + 'deg');
+      var k = Math.sin(Math.PI * Math.pow(prog, 0.85));
+      turning.style.setProperty('--curl', (k * 4.4).toFixed(2) + 'deg');
+      turning.style.setProperty('--k', k.toFixed(3));
+      turning.classList.toggle('past-half', Math.abs(ang) > Math.PI / 2);
     }
     // the free edge of the sheet, which is where the dust actually comes off
     var edge = g.spine + Math.cos(ang) * g.page * dir;

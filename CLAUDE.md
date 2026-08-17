@@ -218,21 +218,34 @@ each face of the sheet in flight as **eight nested slices**: slice *n* sits at
 `left: 100%` of slice *n−1* and carries `rotateY(var(--curl))`, so the
 rotations accumulate and bend the page into a cylinder. Each slice holds a
 clone of the page inside a clipped wrapper, shifted sideways by its index, so
-the eight of them read as one continuous sheet.
+the eight of them read as one continuous sheet. `--curl` is set frame by frame
+from the dust loop — `sin(π · progress^0.85) · 4.4°` — so the bend grows into
+the arc and relaxes as the sheet lands. Slices are torn down when the turn
+ends; only the sheet in flight is ever curled.
 
-Two details that matter:
+Four rules, every one of them learned by breaking it. Each produced the same
+symptom — vertical lines down the turning page:
 
-- The page texture lives on `.cwrap` (a whole page wide), **not** on the clip.
-  Put it on the clip and it restarts at every seam, and you can see all eight
-  of them.
-- No inset shadow on the slices, for the same reason — it draws a dark line at
-  every boundary. Depth comes from a single `drop-shadow` on the slice and the
-  per-slice tint, which steps very gently (0.017 alpha per index).
+1. **All shading lives on `.cwrap`, never on a slice.** Every cwrap is a full
+   page wide and they all share an origin, so a gradient painted there is one
+   continuous ramp and each slice shows its slot of it. A gradient inside a
+   slice restarts at every seam (a sawtooth of eight hard edges); even a *flat*
+   tint stepped by slice index bands visibly on a plain cream field.
+2. **No `filter` on a `.cslice`.** `filter` flattens
+   `transform-style: preserve-3d`, so every slice gets composited as its own
+   2D layer and the seams show. The drop-shadow goes on `.leaf`, outside the
+   3D chain.
+3. **`.face.curled` needs `transform-style: preserve-3d`** (and `overflow:
+   visible`, since overflow forces flattening too) or the slices collapse into
+   the face's plane.
+4. **Which face is showing is decided explicitly, not by backface culling.**
+   Once the subtree is 3D and the back face is mirrored, `backface-visibility`
+   stops reliably hiding the front face's slices and you see the page's text
+   mirrored through the sheet. JS sets `.past-half` past 90° and CSS hides the
+   other face outright.
 
-`--curl` is set frame by frame from the dust loop: `sin(π · progress^0.85) ·
-4.4°`, so the bend grows into the arc and relaxes as the sheet lands. Slices
-are torn down when the turn ends — only the sheet in flight is ever curled, so
-it's ~16 clones per turn and nothing persistent.
+`.cclip` also bleeds `right: -0.6px` to cover hairline gaps between slices at
+fractional widths.
 
 ### Dust
 
