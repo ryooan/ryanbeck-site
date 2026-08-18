@@ -14,6 +14,12 @@
 (function () {
   var AMOUNT = 1;
   var RES = 0.7;                        // dust canvas backing-store scale
+  /* All the physics below is written in per-frame units that were tuned at
+     60fps. DT rescales them to real elapsed time, so a 144Hz monitor gets the
+     same cloud as a 60Hz phone instead of one 2.4x faster and 2.4x denser.
+     Set once per animation frame; clamped so a background-tab stall cannot
+     teleport particles. */
+  var DT = 1;
   var DUST_SRCS = window.__DUST_SRCS || [1, 2, 3, 4].map(function (n) {
     return 'assets/tome/dust-' + n + '.png';
   });
@@ -41,9 +47,39 @@
     return [(n1 - n2) / (2 * e), -(n3 - n4) / (2 * e)];
   }
 
+  /* Where dust is allowed to be born: the visible book, not the layout box.
+     StPageFlip's .stf__block is always the full open spread, so a closed book
+     fills only half of it — spawning across the block puts dust on the empty
+     paper beside the cover. The leather boards element tracks the visible
+     book exactly (sizeBoards + its CSS transition), including mid-swing, so
+     it is the spawn box; the block is only the fallback for hosts without
+     boards (the dust lab). */
+  function spawnBoxReader(bookEl) {
+    var boards = bookEl.parentElement &&
+                 bookEl.parentElement.querySelector('.libtome-boards');
+    return function (rect) {
+      var el = boards, r = el && el.getBoundingClientRect();
+      if (!r || !r.width) {
+        el = bookEl.querySelector('.stf__block') || bookEl;
+        r = el.getBoundingClientRect();
+      }
+      if (!r.width) return null;
+      return {
+        x0: r.left - rect.left, x1: r.right - rect.left,
+        y0: r.top - rect.top, y1: r.bottom - rect.top
+      };
+    };
+  }
+
+  function clampX(f, x) {
+    if (!(f.bx1 > f.bx0)) return x;
+    return Math.max(f.bx0, Math.min(f.bx1, x));
+  }
+
   /* ------------------------------------------------------- the fold signal */
   function foldReader(bookEl) {
     var prev = null, lastDir = -1;   // -1 = forward (the crease sweeps left)
+    var box = spawnBoxReader(bookEl);
     return function (rect) {
       // StPageFlip sets display, zIndex and clipPath as inline styles, so
       // these can be read straight off .style. Going through
@@ -90,12 +126,12 @@
       // the crease can be momentarily still at the very start and end of a
       // turn, so the direction is remembered rather than recomputed each frame
       if (Math.abs(v) > 0.2) lastDir = v < 0 ? -1 : 1;
-      var blk2 = bookEl.querySelector('.stf__block');
-      var b2 = blk2 ? blk2.getBoundingClientRect() : fr;
+      var b2 = box(rect);
       return {
         x: x, top: top, bottom: bot, v: v, h: Math.max(1, bot - top), hard: !clipped,
         dir: lastDir,
-        bx0: b2.left - rect.left, bx1: b2.right - rect.left
+        bx0: b2 ? b2.x0 : 0, bx1: b2 ? b2.x1 : 0,
+        by0: b2 ? b2.y0 : top, by1: b2 ? b2.y1 : bot
       };
     };
   }
@@ -145,10 +181,13 @@
     };
   }
 
-  /* where along the page edge a particle is born — varies per turn */
+  /* where along the page edge a particle is born — varies per turn, and
+     always on the book itself */
   function spawnY(f) {
     var g = f.gust || FLAT_GUST;
-    return f.top + Math.pow(Math.random(), g.yBias) * f.h;
+    var y = f.top + Math.pow(Math.random(), g.yBias) * f.h;
+    if (f.by1 > f.by0) y = Math.max(f.by0, Math.min(f.by1, y));
+    return y;
   }
 
   /* =====================================================================
@@ -160,17 +199,17 @@
   function puffs(ctx, W, H) {
     var ps = [];
     return {
-      emit: function (f, power) {
+      emit: function (f, power, k) {
         // Fine and numerous rather than few and large — a handful of big
         // sprites reads as bubbles no matter how you fade them.
         var g = f.gust || FLAT_GUST;
-        var n = Math.round(rnd(9, 21) * power * AMOUNT * g.rate);
+        var n = Math.round(rnd(9, 21) * power * AMOUNT * g.rate * (k || 1));
         if (ps.length > 900) ps.splice(0, ps.length - 900);
         for (var i = 0; i < n; i++) {
           var y = spawnY(f);
           var v = throwVel(f, 1.15);
           ps.push({
-            x: f.x + rnd(-9, 9), y: y,
+            x: clampX(f, f.x + rnd(-9, 9)), y: y,
             vx: v.vx, vy: v.vy,
             s: rnd(3.5, 17) * (0.75 + power * 0.4) * g.size,
             grow: rnd(1.003, 1.013),
@@ -183,11 +222,12 @@
       },
       frame: function (t, skipClear) {
         if (!skipClear) ctx.clearRect(0, 0, W, H);
+        var drag = Math.pow(0.992, DT);
         for (var i = ps.length - 1; i >= 0; i--) {
           var p = ps[i];
-          p.x += p.vx; p.y += p.vy;
-          p.vx *= 0.992; p.vy = p.vy * 0.992 + 0.0022;
-          p.s *= p.grow; p.rot += p.spin; p.life += p.fade;
+          p.x += p.vx * DT; p.y += p.vy * DT;
+          p.vx *= drag; p.vy = p.vy * drag + 0.0022 * DT;
+          p.s *= Math.pow(p.grow, DT); p.rot += p.spin * DT; p.life += p.fade * DT;
           if (p.life >= 1) { ps.splice(i, 1); continue; }
           var k = p.life < 0.18 ? p.life / 0.18 : 1 - (p.life - 0.18) / 0.82;
           var im = sprites[p.img];
@@ -224,12 +264,12 @@
     off.width = W; off.height = H;
     var oc = off.getContext('2d');
     return {
-      emit: function (f, power) {
-        var n = Math.round(rnd(3, 7) * power * AMOUNT);
+      emit: function (f, power, k) {
+        var n = Math.round(rnd(3, 7) * power * AMOUNT * (k || 1));
         for (var i = 0; i < n; i++) {
           var y = f.top + Math.pow(Math.random(), 0.75) * f.h;
           ps.push({
-            x: f.x + rnd(-8, 8), y: y,
+            x: clampX(f, f.x + rnd(-8, 8)), y: y,
             vx: throwVel(f, 1.2).vx, vy: throwVel(f, 1.2).vy,
             s: rnd(16, 52) * (0.7 + power * 0.5),
             grow: rnd(1.006, 1.022),
@@ -240,13 +280,14 @@
       },
       frame: function (t) {
         oc.clearRect(0, 0, W, H);
+        var drag = Math.pow(0.985, DT);
         for (var i = ps.length - 1; i >= 0; i--) {
           var p = ps[i];
           var c = curl(p.x * 0.012 + p.seedx, p.y * 0.012 + p.seedy, t * 0.00016);
-          p.vx += c[0] * 0.5; p.vy += c[1] * 0.5;
-          p.x += p.vx; p.y += p.vy;
-          p.vx *= 0.985; p.vy = p.vy * 0.985 + 0.005;
-          p.s *= p.grow; p.life += p.fade;
+          p.vx += c[0] * 0.5 * DT; p.vy += c[1] * 0.5 * DT;
+          p.x += p.vx * DT; p.y += p.vy * DT;
+          p.vx *= drag; p.vy = p.vy * drag + 0.005 * DT;
+          p.s *= Math.pow(p.grow, DT); p.life += p.fade * DT;
           if (p.life >= 1) { ps.splice(i, 1); continue; }
           var k = p.life < 0.2 ? p.life / 0.2 : 1 - (p.life - 0.2) / 0.8;
           // plain source-over, translucent: overlaps accumulate into a
@@ -281,11 +322,11 @@
   function mist(ctx, W, H) {
     var ps = [];
     return {
-      emit: function (f, power) {
+      emit: function (f, power, k) {
         // Fewer born per frame than before but each lives three times as
         // long, so more of them are in the air at once and they hang around.
         var g = f.gust || FLAT_GUST;
-        var n = Math.round(rnd(31, 74) * power * AMOUNT * g.rate);
+        var n = Math.round(rnd(31, 74) * power * AMOUNT * g.rate * (k || 1));
         if (ps.length > 4800) ps.splice(0, ps.length - 4800);
         var hasBox = f.bx1 > f.bx0;
         for (var i = 0; i < n; i++) {
@@ -294,11 +335,14 @@
           // Density per unit width is what the eye reads, not the split. The
           // crease band is a tenth of the book's width, so giving it much
           // more than a tenth of the particles makes it a stripe.
+          // Every spawn is clamped to the spawn box — dust is born ON the
+          // book and billows outward; it never pops into being beside it.
           var x;
           if (!hasBox) x = f.x + rnd(-30, 30);
-          else if (Math.random() < 0.16) x = f.x + rnd(-30, 30);
-          else x = rnd(f.bx0 - 6, f.bx1 + 6);
+          else if (Math.random() < 0.16) x = clampX(f, f.x + rnd(-30, 30));
+          else x = rnd(f.bx0, f.bx1);
           var y = f.top + Math.random() * f.h;
+          if (f.by1 > f.by0) y = Math.max(f.by0, Math.min(f.by1, y));
           // most of it is thrown the way the page is travelling, the rest
           // goes wherever it likes
           var v = throwVel(f, 0.85, Math.random() < 0.7);
@@ -306,8 +350,12 @@
             x: x, y: y,
             vx: v.vx * 0.7, vy: v.vy * 0.7,
             cx: 0, cy: 0, off: (Math.random() * 3) | 0,
-            s: rnd(0.7, 2.1) * (0.8 + g.size * 0.35),
+            // sizes vary per mote: mostly fine grains, the odd larger fleck —
+            // a squared random skews small, and the ceiling is only a shade
+            // above the old fixed range
+            s: (0.55 + Math.pow(Math.random(), 1.6) * 2.4) * (0.8 + g.size * 0.35),
             life: 1, decay: rnd(0.0016, 0.0050) / g.life,
+            fi: 0,
             a: rnd(0.12, 0.4),
             pale: Math.random() < 0.4
           });
@@ -322,6 +370,7 @@
         for (bi = 0; bi < B * 2; bi++) buckets.push(null);
 
         var tick3 = (t / 16) | 0;
+        var drag = Math.pow(0.9955, DT);
         for (var i = ps.length - 1; i >= 0; i--) {
           var p = ps[i];
           // curl noise is four noise lookups a go; at three thousand motes
@@ -331,12 +380,14 @@
             var c = curl(p.x * 0.018, p.y * 0.018, t * 0.00028);
             p.cx = c[0]; p.cy = c[1];
           }
-          p.vx += p.cx * 0.85; p.vy += p.cy * 0.85;
-          p.x += p.vx; p.y += p.vy;
-          p.vx *= 0.9955; p.vy = p.vy * 0.9955 + 0.0016;
-          p.life -= p.decay;
+          p.vx += p.cx * 0.85 * DT; p.vy += p.cy * 0.85 * DT;
+          p.x += p.vx * DT; p.y += p.vy * DT;
+          p.vx *= drag; p.vy = p.vy * drag + 0.0016 * DT;
+          p.life -= p.decay * DT;
           if (p.life <= 0) { ps.splice(i, 1); continue; }
-          var a = p.life * p.a * edgeFade(p.x, p.y, W, H);
+          // a short ramp-in so a mote materialises rather than pops
+          if (p.fi < 1) p.fi = Math.min(1, p.fi + 0.09 * DT);
+          var a = p.life * p.fi * p.a * edgeFade(p.x, p.y, W, H);
           if (a <= 0.012) continue;
           var b = Math.min(B - 1, (a * B) | 0) + (p.pale ? B : 0);
           (buckets[b] || (buckets[b] = [])).push(p);
@@ -383,9 +434,9 @@
     var live = 0;
 
     return {
-      emit: function (f, power) {
+      emit: function (f, power, k) {
         if (live > 44) return;
-        var n = Math.round(rnd(2, 4.2) * power * AMOUNT);
+        var n = Math.round(rnd(2, 4.2) * power * AMOUNT * (k || 1));
         for (var i = 0; i < n; i++) {
           var e = document.createElementNS(ns, 'ellipse');
           var r = rnd(20, 44);
@@ -424,7 +475,7 @@
   function both(ctx, W, H) {
     var a = puffs(ctx, W, H), b = mist(ctx, W, H);
     return {
-      emit: function (f, power) { a.emit(f, power * 0.8); b.emit(f, power * 0.65); },
+      emit: function (f, power, k) { a.emit(f, power * 0.8, k); b.emit(f, power * 0.65, k); },
       frame: function (t) {
         ctx.clearRect(0, 0, W, H);
         return a.frame(t, true) + b.frame(t, true);
@@ -468,6 +519,7 @@
     }
 
     var read = foldReader(bookEl);
+    var readBox = spawnBoxReader(bookEl);
     var raf = null, idleAfter = 0, alive = 0, gust = makeGust(), lastFold = null;
 
     /* Which way the turn is going, taken from the call rather than inferred.
@@ -482,21 +534,29 @@
       flip.flipPrev = function (c) { intent = 1;  return fp(c); };
     }
 
+    var lastT = 0;
     function loop(t) {
       raf = null;
       if (!engine) return;
+      // real elapsed time, in 60fps frames. Clamped: a fresh kick or a
+      // background-tab stall must not become one giant step.
+      DT = lastT ? Math.min(3, Math.max(0.25, (t - lastT) / 16.667)) : 1;
+      lastT = t;
       var f = read(host.getBoundingClientRect());
       if (f) {
         if (intent) f.dir = intent;
         lastFold = f;
         f.gust = gust;
-        engine.emit(f, Math.min(1.6, 0.35 + Math.abs(f.v) * 0.12));
+        // emission is once per frame, so the count scales by DT too — the
+        // same motes per second at any refresh rate
+        engine.emit(f, Math.min(1.6, 0.35 + Math.abs(f.v) * 0.12), DT);
         idleAfter = t + 2600;
       }
       alive = engine.frame(t || 0);
       if (f || alive || t < idleAfter) raf = requestAnimationFrame(loop);
+      else lastT = 0;
     }
-    function kick() { if (!raf) raf = requestAnimationFrame(loop); }
+    function kick() { if (!raf) { lastT = 0; raf = requestAnimationFrame(loop); } }
 
     /* A burst the moment a flip starts, independent of the per-frame
        tracking. Hard covers and backward flips move differently and the
@@ -505,22 +565,27 @@
     function burst() {
       if (!engine) return;
       var hr = host.getBoundingClientRect();
-      var blk = bookEl.querySelector('.stf__block');
-      var br = blk ? blk.getBoundingClientRect() : hr;
-      var f = read(hr) || {
-        x: (br.left + br.width / 2) - hr.left,
-        top: br.top - hr.top,
-        bottom: br.bottom - hr.top,
-        h: Math.max(1, br.height),
-        v: 0
-      };
+      // The fallback box is the VISIBLE book (boards, or block failing that),
+      // not the layout block — a closed book fills half its block, and a
+      // burst spread across the block puts dust on the empty paper beside it.
+      var bb = readBox(hr);
+      var f = read(hr);
+      if (!f) {
+        if (!bb) return;
+        f = {
+          x: (bb.x0 + bb.x1) / 2,
+          top: bb.y0, bottom: bb.y1,
+          h: Math.max(1, bb.y1 - bb.y0),
+          v: 0
+        };
+      }
       // Without the book box the whole burst piles into the crease band, and
       // since the burst is the first thing on screen the entire effect reads
       // as a narrow vertical strip.
-      if (!(f.bx1 > f.bx0)) { f.bx0 = br.left - hr.left; f.bx1 = br.right - hr.left; }
+      if (!(f.bx1 > f.bx0) && bb) { f.bx0 = bb.x0; f.bx1 = bb.x1; f.by0 = bb.y0; f.by1 = bb.y1; }
       if (intent) f.dir = intent;
       f.gust = gust;
-      for (var i = 0; i < 7; i++) engine.emit(f, 1.15);
+      for (var i = 0; i < 7; i++) engine.emit(f, 1.15, 1);
       kick();
     }
 

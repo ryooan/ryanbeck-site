@@ -87,8 +87,19 @@
     0 1px 0 rgba(255,226,190,.12) inset,
     0 4px 0 -1px #5c3526, 0 7px 0 -2px #34190f, 0 9px 1px -3px rgba(0,0,0,.55),
     0 20px 28px -18px rgba(30,18,10,.8), 0 46px 62px -30px rgba(40,26,14,.5);
-  transition:left .5s ease, width .5s ease;
+  /* paced to StPageFlip's 1100ms cover swing so the board tracks the cover
+     rather than snapping ahead of it or arriving after it has landed */
+  transition:left .95s cubic-bezier(.55,.08,.35,1), width .95s cubic-bezier(.55,.08,.35,1);
 }
+
+/* StPageFlip's crease and cover shadows exist only to shade a turn in
+   flight; its initial render can leave one parked over the empty half of a
+   closed book, which reads as a pale ghost panel. Visibility (not display)
+   so the dust engine can still read the crease's box every frame. */
+.libtome .stf__outerShadow, .libtome .stf__innerShadow,
+.libtome .stf__hardShadow, .libtome .stf__hardInnerShadow{ visibility:hidden }
+.libtome.is-flipping .stf__outerShadow, .libtome.is-flipping .stf__innerShadow,
+.libtome.is-flipping .stf__hardShadow, .libtome.is-flipping .stf__hardInnerShadow{ visibility:visible }
 
 
 /* ---------- portrait: make it read as an open book ----------

@@ -124,6 +124,20 @@
   flip.flipNext = function (c) { navIntent = 1;  return _fn(c); };
   flip.flipPrev = function (c) { navIntent = -1; return _fp(c); };
 
+  /* Clicking a page (clickEventForward) and dragging a corner start flips
+     inside StPageFlip without ever calling flipNext/flipPrev, so navIntent
+     stays 0 for them — and everything driven off the predicted target (the
+     boards, is-open, the left-of-spine mask) then runs a whole cover-swing
+     late. The half of the book the pointer went down on is the intent. */
+  var clickIntent = 0;
+  stage.addEventListener('pointerdown', function (e) {
+    var blk = bookEl.querySelector('.stf__block');
+    if (!blk) return;
+    var b = blk.getBoundingClientRect();
+    if (e.clientY < b.top - 24 || e.clientY > b.bottom + 24) return;
+    clickIntent = e.clientX >= b.left + b.width / 2 ? 1 : -1;
+  }, true);
+
   /* StPageFlip shows a closed book as a single page inside a full-width
      block, so the boards have to follow the *visible* half rather than the
      block, or a closed book looks twice as wide as it is. */
@@ -175,6 +189,7 @@
     sizeBoards();
     fitSheets();
     placeShield();
+    maskLeftPage();
   }
 
   prevBtn.addEventListener('click', function () { flip.flipPrev(); });
@@ -185,24 +200,54 @@
      while the turn is in flight, so its text shows for a moment and then
      vanishes when the blank verso takes over. Hide any settled page sitting
      left of the spine — the sheet actually in flight (z-index 5) is left
-     alone, so it still swings across properly. */
+     alone, so it still swings across properly.
+
+     In landscape the left half needs policing too, but only around the
+     covers: when the book is closed, or a flip is heading for closed,
+     StPageFlip parks a settled page left of the spine where there is no book
+     at all — a pale ghost beside the closed cover at load, and a full-width
+     sheet of leather that sits under the whole closing swing. Nothing
+     settled may render left of the spine in either state. */
+  var maskTarget = null;   // predicted destination page while a flip is in flight
   function maskLeftPage() {
-    if (flip.getOrientation() === 'landscape') return;
     var blk = bookEl.querySelector('.stf__block');
     if (!blk) return;
     var b = blk.getBoundingClientRect();
     var items = bookEl.querySelectorAll('.stf__item');
-    for (var i = 0; i < items.length; i++) {
-      var it = items[i];
-      var sheet = it.querySelector('.sheet, .cover-inner');
+    var i, it, r, sheet, pastSpine, flying;
+
+    if (flip.getOrientation() === 'landscape') {
+      var closedish = maskTarget === 0 ||
+                      (maskTarget === null && flip.getCurrentPageIndex() === 0);
+      var spine = b.left + b.width / 2;
+      for (i = 0; i < items.length; i++) {
+        it = items[i];
+        sheet = it.querySelector('.sheet, .cover-inner');
+        if (it.style.display === 'none') {
+          it.style.visibility = '';
+          if (sheet) sheet.style.visibility = '';
+          continue;
+        }
+        r = it.getBoundingClientRect();
+        pastSpine = (r.left + r.width / 2) < spine - 2;
+        flying = (+it.style.zIndex || 0) >= 5;
+        it.style.visibility = (closedish && pastSpine && !flying) ? 'hidden' : '';
+        if (sheet) sheet.style.visibility = '';
+      }
+      return;
+    }
+
+    for (i = 0; i < items.length; i++) {
+      it = items[i];
+      sheet = it.querySelector('.sheet, .cover-inner');
       if (it.style.display === 'none') {
         it.style.visibility = '';
         if (sheet) sheet.style.visibility = '';
         continue;
       }
-      var r = it.getBoundingClientRect();
-      var pastSpine = (r.left + r.width / 2) < b.left + 2;
-      var flying = (+it.style.zIndex || 0) >= 5;
+      r = it.getBoundingClientRect();
+      pastSpine = (r.left + r.width / 2) < b.left + 2;
+      flying = (+it.style.zIndex || 0) >= 5;
 
       // a settled page on the left has no business being there at all
       it.style.visibility = (pastSpine && !flying) ? 'hidden' : '';
@@ -244,21 +289,29 @@
   }
 
   flip.on('changeState', function (e) {
-    if (e.data === 'read') { navIntent = 0; maskLeftPage(); return; }
+    root.classList.toggle('is-flipping', e.data !== 'read');
+    if (e.data === 'read') { navIntent = 0; clickIntent = 0; maskTarget = null; maskLeftPage(); return; }
     var i = flip.getCurrentPageIndex();
-    var target = navIntent ? i + navIntent : i;
+    var intent = navIntent || clickIntent;
+    var target = intent ? Math.max(0, Math.min(flip.getPageCount() - 1, i + intent)) : i;
+    maskTarget = target;
     root.classList.toggle('is-open', target > 0 && target < flip.getPageCount() - 1);
     sizeBoards(target);
     busyUntil = Date.now() + 1500;
     if (!maskRaf) maskRaf = requestAnimationFrame(maskLoop);
   });
-  flip.on('flip', function () { navIntent = 0; status(); });
+  flip.on('flip', function () { navIntent = 0; clickIntent = 0; maskTarget = null; status(); });
   flip.on('changeOrientation', function () { setTimeout(function () { sizeBoards(); fitSheets(); }, 60); });
   flip.on('changeState', function (e) {
     if (e.data === 'flipping' || e.data === 'user_fold') puff();
   });
   window.addEventListener('resize', function () { setTimeout(function () { sizeBoards(); fitSheets(); }, 80); });
+  // StPageFlip's first render is rAF-driven and can land well after load
+  // (throttled tabs), so the closed-state mask gets a few chances to catch
+  // whatever that first render leaves parked left of the spine.
   setTimeout(status, 60);
+  setTimeout(maskLeftPage, 400);
+  setTimeout(maskLeftPage, 1200);
 
   /* ---------------------------------------------------- the dust */
   /* Two paths. `tsparticles` is what the compare page uses, to show the
