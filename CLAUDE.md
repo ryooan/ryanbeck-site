@@ -249,10 +249,19 @@ matter how they are faded, which was the first version's problem.
 `mist` is deliberately slow and long-lived: about a third of the emission rate
 it had, three times the lifetime, and drag raised from 0.986 to 0.9955 per
 frame so particles carry well past the book instead of stalling a few dozen
-pixels out. Spawn points are split roughly half at the crease and half spread
-across the whole book box (`foldReader` reports `bx0`/`bx1` for that), because
-dust coming only off the fold reads as a jet rather than a sheet being
-disturbed.
+pixels out. Spawn points are spread across the whole book box (`foldReader` reports
+`bx0`/`bx1` for that), with only about **16%** biased to the crease band.
+
+That 16% matters more than it looks. What the eye reads is density per unit
+width, not the split: the crease band is roughly a tenth of the book's width,
+so giving it 45% of the particles made it nine times denser than everywhere
+else and the whole effect read as a vertical stripe. Anything much above its
+share of the width turns back into a curtain.
+
+The other half of that bug was in `burst()`: its fallback `f` object had no
+`bx0`/`bx1`, so when it fired before StPageFlip had rendered a foldable page,
+every particle in the burst landed in the narrow crease band — and the burst is
+the first thing on screen, so it set the impression for the whole turn.
 
 Performance, in order of what actually mattered (measured, headless, software
 rendering — real hardware is better):

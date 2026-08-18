@@ -275,9 +275,13 @@
         for (var i = 0; i < n; i++) {
           // Dust lifts off the whole sheet, not just the crease: about half
           // comes off the fold, the rest from anywhere across the spread.
+          // Density per unit width is what the eye reads, not the split. The
+          // crease band is a tenth of the book's width, so giving it much
+          // more than a tenth of the particles makes it a stripe.
           var x;
-          if (!hasBox || Math.random() < 0.45) x = f.x + rnd(-16, 16);
-          else x = rnd(f.bx0, f.bx1);
+          if (!hasBox) x = f.x + rnd(-30, 30);
+          else if (Math.random() < 0.16) x = f.x + rnd(-30, 30);
+          else x = rnd(f.bx0 - 6, f.bx1 + 6);
           var y = f.top + Math.random() * f.h;
           var v = throwVel(f, 0.85);
           ps.push({
@@ -478,6 +482,10 @@
         h: Math.max(1, br.height),
         v: 0
       };
+      // Without the book box the whole burst piles into the crease band, and
+      // since the burst is the first thing on screen the entire effect reads
+      // as a narrow vertical strip.
+      if (!(f.bx1 > f.bx0)) { f.bx0 = br.left - hr.left; f.bx1 = br.right - hr.left; }
       f.gust = gust;
       for (var i = 0; i < 7; i++) engine.emit(f, 1.15);
       kick();
