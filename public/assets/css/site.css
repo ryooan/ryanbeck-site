@@ -77,6 +77,8 @@ body.hall-page{
   clip-path:var(--clip);
   overflow:hidden; background:#050403;
   -webkit-tap-highlight-color:transparent; cursor:pointer;
+  /* long-press is ours (portal.js), not the browser link menu's */
+  -webkit-touch-callout:none; user-select:none;
 }
 .portal > *{position:absolute;inset:0;display:block;pointer-events:none}
 
@@ -162,22 +164,24 @@ body.hall-page{
   background-repeat:no-repeat;
   filter:none; transition:filter .55s ease, transform .55s ease;
   -webkit-tap-highlight-color:transparent;
+  /* long-press is ours (portal.js), not the browser link menu's */
+  -webkit-touch-callout:none; user-select:none;
 }
 .wizard::after{
   content:""; position:absolute; inset:0;
   background:radial-gradient(60% 50% at 48% 40%, rgba(255,196,102,.55), transparent 72%);
   opacity:0; transition:opacity .55s ease; mix-blend-mode:screen;
-  /* an occasional soft flicker while idle, so he reads as clickable before
-     anyone thinks to hover him */
-  animation:wizard-beckon 9s ease-in-out 4s infinite;
 }
-.wizard:is(:hover,:focus-visible,.is-awake){
+/* The full-body glow belongs to a deliberate visit — pointer, keyboard
+   focus, or a long press on touch (.is-held, from portal.js). His turn in
+   the wake cycle lights only the staff ember below — a wizard flaring up
+   on a timer looked possessed rather than inviting. */
+.wizard:is(:hover,:focus-visible,.is-held){
   filter:drop-shadow(0 0 14px rgba(255,190,110,.85)) drop-shadow(0 0 34px rgba(255,150,60,.45)) brightness(1.06);
   transform:translateY(-.4%);
 }
-.wizard:is(:hover,:focus-visible,.is-awake)::after{opacity:1;animation:none}
+.wizard:is(:hover,:focus-visible,.is-held)::after{opacity:1}
 .wizard:focus-visible{outline:2px solid rgba(255,200,120,.9);outline-offset:4px}
-@keyframes wizard-beckon{0%,86%,100%{opacity:0}90%,95%{opacity:.5}}
 
 /* The carved knot at the top of his staff carries a dull ember of a glow,
    breathing slowly; hovering (or his turn in the wake cycle) blows on it.
@@ -194,7 +198,7 @@ body.hall-page{
   opacity:.34; transition:opacity .55s ease, transform .55s ease;
   animation:staff-breathe 5.5s ease-in-out infinite;
 }
-.wizard:is(:hover,:focus-visible,.is-awake) + .staff-glow{
+.wizard:is(:hover,:focus-visible,.is-awake,.is-held) + .staff-glow{
   opacity:1; transform:translate(-50%,-50%) scale(1.35); animation:none;
 }
 @keyframes staff-breathe{0%,100%{opacity:.26}50%{opacity:.42}}

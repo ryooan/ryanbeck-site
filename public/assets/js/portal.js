@@ -41,8 +41,35 @@
       p.addEventListener('pointerleave', function () { hovered = false; });
     });
   } else {
+    /* Touch: a tap navigates, a long press (450ms) stays to watch the
+       animation instead. is-held is what distinguishes a deliberate hold
+       from the cycle's turn — on the wizard it lights his full hover glow,
+       which his rotation slot deliberately does not. The contextmenu
+       preventDefault stops the browser's own long-press link menu from
+       hijacking the hold. */
     cycle.forEach(function (p, k) {
-      p.addEventListener('touchstart', function () { i = k; wake(k); }, { passive: true });
+      var downAt = 0, holdT = null;
+      p.addEventListener('touchstart', function () {
+        downAt = Date.now(); i = k; wake(k);
+        clearTimeout(holdT);
+        holdT = setTimeout(function () { p.classList.add('is-held'); }, 450);
+      }, { passive: true });
+      p.addEventListener('touchmove', function () {
+        clearTimeout(holdT);          // a scroll is not a hold
+      }, { passive: true });
+      p.addEventListener('touchend', function (e) {
+        clearTimeout(holdT);
+        if (Date.now() - downAt > 450) {
+          e.preventDefault();         // held: play on, don't navigate
+          setTimeout(function () { p.classList.remove('is-held'); }, 3200);
+        } else {
+          p.classList.remove('is-held');
+        }
+      });
+      p.addEventListener('touchcancel', function () {
+        clearTimeout(holdT); p.classList.remove('is-held');
+      });
+      p.addEventListener('contextmenu', function (e) { e.preventDefault(); });
     });
   }
 })();

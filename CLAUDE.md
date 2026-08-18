@@ -91,9 +91,10 @@ behind the staff, and emits the normalised points for `#clip-wizard`. Re-run
 it if the artwork or the element box changes (the box is duplicated in the
 script's `BOX`).
 
-While idle he flickers a faint warm glow every ~9s (`wizard-beckon`), so he
-reads as clickable before anyone hovers him; hover, focus and his `.is-awake`
-turn in the wake cycle all use the full glow.
+Hover, keyboard focus, and a touch long-press (`.is-held`) light his full
+glow. His `.is-awake` turn in the wake cycle lights **only the staff ember**
+— a wizard flaring up on a timer read as possessed rather than inviting,
+so the always-breathing ember is the whole idle affordance.
 
 The knot of his staff carries `.staff-glow` — a dull breathing ember that
 brightens and swells when he is hovered, focused or awake. It is a sibling
@@ -143,11 +144,19 @@ clipped into two orange smudges; smaller closes the ring in over the art. Change
 One portal (or the wizard) is always awake: `portal.js` rotates the glow
 every 3.6s on **every** device. On desktop, hover outranks the rotation —
 pointerenter on any of them stands the cycle down and pointerleave resumes
-it, so the cycle never fights the cursor. On a phone a tap wakes what it
-touched and navigates. Below 760px the artwork is also scaled to 152% of
-the viewport and its faded edges are allowed to crop, which makes the doors
-a real tap target — that only works because the page is the same colour as
-the paper.
+it, so the cycle never fights the cursor. The wizard's slot in the rotation
+lights **only his staff ember**, never his body — the full glow is reserved
+for a deliberate visit (hover, focus, or a long press).
+
+On a phone a tap wakes what it touched and navigates; a **long press
+(450ms) stays to watch** — `touchend` is preventDefaulted so the link never
+fires, `.is-held` marks the hold (it is what lights the wizard's full glow
+on touch), and `contextmenu` plus `-webkit-touch-callout:none` keep the
+browser's own long-press link menu from hijacking it. A touchmove cancels
+the hold so scrolling never triggers it. Below 760px the artwork is also
+scaled to 152% of the viewport and its faded edges are allowed to crop,
+which makes the doors a real tap target — that only works because the page
+is the same colour as the paper.
 
 `.hall-nav` is a plain text nav shown at **every** size, positioned
 **absolutely inside `.hall`, at `bottom: 13%`** — the drawing's rocks run out
@@ -253,12 +262,23 @@ leather rectangle sliding sideways reads as furniture moving, not as a book
 opening (tried, rejected); and physically the board *is* the cover, so
 nothing should lie under the half the cover has not reached. Opening: the
 board stays at half width for the entire swing — the left of the screen is
-genuinely empty until the cover lands — and snaps to full in the `flip`
-handler, the same frame StPageFlip settles the cover flat. Closing: the
-board snaps to half at `changeState`, when the flying cover still lies flat
-over the left half, exactly covering what disappears. `maskLeftPage()` runs
-synchronously with that snap. If either snap ever becomes visible, the
-timing against StPageFlip's events is what broke.
+genuinely empty until the cover lands — and goes full in the `flip`
+handler, the same frame StPageFlip settles the cover flat. That landing is
+the one sanctioned animation: `sizeBoards` puts `.settle` on the boards for
+~260ms so the rim **eases out from beneath the landed cover** instead of
+popping around it — it reads as the book settling flat. Closing still
+snaps hard at `changeState`, when the flying cover lies flat over the left
+half, exactly covering what disappears. `maskLeftPage()` runs synchronously
+with that snap. If any of this ever becomes visible, the timing against
+StPageFlip's events is what broke.
+
+**Page staining varies per page.** Each paper page gets its own crop window
+into `page.jpg` — deterministic offsets and an anisotropic stretch set
+inline when the pages are built (and one for the portrait verso). Without
+it every page wears identical foxing and the stock reads as a texture
+overlay rather than as paper. The covers keep their leather from CSS; the
+inline styles are only set on paper pages, because an inline background
+would override the hard pages' leather.
 
 `.libtome-book` needs `position:relative; z-index:2`. The verso is `z-index:1`,
 and without an explicit z-index on the book, StPageFlip's own
@@ -305,6 +325,18 @@ its box every frame gives the live position and speed of the fold. Dust is born
 there. It is not an overlay playing on a timer — that was the flaw in the
 tsParticles version, whose emitters fire on flip events and have no idea where
 the page actually is.
+
+**Emission is timeboxed, and only a real turn opens it.** A `changeState` of
+`flipping` or `user_fold` opens a window (~1s for a cover, ~0.55s for a page,
+one per gesture — the fold→flip transition of a drag-and-release must not
+double up); inside it the tracker spawns off the moving fold, after it the
+cloud only drifts and thins. This matters because a fold's existence is NOT
+evidence of a turn: hovering a page corner makes StPageFlip raise a little
+fold (`fold_corner`), and a drag held half-turned keeps one alive
+indefinitely — both used to pour out dust continuously. Cover flips get
+full power; ordinary page turns run at half (`powerScale`). The cover test
+is index 0, or index 1 heading backward — and a hard board seen mid-window
+upgrades a wrong half-power guess, which covers click-started closes.
 
 Hard covers have no crease: StPageFlip swings them as a board, with a
 `.stf__hardShadow` and **no clip-path**. `foldReader` detects that case and

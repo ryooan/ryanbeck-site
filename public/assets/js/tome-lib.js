@@ -30,6 +30,10 @@
 
   var stage  = document.createElement('div'); stage.className = 'libtome-stage';
   var verso  = document.createElement('div'); verso.className = 'libtome-verso';
+  // its own patch of the stock, distinct from any real page's (see the
+  // per-page staining note below)
+  verso.style.backgroundPosition = '73% 41%';
+  verso.style.backgroundSize = '139% 127%';
   var boards = document.createElement('div'); boards.className = 'libtome-boards';
   var bookEl = document.createElement('div'); bookEl.className = 'libtome-book';
   var dustEl = document.createElement('div'); dustEl.className = 'libtome-dust'; dustEl.id = 'libtome-dust';
@@ -40,6 +44,15 @@
     // StPageFlip treats "hard" pages as covers: they turn as boards, not paper
     if (i === 0 || i === articles.length - 1) page.setAttribute('data-density', 'hard');
     if (a.dataset.type) page.setAttribute('data-type', a.dataset.type);
+    // Every paper page shows a different patch of the stock: the crop
+    // window into page.jpg is varied per page (deterministically, so page
+    // three's stain is always page three's stain). Without this every page
+    // wears the same foxing in the same places and the texture reads as an
+    // overlay, not as paper. Leather covers keep their CSS background.
+    if (i !== 0 && i !== articles.length - 1) {
+      page.style.backgroundPosition = ((i * 37 + 11) % 61) + '% ' + ((i * 53 + 29) % 71) + '%';
+      page.style.backgroundSize = (118 + (i * 29) % 46) + '% ' + (118 + (i * 41) % 46) + '%';
+    }
     var sheet = document.createElement('div');
     sheet.className = a.dataset.type === 'cover' ? 'cover-inner' : 'sheet';
     sheet.innerHTML = a.innerHTML;
@@ -141,6 +154,7 @@
   /* StPageFlip shows a closed book as a single page inside a full-width
      block, so the boards have to follow the *visible* half rather than the
      block, or a closed book looks twice as wide as it is. */
+  var boardsHalf = null;
   function sizeBoards(targetIdx) {
     var blk = bookEl.querySelector('.stf__block') || bookEl;
     var b = blk.getBoundingClientRect(), s = stage.getBoundingClientRect();
@@ -151,6 +165,20 @@
     var landscape = flip.getOrientation() === 'landscape';
     var open = idx > 0 && idx < n - 1;
     var half = landscape && !open;
+
+    /* The one exception to boards-never-animate: when a cover open lands
+       (half -> full), the rim eases out from beneath the landed cover over
+       a couple hundred ms, so the book reads as settling flat rather than
+       a frame of leather popping into place. Closing still snaps — that
+       change happens under a cover lying flat on top of it. */
+    if (boardsHalf === true && !half) {
+      boards.classList.add('settle');
+      clearTimeout(sizeBoards._t);
+      sizeBoards._t = setTimeout(function () { boards.classList.remove('settle'); }, 260);
+    } else if (half) {
+      boards.classList.remove('settle');
+    }
+    boardsHalf = half;
 
     var w = half ? b.width / 2 : b.width;
     var x = b.left - s.left + (half && idx === 0 ? b.width / 2 : 0);

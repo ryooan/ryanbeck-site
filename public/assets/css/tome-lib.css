@@ -92,6 +92,12 @@
      snap is timed to frames where the cover itself hides it — see
      sizeBoards' choreography note in tome-lib.js. */
 }
+/* the one exception: a cover-open landing eases the rim out from beneath
+   the landed cover, so the book settles instead of popping (sizeBoards
+   adds this for ~260ms) */
+.libtome-boards.settle{
+  transition:left .18s cubic-bezier(.2,.7,.3,1), width .18s cubic-bezier(.2,.7,.3,1);
+}
 
 /* StPageFlip's crease and cover shadows exist only to shade a turn in
    flight; its initial render can leave one parked over the empty half of a

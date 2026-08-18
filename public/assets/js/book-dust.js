@@ -557,6 +557,13 @@
     var read = foldReader(bookEl);
     var readBox = spawnBoxReader(bookEl);
     var raf = null, idleAfter = 0, alive = 0, gust = makeGust(), lastFold = null;
+    /* Emission is a short, timeboxed event, not a state. A turn OPENS a
+       window (~1s for a cover, ~0.55s for a page); inside it the per-frame
+       tracker spawns dust off the moving fold, and when it closes the cloud
+       just drifts and thins. Hovering a page corner raises a fold too, and
+       holding a drag half-turned keeps one alive — neither may spawn:
+       without the window, a fold emits nothing. */
+    var emitUntil = 0, powerScale = 1, lastWindow = -9999;
 
     /* Which way the turn is going, taken from the call rather than inferred.
        Crease motion tells you eventually, but the opening burst fires before
@@ -583,9 +590,14 @@
         if (intent) f.dir = intent;
         lastFold = f;
         f.gust = gust;
-        // emission is once per frame, so the count scales by DT too — the
-        // same motes per second at any refresh rate
-        engine.emit(f, Math.min(1.6, 0.35 + Math.abs(f.v) * 0.12), DT);
+        if (t < emitUntil) {
+          // a hard board seen mid-window means this turn is a cover after
+          // all — restore full power even if the burst guessed page
+          if (f.hard) powerScale = 1;
+          // emission is once per frame, so the count scales by DT too — the
+          // same motes per second at any refresh rate
+          engine.emit(f, Math.min(1.6, 0.35 + Math.abs(f.v) * 0.12) * powerScale, DT);
+        }
         idleAfter = t + 2600;
       }
       alive = engine.frame(t || 0);
@@ -621,13 +633,28 @@
       if (!(f.bx1 > f.bx0) && bb) { f.bx0 = bb.x0; f.bx1 = bb.x1; f.by0 = bb.y0; f.by1 = bb.y1; }
       if (intent) f.dir = intent;
       f.gust = gust;
-      for (var i = 0; i < 7; i++) engine.emit(f, 1.15, 1);
+      for (var i = 0; i < 7; i++) engine.emit(f, 1.15 * powerScale, 1);
       kick();
     }
 
     if (flip && flip.on) {
       flip.on('changeState', function (e) {
-        if (e.data === 'read') return;
+        // Only a real turn opens the window: 'flipping' (a click or a
+        // released drag) or 'user_fold' (a drag in progress). 'fold_corner'
+        // is the corner lifting under a hovering pointer — no dust.
+        if (e.data !== 'flipping' && e.data !== 'user_fold') return;
+        var now = performance.now();
+        // one window per gesture: the user_fold -> flipping transition of a
+        // single drag-and-release must not double up
+        if (now - lastWindow < 1400) return;
+        lastWindow = now;
+        // covers get the full treatment, page turns half of it. Opening is
+        // current page 0; closing is page 1 heading backward (button path —
+        // a click-started close corrects itself via f.hard mid-window).
+        var idx = flip.getCurrentPageIndex ? flip.getCurrentPageIndex() : 0;
+        var cover = idx === 0 || (idx === 1 && intent === 1);
+        powerScale = cover ? 1 : 0.5;
+        emitUntil = now + (cover ? 1000 : 550);
         gust = makeGust();            // a fresh gust for every turn
         burst();
       });
