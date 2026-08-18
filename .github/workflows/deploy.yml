@@ -23,6 +23,9 @@ jobs:
       - name: Check internal links
         run: node tools/check-links.mjs
 
+      - name: Check the docs still match the code
+        run: node tools/check-docs.mjs
+
       - name: Deploy to Cloudflare
         uses: cloudflare/wrangler-action@v3
         with:

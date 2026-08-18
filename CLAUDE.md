@@ -269,8 +269,8 @@ cannot read a fold at all it falls back to the book's own box.
 | kind | technique |
 |---|---|
 | `puffs` | sprite billboards — small, numerous, growing and fading |
-| `mist` | a few thousand single pixels advected by a curl-noise flow field, lifting off the whole spread and hanging for seconds |
-| `both` | puffs for body with mist over it for grain — **what the site uses** |
+| `mist` | a few thousand single pixels advected by a curl-noise flow field, lifting off the whole spread and hanging for seconds — **this is the chosen one, and what the site uses** |
+| `both` | puffs for body with mist over it for grain |
 | `cloud` | translucent overlapping particles blurred into one mass |
 | `smoke` | SVG ellipses through `feTurbulence`, animated outward and discarded |
 
@@ -396,6 +396,11 @@ Worker implements it: fetch, parse, decode entities, cache 30 minutes.
   writes plainly; don't make it markety.
 - **Links**: `tools/check-links.mjs` runs in CI and fails the build on a dead
   internal link. Run it after any rename.
+- **Docs**: `tools/check-docs.mjs` also runs in CI. It asserts that the files
+  these documents name exist, that the dust engine they claim is live is the
+  one wired up, and that the experiment pages really are unlinked and
+  `noindex`. If you change one of those things, the build tells you which
+  document to update.
 
 ## Deploying
 
@@ -412,28 +417,58 @@ custom domain and a Hyperdrive/Neon binding — uncomment when they exist.
 
 ## Known placeholders
 
-Everything below is scaffolding waiting for real content. None of it is a bug.
+None of this is a bug. All of it is waiting for real content.
 
-- all six project cards (art, titles, copy, links all invented)
-- both book covers and the about-page portrait are generated, not real
-- the tome's page copy is a template, marked as such in the text
-- the cover portrait is the same generated placeholder
-- the newsletter form posts to `/api/subscribe`, which validates the address and
-  returns `{ok: true}` without storing it. See the TODO in `worker/index.js` —
-  it needs either a Buttondown token or to be repointed at Substack's own
-  subscribe page
-- the blog page's post lists are hand-written; the Substack half is replaced at
-  runtime once `/api/substack` is live
+- **Every project card** on `projects.html` — art, titles, copy and links are
+  invented.
+- **Both book covers** and the **about-page portrait** are generated images,
+  not real ones. The portrait in particular is an obvious grey silhouette.
+- **The three door scenes** behind the portals are generated. Real artwork
+  wants to be roughly 760×912 with the subject centred, because the ring of
+  fire eats the edges.
+- **All about-page copy** is a template and says so in the text itself.
+- **The newsletter form** posts to `/api/subscribe`, which validates the
+  address and returns `{ok: true}` without storing it. See the TODO in
+  `worker/index.js`: it needs a Buttondown token or to be repointed at
+  Substack's own subscribe page.
+- **The blog page's post lists** are hand-written. The Substack half is
+  replaced at runtime once `/api/substack` is live.
+- **The domain** is assumed to be `ryanbeck.com` in `sitemap.xml`, `robots.txt`
+  and the canonical/OG tags. Change it there if it ends up being something
+  else.
+
+## Experiments that can be deleted
+
+Two pages exist only as a record of decisions and are `noindex` and unlinked
+from the nav. Nothing else references them.
+
+- `compare.html` — the hand-built book beside the StPageFlip one. Delete it
+  together with `assets/css/tome.css`, `assets/js/tome.js`,
+  `assets/css/tome-lib.css`'s tsParticles branch, and the tsParticles half of
+  `libtome/src/entry.js`.
+- `dust-lab.html` — the dust engines side by side. Delete it with
+  `assets/css/dust-lab.css` and `assets/js/dust-lab.js`. Keep
+  `assets/js/book-dust.js`: the site uses it.
+
+Deleting both would also let the vendor bundle drop tsParticles and shrink by
+roughly half.
 
 ## Reasonable next tasks
 
-1. Wire `/api/subscribe` to a real list, or delete it and point the form at
-   Substack.
-2. Replace the three door scenes with real artwork (760×912-ish, subject
-   centred — the fire ring eats the edges), and put a real photograph on the
-   tome's cover.
-3. Real project cards. The grid takes any number; the card markup is
+Roughly in the order they unblock things.
+
+1. **Deploy it.** It is a static site plus one Worker and has never been put
+   online. `npx wrangler login && npm run deploy`, then point the domain.
+   HOSTING.md covers why Cloudflare and what the free tier gives you.
+2. **Wire `/api/subscribe`** to a real list, or delete the route and point the
+   form at Substack's own subscribe page.
+3. **Replace the placeholder art** — the door scenes, the two book covers and
+   the about-page portrait. See "Known placeholders" for the sizes.
+4. **Real project cards.** The grid takes any number; the card markup is
    copy-pasteable.
-4. Decide on Astro before the site grows past ~8 pages — the shared header is
-   currently duplicated in five files, which is fine at five and annoying at
-   ten. See HOSTING.md for the reasoning.
+5. **Rewrite the about-page copy** in Ryan's voice. Each page is one
+   `<article class="page-src">` in `about.html`; adding or reordering pages
+   needs nothing else changed.
+6. **Decide on Astro** before the site grows past ~8 pages. The header is
+   duplicated across six files, which is fine at six and annoying at ten.
+   HOSTING.md has the argument, including the case against.

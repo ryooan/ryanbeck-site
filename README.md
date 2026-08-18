@@ -1,5 +1,7 @@
 # Ryan Beck — personal site
 
+*New here? Read `HANDOFF.md` first.*
+
 A static, dependency-free site. No build step, no framework, no `npm install`.
 Open `index.html` in a browser and it works.
 
@@ -22,8 +24,10 @@ public/               everything that gets served
   projects.html       card grid
   writing.html        fiction / author page
   blog.html           Substack feed + older archive
-  about.html          the tome — a dusty book you click through
+  about.html          the book
   about-plain.html    the same content as an ordinary page
+  compare.html        experiment: hand-built book vs libraries (noindex)
+  dust-lab.html       experiment: four dust engines (noindex)
   404.html
   _headers            caching + security headers
   _redirects          old ryanbeckauthor.com paths, extensionless URLs
@@ -125,15 +129,22 @@ deploy somewhere that runs functions.
 
 Until then the page shows the static list, which is a fine place to start.
 
-## The tome
+## The about page is a book
 
-The about page is an experiment: the content as a book you click through, with
-a dust puff on every turn. Pages are authored as plain `<article>` elements in
-`about.html` — the book is assembled from them at runtime, so with JS off or
-reduced motion on, you just read the articles. `about-plain.html` is the
-earlier straightforward version if you'd rather ship that.
+`about.html` renders the about content as a book you click through:
+[StPageFlip](https://github.com/Nodlik/StPageFlip) for the page turns, and a
+canvas dust engine of our own that reads the crease StPageFlip draws and throws
+dust off it. `about-plain.html` is the same content as an ordinary page, linked
+from the colophon, if you would rather ship that.
 
-See CLAUDE.md for how the page turn is built and the one CSS trap in it.
+Pages are authored as plain `<article>` elements in the HTML — the book is
+assembled from them at runtime, so with JS off or reduced motion on you just
+read the articles.
+
+Two pages are experiments kept as a record and unlinked from the nav:
+`compare.html` (this book beside an earlier hand-built one) and
+`dust-lab.html` (four dust engines side by side, with a density slider).
+CLAUDE.md says what to delete if you want them gone.
 
 ## Things left as placeholders
 
