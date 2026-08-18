@@ -175,6 +175,15 @@ never runs — no JS, or `prefers-reduced-motion` — the articles stay put and
 you read a perfectly ordinary document. Add or reorder a page by editing the
 articles; nothing else needs to change.
 
+On a phone StPageFlip switches to a single page, which on its own reads as a
+floating leaf rather than an open book. `.libtome-verso` is a static page-
+textured panel positioned immediately left of the recto, and the boards are
+stretched to span both — so the verso and the left board obviously carry on off
+the left of the screen. The stage also slides right by 9% once the book is
+open, so the spine sits inside the viewport rather than at its edge. All of it
+is portrait-only; the landscape spread is untouched and the verso is
+`display:none` there.
+
 Two things learned wiring StPageFlip up:
 
 - It renders a **closed** book as a single page inside a full-width block, so
@@ -195,7 +204,8 @@ Two things learned wiring StPageFlip up:
 BookDust.attach(bookEl, hostEl, flip, { kind: 'cloud' })
 ```
 
-`about.html` picks one with `data-dust-kind` on the container.
+`about.html` picks one with `data-dust-kind` on the container — currently
+`mist`, which is the chosen one.
 `dust-lab.html` runs all four side by side with a density slider, so they can
 be compared directly.
 

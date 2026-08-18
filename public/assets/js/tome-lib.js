@@ -29,6 +29,7 @@
   root.className = 'libtome';
 
   var stage  = document.createElement('div'); stage.className = 'libtome-stage';
+  var verso  = document.createElement('div'); verso.className = 'libtome-verso';
   var boards = document.createElement('div'); boards.className = 'libtome-boards';
   var bookEl = document.createElement('div'); bookEl.className = 'libtome-book';
   var dustEl = document.createElement('div'); dustEl.className = 'libtome-dust'; dustEl.id = 'libtome-dust';
@@ -46,6 +47,7 @@
   });
 
   stage.appendChild(boards);
+  stage.appendChild(verso);
   stage.appendChild(bookEl);
   stage.appendChild(dustEl);
   root.appendChild(stage);
@@ -120,15 +122,31 @@
     var idx = flip.getCurrentPageIndex();
     var n = flip.getPageCount();
     var landscape = flip.getOrientation() === 'landscape';
-    var half = landscape && (idx === 0 || idx >= n - 1);
+    var open = idx > 0 && idx < n - 1;
+    var half = landscape && !open;
 
     var w = half ? b.width / 2 : b.width;
     var x = b.left - s.left + (half && idx === 0 ? b.width / 2 : 0);
+    var top = b.top - s.top - b.height * 0.013;
+    var hgt = b.height * 1.026;
 
-    boards.style.left   = (x - w * 0.016) + 'px';
-    boards.style.top    = (b.top - s.top - b.height * 0.013) + 'px';
-    boards.style.width  = (w * 1.032) + 'px';
-    boards.style.height = (b.height * 1.026) + 'px';
+    root.classList.toggle('is-open', open);
+
+    if (!landscape && open) {
+      // portrait, open: the verso and the left board carry on off the screen
+      verso.style.left   = (x - b.width) + 'px';
+      verso.style.top    = (b.top - s.top) + 'px';
+      verso.style.width  = b.width + 'px';
+      verso.style.height = b.height + 'px';
+
+      boards.style.left  = (x - b.width - w * 0.016) + 'px';
+      boards.style.width = (b.width + w * 1.032) + 'px';
+    } else {
+      boards.style.left  = (x - w * 0.016) + 'px';
+      boards.style.width = (w * 1.032) + 'px';
+    }
+    boards.style.top    = top + 'px';
+    boards.style.height = hgt + 'px';
   }
 
   function status() {

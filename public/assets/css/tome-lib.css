@@ -35,6 +35,23 @@
   background:#5a3325 url("../tome/leather.jpg") center/cover;
   box-shadow:inset 0 0 46px rgba(30,14,6,.30), inset 0 0 14px rgba(30,14,6,.24);
 }
+/* Settled dust, over everything on the cover including the gilt — dust does
+   not respect the tooling. */
+.libtome .page[data-density="hard"]::before{
+  content:""; position:absolute; inset:0; z-index:5; pointer-events:none;
+  background:url("../tome/cover-dust.png") center/cover;
+  opacity:.5;
+}
+.libtome .page[data-density="hard"]::after{
+  /* knocked corners: the board shows through where it has been dropped */
+  content:""; position:absolute; inset:0; z-index:4; pointer-events:none;
+  background:
+    radial-gradient(circle at 0 0,      rgba(196,158,116,.55) 0, transparent 9%),
+    radial-gradient(circle at 100% 0,   rgba(196,158,116,.42) 0, transparent 7%),
+    radial-gradient(circle at 0 100%,   rgba(196,158,116,.50) 0, transparent 8%),
+    radial-gradient(circle at 100% 100%,rgba(196,158,116,.60) 0, transparent 10%);
+  width:auto;
+}
 .libtome .page .sheet{
   position:absolute; inset:0; display:flex; flex-direction:column;
   padding:clamp(18px,3.2vw,42px) clamp(18px,3.4vw,46px);
@@ -71,4 +88,28 @@
     0 4px 0 -1px #5c3526, 0 7px 0 -2px #34190f, 0 9px 1px -3px rgba(0,0,0,.55),
     0 20px 28px -18px rgba(30,18,10,.8), 0 46px 62px -30px rgba(40,26,14,.5);
   transition:left .5s ease, width .5s ease;
+}
+
+
+/* ---------- portrait: make it read as an open book ----------
+   StPageFlip shows one page in portrait, which on its own looks like a
+   floating leaf. The verso and the boards are drawn continuing off the left
+   of the screen so there is obviously a book there, and the whole thing
+   shifts right once it is open so the spine sits inside the viewport. */
+.libtome-verso{
+  position:absolute; z-index:1; pointer-events:none; display:none;
+  background:#efe4cd url("../tome/page.jpg") center/cover;
+  box-shadow:inset -18px 0 26px -14px rgba(76,52,26,.5);
+  border-radius:5px 1px 1px 5px;
+}
+.libtome-verso::after{
+  content:""; position:absolute; top:0; bottom:0; right:0; width:16%;
+  background:linear-gradient(to left, rgba(76,52,26,.4), transparent);
+}
+.libtome-stage{ transition:transform .55s cubic-bezier(.4,.05,.2,1) }
+
+@media (max-width:820px){
+  .libtome{ max-width:min(73vw, calc((100svh - 300px) * .70)) }
+  .libtome.is-open .libtome-verso{ display:block }
+  .libtome.is-open .libtome-stage{ transform:translateX(9%) }
 }
