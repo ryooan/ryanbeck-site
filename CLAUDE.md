@@ -93,7 +93,15 @@ script's `BOX`).
 
 While idle he flickers a faint warm glow every ~9s (`wizard-beckon`), so he
 reads as clickable before anyone hovers him; hover, focus and his `.is-awake`
-turn in the touch cycle all use the full glow.
+turn in the wake cycle all use the full glow.
+
+The knot of his staff carries `.staff-glow` — a dull breathing ember that
+brightens and swells when he is hovered, focused or awake. It is a sibling
+placed **immediately after** the `.wizard` anchor (the `+` selector depends
+on that), and it must live outside him: his clip-path would crop any halo
+drawn inside to his silhouette. Its position is derived from the knot's
+spot in his element box (the arithmetic is in the CSS comment); moving
+`.wizard` means re-deriving it.
 
 **If you change `.wizard`'s `left/top/width/height`, you must recompute the
 two background values** or he slides out of register. The formula, where the
@@ -130,13 +138,16 @@ shows more picture but pushes the flames outside the frame where they get
 clipped into two orange smudges; smaller closes the ring in over the art. Change
 `inner=` in `tools/make-fire.py` and you have to change that percentage too.
 
-### Touch devices
+### The wake cycle
 
-No hover on a phone. `portal.js` cycles which door is awake every 3.6s — the
-wizard takes a turn in that rotation too — and a tap navigates. Below 760px
-the artwork is also scaled to 152% of the viewport and its faded edges are
-allowed to crop, which makes the doors a real tap target — that only works
-because the page is the same colour as the paper.
+One portal (or the wizard) is always awake: `portal.js` rotates the glow
+every 3.6s on **every** device. On desktop, hover outranks the rotation —
+pointerenter on any of them stands the cycle down and pointerleave resumes
+it, so the cycle never fights the cursor. On a phone a tap wakes what it
+touched and navigates. Below 760px the artwork is also scaled to 152% of
+the viewport and its faded edges are allowed to crop, which makes the doors
+a real tap target — that only works because the page is the same colour as
+the paper.
 
 `.hall-nav` is a plain text nav shown at **every** size, positioned
 **absolutely inside `.hall`, at `bottom: 13%`** — the drawing's rocks run out
@@ -237,9 +248,17 @@ render can land late in a throttled tab), and per-frame during flips via
 can park one of those over the empty half too. Visibility, not display,
 because the dust engine reads the outer shadow's box every frame.
 
-`.libtome-boards`' transition is paced at .95s against StPageFlip's 1100ms
-`flippingTime`, so the board tracks the swinging cover instead of snapping
-ahead or trailing it. Change one, rebalance the other.
+**The boards never animate — they snap, on frames the cover conceals.** A
+leather rectangle sliding sideways reads as furniture moving, not as a book
+opening (tried, rejected); and physically the board *is* the cover, so
+nothing should lie under the half the cover has not reached. Opening: the
+board stays at half width for the entire swing — the left of the screen is
+genuinely empty until the cover lands — and snaps to full in the `flip`
+handler, the same frame StPageFlip settles the cover flat. Closing: the
+board snaps to half at `changeState`, when the flying cover still lies flat
+over the left half, exactly covering what disappears. `maskLeftPage()` runs
+synchronously with that snap. If either snap ever becomes visible, the
+timing against StPageFlip's events is what broke.
 
 `.libtome-book` needs `position:relative; z-index:2`. The verso is `z-index:1`,
 and without an explicit z-index on the book, StPageFlip's own
@@ -358,11 +377,17 @@ ramps in over its first frames (`fi`) — it billows off the book and drifts
 outward, it never pops into being out on the paper. The block is the
 fallback for hosts without boards (the dust lab).
 
-`mist` is deliberately slow and long-lived: about a third of the emission rate
-it had, three times the lifetime, and drag raised from 0.986 to 0.9955 per
-frame so particles carry well past the book instead of stalling a few dozen
-pixels out. Mote sizes are drawn from a skewed distribution — mostly fine
-grains, the odd fleck at a ceiling only a shade above the old fixed range.
+`mist` is two layers on one canvas. The **body**: about a quarter of the
+emission as large (6–18px), very faint, pre-rendered soft radial blobs that
+overlap into a slow billowing cloud, grow gently as they thin, and get a
+touch of upward lift. The **grain**: fine motes (skewed small, the odd
+fleck) hanging inside that cloud. Both ride the same curl field, and the
+whole thing is deliberately slow: spawn velocities at a third of the throw,
+a curl field that evolves at large scale and low speed (small fast eddies
+read as gnats, not dust — this was relearned the hard way), weak gravity,
+long lives, and a half-second fade-in so a mote condenses into view instead
+of popping. Speed lives in three numbers: the `0.32`/`0.22` spawn scale in
+`emit`, the `0.30` curl force and the `0.00012` field speed in `frame`.
 Spawn points are spread across the whole spawn box, with only about **16%**
 biased to the crease band.
 

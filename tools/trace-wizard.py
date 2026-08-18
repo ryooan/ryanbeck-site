@@ -31,7 +31,7 @@ INK_DIST = 55                             # how much darker than paper counts as
 BODY = [(0.00, 0.30), (0.10, 0.14), (0.22, 0.06), (0.30, 0.00), (0.52, 0.00),
         (0.62, 0.10), (0.70, 0.22), (0.74, 0.40), (0.78, 0.60), (0.82, 0.80),
         (0.84, 1.00), (0.00, 1.00)]
-STAFF = [(0.615, 0.68), (0.745, 0.00), (0.895, 0.00), (0.76, 0.68)]
+STAFF = [(0.625, 0.68), (0.745, 0.00), (0.875, 0.00), (0.755, 0.68)]
 
 
 def main():
@@ -59,9 +59,19 @@ def main():
     main_c = ndimage.binary_fill_holes(main_c)
     main_c = ndimage.median_filter(main_c, size=5)
 
-    cont = max(measure.find_contours(main_c.astype(float), 0.5), key=len)
-    poly = measure.approximate_polygon(cont, tolerance=1.6)
-    pts = [(min(1, max(0, c / w)), min(1, max(0, r / h))) for r, c in poly]
+    # the wall seam above the hat survives as a thin spike; an opening pass
+    # confined to the hat's airspace (left of the staff) shaves it without
+    # touching the staff, which is legitimately thin
+    top = np.zeros_like(main_c)
+    top[: int(h * 0.14), : int(w * 0.62)] = True
+    opened = ndimage.binary_opening(main_c, structure=np.ones((7, 7)))
+    main_c = np.where(top, opened & main_c, main_c)
+
+    # trace at 2x for a smoother line, then simplify gently
+    big = ndimage.zoom(main_c.astype(float), 2, order=1) > 0.5
+    cont = max(measure.find_contours(big.astype(float), 0.5), key=len)
+    poly = measure.approximate_polygon(cont, tolerance=2.0)
+    pts = [(min(1, max(0, c / 2 / w)), min(1, max(0, r / 2 / h))) for r, c in poly]
     print(' '.join(f'{x:.4f},{y:.4f}' for x, y in pts))
 
 

@@ -315,19 +315,36 @@
 
   /* =====================================================================
      STRATEGY 3 — MIST
-     No sprites at all. A few thousand single pixels pushed around by a
-     curl-noise flow field. Reads as fine airborne dust catching the
-     light rather than as smoke.
+     Two layers on one canvas. The body: sparse, large, very faint soft
+     blobs that overlap into a slow billowing cloud. The grain: fine
+     motes hanging inside that cloud, catching the light. Both are
+     advected by the same curl-noise field, slowly — dust hangs, it does
+     not dart.
      ===================================================================== */
+  var softSprite = null;
+  function makeSoftSprite() {
+    if (softSprite) return softSprite;
+    var c = document.createElement('canvas');
+    c.width = c.height = 64;
+    var g = c.getContext('2d');
+    var r = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    r.addColorStop(0, 'rgba(111,90,62,0.85)');
+    r.addColorStop(0.45, 'rgba(111,90,62,0.38)');
+    r.addColorStop(1, 'rgba(111,90,62,0)');
+    g.fillStyle = r;
+    g.fillRect(0, 0, 64, 64);
+    softSprite = c;
+    return c;
+  }
+
   function mist(ctx, W, H) {
     var ps = [];
+    var soft = makeSoftSprite();
     return {
       emit: function (f, power, k) {
-        // Fewer born per frame than before but each lives three times as
-        // long, so more of them are in the air at once and they hang around.
         var g = f.gust || FLAT_GUST;
-        var n = Math.round(rnd(31, 74) * power * AMOUNT * g.rate * (k || 1));
-        if (ps.length > 4800) ps.splice(0, ps.length - 4800);
+        var n = Math.round(rnd(60, 130) * power * AMOUNT * g.rate * (k || 1));
+        if (ps.length > 6500) ps.splice(0, ps.length - 6500);
         var hasBox = f.bx1 > f.bx0;
         for (var i = 0; i < n; i++) {
           // Dust lifts off the whole sheet, not just the crease: about half
@@ -344,20 +361,26 @@
           var y = f.top + Math.random() * f.h;
           if (f.by1 > f.by0) y = Math.max(f.by0, Math.min(f.by1, y));
           // most of it is thrown the way the page is travelling, the rest
-          // goes wherever it likes
+          // goes wherever it likes. The 0.32 is the overall speed of the
+          // effect: dust drifts, it does not fly.
           var v = throwVel(f, 0.85, Math.random() < 0.7);
+          // about a quarter of the emission is cloud body: big, soft, very
+          // faint, even slower than the grain, with a touch of lift
+          var body = Math.random() < 0.25;
           ps.push({
             x: x, y: y,
-            vx: v.vx * 0.7, vy: v.vy * 0.7,
+            vx: v.vx * (body ? 0.22 : 0.32), vy: v.vy * (body ? 0.22 : 0.32) - (body ? 0.06 : 0),
             cx: 0, cy: 0, off: (Math.random() * 3) | 0,
-            // sizes vary per mote: mostly fine grains, the odd larger fleck —
-            // a squared random skews small, and the ceiling is only a shade
-            // above the old fixed range
-            s: (0.55 + Math.pow(Math.random(), 1.6) * 2.4) * (0.8 + g.size * 0.35),
-            life: 1, decay: rnd(0.0016, 0.0050) / g.life,
+            body: body,
+            // grain sizes vary per mote — mostly fine, the odd fleck;
+            // body blobs are an order larger and grow gently as they thin
+            s: body ? rnd(6, 18) * (0.8 + g.size * 0.35)
+                    : (0.55 + Math.pow(Math.random(), 1.6) * 2.4) * (0.8 + g.size * 0.35),
+            grow: body ? 1.0016 : 1,
+            life: 1, decay: rnd(0.0010, 0.0032) / g.life / (body ? 1.3 : 1),
             fi: 0,
-            a: rnd(0.12, 0.4),
-            pale: Math.random() < 0.4
+            a: body ? rnd(0.05, 0.12) : rnd(0.12, 0.4),
+            pale: !body && Math.random() < 0.4
           });
         }
       },
@@ -371,26 +394,39 @@
 
         var tick3 = (t / 16) | 0;
         var drag = Math.pow(0.9955, DT);
+        var bodies = [];
         for (var i = ps.length - 1; i >= 0; i--) {
           var p = ps[i];
           // curl noise is four noise lookups a go; at three thousand motes
           // that is the whole frame budget. Each particle refreshes its own
           // flow vector every third frame and coasts on it in between.
+          // The field itself evolves slowly and at a large scale — small
+          // fast eddies are what made the motes read as gnats.
           if (((tick3 + p.off) % 3) === 0) {
-            var c = curl(p.x * 0.018, p.y * 0.018, t * 0.00028);
+            var c = curl(p.x * 0.013, p.y * 0.013, t * 0.00012);
             p.cx = c[0]; p.cy = c[1];
           }
-          p.vx += p.cx * 0.85 * DT; p.vy += p.cy * 0.85 * DT;
+          p.vx += p.cx * 0.30 * DT; p.vy += p.cy * 0.30 * DT;
           p.x += p.vx * DT; p.y += p.vy * DT;
-          p.vx *= drag; p.vy = p.vy * drag + 0.0016 * DT;
+          p.vx *= drag; p.vy = p.vy * drag + 0.0007 * DT;
+          if (p.grow !== 1) p.s *= Math.pow(p.grow, DT);
           p.life -= p.decay * DT;
           if (p.life <= 0) { ps.splice(i, 1); continue; }
-          // a short ramp-in so a mote materialises rather than pops
-          if (p.fi < 1) p.fi = Math.min(1, p.fi + 0.09 * DT);
+          // a slow ramp-in (about half a second) so a mote condenses into
+          // view instead of popping
+          if (p.fi < 1) p.fi = Math.min(1, p.fi + 0.035 * DT);
           var a = p.life * p.fi * p.a * edgeFade(p.x, p.y, W, H);
-          if (a <= 0.012) continue;
+          if (a <= 0.008) continue;
+          if (p.body) { p.dA = a; bodies.push(p); continue; }
           var b = Math.min(B - 1, (a * B) | 0) + (p.pale ? B : 0);
           (buckets[b] || (buckets[b] = [])).push(p);
+        }
+
+        // the cloud body first, so the grain reads as motes inside it
+        for (var k2 = 0; k2 < bodies.length; k2++) {
+          var q2 = bodies[k2];
+          ctx.globalAlpha = q2.dA;
+          ctx.drawImage(soft, q2.x - q2.s / 2, q2.y - q2.s / 2, q2.s, q2.s);
         }
 
         for (bi = 0; bi < B * 2; bi++) {

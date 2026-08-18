@@ -87,9 +87,10 @@
     0 1px 0 rgba(255,226,190,.12) inset,
     0 4px 0 -1px #5c3526, 0 7px 0 -2px #34190f, 0 9px 1px -3px rgba(0,0,0,.55),
     0 20px 28px -18px rgba(30,18,10,.8), 0 46px 62px -30px rgba(40,26,14,.5);
-  /* paced to StPageFlip's 1100ms cover swing so the board tracks the cover
-     rather than snapping ahead of it or arriving after it has landed */
-  transition:left .95s cubic-bezier(.55,.08,.35,1), width .95s cubic-bezier(.55,.08,.35,1);
+  /* NO transition, deliberately. A leather rectangle sliding sideways reads
+     as furniture moving, not as a book opening. The board snaps, and the
+     snap is timed to frames where the cover itself hides it — see
+     sizeBoards' choreography note in tome-lib.js. */
 }
 
 /* StPageFlip's crease and cover shadows exist only to shade a turn in

@@ -102,12 +102,13 @@ All in `assets/css/site.css` under `/* --- a doorway --- */`:
 The fire rings are generated PNGs, not gradients. `tools/make-fire.py` regenerates
 them if you want different flames.
 
-### On touch devices
+### The wake cycle
 
-There's no hover on a phone, so `portal.js` cycles which is awake every
-3.6s — the doors and the wizard take turns — and a tap navigates. A plain
-text nav also sits on the artwork's sand at every size — the doors are only
-~40px wide on a phone, which is too small to be the only way in.
+One door (or the wizard) is always awake: `portal.js` rotates the glow every
+3.6s on every device. Hovering anything pauses the rotation; on a phone a
+tap wakes what it touched and navigates. A plain text nav also sits on the
+artwork's sand at every size — the doors are only ~40px wide on a phone,
+which is too small to be the only way in.
 
 Everything respects `prefers-reduced-motion`.
 

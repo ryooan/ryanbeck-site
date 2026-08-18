@@ -296,7 +296,20 @@
     var target = intent ? Math.max(0, Math.min(flip.getPageCount() - 1, i + intent)) : i;
     maskTarget = target;
     root.classList.toggle('is-open', target > 0 && target < flip.getPageCount() - 1);
-    sizeBoards(target);
+    /* Board choreography for landscape covers. The board is the cover — a
+       book has nothing lying under the half its cover has not reached — so
+       it must never be seen moving on its own. Both snaps happen on frames
+       where the cover conceals them:
+       - OPENING: keep the half-width board through the whole swing (the
+         left half of the screen is genuinely empty until the cover lands).
+         The snap to full width happens in the 'flip' handler, the same
+         frame StPageFlip settles the flying cover flat on the left.
+       - CLOSING: snap to half width right now — at this frame the flying
+         cover is still lying flat over the left half, exactly covering the
+         board it is taking away. */
+    var opening = flip.getOrientation() === 'landscape' && i === 0 && target > 0;
+    if (!opening) sizeBoards(target);
+    maskLeftPage();   // same frame as the snap, not a rAF later
     busyUntil = Date.now() + 1500;
     if (!maskRaf) maskRaf = requestAnimationFrame(maskLoop);
   });

@@ -179,6 +179,26 @@ body.hall-page{
 .wizard:focus-visible{outline:2px solid rgba(255,200,120,.9);outline-offset:4px}
 @keyframes wizard-beckon{0%,86%,100%{opacity:0}90%,95%{opacity:.5}}
 
+/* The carved knot at the top of his staff carries a dull ember of a glow,
+   breathing slowly; hovering (or his turn in the wake cycle) blows on it.
+   It lives OUTSIDE .wizard because his clip-path would crop any halo to his
+   silhouette — which is also why it must stay pointer-events:none, sitting
+   over his hit area. Position: the knot is at ~(0.79, 0.11) of the wizard's
+   box; box left 28.5% + 0.79x16% = 41.1%, top 46% + 0.11x25% = 48.8%. */
+.staff-glow{
+  position:absolute; z-index:5; pointer-events:none;
+  left:41.1%; top:48.8%; width:5%; aspect-ratio:1;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(closest-side, rgba(255,216,150,.55), rgba(255,170,80,.24) 52%, transparent 74%);
+  mix-blend-mode:screen; filter:blur(1px);
+  opacity:.34; transition:opacity .55s ease, transform .55s ease;
+  animation:staff-breathe 5.5s ease-in-out infinite;
+}
+.wizard:is(:hover,:focus-visible,.is-awake) + .staff-glow{
+  opacity:1; transform:translate(-50%,-50%) scale(1.35); animation:none;
+}
+@keyframes staff-breathe{0%,100%{opacity:.26}50%{opacity:.42}}
+
 /* wizard hint label */
 .wizard-hint{
   position:absolute; z-index:4; left:28.5%; top:72.5%; width:16%;
