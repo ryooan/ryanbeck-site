@@ -246,6 +246,18 @@ matter how they are faded, which was the first version's problem.
 `both` shares one canvas between two engines, so it clears once and passes
 `skipClear` to each.
 
+Half of each mist emission is launched **along the direction of travel**
+(`throwVel(..., follow)`), in a cone rather than a line; the other half
+scatters freely.
+
+That direction is taken from the call, not inferred from crease motion:
+`attach()` wraps `flip.flipNext` / `flip.flipPrev` to record intent. Inference
+does work eventually, but the opening burst fires before the sheet has moved,
+so it reads the *previous* turn's direction — which means the first and biggest
+puff of every turn goes the wrong way, and it is the puff that sets the
+impression. Dragging a corner has no call to intercept, so that path still
+falls back to crease motion.
+
 `mist` is deliberately slow and long-lived: about a third of the emission rate
 it had, three times the lifetime, and drag raised from 0.986 to 0.9955 per
 frame so particles carry well past the book instead of stalling a few dozen

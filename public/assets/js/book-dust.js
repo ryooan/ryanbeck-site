@@ -43,7 +43,7 @@
 
   /* ------------------------------------------------------- the fold signal */
   function foldReader(bookEl) {
-    var prev = null;
+    var prev = null, lastDir = -1;   // -1 = forward (the crease sweeps left)
     return function (rect) {
       // StPageFlip sets display, zIndex and clipPath as inline styles, so
       // these can be read straight off .style. Going through
@@ -87,10 +87,14 @@
       var top = fr.top - rect.top, bot = fr.bottom - rect.top;
       var v = prev === null ? 0 : x - prev;
       prev = x;
+      // the crease can be momentarily still at the very start and end of a
+      // turn, so the direction is remembered rather than recomputed each frame
+      if (Math.abs(v) > 0.2) lastDir = v < 0 ? -1 : 1;
       var blk2 = bookEl.querySelector('.stf__block');
       var b2 = blk2 ? blk2.getBoundingClientRect() : fr;
       return {
         x: x, top: top, bottom: bot, v: v, h: Math.max(1, bot - top), hard: !clipped,
+        dir: lastDir,
         bx0: b2.left - rect.left, bx1: b2.right - rect.left
       };
     };
@@ -117,12 +121,24 @@
      and it goes everywhere. A full circle of directions, the rightward half
      damped but not suppressed, only a small share of the crease's own motion,
      and this turn's gust laid over the top. */
-  function throwVel(f, base) {
+  function throwVel(f, base, follow) {
     var g = f.gust || FLAT_GUST;
+    var sp = base * g.spread * (0.25 + Math.pow(Math.random(), 0.5) * 2.1);
+
+    if (follow) {
+      // Thrown along the way the page is going, in a cone rather than a line,
+      // so it looks pushed by the sheet instead of merely blown about.
+      var dir = f.dir || -1;
+      var a = (dir > 0 ? 0 : Math.PI) + rnd(-0.72, 0.72);
+      return {
+        vx: Math.cos(a) * sp * 1.15 + f.v * 0.16 + rnd(-0.2, 0.2),
+        vy: Math.sin(a) * sp * 0.8 + g.gy * g.lean * sp * 0.3 + rnd(-0.2, 0.1)
+      };
+    }
+
     var ang = Math.random() * 6.283;
     var cx = Math.cos(ang), sy = Math.sin(ang);
     if (cx > 0) cx *= 0.45;
-    var sp = base * g.spread * (0.25 + Math.pow(Math.random(), 0.5) * 2.1);
     return {
       vx: cx * sp + g.gx * g.lean * sp * 0.55 + f.v * 0.14 + rnd(-0.3, 0.3),
       vy: sy * sp + g.gy * g.lean * sp * 0.55 + rnd(-0.25, 0.15)
@@ -269,7 +285,7 @@
         // Fewer born per frame than before but each lives three times as
         // long, so more of them are in the air at once and they hang around.
         var g = f.gust || FLAT_GUST;
-        var n = Math.round(rnd(60, 140) * power * AMOUNT * g.rate);
+        var n = Math.round(rnd(45, 105) * power * AMOUNT * g.rate);
         if (ps.length > 4800) ps.splice(0, ps.length - 4800);
         var hasBox = f.bx1 > f.bx0;
         for (var i = 0; i < n; i++) {
@@ -283,7 +299,9 @@
           else if (Math.random() < 0.16) x = f.x + rnd(-30, 30);
           else x = rnd(f.bx0 - 6, f.bx1 + 6);
           var y = f.top + Math.random() * f.h;
-          var v = throwVel(f, 0.85);
+          // half of it is thrown the way the page is travelling, half goes
+          // wherever it likes
+          var v = throwVel(f, 0.85, Math.random() < 0.5);
           ps.push({
             x: x, y: y,
             vx: v.vx * 0.7, vy: v.vy * 0.7,
@@ -450,13 +468,27 @@
     }
 
     var read = foldReader(bookEl);
-    var raf = null, idleAfter = 0, alive = 0, gust = makeGust();
+    var raf = null, idleAfter = 0, alive = 0, gust = makeGust(), lastFold = null;
+
+    /* Which way the turn is going, taken from the call rather than inferred.
+       Crease motion tells you eventually, but the opening burst fires before
+       the sheet has moved, so inference there returns the *previous* turn's
+       direction and the first and biggest puff goes the wrong way. Dragging a
+       corner still falls back to the crease. */
+    var intent = 0;
+    if (flip && typeof flip.flipNext === 'function') {
+      var fn = flip.flipNext.bind(flip), fp = flip.flipPrev.bind(flip);
+      flip.flipNext = function (c) { intent = -1; return fn(c); };
+      flip.flipPrev = function (c) { intent = 1;  return fp(c); };
+    }
 
     function loop(t) {
       raf = null;
       if (!engine) return;
       var f = read(host.getBoundingClientRect());
       if (f) {
+        if (intent) f.dir = intent;
+        lastFold = f;
         f.gust = gust;
         engine.emit(f, Math.min(1.6, 0.35 + Math.abs(f.v) * 0.12));
         idleAfter = t + 2600;
@@ -486,6 +518,7 @@
       // since the burst is the first thing on screen the entire effect reads
       // as a narrow vertical strip.
       if (!(f.bx1 > f.bx0)) { f.bx0 = br.left - hr.left; f.bx1 = br.right - hr.left; }
+      if (intent) f.dir = intent;
       f.gust = gust;
       for (var i = 0; i < 7; i++) engine.emit(f, 1.15);
       kick();
@@ -497,7 +530,7 @@
         gust = makeGust();            // a fresh gust for every turn
         burst();
       });
-      flip.on('flip', kick);
+      flip.on('flip', function () { intent = 0; kick(); });
     }
 
     rebuild();
@@ -505,6 +538,8 @@
       kick: kick,
       rebuild: rebuild,
       alive: function () { return alive; },
+      lastFold: function () { return lastFold; },
+      clear: function () { if (engine && engine.clear) engine.clear(); },
       setAmount: function (v) { AMOUNT = v; }
     };
   }
