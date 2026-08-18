@@ -18,19 +18,23 @@
 
   if (canHover) return;
 
-  /* --- touch: cycle which door is awake, tap navigates --- */
+  /* --- touch: cycle which is awake, tap navigates --- */
+  /* The wizard joins the rotation so he glows on his turn like the doors do
+     — without hover it is the only thing that says he is tappable. */
+  var wizard = document.querySelector('.wizard');
+  var cycle = wizard ? portals.concat([wizard]) : portals;
   var i = 0;
   function wake(n) {
-    portals.forEach(function (p, k) { p.classList.toggle('is-awake', k === n); });
+    cycle.forEach(function (p, k) { p.classList.toggle('is-awake', k === n); });
   }
   wake(0);
   if (!reduced) {
-    var timer = setInterval(function () { i = (i + 1) % portals.length; wake(i); }, 3600);
+    var timer = setInterval(function () { i = (i + 1) % cycle.length; wake(i); }, 3600);
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) clearInterval(timer);
     });
   }
-  portals.forEach(function (p, k) {
+  cycle.forEach(function (p, k) {
     p.addEventListener('touchstart', function () { wake(k); }, { passive: true });
   });
 })();
