@@ -246,8 +246,8 @@ matter how they are faded, which was the first version's problem.
 `both` shares one canvas between two engines, so it clears once and passes
 `skipClear` to each.
 
-Half of each mist emission is launched **along the direction of travel**
-(`throwVel(..., follow)`), in a cone rather than a line; the other half
+Seventy per cent of each mist emission is launched **along the direction of
+travel** (`throwVel(..., follow)`), in a cone rather than a line; the rest
 scatters freely.
 
 That direction is taken from the call, not inferred from crease motion:

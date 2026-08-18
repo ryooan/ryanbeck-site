@@ -285,7 +285,7 @@
         // Fewer born per frame than before but each lives three times as
         // long, so more of them are in the air at once and they hang around.
         var g = f.gust || FLAT_GUST;
-        var n = Math.round(rnd(45, 105) * power * AMOUNT * g.rate);
+        var n = Math.round(rnd(31, 74) * power * AMOUNT * g.rate);
         if (ps.length > 4800) ps.splice(0, ps.length - 4800);
         var hasBox = f.bx1 > f.bx0;
         for (var i = 0; i < n; i++) {
@@ -299,9 +299,9 @@
           else if (Math.random() < 0.16) x = f.x + rnd(-30, 30);
           else x = rnd(f.bx0 - 6, f.bx1 + 6);
           var y = f.top + Math.random() * f.h;
-          // half of it is thrown the way the page is travelling, half goes
-          // wherever it likes
-          var v = throwVel(f, 0.85, Math.random() < 0.5);
+          // most of it is thrown the way the page is travelling, the rest
+          // goes wherever it likes
+          var v = throwVel(f, 0.85, Math.random() < 0.7);
           ps.push({
             x: x, y: y,
             vx: v.vx * 0.7, vy: v.vy * 0.7,
