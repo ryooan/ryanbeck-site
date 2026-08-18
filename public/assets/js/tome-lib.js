@@ -47,9 +47,12 @@
     bookEl.appendChild(page);
   });
 
+  var shield = document.createElement('div'); shield.className = 'libtome-shield';
+
   stage.appendChild(boards);
   stage.appendChild(verso);
   stage.appendChild(bookEl);
+  stage.appendChild(shield);
   stage.appendChild(dustEl);
   root.appendChild(stage);
 
@@ -134,14 +137,9 @@
     root.classList.toggle('is-open', open);
 
     if (!landscape && open) {
-      // portrait, open: the verso and the left board carry on off the screen,
-      // and the verso shows the page before this one so the spread is real
-      var prev = articles[idx - 1];
-      if (prev && verso._src !== prev) {
-        verso._src = prev;
-        verso.innerHTML = prev.dataset.type === 'cover' || prev.dataset.type === 'backcover'
-          ? '' : '<div class="sheet">' + prev.innerHTML + '</div>';
-      }
+      // portrait, open: the verso and the left board carry on off the screen.
+      // It stays blank — repeating the page you just read as a cropped sliver
+      // reads as a glitch, not as a spread.
       verso.style.left   = (x - b.width) + 'px';
       verso.style.top    = (b.top - s.top) + 'px';
       verso.style.width  = b.width + 'px';
@@ -167,19 +165,36 @@
     nextBtn.disabled = i >= LAST;
     sizeBoards();
     fitSheets();
+    placeShield();
   }
 
   prevBtn.addEventListener('click', function () { flip.flipPrev(); });
   nextBtn.addEventListener('click', function () {
     if (flip.getCurrentPageIndex() < LAST) flip.flipNext();
   });
-  flip.on('flip', function () {
-    // clicking or dragging can still reach the back board; snap straight back
-    // so the book simply stops at its last page
-    var i = flip.getCurrentPageIndex(), n = flip.getPageCount();
-    if (i > n - 2 && n > 2) { flip.turnToPage(n - 2); }
-    status();
+  /* At the last page, cover the forward half of the book with a shield that
+     swallows pointer events. Letting the flip run and snapping back afterwards
+     plays a whole animation that ends where it started, which just looks
+     broken; this stops it happening at all. */
+  ['pointerdown', 'mousedown', 'touchstart', 'click'].forEach(function (ev) {
+    shield.addEventListener(ev, function (e) { e.preventDefault(); e.stopPropagation(); }, true);
   });
+
+  function placeShield() {
+    var blk = bookEl.querySelector('.stf__block');
+    var i = flip.getCurrentPageIndex(), n = flip.getPageCount();
+    if (!blk || i < n - 2) { shield.style.display = 'none'; return; }
+    var b = blk.getBoundingClientRect(), s2 = stage.getBoundingClientRect();
+    var landscape = flip.getOrientation() === 'landscape';
+    var w = landscape ? b.width / 2 : b.width * 0.62;
+    shield.style.display = 'block';
+    shield.style.left   = (b.right - s2.left - w) + 'px';
+    shield.style.top    = (b.top - s2.top) + 'px';
+    shield.style.width  = w + 'px';
+    shield.style.height = b.height + 'px';
+  }
+
+  flip.on('flip', status);
   flip.on('changeOrientation', function () { setTimeout(function () { sizeBoards(); fitSheets(); }, 60); });
   flip.on('changeState', function (e) {
     if (e.data === 'flipping' || e.data === 'user_fold') puff();
