@@ -176,16 +176,27 @@ you read a perfectly ordinary document. Add or reorder a page by editing the
 articles; nothing else needs to change.
 
 On a phone StPageFlip switches to a single page, which on its own reads as a
-floating leaf rather than an open book. `.libtome-verso` is a static page-
-textured panel positioned immediately left of the recto, and the boards are
-stretched to span both — so the verso and the left board obviously carry on off
-the left of the screen. The stage also slides right by 9% once the book is
-open, so the spine sits inside the viewport rather than at its edge. All of it
-is portrait-only; the landscape spread is untouched and the verso is
+floating leaf rather than an open book. `.libtome-verso` is a panel positioned
+immediately left of the recto carrying **the previous page's content**, and the
+boards are stretched to span both — so the verso and the left board obviously
+carry on off the left of the screen. The stage also slides right by 9% once the
+book is open, so the spine sits inside the viewport rather than at its edge.
+Portrait-only; the landscape spread is untouched and the verso is
 `display:none` there.
+
+`.libtome-book` needs `position:relative; z-index:2`. The verso is `z-index:1`,
+and without an explicit z-index on the book, StPageFlip's own
+`position:relative` leaves it at `auto` — so the sheet in flight slid *under*
+the static verso instead of over it.
 
 Two things learned wiring StPageFlip up:
 
+- `showCover: true` marks the first **and last** pages hard. The last article
+  is therefore a real back board; without it the colophon was being rendered
+  as leather with text on it. Its visible face is styled as a paste-down
+  endpaper rather than exterior leather, since that inner face is the only one
+  ever seen — navigation stops at `pageCount - 2`, and a guard on `flip` snaps
+  back if a click or drag reaches the board.
 - It renders a **closed** book as a single page inside a full-width block, so
   anything drawn behind it (our leather boards) has to follow the *visible*
   half, or a closed book looks twice as wide as it is. `sizeBoards()` does it.

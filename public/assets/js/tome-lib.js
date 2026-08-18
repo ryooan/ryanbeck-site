@@ -39,6 +39,7 @@
     page.className = 'page';
     // StPageFlip treats "hard" pages as covers: they turn as boards, not paper
     if (i === 0 || i === articles.length - 1) page.setAttribute('data-density', 'hard');
+    if (a.dataset.type) page.setAttribute('data-type', a.dataset.type);
     var sheet = document.createElement('div');
     sheet.className = a.dataset.type === 'cover' ? 'cover-inner' : 'sheet';
     sheet.innerHTML = a.innerHTML;
@@ -133,7 +134,14 @@
     root.classList.toggle('is-open', open);
 
     if (!landscape && open) {
-      // portrait, open: the verso and the left board carry on off the screen
+      // portrait, open: the verso and the left board carry on off the screen,
+      // and the verso shows the page before this one so the spread is real
+      var prev = articles[idx - 1];
+      if (prev && verso._src !== prev) {
+        verso._src = prev;
+        verso.innerHTML = prev.dataset.type === 'cover' || prev.dataset.type === 'backcover'
+          ? '' : '<div class="sheet">' + prev.innerHTML + '</div>';
+      }
       verso.style.left   = (x - b.width) + 'px';
       verso.style.top    = (b.top - s.top) + 'px';
       verso.style.width  = b.width + 'px';
@@ -149,19 +157,29 @@
     boards.style.height = hgt + 'px';
   }
 
+  var LAST = 0;   // the last page of content; the page after it is the board
   function status() {
     var i = flip.getCurrentPageIndex(), n = flip.getPageCount();
-    progress.textContent = i === 0 ? 'closed' : i + ' / ' + (n - 1);
-    nextBtn.textContent = i === 0 ? 'Open it' : (i >= n - 1 ? 'The end' : 'Turn the page');
+    LAST = n - 2;
+    progress.textContent = i === 0 ? 'closed' : i + ' / ' + LAST;
+    nextBtn.textContent = i === 0 ? 'Open it' : (i >= LAST ? 'The end' : 'Turn the page');
     prevBtn.disabled = i === 0;
-    nextBtn.disabled = i >= n - 1;
+    nextBtn.disabled = i >= LAST;
     sizeBoards();
     fitSheets();
   }
 
   prevBtn.addEventListener('click', function () { flip.flipPrev(); });
-  nextBtn.addEventListener('click', function () { flip.flipNext(); });
-  flip.on('flip', status);
+  nextBtn.addEventListener('click', function () {
+    if (flip.getCurrentPageIndex() < LAST) flip.flipNext();
+  });
+  flip.on('flip', function () {
+    // clicking or dragging can still reach the back board; snap straight back
+    // so the book simply stops at its last page
+    var i = flip.getCurrentPageIndex(), n = flip.getPageCount();
+    if (i > n - 2 && n > 2) { flip.turnToPage(n - 2); }
+    status();
+  });
   flip.on('changeOrientation', function () { setTimeout(function () { sizeBoards(); fitSheets(); }, 60); });
   flip.on('changeState', function (e) {
     if (e.data === 'flipping' || e.data === 'user_fold') puff();

@@ -23,7 +23,7 @@
   max-width:min(880px, 88vw, calc((100svh - 330px) * 1.42));
 }
 .libtome-stage{ position:relative; margin:0 auto; width:100% }
-.libtome-book{ margin:0 auto }
+.libtome-book{ margin:0 auto; position:relative; z-index:2 }
 
 .libtome .page{
   background:#efe4cd url("../tome/page.jpg") center/cover;
@@ -98,6 +98,7 @@
    shifts right once it is open so the spine sits inside the viewport. */
 .libtome-verso{
   position:absolute; z-index:1; pointer-events:none; display:none;
+  overflow:hidden; color:#3b2f22;
   background:#efe4cd url("../tome/page.jpg") center/cover;
   box-shadow:inset -18px 0 26px -14px rgba(76,52,26,.5);
   border-radius:5px 1px 1px 5px;
@@ -113,3 +114,35 @@
   .libtome.is-open .libtome-verso{ display:block }
   .libtome.is-open .libtome-stage{ transform:translateX(9%) }
 }
+
+
+/* the verso carries the previous page's text, cropped by the screen edge */
+.libtome-verso .sheet{
+  position:absolute; inset:0; display:flex; flex-direction:column;
+  padding:clamp(18px,3.2vw,42px) clamp(18px,3.4vw,46px);
+  font-size:var(--sheet-fs, clamp(.72rem,1vw,.98rem)); line-height:1.62;
+  opacity:.9;
+}
+.libtome-verso .folio{ margin-top:auto }
+
+/* The inside of the back board is a paste-down endpaper, not the outside of
+   the cover — that face is the only one you ever see, since the book stops
+   before it can be turned. */
+.libtome .page[data-type="backcover"]{
+  background:#e6d8bd url("../tome/page.jpg") center/cover;
+  box-shadow:inset 0 0 60px rgba(84,58,28,.42), inset 0 0 18px rgba(60,38,16,.34);
+}
+.libtome .page[data-type="backcover"]::before{
+  content:""; position:absolute; inset:0; z-index:5; pointer-events:none;
+  background:
+    radial-gradient(120% 100% at 50% 50%, transparent 42%, rgba(74,50,22,.30) 100%),
+    linear-gradient(115deg, rgba(120,88,44,.10), transparent 45%);
+  opacity:1; mix-blend-mode:multiply;
+}
+.libtome .page[data-type="backcover"]::after{ content:none }
+
+.libtome .page[data-density="hard"] .cover-mark-small{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  font-size:clamp(18px,3vw,30px); color:rgba(226,188,120,.34);
+}
+.libtome .page[data-type="backcover"] .cover-mark-small{ color:rgba(120,86,40,.32) }
