@@ -6,7 +6,9 @@
 /home         /               301
 /index        /               301
 
-# Pretty URLs
+# Pretty URLs. html_handling is "none" (see wrangler.toml), so the root
+# needs an explicit rewrite too.
+/             /index.html     200
 /projects     /projects.html  200
 /writing      /writing.html   200
 /blog         /blog.html      200

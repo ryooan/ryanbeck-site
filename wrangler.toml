@@ -8,6 +8,10 @@ compatibility_date = "2026-08-01"
 directory = "./public"
 binding = "ASSETS"
 not_found_handling = "404-page"
+# "none", because _redirects owns the pretty URLs. The default
+# (auto-trailing-slash) 307s /about.html back to /about, which combines with
+# our "/about -> /about.html 200" rewrite into an infinite redirect loop.
+html_handling = "none"
 
 [observability]
 enabled = true
