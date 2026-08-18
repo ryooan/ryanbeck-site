@@ -4,12 +4,14 @@ Context for Claude Code working on this repo. Read this before changing anything
 
 ## What this is
 
-Ryan Beck's personal site. Five pages of hand-written HTML, one stylesheet,
-three small scripts, and a Cloudflare Worker that exists only to serve `/api/*`.
+Ryan Beck's personal site. Hand-written HTML, plain CSS and dependency-free
+JS, plus a Cloudflare Worker that exists only to serve `/api/*`.
 
 **There is no build step and no framework, and that is deliberate.** Don't
-introduce React, a bundler, or a CSS framework without asking. The whole site
-is ~15 KB of CSS and ~4 KB of JS; the constraint is doing real work.
+introduce React, a bundler, or a CSS framework without asking. Every page
+carries ~19 KB of CSS and under 4 KB of JS; the about page adds the book
+(~29 KB of our own CSS+JS, plus the 233 KB vendor bundle). The constraint is
+doing real work.
 
 ```
 public/            everything served to a browser
@@ -17,14 +19,23 @@ public/            everything served to a browser
   projects.html  writing.html  blog.html  404.html
   about.html       the tome — a book you click through
   about-plain.html the same content as an ordinary page
+  compare.html  dust-lab.html   experiments, noindex, unlinked (see the end)
   _headers  _redirects  robots.txt  sitemap.xml  site.webmanifest
   assets/
     portal-hall.webp/.png   the drawing the whole site hangs off
-    css/site.css            all styling
-    css/tome.css            the book
-    tome/                   leather, page stock, gilt wordmark
-    js/portal.js            touch behaviour for the doors
-    js/tome.js              the book: page turns and dust
+    css/site.css            all styling for every page but the book
+    css/tome-lib.css        the book that ships
+    css/tome.css            BOTH the shared book furniture (type, controls,
+                            plate, folio — about.html needs it) AND the
+                            hand-built book's geometry (compare.html only)
+    css/dust-lab.css        dust-lab.html only
+    tome/                   leather, page stock, dust sprites, gilt wordmark
+    vendor/lib-tome.bundle.js  StPageFlip + tsParticles, built in libtome/
+    js/portal.js            the doors: wake cycle, long-press, preloading
+    js/tome-lib.js          the book that ships (StPageFlip)
+    js/book-dust.js         the dust engines
+    js/tome.js              the hand-built book (compare.html only)
+    js/dust-lab.js          dust-lab.html only
     js/substack.js          fetches /api/substack
     js/nav.js               marks the current nav item
     scenes/                 what's behind each door + the fire ring textures
@@ -32,21 +43,27 @@ public/            everything served to a browser
 worker/index.js    /api/substack and /api/subscribe. Static files never reach it
 tools/             make-fire.py (flames), make-wordmark.py (lettering),
                    make-tome-textures.py (leather + page stock),
+                   make-dust.py (dust sprites),
                    trace-wizard.py (the wizard's clip polygon),
-                   check-links.mjs (CI)
+                   check-links.mjs, check-docs.mjs (CI)
 wrangler.toml      Cloudflare config
 ```
 
 ## Running it
 
 ```bash
-npm run serve     # static only, python http.server on :8000
-npm run dev       # wrangler — use this if you're touching /api
+npm run dev       # wrangler on :8787 — the real thing, use this
+npm run serve     # python http.server on :8000 — quick, but see below
 npm run deploy    # pushes to Cloudflare
+npm test          # check-links + check-docs, the same pair CI runs
 ```
 
-`npm run serve` is enough for anything that isn't the API. The blog page
-degrades gracefully when `/api/substack` 404s.
+**Prefer `npm run dev`.** Wrangler serves the pages, `/api/*`, `_redirects`
+and `_headers` exactly as production does. `npm run serve` is a plain file
+server: it ignores both files, so every pretty URL (`/about`, `/projects`)
+404s, only the `.html` spellings work, and the blog page falls back to its
+hand-written list because `/api/substack` isn't there. Fine for poking at
+one page's CSS; misleading for anything about routing.
 
 ## The landing page
 
@@ -204,9 +221,17 @@ those two filenames is the whole rollback.
 **The book is StPageFlip** (`page-flip`), chosen over a hand-built CSS 3D
 version after a side-by-side — its fold geometry and drag-a-corner beat what
 eight rotated slices could manage. The hand-built implementation is still in
-the repo (`assets/css/tome.css`, `assets/js/tome.js`) because `compare.html`
-shows it; nothing else uses it. Its own notes are kept at the bottom of this
+the repo (`assets/js/tome.js` and the geometry half of `assets/css/tome.css`)
+because `compare.html` shows it. Its own notes are kept at the bottom of this
 section in case it is ever revived.
+
+⚠️ **`tome.css` is two files in a trenchcoat, and `about.html` loads it.**
+Its "stage / page contents / the cover / controls / reduced-motion" sections
+are the shared furniture every version of the book uses — headings, buttons,
+`.plate`, `.folio`, `.kicker`, drop caps. Its "leaves / the curl" sections
+are the hand-built book alone. Deleting the file with `compare.html` strips
+the about page of all its typography and controls. Split it first, or keep
+it.
 
 **Content lives in the HTML, not in JS.** Each page is an
 `<article class="page-src">` inside `.tome-fallback`. `tome-lib.js` reads
@@ -546,12 +571,23 @@ Cloudflare Workers with static assets. Static files are served by the asset
 layer and never invoke the Worker, so they're free and unlimited; only `/api/*`
 costs anything against the 100k/day free tier.
 
-Needs two GitHub secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
-`.github/workflows/deploy.yml` deploys on push to `main`.
+**Wrangler is authenticated** (2026-08-18, OAuth as ryooan@gmail.com, account
+`0efbd4d4…d990`), so `npm run deploy` works from this machine. It has still
+never been deployed — publishing is Ryan's call, not a default.
+
+Two things to know before wiring up CI:
+
+- `.github/workflows/deploy.yml` triggers on push to **`main`**, but this repo's
+  branch is **`master`**. Rename the branch or the trigger, or the workflow
+  silently never runs.
+- It needs two GitHub secrets, `CLOUDFLARE_API_TOKEN` and
+  `CLOUDFLARE_ACCOUNT_ID`. There is no remote configured yet, so none of this
+  is live.
 
 `public/_redirects` already maps the old ryanbeckauthor.com paths and gives the
 pages extensionless URLs. `wrangler.toml` has commented-out blocks for the
-custom domain and a Hyperdrive/Neon binding — uncomment when they exist.
+custom domain and a Hyperdrive/Neon binding — uncomment when they exist, and
+note `html_handling = "none"` there is load-bearing (see "Running it").
 
 ## Known placeholders
 
@@ -581,23 +617,29 @@ Two pages exist only as a record of decisions and are `noindex` and unlinked
 from the nav. Nothing else references them.
 
 - `compare.html` — the hand-built book beside the StPageFlip one. Delete it
-  together with `assets/css/tome.css`, `assets/js/tome.js`,
-  `assets/css/tome-lib.css`'s tsParticles branch, and the tsParticles half of
-  `libtome/src/entry.js`.
+  with `assets/js/tome.js`, the tsParticles branch of `tome-lib.js`, and the
+  tsParticles half of `libtome/src/entry.js`. **Do not delete
+  `assets/css/tome.css`** — see the warning in "The tome" above; about.html
+  depends on its shared half. To be rid of it, first move the "stage / page
+  contents / the cover / controls / reduced-motion" sections into
+  `tome-lib.css` and drop the `tome.css` link from `about.html`, verifying
+  the about page's type and buttons survive.
 - `dust-lab.html` — the dust engines side by side. Delete it with
   `assets/css/dust-lab.css` and `assets/js/dust-lab.js`. Keep
   `assets/js/book-dust.js`: the site uses it.
 
 Deleting both would also let the vendor bundle drop tsParticles and shrink by
-roughly half.
+roughly half — 233 KB is by far the heaviest thing the site serves, and it
+loads on `about.html`.
 
 ## Reasonable next tasks
 
 Roughly in the order they unblock things.
 
 1. **Deploy it.** It is a static site plus one Worker and has never been put
-   online. `npx wrangler login && npm run deploy`, then point the domain.
-   HOSTING.md covers why Cloudflare and what the free tier gives you.
+   online. Wrangler is already logged in, so this is just `npm run deploy` —
+   but it publishes under Ryan's name, so wait for him to ask. Then point the
+   domain. HOSTING.md covers why Cloudflare and what the free tier gives you.
 2. **Wire `/api/subscribe`** to a real list, or delete the route and point the
    form at Substack's own subscribe page.
 3. **Replace the placeholder art** — the door scenes, the two book covers and

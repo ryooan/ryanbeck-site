@@ -6,7 +6,8 @@
     "dev": "wrangler dev",
     "serve": "python3 -m http.server 8000 --directory public",
     "deploy": "wrangler deploy",
-    "tail": "wrangler tail"
+    "tail": "wrangler tail",
+    "test": "node tools/check-links.mjs && node tools/check-docs.mjs"
   },
   "devDependencies": {
     "wrangler": "^4"

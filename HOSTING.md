@@ -70,13 +70,22 @@ start there and skip a lot of glue code.
 
 ## What I'd actually do
 
+> **Status, 2026-08-18:** the Cloudflare account exists and wrangler is
+> authenticated (OAuth, ryooan@gmail.com). Step 3 is done — the Worker
+> implements `/api/substack` and it serves Ryan's real feed locally. Steps 1
+> and 2 are the open ones, and step 2 is now literally `npm run deploy`.
+
 1. **Register `ryanbeck.com`** (or whatever's free) and point it at Cloudflare.
    Keep `ryanbeckauthor.com` as a redirect to `/writing` — the links out there
-   still work, and you stop maintaining two sites.
+   still work, and you stop maintaining two sites. `_redirects` already has the
+   old paths mapped; the domain is the missing half.
 2. **Deploy this as-is.** It's static files; it'll be live in ten minutes and
-   cost nothing. No framework decision required yet.
-3. **Add the Substack route** when you want the blog page live — one file, ~10
-   lines, `functions/api/substack.js`. The client code is already written.
+   cost nothing. No framework decision required yet. The first deploy lands on
+   `ryanbeck-site.<subdomain>.workers.dev`, which is shareable straight away —
+   the domain can follow later without rework.
+3. ~~**Add the Substack route.**~~ Done: `worker/index.js` fetches the feed,
+   parses it, decodes entities and caches for 30 minutes, and
+   `assets/js/substack.js` falls back to the hand-written list if it 404s.
 4. **When the first database project arrives,** convert the site to
    [Astro](https://astro.build). It's the natural next step from plain HTML:
    these files become `.astro` pages nearly unchanged, you get components and

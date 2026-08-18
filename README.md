@@ -2,16 +2,23 @@
 
 *New here? Read `HANDOFF.md` first.*
 
-A static, dependency-free site. No build step, no framework, no `npm install`.
-Open `index.html` in a browser and it works.
+A static site with no build step and no framework. `public/` is what ships:
+edit a file, reload, done. The only dependency is wrangler, for serving
+`/api/*` locally and for deploying.
 
 ## Run it locally
 
 ```bash
-npm run serve     # static only  -> http://localhost:8000
-npm run dev       # wrangler, if you're touching /api
-npm run deploy    # push to Cloudflare
+npm install
+npm run dev       # -> http://localhost:8787   the real thing
+npm test          # check-links + check-docs
 ```
+
+Use `npm run dev`. Wrangler serves the pages, `/api/*`, `_redirects` and
+`_headers` exactly as production does. There is also `npm run serve` (a plain
+python file server on :8000), but it ignores `_redirects`, so every pretty
+URL — `/about`, `/projects` — 404s and only the `.html` spellings work. It's
+for poking at one page's CSS, nothing more.
 
 (You need a server rather than double-clicking the file, because the pages
 load assets by path.)
@@ -37,11 +44,20 @@ public/               everything that gets served
   portal-hall.webp    the drawing (webp) + .png fallback. Flattened onto
                       #e9dac9 with only the doorways punched out, which is
                       why it blends into the page with no visible edge
-  css/site.css        all styling, one file
+  css/site.css        all styling except the book
+  css/tome-lib.css    the book that ships
+  css/tome.css        shared book furniture (about.html needs it) AND the
+                      hand-built book's geometry (compare.html only) — see
+                      the warning in CLAUDE.md before deleting it
   wordmark.svg        RYAN BECK, drawn to match the carved door lintels
-  js/portal.js        touch-device behaviour for the doors
+  js/portal.js        the doors: wake cycle, long-press, preloading
+  js/tome-lib.js      the book that ships (StPageFlip)
+  js/book-dust.js     the dust engines
+  js/tome.js          the hand-built book (compare.html only)
   js/substack.js      pulls live posts from /api/substack
   js/nav.js           highlights the current nav item
+  vendor/             StPageFlip + tsParticles bundle, built in libtome/
+  tome/               leather, page stock, dust sprites, gilt wordmark
   scenes/             what you see through each door
     projects.jpg  fiction.jpg  blog.jpg     <- swap these for real art
     fire-a.webp   fire-b.webp               <- the rotating ring of fire
@@ -51,9 +67,11 @@ public/               everything that gets served
 worker/index.js       /api/substack and /api/subscribe
 tools/                make-fire.py, make-wordmark.py,
                       make-tome-textures.py, make-dust.py,
-                      check-links.mjs
+                      trace-wizard.py,
+                      check-links.mjs, check-docs.mjs
 wrangler.toml         Cloudflare config
-CLAUDE.md             architecture notes for Claude Code
+AGENTS.md             workspace adapter (this repo lives in AI Wiki and Projects)
+CLAUDE.md             architecture notes and every trap found the hard way
 HOSTING.md            where to deploy it and why
 ```
 
