@@ -4,8 +4,12 @@
   X-Frame-Options: SAMEORIGIN
   Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
 
+# Nothing here has a content hash in its filename, so "immutable" would pin
+# a returning visitor to year-old CSS and JS after every deploy. Cache for a
+# few hours and revalidate quietly in the background instead; the artwork
+# and textures change rarely enough that this costs almost nothing.
 /assets/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=14400, stale-while-revalidate=86400
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate

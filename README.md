@@ -104,10 +104,10 @@ them if you want different flames.
 
 ### On touch devices
 
-There's no hover on a phone, so `portal.js` cycles which door is awake every
-3.6s and a tap navigates. There's also a plain text nav under the artwork —
-the doors are only ~40px wide on a phone, which is too small to be the only
-way in.
+There's no hover on a phone, so `portal.js` cycles which is awake every
+3.6s — the doors and the wizard take turns — and a tap navigates. A plain
+text nav also sits on the artwork's sand at every size — the doors are only
+~40px wide on a phone, which is too small to be the only way in.
 
 Everything respects `prefers-reduced-motion`.
 

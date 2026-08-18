@@ -32,6 +32,7 @@ public/            everything served to a browser
 worker/index.js    /api/substack and /api/subscribe. Static files never reach it
 tools/             make-fire.py (flames), make-wordmark.py (lettering),
                    make-tome-textures.py (leather + page stock),
+                   trace-wizard.py (the wizard's clip polygon),
                    check-links.mjs (CI)
 wrangler.toml      Cloudflare config
 ```
@@ -79,13 +80,24 @@ Two things follow from that, both load-bearing:
    doors does nothing, which is the entire point. If you replace `clip-path`
    with `mask-image` for any reason, you silently get rectangular hit areas back.
 
-The wizard works the same way (`#clip-wizard`), except his polygon was traced by
-hand and his "image" is the artwork itself, re-positioned via
+The wizard works the same way (`#clip-wizard`), except his "image" is the
+artwork itself, re-positioned via
 `background-size: 625% 400%; background-position: 33.93% 61.33%` so the same
-PNG lines up exactly inside his little box. **If you change `.wizard`'s
-`left/top/width/height`, you must recompute those two background values** or he
-slides out of register. The formula, where the element is `w`% wide at `l`% from
-the left:
+PNG lines up exactly inside his little box. His polygon is **traced from the
+ink** by `tools/trace-wizard.py` — the hover glow is a drop-shadow on the
+clipped element, so the glow is only as good as the clip; the script
+thresholds the drawing against the paper colour, fences off the rubble
+behind the staff, and emits the normalised points for `#clip-wizard`. Re-run
+it if the artwork or the element box changes (the box is duplicated in the
+script's `BOX`).
+
+While idle he flickers a faint warm glow every ~9s (`wizard-beckon`), so he
+reads as clickable before anyone hovers him; hover, focus and his `.is-awake`
+turn in the touch cycle all use the full glow.
+
+**If you change `.wizard`'s `left/top/width/height`, you must recompute the
+two background values** or he slides out of register. The formula, where the
+element is `w`% wide at `l`% from the left:
 
 ```
 background-size-x = 100 / (w/100) %          e.g. w=16  -> 625%
@@ -120,17 +132,23 @@ clipped into two orange smudges; smaller closes the ring in over the art. Change
 
 ### Touch devices
 
-No hover on a phone. `portal.js` cycles which door is awake every 3.6s and a
-tap navigates. Below 760px the artwork is also scaled to 152% of the viewport
-and its faded edges are allowed to crop, which makes the doors a real tap
-target — that only works because the page is the same colour as the paper.
+No hover on a phone. `portal.js` cycles which door is awake every 3.6s — the
+wizard takes a turn in that rotation too — and a tap navigates. Below 760px
+the artwork is also scaled to 152% of the viewport and its faded edges are
+allowed to crop, which makes the doors a real tap target — that only works
+because the page is the same colour as the paper.
 
-`.hall-nav` is a plain text nav that shows below 760px. It is positioned
+`.hall-nav` is a plain text nav shown at **every** size, positioned
 **absolutely inside `.hall`, at `bottom: 13%`** — the drawing's rocks run out
 around 78% of the frame, so that puts it on clean sand below the wizard. It
-used to sit below the artwork in normal flow and got pushed off short screens.
-Keep it on the art. **Don't remove it** — it's the accessible path in, not a
-fallback.
+used to sit below the artwork in normal flow and got pushed off short
+screens. Keep it on the art. **Don't remove it** — it's the accessible path
+in, not a fallback.
+
+Because the nav lives on the artwork, the hall reserves no vertical space
+below it: the art's size budget is `100svh` minus ~150px for the wordmark and
+paddings (`.hall` and `.hall-mark` share the 150px figure — change one,
+change both).
 
 Everything honours `prefers-reduced-motion`.
 
@@ -196,6 +214,32 @@ The stage's sideways slide is driven from the **predicted** target page at
 `changeState`, not from the `flip` event. Driven off `flip` it runs after the
 cover has finished swinging and the whole book lurches sideways. Portrait-only; the landscape
 spread is untouched and the verso is `display:none` there.
+
+Prediction needs an intent, and there are **two sources**: `flipNext`/`flipPrev`
+are wrapped (buttons), and a capture-phase `pointerdown` on the stage records
+which half of the book was pressed (`clickIntent`) — because
+`clickEventForward` and corner drags start flips **inside** StPageFlip without
+calling those methods. Before the pointerdown intent existed, every
+click-started flip ran with target = current page, so the boards, `is-open`
+and the masks all fired a full cover-swing late — the board arrived visibly
+after the cover had landed.
+
+Landscape has its own left-of-spine rule, active when the book is closed or a
+flip is heading to closed (`maskTarget === 0`): **nothing settled may render
+left of the spine**. StPageFlip breaks that twice — its initial render parks a
+pale page there before the first interaction, and a closing swing sits a
+full sheet of inside-cover leather flat on the left for its whole duration.
+`maskLeftPage()` enforces the rule (it also still does the portrait masking),
+runs from `status()` plus two delayed retries at load (the first StPageFlip
+render can land late in a throttled tab), and per-frame during flips via
+`maskLoop`. Its shadow cousin: the `.stf__*Shadow` elements are
+`visibility:hidden` except while `.libtome.is-flipping` — the initial render
+can park one of those over the empty half too. Visibility, not display,
+because the dust engine reads the outer shadow's box every frame.
+
+`.libtome-boards`' transition is paced at .95s against StPageFlip's 1100ms
+`flippingTime`, so the board tracks the swinging cover instead of snapping
+ahead or trailing it. Change one, rebalance the other.
 
 `.libtome-book` needs `position:relative; z-index:2`. The verso is `z-index:1`,
 and without an explicit z-index on the book, StPageFlip's own
@@ -295,11 +339,32 @@ puff of every turn goes the wrong way, and it is the puff that sets the
 impression. Dragging a corner has no call to intercept, so that path still
 falls back to crease motion.
 
+**The simulation is frame-rate independent.** All the physics constants are
+per-frame values tuned at 60fps; `DT` — real elapsed time in 60fps frames,
+clamped to [0.25, 3] — rescales them each frame, and the per-frame emission
+counts scale by it too. Without this a 144Hz monitor ran the dust ~2.4x
+faster *and* ~2.4x denser than the phone it was tuned against. Positions
+move by `v * DT`, drags become `Math.pow(drag, DT)`, lifetimes decay by
+`decay * DT`. Anything added here must be written the same way.
+
+**Dust is born on the book, never beside it.** The spawn box (`bx0/bx1`,
+`by0/by1`) is the **leather boards element**, not StPageFlip's block — the
+block is always the full open spread, so a closed book fills only half of
+it, and block-based spawns put dust on the empty paper next to the cover on
+every cover flip (`burst()` fires exactly then). The boards also track the
+visible book mid-swing via their CSS transition, so the spawn box grows and
+shrinks with the cover. Everything spawned is clamped into the box and
+ramps in over its first frames (`fi`) — it billows off the book and drifts
+outward, it never pops into being out on the paper. The block is the
+fallback for hosts without boards (the dust lab).
+
 `mist` is deliberately slow and long-lived: about a third of the emission rate
 it had, three times the lifetime, and drag raised from 0.986 to 0.9955 per
 frame so particles carry well past the book instead of stalling a few dozen
-pixels out. Spawn points are spread across the whole book box (`foldReader` reports
-`bx0`/`bx1` for that), with only about **16%** biased to the crease band.
+pixels out. Mote sizes are drawn from a skewed distribution — mostly fine
+grains, the odd fleck at a ceiling only a shade above the old fixed range.
+Spawn points are spread across the whole spawn box, with only about **16%**
+biased to the crease band.
 
 That 16% matters more than it looks. What the eye reads is density per unit
 width, not the split: the crease band is roughly a tenth of the book's width,
