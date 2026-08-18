@@ -35,6 +35,11 @@
   verso.style.backgroundPosition = '73% 41%';
   verso.style.backgroundSize = '139% 127%';
   var boards = document.createElement('div'); boards.className = 'libtome-boards';
+  // the left board is its own element in landscape, so opening the cover
+  // never has to move a rectangle: the right board simply never changes,
+  // and the left one materialises in place under the landed cover
+  var boardsL = document.createElement('div'); boardsL.className = 'libtome-boards';
+  boardsL.style.opacity = '0';
   var bookEl = document.createElement('div'); bookEl.className = 'libtome-book';
   var dustEl = document.createElement('div'); dustEl.className = 'libtome-dust'; dustEl.id = 'libtome-dust';
 
@@ -62,6 +67,7 @@
 
   var shield = document.createElement('div'); shield.className = 'libtome-shield';
 
+  stage.appendChild(boardsL);
   stage.appendChild(boards);
   stage.appendChild(verso);
   stage.appendChild(bookEl);
@@ -154,7 +160,6 @@
   /* StPageFlip shows a closed book as a single page inside a full-width
      block, so the boards have to follow the *visible* half rather than the
      block, or a closed book looks twice as wide as it is. */
-  var boardsHalf = null;
   function sizeBoards(targetIdx) {
     var blk = bookEl.querySelector('.stf__block') || bookEl;
     var b = blk.getBoundingClientRect(), s = stage.getBoundingClientRect();
@@ -164,30 +169,48 @@
     var n = flip.getPageCount();
     var landscape = flip.getOrientation() === 'landscape';
     var open = idx > 0 && idx < n - 1;
-    var half = landscape && !open;
 
-    /* The one exception to boards-never-animate: when a cover open lands
-       (half -> full), the rim eases out from beneath the landed cover over
-       a couple hundred ms, so the book reads as settling flat rather than
-       a frame of leather popping into place. Closing still snaps — that
-       change happens under a cover lying flat on top of it. */
-    if (boardsHalf === true && !half) {
-      boards.classList.add('settle');
-      clearTimeout(sizeBoards._t);
-      sizeBoards._t = setTimeout(function () { boards.classList.remove('settle'); }, 260);
-    } else if (half) {
-      boards.classList.remove('settle');
-    }
-    boardsHalf = half;
-
-    var w = half ? b.width / 2 : b.width;
-    var x = b.left - s.left + (half && idx === 0 ? b.width / 2 : 0);
     var top = b.top - s.top - b.height * 0.013;
     var hgt = b.height * 1.026;
 
     root.classList.toggle('is-open', open);
 
-    if (!landscape && open) {
+    if (landscape) {
+      /* Two half-width boards, and NEITHER ever moves or resizes — a
+         rectangle travelling on its own reads as furniture, not a book.
+         The right board is simply always there. The left one is always
+         positioned and only its opacity changes: it fades in IN PLACE
+         under the cover in the same frame the cover lands flat on it
+         (called from the 'flip' handler), and it vanishes instantly when
+         a close begins, while the flying cover still lies exactly on top
+         of it. The joint between them sits at the spine, hidden by the
+         page block; the sliver visible above and below the pages reads
+         as the hinge groove a real binding has. */
+      var w2 = b.width / 2;
+      var spine = b.left - s.left + w2;
+      boards.style.left   = (spine - w2 * 0.016) + 'px';
+      boards.style.width  = (w2 * 1.032) + 'px';
+      boardsL.style.left  = (b.left - s.left - w2 * 0.016) + 'px';
+      boardsL.style.width = (w2 * 1.032) + 'px';
+      boardsL.style.top = boards.style.top = top + 'px';
+      boardsL.style.height = boards.style.height = hgt + 'px';
+      if (open) {
+        if (boardsL.style.opacity !== '1') {
+          boardsL.style.transition = 'opacity .18s ease';
+          boardsL.style.opacity = '1';
+        }
+      } else {
+        boardsL.style.transition = 'none';
+        boardsL.style.opacity = '0';
+      }
+      return;
+    }
+
+    boardsL.style.transition = 'none';
+    boardsL.style.opacity = '0';
+    var w = b.width;
+    var x = b.left - s.left;
+    if (open) {
       // portrait, open: the verso and the left board carry on off the screen.
       // It stays blank — repeating the page you just read as a cropped sliver
       // reads as a glitch, not as a spread.
@@ -324,17 +347,17 @@
     var target = intent ? Math.max(0, Math.min(flip.getPageCount() - 1, i + intent)) : i;
     maskTarget = target;
     root.classList.toggle('is-open', target > 0 && target < flip.getPageCount() - 1);
-    /* Board choreography for landscape covers. The board is the cover — a
-       book has nothing lying under the half its cover has not reached — so
-       it must never be seen moving on its own. Both snaps happen on frames
-       where the cover conceals them:
-       - OPENING: keep the half-width board through the whole swing (the
-         left half of the screen is genuinely empty until the cover lands).
-         The snap to full width happens in the 'flip' handler, the same
-         frame StPageFlip settles the flying cover flat on the left.
-       - CLOSING: snap to half width right now — at this frame the flying
-         cover is still lying flat over the left half, exactly covering the
-         board it is taking away. */
+    /* Left-board choreography for landscape covers. The board is the cover
+       — a book has nothing lying under the half its cover has not reached
+       — so no board may be seen moving, and the left board only changes
+       opacity, on frames where the cover conceals it:
+       - OPENING: skip sizeBoards here, or the left board would fade in at
+         the start of the swing over a still-empty left half. It fades in,
+         in place, from the 'flip' handler — the same frame StPageFlip
+         settles the flying cover flat on top of it.
+       - CLOSING: sizeBoards now — it hides the left board instantly while
+         the flying cover still lies flat over it, exactly covering what
+         disappears. */
     var opening = flip.getOrientation() === 'landscape' && i === 0 && target > 0;
     if (!opening) sizeBoards(target);
     maskLeftPage();   // same frame as the snap, not a rAF later

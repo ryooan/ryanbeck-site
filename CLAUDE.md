@@ -96,13 +96,15 @@ glow. His `.is-awake` turn in the wake cycle lights **only the staff ember**
 — a wizard flaring up on a timer read as possessed rather than inviting,
 so the always-breathing ember is the whole idle affordance.
 
-The knot of his staff carries `.staff-glow` — a dull breathing ember that
-brightens and swells when he is hovered, focused or awake. It is a sibling
-placed **immediately after** the `.wizard` anchor (the `+` selector depends
-on that), and it must live outside him: his clip-path would crop any halo
-drawn inside to his silhouette. Its position is derived from the knot's
-spot in his element box (the arithmetic is in the CSS comment); moving
-`.wizard` means re-deriving it.
+The knot of his staff carries `.staff-glow` — wizard-light: a white core,
+cold blue halo, and two crossed off-axis rays (the pseudo-elements), dim
+and breathing at rest, flaring to full when he is hovered, focused, held,
+or awake. Deliberately cold against the warm page — it reads as magic, not
+as a candle. It is a sibling placed **immediately after** the `.wizard`
+anchor (the `+` selector depends on that), and it must live outside him:
+his clip-path would crop any halo drawn inside to his silhouette. Its
+position is derived from the knot's spot in his element box (the arithmetic
+is in the CSS comment); moving `.wizard` means re-deriving it.
 
 **If you change `.wizard`'s `left/top/width/height`, you must recompute the
 two background values** or he slides out of register. The formula, where the
@@ -257,20 +259,24 @@ render can land late in a throttled tab), and per-frame during flips via
 can park one of those over the empty half too. Visibility, not display,
 because the dust engine reads the outer shadow's box every frame.
 
-**The boards never animate — they snap, on frames the cover conceals.** A
-leather rectangle sliding sideways reads as furniture moving, not as a book
-opening (tried, rejected); and physically the board *is* the cover, so
-nothing should lie under the half the cover has not reached. Opening: the
-board stays at half width for the entire swing — the left of the screen is
-genuinely empty until the cover lands — and goes full in the `flip`
-handler, the same frame StPageFlip settles the cover flat. That landing is
-the one sanctioned animation: `sizeBoards` puts `.settle` on the boards for
-~260ms so the rim **eases out from beneath the landed cover** instead of
-popping around it — it reads as the book settling flat. Closing still
-snaps hard at `changeState`, when the flying cover lies flat over the left
-half, exactly covering what disappears. `maskLeftPage()` runs synchronously
-with that snap. If any of this ever becomes visible, the timing against
-StPageFlip's events is what broke.
+**In landscape there are TWO boards, and neither ever moves.** A leather
+rectangle travelling or resizing reads as furniture moving, not as a book
+opening — that was tried twice (a paced transition, then a snap-with-settle)
+and rejected twice; physically the board *is* the cover, so nothing should
+lie under the half the cover has not reached, and nothing should slide to
+get there. So: the right half-board is simply always present. The left
+half-board is always **positioned** but changes only opacity — it fades in
+IN PLACE (~180ms) from the `flip` handler, the same frame StPageFlip lays
+the flying cover flat on top of it, and it vanishes instantly at
+`changeState` when a close begins, while the cover still lies exactly over
+it. `changeState` must keep skipping `sizeBoards` for an opening cover, or
+the left board fades in over a still-empty left half at the start of the
+swing. The joint between the two boards sits at the spine, hidden by the
+page block; the sliver visible above and below the pages reads as a
+binding's hinge groove. Portrait keeps the single spanning board and the
+verso. `maskLeftPage()` runs synchronously with the close-time hide. If any
+of this ever becomes visible, the timing against StPageFlip's events is
+what broke.
 
 **Page staining varies per page.** Each paper page gets its own crop window
 into `page.jpg` — deterministic offsets and an anisotropic stretch set
@@ -399,15 +405,25 @@ move by `v * DT`, drags become `Math.pow(drag, DT)`, lifetimes decay by
 `decay * DT`. Anything added here must be written the same way.
 
 **Dust is born on the book, never beside it.** The spawn box (`bx0/bx1`,
-`by0/by1`) is the **leather boards element**, not StPageFlip's block — the
-block is always the full open spread, so a closed book fills only half of
-it, and block-based spawns put dust on the empty paper next to the cover on
-every cover flip (`burst()` fires exactly then). The boards also track the
-visible book mid-swing via their CSS transition, so the spawn box grows and
-shrinks with the cover. Everything spawned is clamped into the box and
-ramps in over its first frames (`fi`) — it billows off the book and drifts
-outward, it never pops into being out on the paper. The block is the
-fallback for hosts without boards (the dust lab).
+`by0/by1`) is the visible union of the **leather board elements**, not
+StPageFlip's block — the block is always the full open spread, so a closed
+book fills only half of it, and block-based spawns put dust on the empty
+paper next to the cover on every cover flip (`burst()` fires exactly then).
+There are two boards in landscape and the left one is `opacity:0` whenever
+no book lies under it, so the union tracks what is actually on screen.
+Everything spawned is clamped into the box and ramps in over its first
+frames (`fi`) — it billows off the book and drifts outward, it never pops
+into being out on the paper. The block is the fallback for hosts without
+boards (the dust lab).
+
+The one deliberate exception: **a swinging cover sheds dust off its own
+face.** During a hard flip, 55% of the emission is born ON the moving board
+— between the hinge (the spine, which is the spawn box's near edge) and the
+tracked fore-edge, biased outward with `sqrt(random)` — and is carried with
+the board: it inherits a share of the edge velocity that grows with
+distance from the hinge, plus an upward fling, because the fore-edge is the
+fast end of the lever. These spawns are intentionally NOT clamped to the
+box; mid-swing the board is legitimately outside it.
 
 `mist` is two layers on one canvas. The **body**: about a quarter of the
 emission as large (6–18px), very faint, pre-rendered soft radial blobs that

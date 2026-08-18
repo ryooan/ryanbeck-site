@@ -50,23 +50,34 @@
   /* Where dust is allowed to be born: the visible book, not the layout box.
      StPageFlip's .stf__block is always the full open spread, so a closed book
      fills only half of it — spawning across the block puts dust on the empty
-     paper beside the cover. The leather boards element tracks the visible
-     book exactly (sizeBoards + its CSS transition), including mid-swing, so
-     it is the spawn box; the block is only the fallback for hosts without
-     boards (the dust lab). */
+     paper beside the cover. The leather boards track the visible book
+     exactly (there are two in landscape, and the left one is opacity:0
+     whenever there is no book under it), so their visible union is the
+     spawn box; the block is only the fallback for hosts without boards
+     (the dust lab). */
   function spawnBoxReader(bookEl) {
-    var boards = bookEl.parentElement &&
-                 bookEl.parentElement.querySelector('.libtome-boards');
+    var boardEls = bookEl.parentElement ?
+      bookEl.parentElement.querySelectorAll('.libtome-boards') : [];
     return function (rect) {
-      var el = boards, r = el && el.getBoundingClientRect();
-      if (!r || !r.width) {
-        el = bookEl.querySelector('.stf__block') || bookEl;
-        r = el.getBoundingClientRect();
+      var x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+      for (var i = 0; i < boardEls.length; i++) {
+        if (boardEls[i].style.opacity === '0') continue;
+        var r = boardEls[i].getBoundingClientRect();
+        if (!r.width) continue;
+        if (r.left < x0) x0 = r.left;
+        if (r.right > x1) x1 = r.right;
+        if (r.top < y0) y0 = r.top;
+        if (r.bottom > y1) y1 = r.bottom;
       }
-      if (!r.width) return null;
+      if (x1 <= x0) {
+        var el = bookEl.querySelector('.stf__block') || bookEl;
+        var br = el.getBoundingClientRect();
+        if (!br.width) return null;
+        x0 = br.left; x1 = br.right; y0 = br.top; y1 = br.bottom;
+      }
       return {
-        x0: r.left - rect.left, x1: r.right - rect.left,
-        y0: r.top - rect.top, y1: r.bottom - rect.top
+        x0: x0 - rect.left, x1: x1 - rect.left,
+        y0: y0 - rect.top, y1: y1 - rect.top
       };
     };
   }
@@ -346,30 +357,53 @@
         var n = Math.round(rnd(60, 130) * power * AMOUNT * g.rate * (k || 1));
         if (ps.length > 6500) ps.splice(0, ps.length - 6500);
         var hasBox = f.bx1 > f.bx0;
+        // A swinging cover is a dusty surface in motion: what sits on its
+        // face gets carried with the board and flung off, hardest at the
+        // fore-edge, which moves the fastest (it is the far end of the
+        // lever). The hinge is the spine — the near edge of the spawn box,
+        // since the boards hug the closed half during a cover flip.
+        var onCover = f.hard && hasBox && Math.abs(f.v) > 0.05;
         for (var i = 0; i < n; i++) {
-          // Dust lifts off the whole sheet, not just the crease: about half
-          // comes off the fold, the rest from anywhere across the spread.
-          // Density per unit width is what the eye reads, not the split. The
-          // crease band is a tenth of the book's width, so giving it much
-          // more than a tenth of the particles makes it a stripe.
-          // Every spawn is clamped to the spawn box — dust is born ON the
-          // book and billows outward; it never pops into being beside it.
-          var x;
-          if (!hasBox) x = f.x + rnd(-30, 30);
-          else if (Math.random() < 0.16) x = clampX(f, f.x + rnd(-30, 30));
-          else x = rnd(f.bx0, f.bx1);
-          var y = f.top + Math.random() * f.h;
-          if (f.by1 > f.by0) y = Math.max(f.by0, Math.min(f.by1, y));
-          // most of it is thrown the way the page is travelling, the rest
-          // goes wherever it likes. The 0.32 is the overall speed of the
-          // effect: dust drifts, it does not fly.
+          var x, y, vx, vy, u;
           var v = throwVel(f, 0.85, Math.random() < 0.7);
           // about a quarter of the emission is cloud body: big, soft, very
           // faint, even slower than the grain, with a touch of lift
           var body = Math.random() < 0.25;
+          if (onCover && Math.random() < 0.55) {
+            // born on the moving board itself, between hinge and fore-edge,
+            // biased outward; carried with the board (share of the edge's
+            // own velocity grows with distance from the hinge) and flung
+            // slightly up and off. Deliberately NOT clamped to the box —
+            // the board is legitimately outside it mid-swing.
+            u = Math.sqrt(Math.random());
+            x = f.bx0 + (f.x - f.bx0) * u;
+            y = f.top + Math.random() * f.h;
+            var carry = Math.max(-5, Math.min(5, f.v * u * 0.5));
+            vx = carry + v.vx * 0.35;
+            vy = v.vy * 0.35 - u * rnd(0.05, 0.5);
+          } else {
+            // Dust lifts off the whole sheet, not just the crease: about
+            // half comes off the fold, the rest from anywhere across the
+            // spread. Density per unit width is what the eye reads, not the
+            // split — the crease band is a tenth of the book's width, so
+            // giving it much more than a tenth of the particles makes it a
+            // stripe. Every spawn is clamped to the spawn box — dust is
+            // born ON the book and billows outward; it never pops into
+            // being beside it.
+            if (!hasBox) x = f.x + rnd(-30, 30);
+            else if (Math.random() < 0.16) x = clampX(f, f.x + rnd(-30, 30));
+            else x = rnd(f.bx0, f.bx1);
+            y = f.top + Math.random() * f.h;
+            if (f.by1 > f.by0) y = Math.max(f.by0, Math.min(f.by1, y));
+            // most of it is thrown the way the page is travelling, the rest
+            // goes wherever it likes. The 0.32 is the overall speed of the
+            // effect: dust drifts, it does not fly.
+            vx = v.vx * (body ? 0.22 : 0.32);
+            vy = v.vy * (body ? 0.22 : 0.32) - (body ? 0.06 : 0);
+          }
           ps.push({
             x: x, y: y,
-            vx: v.vx * (body ? 0.22 : 0.32), vy: v.vy * (body ? 0.22 : 0.32) - (body ? 0.06 : 0),
+            vx: vx, vy: vy,
             cx: 0, cy: 0, off: (Math.random() * 3) | 0,
             body: body,
             // grain sizes vary per mote — mostly fine, the odd fleck;

@@ -5,11 +5,20 @@
   Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
 
 # Nothing here has a content hash in its filename, so "immutable" would pin
-# a returning visitor to year-old CSS and JS after every deploy. Cache for a
-# few hours and revalidate quietly in the background instead; the artwork
-# and textures change rarely enough that this costs almost nothing.
+# a returning visitor to year-old CSS and JS after every deploy. Images and
+# textures cache for a few hours; CSS and JS always revalidate (they are a
+# few KB and change every iteration — serving a stale stylesheet costs far
+# more debugging than a 304 costs bandwidth). Later rules override earlier.
 /assets/*
   Cache-Control: public, max-age=14400, stale-while-revalidate=86400
+
+/assets/css/*
+  ! Cache-Control
+  Cache-Control: no-cache
+
+/assets/js/*
+  ! Cache-Control
+  Cache-Control: no-cache
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate

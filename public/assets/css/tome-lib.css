@@ -87,16 +87,11 @@
     0 1px 0 rgba(255,226,190,.12) inset,
     0 4px 0 -1px #5c3526, 0 7px 0 -2px #34190f, 0 9px 1px -3px rgba(0,0,0,.55),
     0 20px 28px -18px rgba(30,18,10,.8), 0 46px 62px -30px rgba(40,26,14,.5);
-  /* NO transition, deliberately. A leather rectangle sliding sideways reads
-     as furniture moving, not as a book opening. The board snaps, and the
-     snap is timed to frames where the cover itself hides it — see
-     sizeBoards' choreography note in tome-lib.js. */
-}
-/* the one exception: a cover-open landing eases the rim out from beneath
-   the landed cover, so the book settles instead of popping (sizeBoards
-   adds this for ~260ms) */
-.libtome-boards.settle{
-  transition:left .18s cubic-bezier(.2,.7,.3,1), width .18s cubic-bezier(.2,.7,.3,1);
+  /* NO geometry transition, deliberately. A leather rectangle sliding
+     sideways reads as furniture moving, not as a book opening. In
+     landscape there are TWO of these — right and left half-boards that
+     never move or resize; the left one only fades in place under a landed
+     cover. See sizeBoards' choreography note in tome-lib.js. */
 }
 
 /* StPageFlip's crease and cover shadows exist only to shade a turn in

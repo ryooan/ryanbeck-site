@@ -183,25 +183,42 @@ body.hall-page{
 .wizard:is(:hover,:focus-visible,.is-held)::after{opacity:1}
 .wizard:focus-visible{outline:2px solid rgba(255,200,120,.9);outline-offset:4px}
 
-/* The carved knot at the top of his staff carries a dull ember of a glow,
-   breathing slowly; hovering (or his turn in the wake cycle) blows on it.
-   It lives OUTSIDE .wizard because his clip-path would crop any halo to his
-   silhouette — which is also why it must stay pointer-events:none, sitting
-   over his hit area. Position: the knot is at ~(0.79, 0.11) of the wizard's
-   box; box left 28.5% + 0.79x16% = 41.1%, top 46% + 0.11x25% = 48.8%. */
+/* The carved knot at the top of his staff carries wizard-light: a white
+   core with a cold blue halo and two faint crossed rays — Glamdring-cave
+   light, not candle light. Dim and breathing at rest; hovering him (or his
+   turn in the wake cycle, or a long press) flares it. It lives OUTSIDE
+   .wizard because his clip-path would crop any halo to his silhouette —
+   which is also why it must stay pointer-events:none, sitting over his hit
+   area. Position: the knot is at ~(0.79, 0.11) of the wizard's box; box
+   left 28.5% + 0.79x16% = 41.1%, top 46% + 0.11x25% = 48.8%. */
 .staff-glow{
   position:absolute; z-index:5; pointer-events:none;
-  left:41.1%; top:48.8%; width:5%; aspect-ratio:1;
+  left:41.1%; top:48.8%; width:5.6%; aspect-ratio:1;
   transform:translate(-50%,-50%);
-  background:radial-gradient(closest-side, rgba(255,216,150,.55), rgba(255,170,80,.24) 52%, transparent 74%);
-  mix-blend-mode:screen; filter:blur(1px);
+  background:
+    radial-gradient(closest-side,
+      rgba(255,255,255,.95),
+      rgba(224,240,255,.5) 22%,
+      rgba(150,198,255,.22) 46%,
+      rgba(110,170,255,.08) 62%,
+      transparent 76%);
+  mix-blend-mode:screen; filter:blur(.4px);
   opacity:.34; transition:opacity .55s ease, transform .55s ease;
   animation:staff-breathe 5.5s ease-in-out infinite;
 }
-.wizard:is(:hover,:focus-visible,.is-awake,.is-held) + .staff-glow{
-  opacity:1; transform:translate(-50%,-50%) scale(1.35); animation:none;
+/* the rays: two crossed streaks, slightly off-axis like a lens flare.
+   They inherit the element's opacity, so they dim and flare with it. */
+.staff-glow::before, .staff-glow::after{
+  content:""; position:absolute; left:50%; top:50%;
+  width:240%; height:22%;
+  background:radial-gradient(50% 50% at 50% 50%, rgba(228,242,255,.5), rgba(160,205,255,.14) 58%, transparent 78%);
 }
-@keyframes staff-breathe{0%,100%{opacity:.26}50%{opacity:.42}}
+.staff-glow::before{ transform:translate(-50%,-50%) rotate(18deg) }
+.staff-glow::after{ transform:translate(-50%,-50%) rotate(105deg) }
+.wizard:is(:hover,:focus-visible,.is-awake,.is-held) + .staff-glow{
+  opacity:1; transform:translate(-50%,-50%) scale(1.5); animation:none;
+}
+@keyframes staff-breathe{0%,100%{opacity:.26}50%{opacity:.44}}
 
 /* wizard hint label */
 .wizard-hint{
