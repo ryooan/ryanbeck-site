@@ -182,7 +182,19 @@ both — so the verso and the left board obviously
 carry on off the left of the screen. The stage also slides right by 9% once the
 book is open, so the spine sits inside the viewport rather than at its edge.
 It carries no text on purpose: repeating the page you just read as a cropped
-sliver reads as a glitch rather than as a spread. Portrait-only; the landscape
+sliver reads as a glitch rather than as a spread.
+
+Two things have to agree with that decision or the seam shows:
+`maskLeftPage()` hides any *settled* page StPageFlip leaves rendered left of
+the spine mid-turn, and it hides the **text** of the sheet in flight once that
+sheet's centre crosses the spine — keeping its paper. So the page lifts with
+its words, goes blank as it passes edge-on, and lands matching the verso.
+Without the second half, the words sat on the left until StPageFlip hid the
+element, then popped out of existence.
+
+The stage's sideways slide is driven from the **predicted** target page at
+`changeState`, not from the `flip` event. Driven off `flip` it runs after the
+cover has finished swinging and the whole book lurches sideways. Portrait-only; the landscape
 spread is untouched and the verso is `display:none` there.
 
 `.libtome-book` needs `position:relative; z-index:2`. The verso is `z-index:1`,

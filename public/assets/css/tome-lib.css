@@ -107,7 +107,7 @@
   content:""; position:absolute; top:0; bottom:0; right:0; width:16%;
   background:linear-gradient(to left, rgba(76,52,26,.4), transparent);
 }
-.libtome-stage{ transition:transform .55s cubic-bezier(.4,.05,.2,1) }
+.libtome-stage{ transition:transform 1s cubic-bezier(.45,.05,.25,1) }
 
 @media (max-width:820px){
   .libtome{ max-width:min(73vw, calc((100svh - 300px) * .70)) }

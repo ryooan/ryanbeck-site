@@ -115,15 +115,24 @@
 
   flip.loadFromHTML(bookEl.querySelectorAll('.page'));
 
+  /* Which page the turn is heading for. The stage slides sideways when the
+     book opens, and if that is driven off the 'flip' event it happens after
+     the cover has finished swinging — the book lurches. Knowing the target up
+     front lets the slide run alongside the cover. */
+  var navIntent = 0;
+  var _fn = flip.flipNext.bind(flip), _fp = flip.flipPrev.bind(flip);
+  flip.flipNext = function (c) { navIntent = 1;  return _fn(c); };
+  flip.flipPrev = function (c) { navIntent = -1; return _fp(c); };
+
   /* StPageFlip shows a closed book as a single page inside a full-width
      block, so the boards have to follow the *visible* half rather than the
      block, or a closed book looks twice as wide as it is. */
-  function sizeBoards() {
+  function sizeBoards(targetIdx) {
     var blk = bookEl.querySelector('.stf__block') || bookEl;
     var b = blk.getBoundingClientRect(), s = stage.getBoundingClientRect();
     if (!b.width) return;
 
-    var idx = flip.getCurrentPageIndex();
+    var idx = targetIdx === undefined ? flip.getCurrentPageIndex() : targetIdx;
     var n = flip.getPageCount();
     var landscape = flip.getOrientation() === 'landscape';
     var open = idx > 0 && idx < n - 1;
@@ -172,6 +181,46 @@
   nextBtn.addEventListener('click', function () {
     if (flip.getCurrentPageIndex() < LAST) flip.flipNext();
   });
+  /* In portrait, StPageFlip keeps the page you just left rendered on the left
+     while the turn is in flight, so its text shows for a moment and then
+     vanishes when the blank verso takes over. Hide any settled page sitting
+     left of the spine — the sheet actually in flight (z-index 5) is left
+     alone, so it still swings across properly. */
+  function maskLeftPage() {
+    if (flip.getOrientation() === 'landscape') return;
+    var blk = bookEl.querySelector('.stf__block');
+    if (!blk) return;
+    var b = blk.getBoundingClientRect();
+    var items = bookEl.querySelectorAll('.stf__item');
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      var sheet = it.querySelector('.sheet, .cover-inner');
+      if (it.style.display === 'none') {
+        it.style.visibility = '';
+        if (sheet) sheet.style.visibility = '';
+        continue;
+      }
+      var r = it.getBoundingClientRect();
+      var pastSpine = (r.left + r.width / 2) < b.left + 2;
+      var flying = (+it.style.zIndex || 0) >= 5;
+
+      // a settled page on the left has no business being there at all
+      it.style.visibility = (pastSpine && !flying) ? 'hidden' : '';
+
+      // the sheet in flight keeps its paper but drops its text once it is
+      // past the spine, so it lands blank and matches the verso instead of
+      // its words popping out of existence when StPageFlip hides it
+      if (sheet) sheet.style.visibility = (pastSpine && flying) ? 'hidden' : '';
+    }
+  }
+  var maskRaf = null;
+  function maskLoop() {
+    maskRaf = null;
+    maskLeftPage();
+    if (busyUntil > Date.now()) maskRaf = requestAnimationFrame(maskLoop);
+  }
+  var busyUntil = 0;
+
   /* At the last page, cover the forward half of the book with a shield that
      swallows pointer events. Letting the flip run and snapping back afterwards
      plays a whole animation that ends where it started, which just looks
@@ -194,7 +243,16 @@
     shield.style.height = b.height + 'px';
   }
 
-  flip.on('flip', status);
+  flip.on('changeState', function (e) {
+    if (e.data === 'read') { navIntent = 0; maskLeftPage(); return; }
+    var i = flip.getCurrentPageIndex();
+    var target = navIntent ? i + navIntent : i;
+    root.classList.toggle('is-open', target > 0 && target < flip.getPageCount() - 1);
+    sizeBoards(target);
+    busyUntil = Date.now() + 1500;
+    if (!maskRaf) maskRaf = requestAnimationFrame(maskLoop);
+  });
+  flip.on('flip', function () { navIntent = 0; status(); });
   flip.on('changeOrientation', function () { setTimeout(function () { sizeBoards(); fitSheets(); }, 60); });
   flip.on('changeState', function (e) {
     if (e.data === 'flipping' || e.data === 'user_fold') puff();
