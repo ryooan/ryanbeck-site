@@ -5,12 +5,18 @@
   Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
 
 # Nothing here has a content hash in its filename, so "immutable" would pin
-# a returning visitor to year-old CSS and JS after every deploy. Images and
-# textures cache for a few hours; CSS and JS always revalidate (they are a
-# few KB and change every iteration — serving a stale stylesheet costs far
-# more debugging than a 304 costs bandwidth). Later rules override earlier.
+# a returning visitor to year-old assets after every deploy.
+#
+# Everything revalidates while the site's content is still being built out.
+# The 4h image policy this replaced was a real trap: swapped artwork kept
+# showing as the old file, and it is impossible to tell "you cached it" from
+# "I broke it" over a screenshot. Assets here are small and the site is not
+# yet public; correctness of what the author sees beats edge bandwidth.
+#
+# BEFORE LAUNCH: put the images back on a long max-age (a year is fine) and
+# add a content hash to their filenames so a swap busts the cache by itself.
 /assets/*
-  Cache-Control: public, max-age=14400, stale-while-revalidate=86400
+  Cache-Control: no-cache
 
 /assets/css/*
   ! Cache-Control
