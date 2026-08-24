@@ -225,8 +225,7 @@ fourteen real project cards. What is still standing in:
 
 - the project thumbnails (six generated images across fourteen cards) and the
   projects lede, which says in the page that it is a draft to prune
-- the forecasting page has no small-multiples view yet, so the committed
-  50-state flu file is not charted
+- the forecasting page's intro and the projects lede still want Ryan's voice
 - one of the three door scenes: `scenes/projects.jpg` (the fiction door is the
   real SEER art, and the blog door is Ryan's puzzle photograph)
 - the about-page copy — grounded and no longer self-labelled, but drafted for

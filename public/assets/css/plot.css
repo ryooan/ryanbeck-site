@@ -171,3 +171,42 @@
 @media (prefers-reduced-motion:reduce){
   .plot-canvas{transition:none}
 }
+
+/* ---- small multiples ---- */
+
+.panel-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:10px 14px;
+  margin-top:6px;
+}
+.panel{
+  margin:0;
+  padding:6px 8px 4px;
+  border:1px solid var(--rule);
+  border-radius:5px;
+  background:var(--parchment);
+}
+.panel figcaption{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:6px;
+  margin-bottom:2px;
+  font:400 12px/1.3 var(--sans);
+}
+.panel .panel-name{
+  color:var(--ink);
+  font-weight:600;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.panel .panel-peak{color:var(--ink-faint);font-variant-numeric:tabular-nums}
+.panel svg{display:block;width:100%;height:52px}
+.panel-note{
+  max-width:66ch;
+  margin:12px 0 0;
+  color:var(--ink-faint);
+  font:400 13px/1.55 var(--sans);
+}

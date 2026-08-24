@@ -338,6 +338,20 @@ old. That is why the bird-flu chart currently says "Source stalled · data to
   prior years. Tags are tried in order; entries are filtered to 330-400 day
   durations and de-duplicated by fiscal-year end, newest filing winning.
 
+### Small multiples
+
+`panelBy` switches the module into a grid of one sparkline per category, all
+on **one shared vertical scale**. Sharing it is the point: per-panel scales
+put every state's peak at the top of its own box, and the grid then says
+nothing beyond "everywhere had a winter".
+
+The state flu grid plots `rate_per_100k`, not raw admissions, and that choice
+is what makes a shared scale usable. On raw counts the spread is 55x — Texas
+4,729 against Hawaii 86 — so four panels are legible and forty-eight are flat
+slivers. Per head the spread is about 4x, every state's season has a shape,
+and the comparison is still honest. It also surfaces something the counts
+hide: Texas is middling per capita (15.1 / 100k against Arizona's 37.5).
+
 ### plot.js, and why it is not a library
 
 Every dashboard here died of dependency rot — RSocrata leaving CRAN took two

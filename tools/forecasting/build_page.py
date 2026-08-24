@@ -103,6 +103,29 @@ SECTIONS = [
         "extra_csv": "flu-hospitalizations-states.csv",
     },
     {
+        "slug": "flu-hospitalizations-states",
+        "title": "Influenza admissions, state by state",
+        "csv": "flu-hospitalizations-states.csv",
+        "plot": {
+            "format": "rate",
+            "panelBy": "location",
+            "value": "rate_per_100k",
+            "panelNote": ("Admissions per 100,000 residents, so a small state "
+                          "and a large one can be read against each other."),
+        },
+        "note": (
+            "The same weekly flu admissions, split by state and shown as a "
+            "rate per 100,000 residents. Every panel shares one vertical "
+            "scale, so the boxes are directly comparable. The rate rather "
+            "than the raw count is what makes that readable: on raw "
+            "admissions Texas out-tops Hawaii fifty-five-fold and most of "
+            "the grid flattens into unreadable slivers, where per head the "
+            "spread is about four-fold and each state’s season has a "
+            "visible shape."),
+        "source": "CDC FluSight forecast hub",
+        "source_url": "https://github.com/cdcepi/FluSight-forecast-hub",
+    },
+    {
         "slug": "semiconductors-us-exports-china",
         "title": "US semiconductor exports to China",
         "csv": "semiconductors-us-exports-china.csv",

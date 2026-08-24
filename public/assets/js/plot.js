@@ -141,7 +141,9 @@
       if (a >= 1e4) return Math.round(v / 1e3) + 'k';
       return String(Math.round(v * 100) / 100);
     },
-    percent: function (v) { return (Math.round(v * 10) / 10) + '%'; }
+    percent: function (v) { return (Math.round(v * 10) / 10) + '%'; },
+    /* Admissions per 100,000 people. */
+    rate: function (v) { return (Math.round(v * 10) / 10) + ' / 100k'; }
   };
 
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -506,6 +508,115 @@
 
   /* ---- entry point ----------------------------------------------------- */
 
+
+  /* ---- small multiples ------------------------------------------------- */
+
+  /* One panel per category, all sharing a y scale.
+
+     The shared scale is the whole point and the easy thing to get wrong: with
+     per-panel scales every state peaks at the top of its own box and the grid
+     says only "everywhere had a winter", which is not information. Sharing it
+     means Texas dwarfs Vermont, which is the true shape. Each panel prints its
+     own peak so a small one is still readable as a number. */
+  function buildPanels(host, opt, data) {
+    var pal = palette();
+    var fmt = FORMATS[opt.format] || FORMATS.number;
+    var xKey = opt.x || 'date';
+    var byKey = opt.panelBy;
+    var vKey = opt.value;
+
+    var groups = {};
+    data.rows.forEach(function (r) {
+      var name = r[byKey];
+      if (!name) return;
+      var t = parseDate(r[xKey]);
+      if (isNaN(t)) return;
+      var raw = r[vKey];
+      var v = (raw === '' || raw == null) ? null : +raw;
+      (groups[name] || (groups[name] = [])).push({
+        t: t, v: (v == null || isNaN(v)) ? null : v
+      });
+    });
+
+    var names = Object.keys(groups).sort();
+    if (!names.length) throw new Error('nothing to panel by "' + byKey + '"');
+
+    var t0 = Infinity, t1 = -Infinity, vMax = 0;
+    names.forEach(function (n) {
+      groups[n].sort(function (a, b) { return a.t - b.t; });
+      groups[n].forEach(function (p) {
+        if (p.t < t0) t0 = p.t;
+        if (p.t > t1) t1 = p.t;
+        if (p.v != null && p.v > vMax) vMax = p.v;
+      });
+    });
+    if (!(vMax > 0)) throw new Error('no numeric data');
+
+    host.classList.add('plot', 'plot-panels');
+    host.innerHTML = '';
+    var grid = document.createElement('div');
+    grid.className = 'panel-grid';
+    host.appendChild(grid);
+
+    var note = document.createElement('p');
+    note.className = 'panel-note';
+    note.textContent = 'All panels share one vertical scale, topping out at '
+      + fmt(vMax) + ', so their heights are directly comparable. Each panel '
+      + 'also prints its own peak. ' + (opt.panelNote || '');
+    host.appendChild(note);
+
+    var W = 200, H = 62, m = 4;
+
+    names.forEach(function (n) {
+      var pts = groups[n];
+      var peak = 0;
+      pts.forEach(function (p) { if (p.v != null && p.v > peak) peak = p.v; });
+
+      var cell = document.createElement('figure');
+      cell.className = 'panel';
+
+      var cap = document.createElement('figcaption');
+      cap.innerHTML = '<span class="panel-name"></span>' +
+        '<span class="panel-peak"></span>';
+      cap.querySelector('.panel-name').textContent = n;
+      cap.querySelector('.panel-peak').textContent = fmt(peak);
+      cell.appendChild(cap);
+
+      var svg = el('svg', {
+        viewBox: '0 0 ' + W + ' ' + H, preserveAspectRatio: 'none',
+        role: 'img', 'aria-label': n + ', peak ' + fmt(peak)
+      });
+
+      function sx(t) { return m + (t - t0) / (t1 - t0 || 1) * (W - m * 2); }
+      function sy(v) { return H - m - (v / vMax) * (H - m * 2); }
+
+      var d = '', area = '', pen = false;
+      pts.forEach(function (p) {
+        if (p.v == null) { pen = false; return; }
+        var x = sx(p.t).toFixed(1), y = sy(p.v).toFixed(1);
+        d += (pen ? 'L' : 'M') + x + ' ' + y;
+        area += (pen ? 'L' : 'M' + x + ' ' + (H - m) + 'L') + x + ' ' + y;
+        pen = true;
+      });
+      if (area) {
+        area += 'L' + sx(pts[pts.length - 1].t).toFixed(1) + ' ' + (H - m) + 'Z';
+        svg.appendChild(el('path', {
+          d: area, fill: pal.ember, 'fill-opacity': .13, stroke: 'none'
+        }));
+      }
+      if (d) {
+        svg.appendChild(el('path', {
+          d: d, fill: 'none', stroke: pal.ember, 'stroke-width': 1.4,
+          'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke'
+        }));
+      }
+      cell.appendChild(svg);
+      grid.appendChild(cell);
+    });
+
+    return { panels: names.length, max: vMax };
+  }
+
   function render(host, opt) {
     if (!host) return Promise.resolve(null);
     host.classList.add('is-loading');
@@ -518,7 +629,7 @@
         var data = parseCSV(text);
         if (!data.rows.length) throw new Error('empty CSV');
         host.classList.remove('is-loading');
-        return build(host, opt, data);
+        return (opt.panelBy ? buildPanels : build)(host, opt, data);
       })
       .catch(function (err) {
         host.classList.remove('is-loading');
