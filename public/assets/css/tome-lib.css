@@ -57,6 +57,27 @@
   padding:clamp(18px,3.2vw,42px) clamp(18px,3.4vw,46px);
   font-size:var(--sheet-fs, clamp(.72rem,1vw,.98rem)); line-height:1.62;
 }
+/* Each paper page's own ageing, composed by stain() in tome-lib.js. It
+   lives on a child .leaf because StPageFlip rewrites the page element's
+   entire style.cssText on every draw -- inline styles on the item itself do
+   not survive the first frame. The leaf carries the sheet of stock (its
+   crop, tint and vignette inline) and its ::before paints the --age
+   gradients; the item's clip-path folds both with the page. It is
+   .age-leaf, not .leaf -- tome.css owns .leaf for the hand-built book's
+   half-spread leaves, and about.html loads tome.css, so the collision
+   halved this element's width. Before .sheet
+   in tree order, so it ages the paper and never the type. The verso is ours,
+   StPageFlip never touches it, so it keeps the direct arrangement. */
+.libtome .age-leaf{
+  position:absolute; inset:0; pointer-events:none;
+  background:#efe4cd url("../tome/page.jpg") center/cover;
+}
+.libtome .age-leaf::before,
+.libtome-verso::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:var(--age, none);
+}
+
 /* the gutter shadow, mirrored for versos */
 .libtome .page::after{
   content:""; position:absolute; top:0; bottom:0; width:13%; pointer-events:none;
@@ -159,8 +180,8 @@
 }
 .libtome .page[data-type="backcover"]::after{ content:none }
 
-.libtome .page[data-density="hard"] .cover-mark-small{
-  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-  font-size:clamp(18px,3vw,30px); color:rgba(226,188,120,.34);
-}
-.libtome .page[data-type="backcover"] .cover-mark-small{ color:rgba(120,86,40,.32) }
+/* The inside back board carries no ornament. It used to hold a single
+   centred U+25C6 diamond, which read as an artifact rather than as tooling
+   -- one small shape floating in the middle of an otherwise empty endpaper
+   looks like something went wrong, not like a decision. A real paste-down
+   endpaper is blank. */
