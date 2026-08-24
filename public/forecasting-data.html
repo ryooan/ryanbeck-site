@@ -76,6 +76,16 @@
       download: <a href="/data/forecasting/refugee-admissions.csv">refugee-admissions.csv</a> &middot; <a href="/data/forecasting/refugee-admissions-annual.csv">refugee-admissions-annual.csv</a></p>
   </section>
 
+  <section class="series" id="refugee-admissions-annual">
+    <span class="status is-live">Live &middot; data to 1 October 2025</span>
+    <h2>Refugee admissions by fiscal year</h2>
+    <p class="series-note">The same arrivals totalled by fiscal year, back to 1975 — the Vietnamese and Soviet resettlements are the two peaks. The dashed line is the annual ceiling set by presidential determination, a cap rather than a target, and only published for recent years.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Admitted&quot;},{&quot;col&quot;:&quot;ceiling&quot;,&quot;label&quot;:&quot;Presidential ceiling&quot;,&quot;dash&quot;:true}],&quot;csv&quot;:&quot;/data/forecasting/refugee-admissions-annual.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Refugee admissions by fiscal year&quot;}'></div>
+    <p class="series-source">52 rows, latest about 11 months ago &middot;
+      source: <a href="https://www.wrapsnet.org/admissions-and-arrivals/" rel="noopener">State Department Refugee Processing Center</a> &middot;
+      download: <a href="/data/forecasting/refugee-admissions-annual.csv">refugee-admissions-annual.csv</a></p>
+  </section>
+
   <section class="series" id="faamg-revenues">
     <span class="status is-live">Live &middot; data to 1 January 2025</span>
     <h2>Big-tech combined revenue</h2>
@@ -111,7 +121,7 @@
     <h2>US semiconductor exports to China</h2>
     <p class="series-note">Monthly US exports to China of semiconductors and of the equipment used to make them, from UN Comtrade. This one was dead for three years: the old Comtrade endpoint was retired and the code that built the page had been deleted from the repo. The code was recovered from git history and the series now runs on the current API.</p>
     <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;chips&quot;,&quot;label&quot;:&quot;Chips (HS 8542)&quot;},{&quot;col&quot;:&quot;equipment&quot;,&quot;label&quot;:&quot;Manufacturing equipment&quot;}],&quot;csv&quot;:&quot;/data/forecasting/semiconductors-us-exports-china.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US semiconductor exports to China&quot;}'></div>
-    <p class="series-source">150 rows, latest about 3 months ago &middot;
+    <p class="series-source">198 rows, latest about 3 months ago &middot;
       source: <a href="https://comtradeplus.un.org/" rel="noopener">UN Comtrade</a> &middot;
       download: <a href="/data/forecasting/semiconductors-us-exports-china.csv">semiconductors-us-exports-china.csv</a></p>
   </section>
@@ -121,7 +131,7 @@
     <h2>China&#x27;s semiconductor imports</h2>
     <p class="series-note">What China buys from the whole world, annually — the denominator for the export series above.</p>
     <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;chips&quot;,&quot;label&quot;:&quot;Chips (HS 8542)&quot;},{&quot;col&quot;:&quot;equipment&quot;,&quot;label&quot;:&quot;Manufacturing equipment&quot;}],&quot;csv&quot;:&quot;/data/forecasting/semiconductors-china-imports.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;China&#x27;s semiconductor imports&quot;}'></div>
-    <p class="series-source">11 rows, latest about 2.6 years ago &middot;
+    <p class="series-source">25 rows, latest about 2.6 years ago &middot;
       source: <a href="https://comtradeplus.un.org/" rel="noopener">UN Comtrade</a> &middot;
       download: <a href="/data/forecasting/semiconductors-china-imports.csv">semiconductors-china-imports.csv</a></p>
   </section>

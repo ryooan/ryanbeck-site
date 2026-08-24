@@ -63,6 +63,26 @@ SECTIONS = [
         "extra_csv": "refugee-admissions-annual.csv",
     },
     {
+        "slug": "refugee-admissions-annual",
+        "title": "Refugee admissions by fiscal year",
+        "csv": "refugee-admissions-annual.csv",
+        "plot": {
+            "format": "number",
+            "zero": True,
+            "series": [
+                {"col": "admissions", "label": "Admitted"},
+                {"col": "ceiling", "label": "Presidential ceiling", "dash": True},
+            ],
+        },
+        "note": (
+            "The same arrivals totalled by fiscal year, back to 1975 — the "
+            "Vietnamese and Soviet resettlements are the two peaks. The dashed "
+            "line is the annual ceiling set by presidential determination, a "
+            "cap rather than a target, and only published for recent years."),
+        "source": "State Department Refugee Processing Center",
+        "source_url": "https://www.wrapsnet.org/admissions-and-arrivals/",
+    },
+    {
         "slug": "faamg-revenues",
         "title": "Big-tech combined revenue",
         "csv": "faamg-revenues.csv",

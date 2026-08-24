@@ -35,9 +35,18 @@ USA, CHINA, WORLD = 842, 156, 0
 CHIPS = "8542"
 EQUIPMENT = "8486,903082,903141,854311,901041"
 
-# Comtrade's annual data begins in 2014 for these reporters; monthly detail
-# does not go back further in the current API either.
-FIRST_YEAR = 2014
+# How far back each frequency actually goes. These are measured, not assumed,
+# and the assumption they replace was wrong in an instructive way: a query with
+# no `period` returns 2014 onward, and I read that as the start of the data. It
+# is the API's default window. The old dashboard plotted monthly figures from
+# January 2010, which is what exposed it.
+#
+# Monthly genuinely starts around 2010 -- 2008 and earlier return nothing.
+# Annual reaches back to at least 1996, with real holes in it (2008 returns no
+# rows at all). Gaps are left as gaps; the chart breaks the line rather than
+# drawing through them.
+FIRST_MONTHLY_YEAR = 2010
+FIRST_ANNUAL_YEAR = 2000
 
 
 def query(key, freq, *, reporter, partner, flow, cmd, period=None):
@@ -77,7 +86,7 @@ def run():
 
     # ---- monthly: US exports to China -----------------------------------
     chips, equip = {}, {}
-    for y in range(FIRST_YEAR, this_year + 1):
+    for y in range(FIRST_MONTHLY_YEAR, this_year + 1):
         p = months(y)
         chips.update(total_by_period(query(
             key, "M", reporter=USA, partner=CHINA, flow="X",
@@ -101,10 +110,17 @@ def run():
               ["date", "chips", "equipment"])
 
     # ---- annual: China's imports from the world --------------------------
-    ch = total_by_period(query(key, "A", reporter=CHINA, partner=WORLD,
-                               flow="M", cmd=CHIPS))
-    eq = total_by_period(query(key, "A", reporter=CHINA, partner=WORLD,
-                               flow="M", cmd=EQUIPMENT))
+    # Twelve periods per call, so the year range is requested in batches.
+    ch, eq = {}, {}
+    years = list(range(FIRST_ANNUAL_YEAR, this_year + 1))
+    for i in range(0, len(years), 12):
+        batch = ",".join(str(y) for y in years[i:i + 12])
+        ch.update(total_by_period(query(key, "A", reporter=CHINA,
+                                        partner=WORLD, flow="M",
+                                        cmd=CHIPS, period=batch)))
+        eq.update(total_by_period(query(key, "A", reporter=CHINA,
+                                        partner=WORLD, flow="M",
+                                        cmd=EQUIPMENT, period=batch)))
     annual = []
     for p in sorted(set(ch) | set(eq)):
         if len(p) != 4:
@@ -128,9 +144,12 @@ def run():
            last_date=annual[-1]["date"], status="live",
            source="UN Comtrade", note=note)
 
-    print("semiconductors: %d months %s -> %s; %d years %s -> %s"
+    have = {int(r["date"][:4]) for r in annual}
+    holes = [y for y in range(min(have), max(have) + 1) if y not in have]
+    print("semiconductors: %d months %s -> %s; %d years %s -> %s%s"
           % (len(monthly), monthly[0]["date"], monthly[-1]["date"],
-             len(annual), annual[0]["date"][:4], annual[-1]["date"][:4]))
+             len(annual), annual[0]["date"][:4], annual[-1]["date"][:4],
+             ("  [no data for %s]" % ", ".join(map(str, holes))) if holes else ""))
 
 
 if __name__ == "__main__":

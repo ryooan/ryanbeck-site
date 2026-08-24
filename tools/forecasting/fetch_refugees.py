@@ -9,6 +9,11 @@ OCT/NOV/DEC onto the *previous* calendar year.
 
 Two things worth knowing, both of which the original R got wrong:
 
+* **The long history is on a different sheet.** The per-year sheets start at
+  2001; the "Cumulative Summary" sheet goes back to 1975, which is what the
+  old dashboard plotted. Reading only the year sheets drops 26 years without
+  any sign that it happened.
+
 * **Picking the first .xlsx on the page is wrong.** The old code took
   `[grepl(".xlsx$", .)][1]`, and the first workbook linked there today is the
   Affiliate Directory, not the admissions report. Matched on the filename
@@ -61,6 +66,35 @@ def as_of(ws):
     return None
 
 
+def cumulative_totals(wb):
+    """Fiscal-year totals from the "Cumulative Summary" sheet, 1975 onward.
+
+    The per-year sheets only go back to 2001, but the workbook carries a
+    summary sheet reaching to 1975 -- and the old dashboard plotted the long
+    version, so stopping at 2001 would have been a quiet 26-year regression.
+    The sheet is regions across, fiscal years down, with the total in the last
+    populated column and a "Total" row at the foot to skip.
+    """
+    name = next((n for n in wb.sheetnames if "cumulative" in n.lower()), None)
+    if not name:
+        return {}
+    rows = list(wb[name].iter_rows(values_only=True))
+    out = {}
+    for r in rows:
+        if not r or r[0] is None:
+            continue
+        try:
+            fy = int(str(r[0]).strip())
+        except ValueError:
+            continue                      # the "Total" row and the headers
+        if not 1900 < fy < 2100:
+            continue
+        vals = [c for c in r[1:] if isinstance(c, (int, float))]
+        if vals:
+            out[fy] = int(vals[-1])       # last numeric cell is the Total
+    return out
+
+
 def grand_total_row(ws):
     for row in ws.iter_rows(values_only=True):
         label = " ".join(str(c) for c in row[:3] if c).lower()
@@ -79,6 +113,7 @@ def run():
         raise FetchError("no fiscal-year sheets in the workbook")
 
     report_date = as_of(wb[years[-1]])
+    long_totals = cumulative_totals(wb)
 
     monthly, annual = [], []
     for y in years:
@@ -114,6 +149,19 @@ def run():
             "ceiling": "" if not isinstance(ceiling, (int, float)) else int(ceiling),
         })
 
+    # Prepend the years that only the summary sheet covers. Ceilings are not
+    # on that sheet, so those rows carry admissions alone.
+    covered = {r["fiscal_year"] for r in annual}
+    for fy in sorted(long_totals):
+        if fy in covered:
+            continue
+        annual.append({
+            "date": "%d-10-01" % (fy - 1),
+            "fiscal_year": fy,
+            "admissions": long_totals[fy],
+            "ceiling": "",
+        })
+
     if not monthly:
         raise FetchError("no monthly rows extracted")
 
@@ -130,8 +178,10 @@ def run():
            status="live", source="State Dept Refugee Processing Center",
            note=("Monthly arrivals. Fiscal years run October-September; the "
                  "annual file carries the presidential ceiling."))
-    print("refugee-admissions: %d months %s -> %s; %d fiscal years (report as of %s)"
-          % (len(monthly), monthly[0]["date"], last, len(annual), report_date))
+    print("refugee-admissions: %d months %s -> %s; %d fiscal years %d-%d "
+          "(report as of %s)"
+          % (len(monthly), monthly[0]["date"], last, len(annual),
+             annual[0]["fiscal_year"], annual[-1]["fiscal_year"], report_date))
 
 
 if __name__ == "__main__":
