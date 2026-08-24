@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Respiratory illness &middot; Forecasting Data &middot; Ryan Beck</title>
+<meta name="description" content="Weekly hospital admissions for the three respiratory viruses that get forecast most, nationally and by state. This grouping is why the whole set was rebuilt. The old COVID page ran">
+<link rel="canonical" href="https://ryanbeck.com/forecasting/respiratory">
+<meta name="theme-color" content="#f4ead9">
+
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ryan Beck">
+<meta property="og:title" content="Respiratory illness &middot; Forecasting Data &middot; Ryan Beck">
+<meta property="og:description" content="Weekly hospital admissions for the three respiratory viruses that get forecast most, nationally and by state. This grouping is why the whole set was rebuilt. The old COVID page ran">
+<meta property="og:url" content="https://ryanbeck.com/forecasting/respiratory">
+<meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ryanbeck111">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/plot.css">
+</head>
+<body class="dash-page">
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/projects">Projects</a>
+      <a href="/writing">Fiction</a>
+      <a href="/blog">Blog</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="dash">
+
+<nav class="dash-nav" aria-label="Forecasting data sections">
+  <p class="dash-nav-head"><a href="/forecasting">Forecasting data</a></p>
+  <ul>
+    <li><a href="/forecasting/respiratory" aria-current="page">Respiratory illness<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/debt-limit">The debt limit<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/big-tech-revenue">Big-tech revenue<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/refugee-admissions">Refugee admissions<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/semiconductors">Semiconductor trade<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/bird-flu">Bird flu<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/virginia-covid">Virginia COVID<span class="dot is-historical" aria-hidden="true"></span></a></li>
+  </ul>
+  <p class="dash-nav-foot"><a href="/forecasting/archive">The archive</a></p>
+  <p class="dash-nav-foot"><a href="/projects">&larr; All projects</a></p>
+</nav>
+  <main class="dash-main">
+    <header class="dash-head">
+      <span class="runic">COVID, influenza and RSV</span>
+      <h1>Respiratory illness</h1>
+      <div class="dash-blurb"><p>Weekly hospital admissions for the three respiratory viruses that get forecast most, nationally and by state.</p><p><strong>This grouping is why the whole set was rebuilt.</strong> The old COVID page ran a scheduled job every ten hours for two years and reported success every time, while the repository behind it had been archived and its data had stopped in April 2024. Nobody was lying; nothing failed. The job fetched a file, the file was valid, and the chart was redrawn with today’s date on it. What was missing was any statement of when the <em>data</em> ended.</p><p>Hospitals had never stopped reporting — the requirement moved to the CDC’s National Healthcare Safety Network, where the same measure runs from August 2020 to last week. So the series is not only alive, it is longer than it ever was.</p></div>
+    </header>
+
+  <section class="series" id="covid-weekly-admissions">
+    <span class="status is-live">Live &middot; data to 15 August 2026</span>
+    <h2>US respiratory hospital admissions, weekly</h2>
+    <p class="series-note">This is the series that prompted the rebuild: its job succeeded every ten hours for two years and republished a chart each time, while the repository behind it had been archived in November 2024 and the data had stopped the previous April.<br><br><strong>It is live again, and longer than it ever was.</strong> Hospitals never stopped reporting — the requirement moved to the CDC’s National Healthcare Safety Network, which carries the same measure from August 2020 to last week. That covers everything the archived source had plus the two years it missed. Influenza and RSV come from the same rows, so all three respiratory admissions are here on one chart.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;defaultRange&quot;:&quot;2y&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;covid&quot;,&quot;label&quot;:&quot;COVID-19&quot;},{&quot;col&quot;:&quot;influenza&quot;,&quot;label&quot;:&quot;Influenza&quot;},{&quot;col&quot;:&quot;rsv&quot;,&quot;label&quot;:&quot;RSV&quot;}],&quot;csv&quot;:&quot;/data/forecasting/covid-weekly-admissions.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US respiratory hospital admissions, weekly&quot;}'></div>
+    <p class="series-source">315 rows, latest up to date &middot;
+      source: <a href="https://data.cdc.gov/resource/ua7e-t2fy" rel="noopener">CDC NHSN Hospital Respiratory Data</a> &middot;
+      download: <a href="/data/forecasting/covid-weekly-admissions.csv">covid-weekly-admissions.csv</a> &middot; <a href="/data/forecasting/covid-weekly-admissions-reichlab.csv">covid-weekly-admissions-reichlab.csv</a></p>
+  </section>
+
+  <section class="series" id="flu-hospitalizations">
+    <span class="status is-live">Live &middot; data to 4 July 2026</span>
+    <h2>US influenza hospitalisations</h2>
+    <p class="series-note">Weekly hospital admissions with a confirmed influenza diagnosis, from the CDC's FluSight forecasting hub. Per-state figures are in the companion file.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Weekly admissions&quot;}],&quot;csv&quot;:&quot;/data/forecasting/flu-hospitalizations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US influenza hospitalisations&quot;}'></div>
+    <p class="series-source">231 rows, latest 51 days ago &middot;
+      source: <a href="https://github.com/cdcepi/FluSight-forecast-hub" rel="noopener">CDC FluSight forecast hub</a> &middot;
+      download: <a href="/data/forecasting/flu-hospitalizations.csv">flu-hospitalizations.csv</a> &middot; <a href="/data/forecasting/flu-hospitalizations-states.csv">flu-hospitalizations-states.csv</a></p>
+  </section>
+
+  <section class="series" id="flu-hospitalizations-states">
+    <span class="status is-live">Live &middot; data to 4 July 2026</span>
+    <h2>Influenza admissions, state by state</h2>
+    <p class="series-note">The same admissions, state by state, laid out roughly as the map is — so you find a state where you expect it, and a bad week across the southeast reads as a block of colour rather than eight scattered cells. It opens on percentage change against four weeks earlier, which is what makes a small state climbing fast as visible as a large one. The buttons switch to the underlying admissions per 100,000 over a window. Either way every panel shares one vertical scale, so the boxes are honestly comparable.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;rate&quot;,&quot;panelBy&quot;:&quot;location&quot;,&quot;value&quot;:&quot;rate_per_100k&quot;,&quot;layout&quot;:&quot;us-grid&quot;,&quot;defaultMode&quot;:&quot;change&quot;,&quot;changeLagWeeks&quot;:4,&quot;changeWeeks&quot;:6,&quot;valueRanges&quot;:[&quot;6m&quot;,&quot;1y&quot;,&quot;2y&quot;,&quot;5y&quot;],&quot;csv&quot;:&quot;/data/forecasting/flu-hospitalizations-states.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Influenza admissions, state by state&quot;}'></div>
+    <p class="series-source">11,976 rows, latest 51 days ago &middot;
+      source: <a href="https://github.com/cdcepi/FluSight-forecast-hub" rel="noopener">CDC FluSight forecast hub</a> &middot;
+      download: <a href="/data/forecasting/flu-hospitalizations-states.csv">flu-hospitalizations-states.csv</a></p>
+  </section>
+
+  <section class="series" id="covid-hospitalizations">
+    <span class="status is-historical">Historical &middot; data to 27 April 2024</span>
+    <h2>COVID and flu patients in hospital</h2>
+    <p class="series-note">Patients in hospital on a given day, summed across reporting states, from the HHS capacity dataset. Three of the old dashboards ran on this one source and all three died together when the R package they used to read it left CRAN — the plain CSV export worked the whole time. HHS later ended the reporting requirement, so the series genuinely stops in April 2024.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;adult_covid&quot;,&quot;label&quot;:&quot;Adults with COVID&quot;},{&quot;col&quot;:&quot;influenza&quot;,&quot;label&quot;:&quot;Confirmed influenza&quot;},{&quot;col&quot;:&quot;icu_covid&quot;,&quot;label&quot;:&quot;COVID in adult ICU&quot;}],&quot;csv&quot;:&quot;/data/forecasting/covid-hospitalizations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;COVID and flu patients in hospital&quot;}'></div>
+    <p class="series-source">1,579 rows, latest about 2.3 years ago &middot;
+      source: <a href="https://healthdata.gov/dataset/g62h-syeh" rel="noopener">healthdata.gov g62h-syeh (HHS)</a> &middot;
+      download: <a href="/data/forecasting/covid-hospitalizations.csv">covid-hospitalizations.csv</a> &middot; <a href="/data/forecasting/covid-hospitalizations-va.csv">covid-hospitalizations-va.csv</a></p>
+  </section>
+
+  </main>
+</div>
+<footer class="site-foot">
+  <div class="wrap">
+    <span>&copy; 2026 Ryan Beck</span>
+    <span><a href="/">&larr; back to the hall</a></span>
+    <span><a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a></span>
+  </div>
+</footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/plot.js" defer></script>
+</body>
+</html>

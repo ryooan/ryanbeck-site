@@ -278,3 +278,156 @@
   color:var(--ink-faint);
   font:400 13px/1.55 var(--sans);
 }
+
+/* ---- the dashboard shell ---- */
+
+.dash{
+  display:grid;
+  grid-template-columns:232px minmax(0,1fr);
+  gap:0 40px;
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:0 20px;
+  align-items:start;
+}
+
+.dash-nav{
+  position:sticky;
+  top:24px;
+  padding:30px 0 40px;
+  font:400 15px/1.5 var(--sans);
+}
+.dash-nav-head{
+  margin:0 0 14px;
+  font:600 13px/1.3 var(--sans);
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.dash-nav-head a{color:inherit;text-decoration:none}
+.dash-nav-head a:hover{color:var(--ink)}
+.dash-nav ul{list-style:none;margin:0;padding:0;border-left:1px solid var(--rule)}
+.dash-nav li{margin:0}
+.dash-nav li a{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:8px 12px;
+  margin-left:-1px;
+  border-left:2px solid transparent;
+  color:var(--ink-soft);
+  text-decoration:none;
+  transition:color .15s ease,border-color .15s ease,background .15s ease;
+}
+.dash-nav li a:hover{color:var(--ink);background:rgba(36,28,20,.04)}
+.dash-nav li a[aria-current="page"]{
+  color:var(--ink);
+  font-weight:600;
+  border-left-color:var(--ember);
+  background:rgba(200,114,42,.07);
+}
+.dash-nav li a:focus-visible{outline:2px solid var(--ember);outline-offset:-2px}
+
+/* The same three states as the status chips, shrunk to a dot — so the
+   sidebar says where something has stopped without being opened. */
+.dash-nav .dot{
+  flex:none;
+  width:7px;height:7px;
+  border-radius:50%;
+  background:var(--ink-faint);
+}
+.dash-nav .dot.is-live{background:#3f7d4e}
+.dash-nav .dot.is-stale{background:var(--ember)}
+.dash-nav .dot.is-historical{background:transparent;border:1.5px solid var(--ink-faint)}
+
+.dash-nav-foot{
+  margin:16px 0 0;
+  padding-left:12px;
+  font:400 13.5px/1.5 var(--sans);
+}
+.dash-nav-foot a{color:var(--ink-faint);text-decoration:none}
+.dash-nav-foot a:hover{color:var(--ink-soft)}
+
+.dash-main{min-width:0;padding-bottom:56px}
+.dash-head{padding:34px 0 4px}
+.dash-head .runic{display:block;margin-bottom:12px}
+.dash-head h1{
+  margin:0 0 14px;
+  font:600 clamp(28px,4vw,42px)/1.08 var(--serif);
+  color:var(--ink);
+  text-wrap:balance;
+}
+.dash-blurb{max-width:66ch}
+.dash-blurb p{
+  margin:0 0 12px;
+  color:var(--ink-soft);
+  font:400 clamp(1rem,1.3vw,1.12rem)/1.7 var(--sans);
+}
+.dash-blurb p:last-child{margin-bottom:0}
+.dash-blurb strong{color:var(--ink);font-weight:650}
+.dash-blurb em{font-style:italic}
+
+.dash-main .series:first-of-type{border-top:1px solid var(--rule);margin-top:26px}
+
+/* ---- the index's status table ---- */
+
+.table-wrap{overflow-x:auto;margin-top:16px}
+.status-table{
+  width:100%;
+  border-collapse:collapse;
+  font:400 14.5px/1.5 var(--sans);
+}
+.status-table th,.status-table td{
+  padding:9px 14px 9px 0;
+  text-align:left;
+  border-bottom:1px solid var(--rule);
+  white-space:nowrap;
+}
+.status-table th{
+  font:500 11.5px/1.4 var(--sans);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.status-table td a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+.status-table td a:hover{border-bottom-color:var(--ember)}
+.status-table .num{text-align:right;font-variant-numeric:tabular-nums;padding-right:0}
+.status-table .status{font-size:11px;padding:2px 8px 2px 7px}
+
+/* ---- narrow ---- */
+
+@media (max-width:860px){
+  .dash{grid-template-columns:minmax(0,1fr);gap:0}
+  .dash-nav{
+    position:static;
+    padding:22px 0 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .dash-nav ul{
+    display:flex;
+    gap:4px;
+    overflow-x:auto;
+    border-left:0;
+    padding-bottom:10px;
+    /* Let the row bleed to the screen edges so it reads as scrollable. */
+    margin:0 -20px;
+    padding-left:20px;
+    padding-right:20px;
+    scrollbar-width:thin;
+  }
+  .dash-nav li a{
+    white-space:nowrap;
+    border-left:0;
+    border-bottom:2px solid transparent;
+    border-radius:4px 4px 0 0;
+    padding:7px 11px;
+    margin-left:0;
+  }
+  .dash-nav li a[aria-current="page"]{
+    border-left-color:transparent;
+    border-bottom-color:var(--ember);
+  }
+  .dash-nav-foot{display:inline-block;margin-right:18px;padding-left:0}
+  .dash-head{padding-top:24px}
+}

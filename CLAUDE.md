@@ -17,7 +17,10 @@ doing real work.
 public/            everything served to a browser
   index.html       the hall — the landing page, and the interesting one
   projects.html  writing.html  blog.html  404.html
-  forecasting-data.html   the fourteen data dashboards, one card on projects
+  forecasting/            GENERATED dashboard — index + one page per
+                          subject, each at its own URL. One card on projects
+                          points at it. Rebuild with
+                          tools/forecasting/build_page.py; never hand-edit
   park-guides.html        family park guides: overview + open/download PDFs
   guides/                 the two guide PDFs themselves (RMNP, Grand Teton)
   about.html       the tome — a book you click through
@@ -288,9 +291,17 @@ Everything honours `prefers-reduced-motion`.
 Eleven series, fetched by Python, committed as CSV, drawn by
 `assets/js/plot.js`. Six fetchers run on a schedule; four are one-time rescues
 of sources that have since frozen, and are on no cron.
-`public/forecasting-data.html` is **generated** by
-`tools/forecasting/build_page.py` — edit the SECTIONS list in that file, not
-the HTML.
+`public/forecasting/` is **generated** by `tools/forecasting/build_page.py`
+— eight pages plus an index, one per subject, each at `/forecasting/<slug>`
+so a grouping can be linked to directly. Edit `SECTIONS` (the chart
+definitions) and `GROUPS` (which page each lands on, and its prose) in that
+file, never the HTML.
+
+The generator also rewrites a delimited block in `public/_redirects`.
+`wrangler.toml` sets `html_handling = "none"`, so without an explicit rewrite
+per page `/forecasting/respiratory` 404s in production while working fine
+under a plain file server. If you add a group and skip the generator, that is
+the failure you get.
 
 ### The rule this whole subsystem exists to enforce
 
@@ -1120,8 +1131,8 @@ Roughly in the order they unblock things.
    form at Substack's own subscribe page.
 3. **Fork the fourteen dashboards** out of the old `ryooan.github.io` repo
    into the current personal-projects repo, fix what has drifted, and polish
-   the presentation — Ryan's ask, 2026-08-20; `forecasting-data.html` says
-   the same in its lede. Until then they stay linked where they live.
+   the presentation — Ryan's ask, 2026-08-20. **Done**: the dashboard
+   lives at `public/forecasting/`. Until then they stay linked where they live.
 3a. **March Madness is behind Vercel deployment protection.** Its card
    links the stable alias
    (`march-madness-2026-ryan-8339s-projects.vercel.app`), but every URL on

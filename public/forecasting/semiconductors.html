@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Semiconductor trade &middot; Forecasting Data &middot; Ryan Beck</title>
+<meta name="description" content="US exports of chips and chipmaking equipment to China, and what China buys from the whole world. Built for a set of questions on export controls. Chips are HS 8542; equipment is HS">
+<link rel="canonical" href="https://ryanbeck.com/forecasting/semiconductors">
+<meta name="theme-color" content="#f4ead9">
+
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ryan Beck">
+<meta property="og:title" content="Semiconductor trade &middot; Forecasting Data &middot; Ryan Beck">
+<meta property="og:description" content="US exports of chips and chipmaking equipment to China, and what China buys from the whole world. Built for a set of questions on export controls. Chips are HS 8542; equipment is HS">
+<meta property="og:url" content="https://ryanbeck.com/forecasting/semiconductors">
+<meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ryanbeck111">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/plot.css">
+</head>
+<body class="dash-page">
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/projects">Projects</a>
+      <a href="/writing">Fiction</a>
+      <a href="/blog">Blog</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="dash">
+
+<nav class="dash-nav" aria-label="Forecasting data sections">
+  <p class="dash-nav-head"><a href="/forecasting">Forecasting data</a></p>
+  <ul>
+    <li><a href="/forecasting/respiratory">Respiratory illness<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/debt-limit">The debt limit<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/big-tech-revenue">Big-tech revenue<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/refugee-admissions">Refugee admissions<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/semiconductors" aria-current="page">Semiconductor trade<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/bird-flu">Bird flu<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/virginia-covid">Virginia COVID<span class="dot is-historical" aria-hidden="true"></span></a></li>
+  </ul>
+  <p class="dash-nav-foot"><a href="/forecasting/archive">The archive</a></p>
+  <p class="dash-nav-foot"><a href="/projects">&larr; All projects</a></p>
+</nav>
+  <main class="dash-main">
+    <header class="dash-head">
+      <span class="runic">UN Comtrade</span>
+      <h1>Semiconductor trade</h1>
+      <div class="dash-blurb"><p>US exports of chips and chipmaking equipment to China, and what China buys from the whole world. Built for a set of questions on export controls.</p><p>Chips are HS 8542; equipment is HS 8486, 903082, 903141, 854311 and 901041, summed — the same commodity codes the original used. Monthly trade is noisy, so a six-month rolling average is carried alongside the raw months, as before.</p></div>
+    </header>
+
+  <section class="series" id="semiconductors-us-exports-china">
+    <span class="status is-live">Live &middot; data to 1 June 2026</span>
+    <h2>US semiconductor exports to China</h2>
+    <p class="series-note">Monthly US exports to China of semiconductors and of the equipment used to make them, from UN Comtrade. This one was dead for three years: the old Comtrade endpoint was retired and the code that built the page had been deleted from the repo. The code was recovered from git history and the series now runs on the current API.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;chips&quot;,&quot;label&quot;:&quot;Chips (HS 8542)&quot;},{&quot;col&quot;:&quot;equipment&quot;,&quot;label&quot;:&quot;Manufacturing equipment&quot;}],&quot;csv&quot;:&quot;/data/forecasting/semiconductors-us-exports-china.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US semiconductor exports to China&quot;}'></div>
+    <p class="series-source">198 rows, latest about 3 months ago &middot;
+      source: <a href="https://comtradeplus.un.org/" rel="noopener">UN Comtrade</a> &middot;
+      download: <a href="/data/forecasting/semiconductors-us-exports-china.csv">semiconductors-us-exports-china.csv</a></p>
+  </section>
+
+  <section class="series" id="semiconductors-china-imports">
+    <span class="status is-live">Live &middot; data to 1 January 2024</span>
+    <h2>China&#x27;s semiconductor imports</h2>
+    <p class="series-note">What China buys from the whole world, annually — the denominator for the export series above.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;chips&quot;,&quot;label&quot;:&quot;Chips (HS 8542)&quot;},{&quot;col&quot;:&quot;equipment&quot;,&quot;label&quot;:&quot;Manufacturing equipment&quot;}],&quot;csv&quot;:&quot;/data/forecasting/semiconductors-china-imports.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;China&#x27;s semiconductor imports&quot;}'></div>
+    <p class="series-source">25 rows, latest about 2.6 years ago &middot;
+      source: <a href="https://comtradeplus.un.org/" rel="noopener">UN Comtrade</a> &middot;
+      download: <a href="/data/forecasting/semiconductors-china-imports.csv">semiconductors-china-imports.csv</a></p>
+  </section>
+
+  </main>
+</div>
+<footer class="site-foot">
+  <div class="wrap">
+    <span>&copy; 2026 Ryan Beck</span>
+    <span><a href="/">&larr; back to the hall</a></span>
+    <span><a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a></span>
+  </div>
+</footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/plot.js" defer></script>
+</body>
+</html>

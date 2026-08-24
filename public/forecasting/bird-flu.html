@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bird flu &middot; Forecasting Data &middot; Ryan Beck</title>
+<meta name="description" content="Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak, from USDA’s detection records. This one is worth reading twice. It spent months showing 174.8 mil">
+<link rel="canonical" href="https://ryanbeck.com/forecasting/bird-flu">
+<meta name="theme-color" content="#f4ead9">
+
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ryan Beck">
+<meta property="og:title" content="Bird flu &middot; Forecasting Data &middot; Ryan Beck">
+<meta property="og:description" content="Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak, from USDA’s detection records. This one is worth reading twice. It spent months showing 174.8 mil">
+<meta property="og:url" content="https://ryanbeck.com/forecasting/bird-flu">
+<meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ryanbeck111">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/plot.css">
+</head>
+<body class="dash-page">
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/projects">Projects</a>
+      <a href="/writing">Fiction</a>
+      <a href="/blog">Blog</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="dash">
+
+<nav class="dash-nav" aria-label="Forecasting data sections">
+  <p class="dash-nav-head"><a href="/forecasting">Forecasting data</a></p>
+  <ul>
+    <li><a href="/forecasting/respiratory">Respiratory illness<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/debt-limit">The debt limit<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/big-tech-revenue">Big-tech revenue<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/refugee-admissions">Refugee admissions<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/semiconductors">Semiconductor trade<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/bird-flu" aria-current="page">Bird flu<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/virginia-covid">Virginia COVID<span class="dot is-historical" aria-hidden="true"></span></a></li>
+  </ul>
+  <p class="dash-nav-foot"><a href="/forecasting/archive">The archive</a></p>
+  <p class="dash-nav-foot"><a href="/projects">&larr; All projects</a></p>
+</nav>
+  <main class="dash-main">
+    <header class="dash-head">
+      <span class="runic">USDA APHIS</span>
+      <h1>Bird flu</h1>
+      <div class="dash-blurb"><p>Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak, from USDA’s detection records.</p><p>This one is worth reading twice. It spent months showing 174.8 million birds and a note saying its source had stalled — true, but the wrong conclusion. The feed it read, a CDC mirror, had quietly stopped updating while still returning a perfectly valid file. The outbreak had not stopped at all, and USDA had moved its data behind a dashboard with no obvious download. The real total was 33 million birds higher.</p></div>
+    </header>
+
+  <section class="series" id="hpai-depopulations">
+    <span class="status is-live">Live &middot; data to 17 August 2026</span>
+    <h2>Birds killed in the bird-flu outbreak</h2>
+    <p class="series-note">Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak. The weekly count sits on its own axis on the right: a single commercial layer flock can be several million birds, so the weeks are spiky, and on the running total’s scale they would be a flat line along the bottom. The download splits each week into commercial and backyard birds.<br><br>This chart read “source stalled” until recently, and the reason is worth keeping. It was fed by a CDC mirror that still returns a perfectly valid file and stopped being updated in June 2025 — nothing failed, the numbers simply stopped moving. USDA had put the data behind a Tableau dashboard with no obvious download. It turned out the dashboard publishes a second hidden view, and asking for that view as CSV returns the whole detection table. Thirty-three million birds were missing from this chart.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;cumulative&quot;,&quot;label&quot;:&quot;Running total&quot;},{&quot;col&quot;:&quot;birds&quot;,&quot;label&quot;:&quot;Killed that week&quot;,&quot;axis&quot;:&quot;right&quot;}],&quot;csv&quot;:&quot;/data/forecasting/hpai-depopulations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Birds killed in the bird-flu outbreak&quot;}'></div>
+    <p class="series-source">202 rows, latest up to date &middot;
+      source: <a href="https://www.aphis.usda.gov/livestock-poultry-disease/avian/avian-influenza/hpai-detections/commercial-backyard-flocks" rel="noopener">USDA APHIS confirmed detections</a> &middot;
+      download: <a href="/data/forecasting/hpai-depopulations.csv">hpai-depopulations.csv</a></p>
+  </section>
+
+  </main>
+</div>
+<footer class="site-foot">
+  <div class="wrap">
+    <span>&copy; 2026 Ryan Beck</span>
+    <span><a href="/">&larr; back to the hall</a></span>
+    <span><a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a></span>
+  </div>
+</footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/plot.js" defer></script>
+</body>
+</html>

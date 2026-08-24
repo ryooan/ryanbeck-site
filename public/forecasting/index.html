@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Forecasting data &middot; Ryan Beck</title>
+<meta name="description" content="Live data series maintained for forecasting: the debt limit, respiratory illness, refugee admissions, big-tech revenue, semiconductor trade and bird flu.">
+<link rel="canonical" href="https://ryanbeck.com/forecasting">
+<meta name="theme-color" content="#f4ead9">
+
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ryan Beck">
+<meta property="og:title" content="Forecasting data &middot; Ryan Beck">
+<meta property="og:description" content="Live data series maintained for forecasting: the debt limit, respiratory illness, refugee admissions, big-tech revenue, semiconductor trade and bird flu.">
+<meta property="og:url" content="https://ryanbeck.com/forecasting">
+<meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ryanbeck111">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/plot.css">
+</head>
+<body class="dash-page">
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/projects">Projects</a>
+      <a href="/writing">Fiction</a>
+      <a href="/blog">Blog</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="dash">
+
+<nav class="dash-nav" aria-label="Forecasting data sections">
+  <p class="dash-nav-head"><a href="/forecasting">Forecasting data</a></p>
+  <ul>
+    <li><a href="/forecasting/respiratory">Respiratory illness<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/debt-limit">The debt limit<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/big-tech-revenue">Big-tech revenue<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/refugee-admissions">Refugee admissions<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/semiconductors">Semiconductor trade<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/bird-flu">Bird flu<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/virginia-covid">Virginia COVID<span class="dot is-historical" aria-hidden="true"></span></a></li>
+  </ul>
+  <p class="dash-nav-foot"><a href="/forecasting/archive">The archive</a></p>
+  <p class="dash-nav-foot"><a href="/projects">&larr; All projects</a></p>
+</nav>
+  <main class="dash-main">
+    <header class="dash-head">
+      <span class="runic">Through the first door</span>
+      <h1>Forecasting data</h1>
+      <div class="dash-blurb"><p>Numbers I kept reaching for while forecasting, collected so I would stop re-downloading them by hand. Pick a subject from the list.</p><p>Each series states the date its data actually ends, which is not always the date it last ran. That distinction is the point: a scheduled job reporting success tells you it fetched something, not that anyone upstream is still publishing.</p></div>
+    </header>
+
+  <section class="series">
+    <h2>Every series at a glance</h2>
+    <p class="series-note">11 of these refresh on a schedule. The rest are
+    frozen at the date their source stopped, and are kept rather than deleted.
+    <strong>Every state below is computed from the last date in the data, never
+    from when the job last ran</strong> &mdash; which is the one thing the
+    versions these replaced could not tell you.</p>
+    <div class="table-wrap"><table class="status-table"><thead><tr><th>Series</th><th>State</th><th>Data ends</th><th class="num">Rows</th></tr></thead><tbody><tr><td><a href="/forecasting/respiratory#covid-weekly-admissions">US respiratory hospital admissions, weekly</a></td><td><span class="status is-live">Live</span></td><td>15 August 2026</td><td class="num">315</td></tr><tr><td><a href="/forecasting/respiratory#flu-hospitalizations">US influenza hospitalisations</a></td><td><span class="status is-live">Live</span></td><td>4 July 2026</td><td class="num">231</td></tr><tr><td><a href="/forecasting/respiratory#flu-hospitalizations-states">Influenza admissions, state by state</a></td><td><span class="status is-live">Live</span></td><td>4 July 2026</td><td class="num">11,976</td></tr><tr><td><a href="/forecasting/respiratory#covid-hospitalizations">COVID and flu patients in hospital</a></td><td><span class="status is-historical">Historical</span></td><td>27 April 2024</td><td class="num">1,579</td></tr><tr><td><a href="/forecasting/debt-limit#debt-limit">US debt limit</a></td><td><span class="status is-live">Live</span></td><td>20 August 2026</td><td class="num">5,246</td></tr><tr><td><a href="/forecasting/big-tech-revenue#faamg-revenues">Big-tech combined revenue</a></td><td><span class="status is-live">Live</span></td><td>1 January 2025</td><td class="num">20</td></tr><tr><td><a href="/forecasting/big-tech-revenue#faamg-revenues-quarterly">Big-tech revenue by quarter</a></td><td><span class="status is-live">Live</span></td><td>1 June 2026</td><td class="num">76</td></tr><tr><td><a href="/forecasting/refugee-admissions#refugee-admissions">US refugee admissions</a></td><td><span class="status is-live">Live</span></td><td>1 July 2026</td><td class="num">310</td></tr><tr><td><a href="/forecasting/refugee-admissions#refugee-admissions-annual">Refugee admissions by fiscal year</a></td><td><span class="status is-live">Live</span></td><td>1 October 2025</td><td class="num">52</td></tr><tr><td><a href="/forecasting/semiconductors#semiconductors-us-exports-china">US semiconductor exports to China</a></td><td><span class="status is-live">Live</span></td><td>1 June 2026</td><td class="num">198</td></tr><tr><td><a href="/forecasting/semiconductors#semiconductors-china-imports">China&#x27;s semiconductor imports</a></td><td><span class="status is-live">Live</span></td><td>1 January 2024</td><td class="num">25</td></tr><tr><td><a href="/forecasting/bird-flu#hpai-depopulations">Birds killed in the bird-flu outbreak</a></td><td><span class="status is-live">Live</span></td><td>17 August 2026</td><td class="num">202</td></tr><tr><td><a href="/forecasting/virginia-covid#va-vaccinations">Virginia COVID vaccinations</a></td><td><span class="status is-historical">Historical</span></td><td>19 September 2023</td><td class="num">909</td></tr><tr><td><a href="/forecasting/virginia-covid#vdh-cases-by-age">Virginia COVID cases by age</a></td><td><span class="status is-historical">Historical</span></td><td>24 September 2024</td><td class="num">1,771</td></tr></tbody></table></div>
+  </section>
+  <section class="series">
+    <h2>How it works</h2>
+    <p class="series-note">Small Python fetchers pull each source, write tidy
+    CSV, and record what they found. This page is generated from that record.
+    The charts are one dependency-free file: every dashboard here died of
+    dependency rot at least once, so importing a charting library to fix them
+    would have been reproducing the disease.</p>
+    <p class="series-note" style="margin-top:14px">Every series is downloadable
+    from its own section, and
+    <a href="/data/forecasting/manifest.json">manifest.json</a> carries the
+    machine-readable state of all of them.</p>
+  </section>
+
+  </main>
+</div>
+<footer class="site-foot">
+  <div class="wrap">
+    <span>&copy; 2026 Ryan Beck</span>
+    <span><a href="/">&larr; back to the hall</a></span>
+    <span><a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a></span>
+  </div>
+</footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/plot.js" defer></script>
+</body>
+</html>

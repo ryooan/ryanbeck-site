@@ -29,9 +29,9 @@ load assets by path.)
 public/               everything that gets served
   index.html          the hall — the three doors + the wizard
   projects.html       card grid: Forecasting Data + featured apps
-  forecasting-data.html  GENERATED — fourteen sections, each with an
-                      interactive chart, time-range buttons and a status line
-                      taken from the data itself. Rebuild with
+  forecasting/        GENERATED — the dashboard. index.html plus one page
+                      per subject at /forecasting/<slug>, each with a shared
+                      sidebar, its own context and its charts. Rebuild with
                       tools/forecasting/build_page.py; do not hand-edit
   writing.html        fiction / author page
   blog.html           Substack feed + older archive
@@ -85,7 +85,7 @@ HOSTING.md            where to deploy it and why
 
 ## The forecasting data
 
-`public/forecasting-data.html` is generated, not written. Small Python
+`public/forecasting/` is generated, not written. Small Python
 fetchers pull each source, write tidy CSV into `public/data/forecasting/`, and
 record the last date *in the data* into `manifest.json`; the page builder
 turns that into the status line on each chart.

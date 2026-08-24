@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The US debt limit &middot; Forecasting Data &middot; Ryan Beck</title>
+<meta name="description" content="Federal debt subject to the statutory ceiling, against the ceiling itself, from the Daily Treasury Statement. Built to forecast X-date questions without re-reading a spreadsheet ev">
+<link rel="canonical" href="https://ryanbeck.com/forecasting/debt-limit">
+<meta name="theme-color" content="#f4ead9">
+
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ryan Beck">
+<meta property="og:title" content="The US debt limit &middot; Forecasting Data &middot; Ryan Beck">
+<meta property="og:description" content="Federal debt subject to the statutory ceiling, against the ceiling itself, from the Daily Treasury Statement. Built to forecast X-date questions without re-reading a spreadsheet ev">
+<meta property="og:url" content="https://ryanbeck.com/forecasting/debt-limit">
+<meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ryanbeck111">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/plot.css">
+</head>
+<body class="dash-page">
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/projects">Projects</a>
+      <a href="/writing">Fiction</a>
+      <a href="/blog">Blog</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="dash">
+
+<nav class="dash-nav" aria-label="Forecasting data sections">
+  <p class="dash-nav-head"><a href="/forecasting">Forecasting data</a></p>
+  <ul>
+    <li><a href="/forecasting/respiratory">Respiratory illness<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/debt-limit" aria-current="page">The debt limit<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/big-tech-revenue">Big-tech revenue<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/refugee-admissions">Refugee admissions<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/semiconductors">Semiconductor trade<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/bird-flu">Bird flu<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/virginia-covid">Virginia COVID<span class="dot is-historical" aria-hidden="true"></span></a></li>
+  </ul>
+  <p class="dash-nav-foot"><a href="/forecasting/archive">The archive</a></p>
+  <p class="dash-nav-foot"><a href="/projects">&larr; All projects</a></p>
+</nav>
+  <main class="dash-main">
+    <header class="dash-head">
+      <span class="runic">Treasury, daily</span>
+      <h1>The US debt limit</h1>
+      <div class="dash-blurb"><p>Federal debt subject to the statutory ceiling, against the ceiling itself, from the Daily Treasury Statement. Built to forecast X-date questions without re-reading a spreadsheet every morning.</p><p>The shaded stretches are the eight occasions Congress has suspended the limit rather than raised it. During a suspension there is no ceiling to plot, so the line stops — which is more honest than the alternative, because Treasury publishes a zero in that field and drawing it would send the ceiling to the floor.</p></div>
+    </header>
+
+  <section class="series" id="debt-limit">
+    <span class="status is-live">Live &middot; data to 20 August 2026</span>
+    <h2>US debt limit</h2>
+    <p class="series-note">Federal debt subject to the statutory ceiling, from Treasury's Daily Treasury Statement, against the ceiling itself. The shaded stretches are the eight periods when Congress suspended the limit rather than raising it — during a suspension there is no number to plot, so the ceiling line stops.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd-millions&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;debt_subject_to_limit&quot;,&quot;label&quot;:&quot;Debt subject to limit&quot;},{&quot;col&quot;:&quot;statutory_limit&quot;,&quot;label&quot;:&quot;Statutory ceiling&quot;,&quot;dash&quot;:true}],&quot;band&quot;:{&quot;col&quot;:&quot;suspended&quot;,&quot;label&quot;:&quot;Limit suspended&quot;},&quot;csv&quot;:&quot;/data/forecasting/debt-limit.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US debt limit&quot;}'></div>
+    <p class="series-source">5,246 rows, latest up to date &middot;
+      source: <a href="https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/debt-subject-to-limit" rel="noopener">Treasury Fiscal Data, Daily Treasury Statement</a> &middot;
+      download: <a href="/data/forecasting/debt-limit.csv">debt-limit.csv</a></p>
+  </section>
+
+  </main>
+</div>
+<footer class="site-foot">
+  <div class="wrap">
+    <span>&copy; 2026 Ryan Beck</span>
+    <span><a href="/">&larr; back to the hall</a></span>
+    <span><a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a></span>
+  </div>
+</footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/plot.js" defer></script>
+</body>
+</html>

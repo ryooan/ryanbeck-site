@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Virginia COVID &middot; Forecasting Data &middot; Ryan Beck</title>
+<meta name="description" content="Two Virginia series that no longer update, kept because the history is real and in one case is the only copy left. The vaccination series is complete: nearly ten million rows, whic">
+<link rel="canonical" href="https://ryanbeck.com/forecasting/virginia-covid">
+<meta name="theme-color" content="#f4ead9">
+
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ryan Beck">
+<meta property="og:title" content="Virginia COVID &middot; Forecasting Data &middot; Ryan Beck">
+<meta property="og:description" content="Two Virginia series that no longer update, kept because the history is real and in one case is the only copy left. The vaccination series is complete: nearly ten million rows, whic">
+<meta property="og:url" content="https://ryanbeck.com/forecasting/virginia-covid">
+<meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ryanbeck111">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/plot.css">
+</head>
+<body class="dash-page">
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/projects">Projects</a>
+      <a href="/writing">Fiction</a>
+      <a href="/blog">Blog</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="dash">
+
+<nav class="dash-nav" aria-label="Forecasting data sections">
+  <p class="dash-nav-head"><a href="/forecasting">Forecasting data</a></p>
+  <ul>
+    <li><a href="/forecasting/respiratory">Respiratory illness<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/debt-limit">The debt limit<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/big-tech-revenue">Big-tech revenue<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/refugee-admissions">Refugee admissions<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/semiconductors">Semiconductor trade<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/bird-flu">Bird flu<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/virginia-covid" aria-current="page">Virginia COVID<span class="dot is-historical" aria-hidden="true"></span></a></li>
+  </ul>
+  <p class="dash-nav-foot"><a href="/forecasting/archive">The archive</a></p>
+  <p class="dash-nav-foot"><a href="/projects">&larr; All projects</a></p>
+</nav>
+  <main class="dash-main">
+    <header class="dash-head">
+      <span class="runic">VDH, retired</span>
+      <h1>Virginia COVID</h1>
+      <div class="dash-blurb"><p>Two Virginia series that no longer update, kept because the history is real and in one case is the only copy left.</p><p>The vaccination series is complete: nearly ten million rows, which turned out never to have been lost when the old endpoints started returning 404s — the dataset had simply moved hosts. The cases-by-age series is not complete, and the page says so rather than showing a stub and hoping nobody checks.</p></div>
+    </header>
+
+  <section class="series" id="va-vaccinations">
+    <span class="status is-historical">Historical &middot; data to 19 September 2023</span>
+    <h2>Virginia COVID vaccinations</h2>
+    <p class="series-note">People in Virginia by vaccination status. The dashboard broke in early 2024 when the state retired the endpoints it read, and the job was switched off by hand. The data was never lost — it moved to Virginia's open-data platform and the history is complete, nearly ten million rows of it. Per-age-group figures are in the companion file.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;at_least_one_dose&quot;,&quot;label&quot;:&quot;At least one dose&quot;},{&quot;col&quot;:&quot;fully_vaccinated&quot;,&quot;label&quot;:&quot;Fully vaccinated&quot;}],&quot;csv&quot;:&quot;/data/forecasting/va-vaccinations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Virginia COVID vaccinations&quot;}'></div>
+    <p class="series-source">909 rows, latest about 2.9 years ago &middot;
+      source: <a href="https://data.virginia.gov/" rel="noopener">data.virginia.gov (VDH)</a> &middot;
+      download: <a href="/data/forecasting/va-vaccinations.csv">va-vaccinations.csv</a> &middot; <a href="/data/forecasting/va-vaccinations-by-age.csv">va-vaccinations-by-age.csv</a></p>
+  </section>
+
+  <section class="series" id="vdh-cases-by-age">
+    <span class="status is-historical">Historical &middot; data to 24 September 2024</span>
+    <h2>Virginia COVID cases by age</h2>
+    <p class="series-note">Five months, and that is all there is. VDH retired this dataset and kept only 2024 — everything before April of that year is gone from the source. Before publishing this as a stub I checked the Internet Archive (its captures hold about one day of data each), the CDC's equivalent (region-level, not state), the datastore behind the retired set (73,920 rows and no more), and every R workspace on my own machine. It is genuinely gone. For an age-stratified Virginia series with no hole in it, the HHS panel above carries age-banded admissions from 2020 to 2023.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;total_cases&quot;,&quot;label&quot;:&quot;Cumulative cases&quot;}],&quot;csv&quot;:&quot;/data/forecasting/vdh-cases-by-age-wide.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Virginia COVID cases by age&quot;}'></div>
+    <p class="series-source">1,771 rows, latest about 1.9 years ago &middot;
+      source: <a href="https://data.virginia.gov/" rel="noopener">data.virginia.gov (VDH, retired dataset)</a> &middot;
+      download: <a href="/data/forecasting/vdh-cases-by-age-wide.csv">vdh-cases-by-age-wide.csv</a> &middot; <a href="/data/forecasting/vdh-cases-by-age.csv">vdh-cases-by-age.csv</a></p>
+  </section>
+
+  </main>
+</div>
+<footer class="site-foot">
+  <div class="wrap">
+    <span>&copy; 2026 Ryan Beck</span>
+    <span><a href="/">&larr; back to the hall</a></span>
+    <span><a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a></span>
+  </div>
+</footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/plot.js" defer></script>
+</body>
+</html>

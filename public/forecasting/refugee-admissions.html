@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>US refugee admissions &middot; Forecasting Data &middot; Ryan Beck</title>
+<meta name="description" content="People admitted to the United States as refugees, from the State Department’s Refugee Processing Center. Fiscal years run October to September. The annual ceiling is set by preside">
+<link rel="canonical" href="https://ryanbeck.com/forecasting/refugee-admissions">
+<meta name="theme-color" content="#f4ead9">
+
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ryan Beck">
+<meta property="og:title" content="US refugee admissions &middot; Forecasting Data &middot; Ryan Beck">
+<meta property="og:description" content="People admitted to the United States as refugees, from the State Department’s Refugee Processing Center. Fiscal years run October to September. The annual ceiling is set by preside">
+<meta property="og:url" content="https://ryanbeck.com/forecasting/refugee-admissions">
+<meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ryanbeck111">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/plot.css">
+</head>
+<body class="dash-page">
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/projects">Projects</a>
+      <a href="/writing">Fiction</a>
+      <a href="/blog">Blog</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="dash">
+
+<nav class="dash-nav" aria-label="Forecasting data sections">
+  <p class="dash-nav-head"><a href="/forecasting">Forecasting data</a></p>
+  <ul>
+    <li><a href="/forecasting/respiratory">Respiratory illness<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/debt-limit">The debt limit<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/big-tech-revenue">Big-tech revenue<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/refugee-admissions" aria-current="page">Refugee admissions<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/semiconductors">Semiconductor trade<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/bird-flu">Bird flu<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/virginia-covid">Virginia COVID<span class="dot is-historical" aria-hidden="true"></span></a></li>
+  </ul>
+  <p class="dash-nav-foot"><a href="/forecasting/archive">The archive</a></p>
+  <p class="dash-nav-foot"><a href="/projects">&larr; All projects</a></p>
+</nav>
+  <main class="dash-main">
+    <header class="dash-head">
+      <span class="runic">State Department, monthly</span>
+      <h1>US refugee admissions</h1>
+      <div class="dash-blurb"><p>People admitted to the United States as refugees, from the State Department’s Refugee Processing Center. Fiscal years run October to September.</p><p>The annual ceiling is set by presidential determination and is a cap rather than a target — admissions have come in well under it far more often than they have approached it. The long view reaches back to 1975, where the two peaks are the Vietnamese and Soviet resettlements.</p></div>
+    </header>
+
+  <section class="series" id="refugee-admissions">
+    <span class="status is-live">Live &middot; data to 1 July 2026</span>
+    <h2>US refugee admissions</h2>
+    <p class="series-note">People admitted to the United States as refugees each month, from the State Department's Refugee Processing Center. Fiscal years run October to September; the annual ceiling is set by presidential determination and is a cap, not a target.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;defaultRange&quot;:&quot;2y&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Arrivals in month&quot;}],&quot;csv&quot;:&quot;/data/forecasting/refugee-admissions.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US refugee admissions&quot;}'></div>
+    <p class="series-source">310 rows, latest 54 days ago &middot;
+      source: <a href="https://www.wrapsnet.org/admissions-and-arrivals/" rel="noopener">State Department Refugee Processing Center</a> &middot;
+      download: <a href="/data/forecasting/refugee-admissions.csv">refugee-admissions.csv</a> &middot; <a href="/data/forecasting/refugee-admissions-annual.csv">refugee-admissions-annual.csv</a></p>
+  </section>
+
+  <section class="series" id="refugee-admissions-annual">
+    <span class="status is-live">Live &middot; data to 1 October 2025</span>
+    <h2>Refugee admissions by fiscal year</h2>
+    <p class="series-note">The same arrivals totalled by fiscal year, back to 1975 — the Vietnamese and Soviet resettlements are the two peaks. The dashed line is the annual ceiling set by presidential determination, a cap rather than a target, and only published for recent years.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;labelCol&quot;:&quot;fiscal_year&quot;,&quot;labelPrefix&quot;:&quot;FY &quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Admitted&quot;},{&quot;col&quot;:&quot;ceiling&quot;,&quot;label&quot;:&quot;Presidential ceiling&quot;,&quot;dash&quot;:true}],&quot;csv&quot;:&quot;/data/forecasting/refugee-admissions-annual.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Refugee admissions by fiscal year&quot;}'></div>
+    <p class="series-source">52 rows, latest about 11 months ago &middot;
+      source: <a href="https://www.wrapsnet.org/admissions-and-arrivals/" rel="noopener">State Department Refugee Processing Center</a> &middot;
+      download: <a href="/data/forecasting/refugee-admissions-annual.csv">refugee-admissions-annual.csv</a></p>
+  </section>
+
+  </main>
+</div>
+<footer class="site-foot">
+  <div class="wrap">
+    <span>&copy; 2026 Ryan Beck</span>
+    <span><a href="/">&larr; back to the hall</a></span>
+    <span><a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a></span>
+  </div>
+</footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/plot.js" defer></script>
+</body>
+</html>

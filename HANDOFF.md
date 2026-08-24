@@ -1,8 +1,8 @@
 # Start here
 
 Ryan Beck's personal site. Six public pages plus one Cloudflare Worker, one of
-which (`forecasting-data.html`) is generated from committed data and must not
-be hand-edited.
+of which is a generated dashboard (`public/forecasting/`, eight pages plus an
+index) built from committed data and never hand-edited.
 It has never been deployed — that is still the first real task. Wrangler was
 logged in on the old PC, but that token did not survive the 2026-08-19 move to
 `RYANDESKTOP`, so deploying now means `npx wrangler login` first — and that is
@@ -131,7 +131,8 @@ Everything in "Known placeholders" in CLAUDE.md, but the short version:
   captures, Herder's is its real wordmark, and the projects/forecasting-data
   ledes remain drafts
 - the forecasting dashboards are **done and in this repo** (2026-08-23):
-  eleven series on a generated `forecasting-data.html`, ten Python fetchers in
+  fourteen series across a generated dashboard at `public/forecasting/`,
+  eleven Python fetchers in
   `tools/forecasting/`, committed CSV under `public/data/forecasting/`. Three
   were revived from dead. What remains: `COMTRADE_API_KEY` has to be added as
   an Actions secret before the scheduled workflow can run, and the chart
