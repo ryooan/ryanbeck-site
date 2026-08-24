@@ -281,13 +281,22 @@
 
 /* ---- the dashboard shell ---- */
 
+/* The dashboard runs wider than the prose pages. 1120px is right for reading
+   a page of text and wrong for a page of charts -- with a sidebar taking its
+   share, the charts were left in an 808px column on a screen twice that wide.
+   Raising the token rather than overriding .dash alone means the topbar and
+   footer widen with it and everything stays on the same left edge. */
+body.dash-page{ --maxw:1460px; }
+
 .dash{
   display:grid;
-  grid-template-columns:232px minmax(0,1fr);
-  gap:0 40px;
+  grid-template-columns:172px minmax(0,1fr);
+  gap:0 30px;
   max-width:var(--maxw);
   margin:0 auto;
-  padding:0 20px;
+  /* Match .wrap exactly, so the sidebar's left edge lines up with the
+     wordmark above it. */
+  padding:0 clamp(18px,4vw,40px);
   align-items:start;
 }
 
@@ -295,7 +304,7 @@
   position:sticky;
   top:24px;
   padding:30px 0 40px;
-  font:400 15px/1.5 var(--sans);
+  font:400 14.5px/1.45 var(--sans);
 }
 .dash-nav-head{
   margin:0 0 14px;
@@ -312,8 +321,8 @@
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:8px;
-  padding:8px 12px;
+  gap:6px;
+  padding:7px 10px;
   margin-left:-1px;
   border-left:2px solid transparent;
   color:var(--ink-soft);
@@ -358,7 +367,7 @@
   color:var(--ink);
   text-wrap:balance;
 }
-.dash-blurb{max-width:66ch}
+.dash-blurb{max-width:72ch}
 .dash-blurb p{
   margin:0 0 12px;
   color:var(--ink-soft);

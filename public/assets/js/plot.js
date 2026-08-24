@@ -457,7 +457,10 @@
 
     function draw() {
       var W = figure.clientWidth || 720;
-      var H = opt.height || Math.max(220, Math.min(400, Math.round(W * 0.46)));
+            /* Height tracks width but is capped, or a full-bleed chart on a wide
+         monitor becomes a letterbox. The cap rose with the dashboard's
+         column: at 1200px, 0.46 would be 550. */
+      var H = opt.height || Math.max(220, Math.min(460, Math.round(W * 0.42)));
       var m = { t: 12, r: hasRight ? 56 : 14, b: 26, l: 56 };
       var iw = Math.max(10, W - m.l - m.r);
       var ih = Math.max(10, H - m.t - m.b);
