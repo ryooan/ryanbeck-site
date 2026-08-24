@@ -51,6 +51,7 @@ SECTIONS = [
         "plot": {
             "format": "number",
             "zero": True,
+            "defaultRange": "2y",
             "series": [{"col": "admissions", "label": "Arrivals in month"}],
         },
         "note": (
@@ -102,6 +103,36 @@ SECTIONS = [
             "five do not share a fiscal calendar — Apple's year ends in "
             "September and Microsoft's in June — so the combined line is "
             "blank for any year where they have not all filed yet."),
+        "source": "SEC XBRL company facts",
+        "source_url": "https://www.sec.gov/edgar/sec-api-documentation",
+    },
+    {
+        "slug": "faamg-revenues-quarterly",
+        "title": "Big-tech revenue by quarter",
+        "csv": "faamg-revenues-quarterly.csv",
+        "plot": {
+            "format": "usd-billions",
+            "zero": True,
+            "defaultRange": "5y",
+            "series": [
+                {"col": "amazon", "label": "Amazon"},
+                {"col": "apple", "label": "Apple"},
+                {"col": "alphabet", "label": "Alphabet"},
+                {"col": "microsoft", "label": "Microsoft"},
+                {"col": "meta", "label": "Meta"},
+            ],
+        },
+        "note": (
+            "The same five by quarter, which is where the seasonality lives — "
+            "Amazon and Apple both spike every December. "
+            "<strong>The old version of this chart had two false spikes in it</strong>: "
+            "Apple appearing to earn $383bn in a quarter and Microsoft $332bn. "
+            "Those are the companies’ <em>annual</em> figures, which reached the "
+            "quarterly series because the old code selected filings by form "
+            "rather than by how long the reporting period actually was. Quarters "
+            "here are picked by duration. The fourth quarter is then derived "
+            "from the annual total, because a 10-K often reports the year "
+            "without ever stating Q4 on its own."),
         "source": "SEC XBRL company facts",
         "source_url": "https://www.sec.gov/edgar/sec-api-documentation",
     },

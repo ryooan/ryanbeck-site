@@ -337,6 +337,45 @@ old. That is why the bird-flu chart currently says "Source stalled · data to
 - **SEC: the revenue tag changed** around 2018, and every 10-K restates two
   prior years. Tags are tried in order; entries are filtered to 330-400 day
   durations and de-duplicated by fiscal-year end, newest filing winning.
+- **SEC: select quarters by DURATION, never by form.** This is what put the
+  two huge spikes in the old quarterly chart -- Apple at ~$383bn and Microsoft
+  at ~$332bn. Those are the *annual* figures; a 10-K carries both the
+  twelve-month total and three-month facts, so filtering on form or fiscal
+  period lets the year land in the quarterly series. Quarters are 80-100 day
+  durations.
+- **SEC: the fourth quarter often does not exist as a fact.** Three 10-Qs
+  cover Q1-Q3 and the 10-K reports the year; filtering by duration alone
+  therefore leaves a hole every twelve months, which is worse than a spike
+  because a gap looks like nothing is wrong. It is derived as annual minus the
+  three quarters inside that fiscal year, and checked against what the
+  companies reported (Apple FY2023 Q4 derived $89.5B vs reported $89.498B).
+  Quarters are then placed in the calendar quarter they *end* in, so the five
+  line up despite Apple's September and Microsoft's June year-ends -- summing
+  four calendar quarters for those two will not equal their fiscal year, and
+  should not.
+
+### Time-range buttons
+
+`plot.js` offers All / 20Y / 10Y / 5Y / 2Y / 1Y / 6M above each chart, and
+**which buttons appear is derived from the data, not declared per chart.** A
+range earns a button only if the window would hold at least five observations
+at that series' own cadence, and only if it is shorter than three quarters of
+the history. So the annual charts offer nothing below 5Y, and the five-month
+VDH series offers no buttons at all.
+
+Two things worth keeping:
+
+- **The y-scale is recomputed for the visible window.** Keeping the full
+  history's scale while zoomed in flattens recent data into a band along the
+  bottom, which is the whole thing you were zooming to escape.
+- **Cadence must come from *unique* timestamps.** `autoRanges` is handed every
+  series concatenated, so a two-line chart has each date twice; those
+  duplicate pairs are zero-day gaps that drag the median cadence to nothing
+  and make every range look justified. That is how the annual refugee chart
+  briefly offered a "2Y" window containing two points.
+
+`defaultRange` overrides the opening view — the monthly refugee chart opens at
+2Y, the quarterly revenue chart at 5Y.
 
 ### Small multiples
 

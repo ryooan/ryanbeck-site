@@ -29,10 +29,10 @@ load assets by path.)
 public/               everything that gets served
   index.html          the hall — the three doors + the wizard
   projects.html       card grid: Forecasting Data + featured apps
-  forecasting-data.html  GENERATED — eleven series, each with an interactive
-                      chart and a status line taken from the data itself.
-                      Rebuild with tools/forecasting/build_page.py; do not
-                      hand-edit
+  forecasting-data.html  GENERATED — fourteen sections, each with an
+                      interactive chart, time-range buttons and a status line
+                      taken from the data itself. Rebuild with
+                      tools/forecasting/build_page.py; do not hand-edit
   writing.html        fiction / author page
   blog.html           Substack feed + older archive
   about.html          the book

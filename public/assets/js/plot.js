@@ -231,6 +231,61 @@
     return out.filter(function (p, i, a) { return i === 0 || p !== a[i - 1]; });
   }
 
+  /* ---- time ranges ----------------------------------------------------- */
+
+  var DAY = 86400000;
+  var RANGES = [
+    { k: '6m', d: 183, label: '6M' },
+    { k: '1y', d: 365, label: '1Y' },
+    { k: '2y', d: 730, label: '2Y' },
+    { k: '5y', d: 1826, label: '5Y' },
+    { k: '10y', d: 3653, label: '10Y' },
+    { k: '20y', d: 7305, label: '20Y' },
+    { k: 'all', d: Infinity, label: 'All' }
+  ];
+
+  /* Which ranges are worth offering for this particular series.
+
+     Driven by the data rather than declared per chart, because the wrong
+     buttons are worse than none: "6M" on a chart with one point a year offers
+     to show you half a point. A range earns its button only if the window
+     holds at least MIN_PTS observations at this series' own cadence, and only
+     if it is meaningfully shorter than the history -- "5Y" on five years of
+     data is just "All" spelled differently. */
+  function autoRanges(pts) {
+    var MIN_PTS = 5;
+    /* Unique timestamps. `pts` arrives as every series concatenated, so a
+       chart with two lines has each date twice -- and the duplicate pairs are
+       zero-day gaps, which drag the median cadence to nothing and make every
+       range look justified. That is how an annual chart came to offer "2Y",
+       a window containing two points. */
+    var seen = {}, times = [];
+    pts.forEach(function (p) {
+      if (seen[p.t]) return;
+      seen[p.t] = 1;
+      times.push(p.t);
+    });
+    times.sort(function (a, b) { return a - b; });
+    if (times.length < 2) return [];
+    var span = (times[times.length - 1] - times[0]) / DAY;
+
+    /* Median gap, not mean: a single long hole in a series (and several here
+       have one) would drag a mean far enough to suppress every button. */
+    var gaps = [];
+    for (var i = 1; i < times.length; i++) gaps.push((times[i] - times[i - 1]) / DAY);
+    gaps.sort(function (a, b) { return a - b; });
+    var cadence = gaps[Math.floor(gaps.length / 2)] || 1;
+
+    var out = RANGES.filter(function (r) {
+      if (r.k === 'all') return false;
+      return r.d >= cadence * MIN_PTS && r.d <= span * 0.75;
+    });
+    /* Keep it to four buttons plus All; drop from the short end, since the
+       long views are the ones that differ most from each other. */
+    while (out.length > 4) out.shift();
+    return out.length ? out.concat([RANGES[RANGES.length - 1]]) : [];
+  }
+
   /* ---- the chart ------------------------------------------------------- */
 
   function build(host, opt, data) {
@@ -270,17 +325,74 @@
     var withV = all.filter(function (p) { return p.v != null; });
     if (!withV.length) throw new Error('no numeric data');
 
-    var t0 = Math.min.apply(null, all.map(function (p) { return p.t; }));
-    var t1 = Math.max.apply(null, all.map(function (p) { return p.t; }));
-    var v0 = Math.min.apply(null, withV.map(function (p) { return p.v; }));
-    var v1 = Math.max.apply(null, withV.map(function (p) { return p.v; }));
-    if (opt.zero) v0 = Math.min(0, v0);
-    var padV = (v1 - v0) * 0.08 || Math.abs(v1 || 1) * 0.1;
-    v0 -= padV; v1 += padV;
+    var fullT0 = Math.min.apply(null, all.map(function (p) { return p.t; }));
+    var fullT1 = Math.max.apply(null, all.map(function (p) { return p.t; }));
+
+    /* The visible window, and the y-scale that fits it. Recomputed whenever
+       the range changes -- keeping the full-history y-scale while zoomed in
+       flattens the recent data into a band at the bottom, which defeats the
+       point of zooming. */
+    var t0, t1, v0, v1, shown;
+    var ranges = opt.ranges === false ? []
+      : (Array.isArray(opt.ranges)
+          ? RANGES.filter(function (r) { return opt.ranges.indexOf(r.k) >= 0; })
+          : autoRanges(all));
+    var active = opt.defaultRange || 'all';
+    if (!ranges.some(function (r) { return r.k === active; })) active = 'all';
+
+    function setWindow(key) {
+      active = key;
+      var r = RANGES.filter(function (x) { return x.k === key; })[0] || RANGES[RANGES.length - 1];
+      t1 = fullT1;
+      t0 = (r.d === Infinity) ? fullT0 : Math.max(fullT0, fullT1 - r.d * DAY);
+
+      shown = series.map(function (s) {
+        return s.pts.filter(function (p) { return p.t >= t0 && p.t <= t1; });
+      });
+      var vis = shown.reduce(function (a, b) { return a.concat(b); }, [])
+        .filter(function (p) { return p.v != null; });
+      if (!vis.length) vis = withV;         // never leave a chart with no scale
+      v0 = Math.min.apply(null, vis.map(function (p) { return p.v; }));
+      v1 = Math.max.apply(null, vis.map(function (p) { return p.v; }));
+      if (opt.zero) v0 = Math.min(0, v0);
+      var padV = (v1 - v0) * 0.08 || Math.abs(v1 || 1) * 0.1;
+      v0 -= padV; v1 += padV;
+    }
+    setWindow(active);
 
     /* --- DOM shell --- */
     host.classList.add('plot');
     host.innerHTML = '';
+
+    var rangeBar = null, rangeBtns = [];
+    if (ranges.length) {
+      rangeBar = document.createElement('div');
+      rangeBar.className = 'plot-ranges';
+      rangeBar.setAttribute('role', 'group');
+      rangeBar.setAttribute('aria-label', 'Time range');
+      ranges.forEach(function (r) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'plot-range';
+        b.textContent = r.label;
+        b.dataset.range = r.k;
+        b.setAttribute('aria-pressed', String(r.k === active));
+        b.addEventListener('click', function () {
+          if (r.k === active) return;
+          hide();
+          host.__at = null;
+          setWindow(r.k);
+          rangeBtns.forEach(function (o) {
+            o.setAttribute('aria-pressed', String(o.dataset.range === active));
+          });
+          draw();
+        });
+        rangeBtns.push(b);
+        rangeBar.appendChild(b);
+      });
+      host.appendChild(rangeBar);
+    }
+
     var figure = document.createElement('div');
     figure.className = 'plot-canvas';
     var tip = document.createElement('div');
@@ -372,8 +484,8 @@
       }));
 
       drawn = [];
-      series.forEach(function (s) {
-        var pts = decimate(s.pts, t0, t1, iw);
+      series.forEach(function (s, si) {
+        var pts = decimate(shown[si], t0, t1, iw);
         drawn.push(pts);
         var d = '', pen = false;
         pts.forEach(function (p) {

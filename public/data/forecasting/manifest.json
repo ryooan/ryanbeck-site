@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-24T04:03:28Z",
+  "generated": "2026-08-24T14:09:14Z",
   "series": {
     "covid-hospitalizations": {
       "fetched": "2026-08-24T03:05:10Z",
@@ -34,10 +34,18 @@
       "status": "live"
     },
     "faamg-revenues": {
-      "fetched": "2026-08-24T02:42:35Z",
+      "fetched": "2026-08-24T14:09:14Z",
       "last_date": "2025-01-01",
       "note": "Billions of US dollars, by each company's own fiscal year. Combined is blank for years where not all five have filed.",
       "rows": 20,
+      "source": "SEC XBRL company facts",
+      "status": "live"
+    },
+    "faamg-revenues-quarterly": {
+      "fetched": "2026-08-24T14:09:14Z",
+      "last_date": "2026-06-01",
+      "note": "Billions of US dollars per quarter, aligned by the calendar quarter each fiscal quarter ends in.",
+      "rows": 76,
       "source": "SEC XBRL company facts",
       "status": "live"
     },

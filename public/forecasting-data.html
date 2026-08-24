@@ -70,8 +70,8 @@
     <span class="status is-live">Live &middot; data to 1 July 2026</span>
     <h2>US refugee admissions</h2>
     <p class="series-note">People admitted to the United States as refugees each month, from the State Department's Refugee Processing Center. Fiscal years run October to September; the annual ceiling is set by presidential determination and is a cap, not a target.</p>
-    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Arrivals in month&quot;}],&quot;csv&quot;:&quot;/data/forecasting/refugee-admissions.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US refugee admissions&quot;}'></div>
-    <p class="series-source">310 rows, latest 53 days ago &middot;
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;defaultRange&quot;:&quot;2y&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Arrivals in month&quot;}],&quot;csv&quot;:&quot;/data/forecasting/refugee-admissions.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US refugee admissions&quot;}'></div>
+    <p class="series-source">310 rows, latest 54 days ago &middot;
       source: <a href="https://www.wrapsnet.org/admissions-and-arrivals/" rel="noopener">State Department Refugee Processing Center</a> &middot;
       download: <a href="/data/forecasting/refugee-admissions.csv">refugee-admissions.csv</a> &middot; <a href="/data/forecasting/refugee-admissions-annual.csv">refugee-admissions-annual.csv</a></p>
   </section>
@@ -96,12 +96,22 @@
       download: <a href="/data/forecasting/faamg-revenues.csv">faamg-revenues.csv</a></p>
   </section>
 
+  <section class="series" id="faamg-revenues-quarterly">
+    <span class="status is-live">Live &middot; data to 1 June 2026</span>
+    <h2>Big-tech revenue by quarter</h2>
+    <p class="series-note">The same five by quarter, which is where the seasonality lives — Amazon and Apple both spike every December. <strong>The old version of this chart had two false spikes in it</strong>: Apple appearing to earn $383bn in a quarter and Microsoft $332bn. Those are the companies’ <em>annual</em> figures, which reached the quarterly series because the old code selected filings by form rather than by how long the reporting period actually was. Quarters here are picked by duration. The fourth quarter is then derived from the annual total, because a 10-K often reports the year without ever stating Q4 on its own.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd-billions&quot;,&quot;zero&quot;:true,&quot;defaultRange&quot;:&quot;5y&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;amazon&quot;,&quot;label&quot;:&quot;Amazon&quot;},{&quot;col&quot;:&quot;apple&quot;,&quot;label&quot;:&quot;Apple&quot;},{&quot;col&quot;:&quot;alphabet&quot;,&quot;label&quot;:&quot;Alphabet&quot;},{&quot;col&quot;:&quot;microsoft&quot;,&quot;label&quot;:&quot;Microsoft&quot;},{&quot;col&quot;:&quot;meta&quot;,&quot;label&quot;:&quot;Meta&quot;}],&quot;csv&quot;:&quot;/data/forecasting/faamg-revenues-quarterly.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Big-tech revenue by quarter&quot;}'></div>
+    <p class="series-source">76 rows, latest about 3 months ago &middot;
+      source: <a href="https://www.sec.gov/edgar/sec-api-documentation" rel="noopener">SEC XBRL company facts</a> &middot;
+      download: <a href="/data/forecasting/faamg-revenues-quarterly.csv">faamg-revenues-quarterly.csv</a></p>
+  </section>
+
   <section class="series" id="flu-hospitalizations">
     <span class="status is-live">Live &middot; data to 4 July 2026</span>
     <h2>US influenza hospitalisations</h2>
     <p class="series-note">Weekly hospital admissions with a confirmed influenza diagnosis, from the CDC's FluSight forecasting hub. Per-state figures are in the companion file.</p>
     <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Weekly admissions&quot;}],&quot;csv&quot;:&quot;/data/forecasting/flu-hospitalizations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US influenza hospitalisations&quot;}'></div>
-    <p class="series-source">231 rows, latest 50 days ago &middot;
+    <p class="series-source">231 rows, latest 51 days ago &middot;
       source: <a href="https://github.com/cdcepi/FluSight-forecast-hub" rel="noopener">CDC FluSight forecast hub</a> &middot;
       download: <a href="/data/forecasting/flu-hospitalizations.csv">flu-hospitalizations.csv</a> &middot; <a href="/data/forecasting/flu-hospitalizations-states.csv">flu-hospitalizations-states.csv</a></p>
   </section>
@@ -111,7 +121,7 @@
     <h2>Influenza admissions, state by state</h2>
     <p class="series-note">The same weekly flu admissions, split by state and shown as a rate per 100,000 residents. Every panel shares one vertical scale, so the boxes are directly comparable. The rate rather than the raw count is what makes that readable: on raw admissions Texas out-tops Hawaii fifty-five-fold and most of the grid flattens into unreadable slivers, where per head the spread is about four-fold and each state’s season has a visible shape.</p>
     <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;rate&quot;,&quot;panelBy&quot;:&quot;location&quot;,&quot;value&quot;:&quot;rate_per_100k&quot;,&quot;panelNote&quot;:&quot;Admissions per 100,000 residents, so a small state and a large one can be read against each other.&quot;,&quot;csv&quot;:&quot;/data/forecasting/flu-hospitalizations-states.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Influenza admissions, state by state&quot;}'></div>
-    <p class="series-source">11,976 rows, latest 50 days ago &middot;
+    <p class="series-source">11,976 rows, latest 51 days ago &middot;
       source: <a href="https://github.com/cdcepi/FluSight-forecast-hub" rel="noopener">CDC FluSight forecast hub</a> &middot;
       download: <a href="/data/forecasting/flu-hospitalizations-states.csv">flu-hospitalizations-states.csv</a></p>
   </section>
