@@ -41,126 +41,45 @@
   <section class="wrap page-head">
     <span class="runic">Through the first door</span>
     <h1>Projects</h1>
-    <p class="lede">Mostly data that needed watching. Each of these is a live dashboard that
-    rebuilds itself on a schedule — a GitHub Action runs the R, pulls from the source agency, and
-    republishes the page — because forecasting a number is much easier when you are not also
-    re-downloading it by hand every week.</p>
-    <p class="lede" style="margin-top:14px"><em>Draft — pulled from the archive to look over.
-    Prune anything stale, and the thumbnails are still placeholder art.</em></p>
+    <p class="lede">Things I have built because I wanted them to exist &mdash; forecasting
+    infrastructure, small apps for real problems in my own life, and the occasional experiment
+    that got out of hand.</p>
+    <p class="lede" style="margin-top:14px"><em>Draft &mdash; more projects are being pulled in
+    and the presentation is still settling.</em></p>
   </section>
 
   <section class="wrap">
     <div class="card-grid">
-      <a class="card" href="https://www.ryanbeckauthor.com/forecasting/hpai-depopulations.html">
-        <span class="thumb"><img src="assets/cards/card-1.jpg" alt="" loading="lazy" width="1200" height="750"></span>
+      <a class="card" href="forecasting-data.html">
+        <span class="thumb"><img src="assets/cards/forecasting-data.jpg" alt="" loading="lazy" width="1200" height="750"></span>
         <span class="body">
-          <h3>Avian Influenza Depopulations</h3>
-          <p>Birds culled in the ongoing HPAI outbreak, parsed out of the USDA&#x27;s confirmed-detections tables and plotted over time. Rebuilt automatically as new detections are posted.</p>
-          <span class="tags"><span class="tag">Public health</span><span class="tag">USDA</span><span class="tag">R</span></span>
+          <h3>Forecasting Data</h3>
+          <p>The numbers I kept reaching for while forecasting &mdash; the debt limit, refugee admissions, big-tech revenue, flu admissions, semiconductor trade, the bird-flu cull &mdash; on one page, with charts you can read values off. Each series refreshes on its own schedule and states the date its data actually ends, which is not always the date it last ran.</p>
+          <span class="tags"><span class="tag">Live data</span><span class="tag">Python</span><span class="tag">GitHub Actions</span></span>
         </span>
       </a>
-      <a class="card" href="https://www.ryanbeckauthor.com/forecasting/DebtLimit.html">
-        <span class="thumb"><img src="assets/cards/card-2.jpg" alt="" loading="lazy" width="1200" height="750"></span>
+      <a class="card" href="https://useherder.com">
+        <span class="thumb"><img src="assets/cards/em-herder.jpg" alt="" loading="lazy" width="1200" height="750"></span>
         <span class="body">
-          <h3>US Debt Limit</h3>
-          <p>Treasury&#x27;s daily cash balance and outstanding debt against the statutory ceiling, straight from the Daily Treasury Statement. Built to forecast X-date questions without re-reading a spreadsheet every morning.</p>
-          <span class="tags"><span class="tag">Fiscal</span><span class="tag">Treasury</span><span class="tag">R</span></span>
+          <h3>Herder</h3>
+          <p>An app for herding a group toward a plan: propose activities, vote on them &mdash; ranked-choice if you like &mdash; and schedule around everyone&#x27;s availability. Share a link; nobody needs an account.</p>
+          <span class="tags"><span class="tag">Web app</span><span class="tag">useherder.com</span></span>
         </span>
       </a>
-      <a class="card" href="https://www.ryanbeckauthor.com/forecasting/us-refugee-admissions.html">
-        <span class="thumb"><img src="assets/cards/card-3.jpg" alt="" loading="lazy" width="1200" height="750"></span>
+      <a class="card" href="https://march-madness-2026-ryan-8339s-projects.vercel.app">
+        <span class="thumb"><img src="assets/cards/em-march-madness.jpg" alt="" loading="lazy" width="1200" height="750"></span>
         <span class="body">
-          <h3>US Refugee Admissions</h3>
-          <p>Monthly and fiscal-year refugee admissions from the State Department&#x27;s Refugee Processing Center, against the annual presidential ceiling.</p>
-          <span class="tags"><span class="tag">Policy</span><span class="tag">State Dept</span><span class="tag">R</span></span>
+          <h3>March Madness 2026</h3>
+          <p>An analytics dashboard for the NCAA tournament field: custom power scores, injury tracking, strength of schedule, a 68&times;68 head-to-head grid, and a bracket builder that remembers your picks.</p>
+          <span class="tags"><span class="tag">Web app</span><span class="tag">React</span><span class="tag">Seasonal</span></span>
         </span>
       </a>
-      <a class="card" href="https://www.ryanbeckauthor.com/forecasting/Flu_Hospitalizations.html">
-        <span class="thumb"><img src="assets/cards/card-4.jpg" alt="" loading="lazy" width="1200" height="750"></span>
+      <a class="card" href="park-guides.html">
+        <span class="thumb"><img src="assets/cards/park-guides.jpg" alt="" loading="lazy" width="1200" height="750"></span>
         <span class="body">
-          <h3>Influenza Hospitalizations</h3>
-          <p>State-level flu hospital admissions, assembled for the Metaculus FluSight forecasting challenge so the numbers were ready before the questions closed.</p>
-          <span class="tags"><span class="tag">Epidemiology</span><span class="tag">Metaculus</span><span class="tag">R</span></span>
-        </span>
-      </a>
-      <a class="card" href="https://www.ryanbeckauthor.com/forecasting/FluWeekly.html">
-        <span class="thumb"><img src="assets/cards/card-5.jpg" alt="" loading="lazy" width="1200" height="750"></span>
-        <span class="body">
-          <h3>Weekly Influenza</h3>
-          <p>National flu hospitalisations from the CDC&#x27;s FluSight target data, updated on the CDC&#x27;s own weekly cadence.</p>
-          <span class="tags"><span class="tag">Epidemiology</span><span class="tag">CDC</span><span class="tag">R</span></span>
-        </span>
-      </a>
-      <a class="card" href="https://www.ryanbeckauthor.com/forecasting/COVIDWeekly.html">
-        <span class="thumb"><img src="assets/cards/card-6.jpg" alt="" loading="lazy" width="1200" height="750"></span>
-        <span class="body">
-          <h3>Weekly COVID</h3>
-          <p>US COVID hospitalisations from the COVID-19 Forecast Hub&#x27;s truth data — the series the hub scores its forecasts against.</p>
-          <span class="tags"><span class="tag">Epidemiology</span><span class="tag">Forecast Hub</span><span class="tag">R</span></span>
-        </span>
-      </a>
-      <a class="card" href="https://www.ryanbeckauthor.com/forecasting/COVIDHospitalizations.html">
-        <span class="thumb"><img src="assets/cards/card-1.jpg" alt="" loading="lazy" width="1200" height="750"></span>
-        <span class="body">
-          <h3>COVID Hospital Admissions</h3>
-          <p>Weekly confirmed COVID admissions for Virginia alongside the national trend.</p>
-          <span class="tags"><span class="tag">Epidemiology</span><span class="tag">HHS</span><span class="tag">R</span></span>
-        </span>
-      </a>
-      <a class="card" href="https://www.ryanbeckauthor.com/forecasting/Weekly-Hospitalizations.html">
-        <span class="thumb"><img src="assets/cards/card-2.jpg" alt="" loading="lazy" width="1200" height="750"></span>
-        <span class="body">
-          <h3>Adult &amp; Pediatric Admissions</h3>
-          <p>Total weekly hospital admissions for confirmed COVID, split adult and paediatric, from HealthData.gov.</p>
-          <span class="tags"><span class="tag">Epidemiology</span><span class="tag">HealthData</span><span class="tag">R</span></span>
-        </span>
-      </a>
-      <a class="card" href="https://www.ryanbeckauthor.com/forecasting/FAAMG_Revenues.html">
-        <span class="thumb"><img src="assets/cards/card-3.jpg" alt="" loading="lazy" width="1200" height="750"></span>
-        <span class="body">
-          <h3>FAAMG Revenues</h3>
-          <p>Quarterly revenue for the big five US tech firms, kept current for forecasting questions about their combined top line.</p>
-          <span class="tags"><span class="tag">Markets</span><span class="tag">Earnings</span><span class="tag">R</span></span>
-        </span>
-      </a>
-      <a class="card" href="https://www.ryanbeckauthor.com/forecasting/INFER_Trade_Data.html">
-        <span class="thumb"><img src="assets/cards/card-4.jpg" alt="" loading="lazy" width="1200" height="750"></span>
-        <span class="body">
-          <h3>Semiconductor Trade Data</h3>
-          <p>Chip import and export flows, maintained to answer a standing INFER question on semiconductor trade.</p>
-          <span class="tags"><span class="tag">Trade</span><span class="tag">INFER</span><span class="tag">R</span></span>
-        </span>
-      </a>
-      <a class="card" href="https://www.ryanbeckauthor.com/forecasting/New-York-Evictions.html">
-        <span class="thumb"><img src="assets/cards/card-5.jpg" alt="" loading="lazy" width="1200" height="750"></span>
-        <span class="body">
-          <h3>New York Evictions</h3>
-          <p>Eviction filings and executed warrants in New York, tracked through the post-moratorium period.</p>
-          <span class="tags"><span class="tag">Housing</span><span class="tag">Courts</span><span class="tag">R</span></span>
-        </span>
-      </a>
-      <a class="card" href="https://www.ryanbeckauthor.com/forecasting/Virginia_Vaccinations.html">
-        <span class="thumb"><img src="assets/cards/card-6.jpg" alt="" loading="lazy" width="1200" height="750"></span>
-        <span class="body">
-          <h3>Virginia Vaccinations</h3>
-          <p>Doses administered and population coverage across Virginia, built during the rollout when the state&#x27;s own dashboard lagged.</p>
-          <span class="tags"><span class="tag">Public health</span><span class="tag">VDH</span><span class="tag">R</span></span>
-        </span>
-      </a>
-      <a class="card" href="https://www.ryanbeckauthor.com/forecasting/VDH-Vaccine-Output.html">
-        <span class="thumb"><img src="assets/cards/card-1.jpg" alt="" loading="lazy" width="1200" height="750"></span>
-        <span class="body">
-          <h3>Vaccination Ratios by Race</h3>
-          <p>Virginia vaccination rates by race and ethnicity, expressed as VDH&#x27;s ratio against the white population — an equity read rather than a raw count.</p>
-          <span class="tags"><span class="tag">Equity</span><span class="tag">VDH</span><span class="tag">R</span></span>
-        </span>
-      </a>
-      <a class="card" href="https://www.ryanbeckauthor.com/forecasting/VDH_Age_Data.html">
-        <span class="thumb"><img src="assets/cards/card-2.jpg" alt="" loading="lazy" width="1200" height="750"></span>
-        <span class="body">
-          <h3>Vaccination by Age Band</h3>
-          <p>The same Virginia rollout cut by age group, to see which cohorts were actually moving.</p>
-          <span class="tags"><span class="tag">Public health</span><span class="tag">VDH</span><span class="tag">R</span></span>
+          <h3>National Park Guides</h3>
+          <p>Printable one-sheet activity guides for park trips with small kids &mdash; short hikes, parking strategy, drive times, and what to do when the trailhead is full. Rocky Mountain and Grand Teton so far.</p>
+          <span class="tags"><span class="tag">Guides</span><span class="tag">PDF</span><span class="tag">Free</span></span>
         </span>
       </a>
     </div>

@@ -10,6 +10,8 @@
 # needs an explicit rewrite too.
 /             /index.html     200
 /projects     /projects.html  200
+/forecasting-data  /forecasting-data.html  200
+/park-guides  /park-guides.html  200
 /writing      /writing.html   200
 /blog         /blog.html      200
 /about        /about.html     200
