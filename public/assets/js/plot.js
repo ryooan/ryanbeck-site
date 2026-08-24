@@ -309,6 +309,21 @@
       };
     });
 
+    /* An optional per-point label, for series whose x value is not really a
+       date. The fiscal-year chart dates FY1975 to 1 October 1974, which is
+       correct for placing it on a time axis and useless to read: hovering it
+       said "Oct 1974" when the answer is "FY 1975". */
+    var labels = null;
+    if (opt.labelCol) {
+      labels = {};
+      data.rows.forEach(function (r) {
+        var t = parseDate(r[xKey]);
+        if (!isNaN(t) && r[opt.labelCol] !== '' && r[opt.labelCol] != null) {
+          labels[t] = (opt.labelPrefix || '') + r[opt.labelCol];
+        }
+      });
+    }
+
     /* Date bands (the debt-limit suspensions) as contiguous runs of a flag. */
     var bands = [];
     if (opt.band && opt.band.col) {
@@ -573,7 +588,8 @@
       geom.cursor.setAttribute('x2', geom.sx(at));
       geom.cursor.setAttribute('visibility', 'visible');
 
-      var lines = ['<b>' + fmtDate(at, (t1 - t0) / 86400000 < 1100) + '</b>'];
+      var head = (labels && labels[at]) || fmtDate(at, (t1 - t0) / 86400000 < 1100);
+      var lines = ['<b>' + head + '</b>'];
       series.forEach(function (s, k) {
         var pts = drawn[k];
         var j = nearestIndex(pts, at);

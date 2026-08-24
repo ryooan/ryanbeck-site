@@ -70,6 +70,8 @@ SECTIONS = [
         "plot": {
             "format": "number",
             "zero": True,
+            "labelCol": "fiscal_year",
+            "labelPrefix": "FY ",
             "series": [
                 {"col": "admissions", "label": "Admitted"},
                 {"col": "ceiling", "label": "Presidential ceiling", "dash": True},
@@ -90,6 +92,8 @@ SECTIONS = [
         "plot": {
             "format": "usd-billions",
             "zero": True,
+            "labelCol": "fiscal_year",
+            "labelPrefix": "FY ",
             "series": [
                 {"col": "combined", "label": "All five combined"},
                 {"col": "amazon", "label": "Amazon"},
@@ -113,6 +117,7 @@ SECTIONS = [
         "plot": {
             "format": "usd-billions",
             "zero": True,
+            "labelCol": "quarter",
             "defaultRange": "5y",
             "series": [
                 {"col": "amazon", "label": "Amazon"},
@@ -267,18 +272,19 @@ SECTIONS = [
             "the H5N1 outbreak. The weekly count sits on its own axis on the "
             "right: a single commercial layer flock can be several million "
             "birds, so the weeks are spiky, and on the running total’s "
-            "scale they would be a flat line along the bottom."
+            "scale they would be a flat line along the bottom. The download "
+            "splits each week into commercial and backyard birds."
             "<br><br>"
-            "<strong>The outbreak has not stopped — this feed has.</strong> "
-            "USDA confirmed 38 flocks in the thirty days to late August 2026, "
-            "but the CDC mirror this chart reads stopped updating in June 2025 "
-            "and has not moved since. USDA now publishes the detections "
-            "through a Tableau dashboard with no full machine-readable export, "
-            "so there is nothing to point a fetcher at without scraping a "
-            "dashboard session — which is the sort of dependency that "
-            "killed half these pages in the first place. The history stands; "
-            "the recent months are missing and the label says so."),
-        "source": "CDC mirror of USDA APHIS confirmed detections",
+            "This chart read “source stalled” until recently, and "
+            "the reason is worth keeping. It was fed by a CDC mirror that "
+            "still returns a perfectly valid file and stopped being updated in "
+            "June 2025 — nothing failed, the numbers simply stopped "
+            "moving. USDA had put the data behind a Tableau dashboard with no "
+            "obvious download. It turned out the dashboard publishes a second "
+            "hidden view, and asking for that view as CSV returns the whole "
+            "detection table. Thirty-three million birds were missing from "
+            "this chart."),
+        "source": "USDA APHIS confirmed detections",
         "source_url": "https://www.aphis.usda.gov/livestock-poultry-disease/avian/avian-influenza/hpai-detections/commercial-backyard-flocks",
     },
     {

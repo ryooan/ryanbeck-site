@@ -327,14 +327,29 @@ and it is worth checking which you have before writing the series off:
   but the reporting requirement had moved to CDC NHSN, where the same measure
   runs from 2020 to now. The dashboard was dead; the data was not. It is live
   again on `ua7e-t2fy`.
-- **The bird-flu outbreak has not stopped either** — USDA confirmed 38 flocks
-  in the thirty days to late August 2026. What stopped is the CDC mirror this
-  fetcher reads, frozen since June 2025. USDA moved to a Tableau dashboard
-  (`publicdashboards.dl.usda.gov`) whose only machine-readable export is one
-  worksheet of backyard-flock counts by month, not bird totals. Scraping a
-  vizql session to get the rest would be precisely the fragile dependency that
-  killed half these pages, so the series stays frozen and the note says why
-  rather than implying the cull ended.
+- **The bird-flu outbreak had not stopped either, and neither had the data.**
+  The CDC mirror froze in June 2025 while still returning a valid 112 KB file,
+  so nothing failed — the numbers just stopped moving, and 33 million birds
+  went missing from the chart. USDA had moved to a Tableau dashboard with no
+  visible download.
+
+  **How the real export was found, because the technique generalises.** The
+  dashboard page has no data link, its embed is a JS shell whose config
+  container is empty, `vizportal`'s listing API returns 401 anonymously, and
+  guessed view names all 404. What worked was loading the dashboard in a
+  browser and reading the response to its own
+  `POST .../startSession/viewing`, which states:
+
+      "visible_sheets": ["HPAI 2022 Confirmed Detections", "ExportToCsv"]
+
+  A second published view named `ExportToCsv` — the sheet behind the
+  dashboard's Download Data button. Appending `.csv` to any Tableau view URL
+  exports it, so no session and no vizql scraping is needed; the whole problem
+  was not knowing the view's name. Full detection detail, 2,240 rows, current.
+
+  Note the trap next to it: the dashboard's *default* view also exports, but
+  returns only backyard flock counts by month and silently ignores every
+  filter parameter. If you are parsing that, you have the wrong view.
 
 - **Treasury: never narrow the `fields` list.** `debt_catg_desc` is requested
   and never read. Drop it and two "Less Debt Not Subject to Limit" rows that

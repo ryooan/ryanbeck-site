@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-24T14:32:26Z",
+  "generated": "2026-08-24T15:24:17Z",
   "series": {
     "covid-hospitalizations": {
       "fetched": "2026-08-24T03:05:10Z",
@@ -74,12 +74,12 @@
       "status": "live"
     },
     "hpai-depopulations": {
-      "fetched": "2026-08-24T02:41:45Z",
-      "last_date": "2025-06-09",
-      "note": "Birds killed in confirmed commercial and backyard flocks. The CDC mirror has not been updated since this date; the outbreak itself has not stopped.",
-      "rows": 152,
-      "source": "CDC mirror of USDA APHIS confirmed detections",
-      "status": "stale"
+      "fetched": "2026-08-24T15:24:17Z",
+      "last_date": "2026-08-17",
+      "note": "Birds killed in confirmed commercial and backyard flocks, from the full detection export behind the APHIS dashboard.",
+      "rows": 202,
+      "source": "USDA APHIS confirmed detections",
+      "status": "live"
     },
     "refugee-admissions": {
       "fetched": "2026-08-24T04:03:04Z",
