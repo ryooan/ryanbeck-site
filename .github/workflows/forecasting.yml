@@ -1,0 +1,102 @@
+# Refresh the forecasting series and commit the result.
+#
+# Cadence is matched to how often each source actually moves, which is the
+# other half of why the old setup was misleading: several of those workflows
+# ran every ten hours against data that changed weekly or quarterly, so a run
+# succeeding said nothing at all. Treasury publishes daily. FluSight and the
+# bird-flu mirror are weekly. Refugee admissions and Comtrade are monthly. SEC
+# filings are quarterly at best.
+#
+# A data commit is a deploy: pushing to main triggers deploy.yml, which is the
+# whole reason the data lives in the site repo.
+
+name: Forecasting data
+
+on:
+  schedule:
+    - cron: '17 11 * * *'          # daily        - debt limit
+    - cron: '32 12 * * 2'          # Tuesdays     - flu, bird flu
+    - cron: '47 13 3 * *'          # 3rd monthly  - refugees, semiconductors
+    - cron: '5 14 5 1,4,7,10 *'    # quarterly    - SEC revenues
+  workflow_dispatch:
+    inputs:
+      only:
+        description: 'Space-separated fetcher names, or blank for all'
+        required: false
+        default: ''
+
+concurrency:
+  group: forecasting-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install -r tools/forecasting/requirements.txt
+
+      - name: Decide which fetchers to run
+        id: pick
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+          ONLY: ${{ github.event.inputs.only }}
+        run: |
+          if [ -n "$ONLY" ]; then
+            list="$ONLY"
+          else
+            case "$SCHEDULE" in
+              '17 11 * * *')       list="debt_limit" ;;
+              '32 12 * * 2')       list="flusight hpai" ;;
+              '47 13 3 * *')       list="refugees semiconductors" ;;
+              '5 14 5 1,4,7,10 *') list="faamg" ;;
+              *)                   list="debt_limit flusight hpai refugees semiconductors faamg" ;;
+            esac
+          fi
+          echo "list=$list" >> "$GITHUB_OUTPUT"
+          echo "Running: $list"
+
+      - name: Fetch
+        env:
+          COMTRADE_API_KEY: ${{ secrets.COMTRADE_API_KEY }}
+        run: |
+          cd tools/forecasting
+          failed=""
+          for f in ${{ steps.pick.outputs.list }}; do
+            echo "::group::$f"
+            # One dead source must not stop the others from updating.
+            python "fetch_$f.py" || failed="$failed $f"
+            echo "::endgroup::"
+          done
+          python build_page.py
+          if [ -n "$failed" ]; then
+            echo "::warning::fetchers failed:$failed"
+            echo "FAILED=$failed" >> "$GITHUB_ENV"
+          fi
+
+      - name: Commit
+        run: |
+          git config user.name  "forecasting-bot"
+          git config user.email "noreply@ryanbeck.com"
+          git add public/data/forecasting public/forecasting-data.html
+          if git diff --cached --quiet; then
+            echo "No change."
+            exit 0
+          fi
+          git commit -m "Forecasting data: refresh ${{ steps.pick.outputs.list }}"
+          git push
+
+      # Surface a partial failure as a failed run, but only after the sources
+      # that did work have been committed.
+      - name: Report failures
+        if: env.FAILED != ''
+        run: |
+          echo "These fetchers failed:$FAILED"
+          exit 1

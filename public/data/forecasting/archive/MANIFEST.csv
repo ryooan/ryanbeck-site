@@ -1,0 +1,147 @@
+workspace,object,rows,cols,date_span,file,tier
+bls white collar,data_list,37,6,,bls-white-collar/data_list.csv.gz,primary
+CDC Plot Experimentation,combined_dataframe,96460,8,,../rdata-derived/cdc-plot-experimentation/combined_dataframe.csv.gz,derived
+CDC Plot Experimentation,covid_data,68461,5,2020-01-01 .. 2024-01-05,cdc-plot-experimentation/covid_data.csv.gz,primary
+CDC Plot Experimentation,covid_data_daily,68461,7,2020-01-01 .. 2024-01-05,cdc-plot-experimentation/covid_data_daily.csv.gz,primary
+CDC Plot Experimentation,ed_data,9984,5,2023-01-14 .. 2024-01-06,cdc-plot-experimentation/ed_data.csv.gz,primary
+CDC Plot Experimentation,influenza_data,5300,7,2022-02-12 .. 2024-01-06,cdc-plot-experimentation/influenza_data.csv.gz,primary
+CDC Plot Experimentation,influenza_data_daily,5300,4,2022-02-12 .. 2024-01-06,cdc-plot-experimentation/influenza_data_daily.csv.gz,primary
+CDC Plot Experimentation,combined_data,5123,33,,../rdata-derived/cdc-plot-experimentation/combined_data.csv.gz,derived
+CDC Plot Experimentation,joined_data,5123,53,,../rdata-derived/cdc-plot-experimentation/joined_data.csv.gz,derived
+CDC Plot Experimentation,prediction_data,5123,6,,../rdata-derived/cdc-plot-experimentation/prediction_data.csv.gz,derived
+CDC Plot Experimentation,us_covid_data,1258,5,2020-07-27 .. 2024-01-05,cdc-plot-experimentation/us_covid_data.csv.gz,primary
+CDC Plot Experimentation,cumulative_us_covid_data,508,6,2023-10-07 .. 2024-01-05,cdc-plot-experimentation/cumulative_us_covid_data.csv.gz,primary
+CDC Plot Experimentation,filtered_forecasts_timing,329,7,2023-12-15 .. 2024-02-09,../rdata-derived/cdc-plot-experimentation/filtered_forecasts_timing.csv.gz,derived
+CDC Plot Experimentation,filtered_forecasts_rate,312,7,,../rdata-derived/cdc-plot-experimentation/filtered_forecasts_rate.csv.gz,derived
+CDC Plot Experimentation,forecast_full,243,7,2023-12-16 .. 2024-02-24,../rdata-derived/cdc-plot-experimentation/forecast_full.csv.gz,derived
+CDC Plot Experimentation,cumulative_data,204,12,2023-10-07 .. 2023-12-16,cdc-plot-experimentation/cumulative_data.csv.gz,primary
+CDC Plot Experimentation,filtered_forecasts,188,7,,../rdata-derived/cdc-plot-experimentation/filtered_forecasts.csv.gz,derived
+CDC Plot Experimentation,annotate_points,108,6,2020-01-01 .. 2024-01-05,cdc-plot-experimentation/annotate_points.csv.gz,primary
+CDC Plot Experimentation,us_influenza_data,100,4,2022-02-12 .. 2024-01-06,cdc-plot-experimentation/us_influenza_data.csv.gz,primary
+CDC Plot Experimentation,us_covid_data_recent,91,5,2023-10-07 .. 2024-01-05,cdc-plot-experimentation/us_covid_data_recent.csv.gz,primary
+CDC Plot Experimentation,questions_data,87,21,,cdc-plot-experimentation/questions_data.csv.gz,primary
+CDC Plot Experimentation,cumulative_us_influenza_data,84,5,2023-10-07 .. 2024-01-06,cdc-plot-experimentation/cumulative_us_influenza_data.csv.gz,primary
+CDC Plot Experimentation,combined_ensemble_wide,65,11,,cdc-plot-experimentation/combined_ensemble_wide.csv.gz,primary
+CDC Plot Experimentation,cumulative_us_rsv_data,63,9,2023-10-07 .. 2023-12-23,cdc-plot-experimentation/cumulative_us_rsv_data.csv.gz,primary
+CDC Plot Experimentation,first_last_dates,54,4,2020-01-01 .. 2021-08-23,cdc-plot-experimentation/first_last_dates.csv.gz,primary
+CDC Plot Experimentation,resp_data,52,11,2023-10-07 .. 2023-12-30,cdc-plot-experimentation/resp_data.csv.gz,primary
+CDC Plot Experimentation,us_resp_data_recent,44,11,2023-10-07 .. 2023-12-16,cdc-plot-experimentation/us_resp_data_recent.csv.gz,primary
+CDC Plot Experimentation,combined_ensemble_history,35,13,2023-11-25 .. 2024-01-13,cdc-plot-experimentation/combined_ensemble_history.csv.gz,primary
+CDC Plot Experimentation,combined_ensemble,24,12,2023-11-25 .. 2024-01-13,cdc-plot-experimentation/combined_ensemble.csv.gz,primary
+CDC Plot Experimentation,past_forecast_plot_data,24,16,2023-12-05 .. 2024-01-09,cdc-plot-experimentation/past_forecast_plot_data.csv.gz,primary
+CDC Plot Experimentation,past_forecasts_plot_rate,24,8,2023-12-05 .. 2024-01-09,cdc-plot-experimentation/past_forecasts_plot_rate.csv.gz,primary
+CDC Plot Experimentation,past_forecasts_plot_timing,24,8,2023-12-15 .. 2024-02-01,cdc-plot-experimentation/past_forecasts_plot_timing.csv.gz,primary
+CDC Plot Experimentation,past_forecasts_rate,24,8,2023-12-05 .. 2024-01-09,cdc-plot-experimentation/past_forecasts_rate.csv.gz,primary
+CDC Plot Experimentation,past_forecasts_timing,24,8,2023-12-15 .. 2024-02-01,cdc-plot-experimentation/past_forecasts_timing.csv.gz,primary
+CDC Plot Experimentation,past_forecasts_combined,21,8,2023-12-12 .. 2024-01-09,cdc-plot-experimentation/past_forecasts_combined.csv.gz,primary
+CDC Plot Experimentation,weekly_forecast,21,8,2023-11-27 .. 2024-01-08,cdc-plot-experimentation/weekly_forecast.csv.gz,primary
+CDC Plots,covid_data,66947,5,2020-01-01 .. 2023-12-08,cdc-plots/covid_data.csv.gz,primary
+CDC Plots,covid_data_daily,66947,7,2020-01-01 .. 2023-12-08,cdc-plots/covid_data_daily.csv.gz,primary
+CDC Plots,influenza_data,5141,7,2022-02-12 .. 2023-12-16,cdc-plots/influenza_data.csv.gz,primary
+CDC Plots,influenza_data_daily,5141,4,2022-02-12 .. 2023-12-16,cdc-plots/influenza_data_daily.csv.gz,primary
+CDC Plots,combined_data,1930,38,2023-12-02 .. 2024-09-29,../rdata-derived/cdc-plots/combined_data.csv.gz,derived
+CDC Plots,prediction_data,1930,6,,../rdata-derived/cdc-plots/prediction_data.csv.gz,derived
+CDC Plots,us_covid_data,1230,5,2020-07-27 .. 2023-12-08,cdc-plots/us_covid_data.csv.gz,primary
+CDC Plots,joined_data,968,57,2023-12-15 .. 2024-07-20,../rdata-derived/cdc-plots/joined_data.csv.gz,derived
+CDC Plots,forecasts_up_to_one_week_ago,689,57,2023-12-15 .. 2024-02-09,../rdata-derived/cdc-plots/forecasts_up_to_one_week_ago.csv.gz,derived
+CDC Plots,us_covid_data_recent,155,5,2023-07-07 .. 2023-12-08,cdc-plots/us_covid_data_recent.csv.gz,primary
+CDC Plots,annotate_points,108,6,2020-01-01 .. 2023-12-08,cdc-plots/annotate_points.csv.gz,primary
+CDC Plots,filtered_forecasts_rate,100,7,,../rdata-derived/cdc-plots/filtered_forecasts_rate.csv.gz,derived
+CDC Plots,filtered_forecasts_timing,97,7,2023-12-15 .. 2024-02-09,../rdata-derived/cdc-plots/filtered_forecasts_timing.csv.gz,derived
+CDC Plots,us_influenza_data,97,4,2022-02-12 .. 2023-12-16,cdc-plots/us_influenza_data.csv.gz,primary
+CDC Plots,questions_data,87,20,,cdc-plots/questions_data.csv.gz,primary
+CDC Plots,filtered_forecasts,64,7,,../rdata-derived/cdc-plots/filtered_forecasts.csv.gz,derived
+CDC Plots,first_last_dates,54,4,2020-01-01 .. 2021-08-23,cdc-plots/first_last_dates.csv.gz,primary
+CDC Plots,resp_data,44,11,2023-10-07 .. 2023-12-16,cdc-plots/resp_data.csv.gz,primary
+CDC Plots,combined_forecasts,40,7,,cdc-plots/combined_forecasts.csv.gz,primary
+CDC Plots,latest_forecasts,40,8,2023-12-08 .. 2023-12-23,cdc-plots/latest_forecasts.csv.gz,primary
+CDC Plots,us_resp_data_recent_filtered,38,11,2023-10-07 .. 2023-12-09,cdc-plots/us_resp_data_recent_filtered.csv.gz,primary
+CDC Plots,us_resp_data_recent,36,11,2023-10-07 .. 2023-12-02,cdc-plots/us_resp_data_recent.csv.gz,primary
+CDC Plots,week_old_forecasts,29,10,2023-12-08 .. 2023-12-16,cdc-plots/week_old_forecasts.csv.gz,primary
+CDC Plots,us_influenza_data_recent,24,4,2023-07-08 .. 2023-12-16,cdc-plots/us_influenza_data_recent.csv.gz,primary
+Expert Elicitation Plots,data_long,96,5,,expert-elicitation-plots/data_long.csv.gz,primary
+Expert Elicitation Plots,options_data,72,5,,expert-elicitation-plots/options_data.csv.gz,primary
+Expert Elicitation Plots,confidence_data,48,3,,expert-elicitation-plots/confidence_data.csv.gz,primary
+Expert Elicitation Plots,subset_data_long,42,5,,expert-elicitation-plots/subset_data_long.csv.gz,primary
+Expert Elicitation Plots,options_data_wide,24,11,,expert-elicitation-plots/options_data_wide.csv.gz,primary
+Expert Elicitation Plots,probability_data,22,5,,expert-elicitation-plots/probability_data.csv.gz,primary
+Expert Elicitation Plots,wrapped_question,22,5,,expert-elicitation-plots/wrapped_question.csv.gz,primary
+Expert Elicitation Plots,data,20,13,,expert-elicitation-plots/data.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,covid_data,68839,5,2020-01-01 .. 2024-01-12,metac-cdc-data-animations-animation-scripts-r/covid_data.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,covid_data_daily,68839,7,2020-01-01 .. 2024-01-12,metac-cdc-data-animations-animation-scripts-r/covid_data_daily.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,combined_data,5891,39,2023-12-02 .. 2024-12-12,../rdata-derived/metac-cdc-data-animations-animation-scripts-r/combined_data.csv.gz,derived
+metac-cdc-data/Animations/Animation_Scripts/R,joined_data,5891,59,2023-12-02 .. 2024-12-12,../rdata-derived/metac-cdc-data-animations-animation-scripts-r/joined_data.csv.gz,derived
+metac-cdc-data/Animations/Animation_Scripts/R,prediction_data,5891,6,,../rdata-derived/metac-cdc-data-animations-animation-scripts-r/prediction_data.csv.gz,derived
+metac-cdc-data/Animations/Animation_Scripts/R,influenza_data,5353,7,2022-02-12 .. 2024-01-13,metac-cdc-data-animations-animation-scripts-r/influenza_data.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,influenza_data_daily,5353,4,2022-02-12 .. 2024-01-13,metac-cdc-data-animations-animation-scripts-r/influenza_data_daily.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,us_covid_data,1265,5,2020-07-27 .. 2024-01-12,metac-cdc-data-animations-animation-scripts-r/us_covid_data.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,cumulative_us_covid_data,609,6,2023-10-07 .. 2024-01-12,metac-cdc-data-animations-animation-scripts-r/cumulative_us_covid_data.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,filtered_forecasts_timing,371,7,2023-12-15 .. 2024-02-09,../rdata-derived/metac-cdc-data-animations-animation-scripts-r/filtered_forecasts_timing.csv.gz,derived
+metac-cdc-data/Animations/Animation_Scripts/R,filtered_forecasts_rate,361,7,,../rdata-derived/metac-cdc-data-animations-animation-scripts-r/filtered_forecasts_rate.csv.gz,derived
+metac-cdc-data/Animations/Animation_Scripts/R,cumulative_data,252,12,2023-10-07 .. 2023-12-23,metac-cdc-data-animations-animation-scripts-r/cumulative_data.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,filtered_forecasts,222,8,,../rdata-derived/metac-cdc-data-animations-animation-scripts-r/filtered_forecasts.csv.gz,derived
+metac-cdc-data/Animations/Animation_Scripts/R,forecast_full,222,7,2023-12-16 .. 2024-02-24,../rdata-derived/metac-cdc-data-animations-animation-scripts-r/forecast_full.csv.gz,derived
+metac-cdc-data/Animations/Animation_Scripts/R,combined_ensemble,184,11,2023-12-03 .. 2024-02-12,metac-cdc-data-animations-animation-scripts-r/combined_ensemble.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,annotate_points,108,6,2020-01-01 .. 2024-01-12,metac-cdc-data-animations-animation-scripts-r/annotate_points.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,us_influenza_data,101,4,2022-02-12 .. 2024-01-13,metac-cdc-data-animations-animation-scripts-r/us_influenza_data.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,cumulative_us_influenza_data,99,5,2023-10-07 .. 2024-01-13,metac-cdc-data-animations-animation-scripts-r/cumulative_us_influenza_data.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,us_covid_data_recent,98,5,2023-10-07 .. 2024-01-12,metac-cdc-data-animations-animation-scripts-r/us_covid_data_recent.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,questions_data,87,21,,metac-cdc-data-animations-animation-scripts-r/questions_data.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,cumulative_us_rsv_data,63,9,2023-10-07 .. 2023-12-23,metac-cdc-data-animations-animation-scripts-r/cumulative_us_rsv_data.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,resp_data,60,11,2023-10-07 .. 2024-01-13,metac-cdc-data-animations-animation-scripts-r/resp_data.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,first_last_dates,54,4,2020-01-01 .. 2021-08-23,metac-cdc-data-animations-animation-scripts-r/first_last_dates.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,us_resp_data_recent,52,11,2023-10-07 .. 2023-12-30,metac-cdc-data-animations-animation-scripts-r/us_resp_data_recent.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,combined_ensemble_history,35,9,2023-11-27 .. 2024-01-15,metac-cdc-data-animations-animation-scripts-r/combined_ensemble_history.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,past_forecast_plot_data,28,16,2023-12-05 .. 2024-01-16,metac-cdc-data-animations-animation-scripts-r/past_forecast_plot_data.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,past_forecasts_plot_rate,28,8,2023-12-05 .. 2024-01-16,metac-cdc-data-animations-animation-scripts-r/past_forecasts_plot_rate.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,past_forecasts_plot_timing,28,8,2023-12-15 .. 2024-02-01,metac-cdc-data-animations-animation-scripts-r/past_forecasts_plot_timing.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,past_forecasts_rate,28,8,2023-12-05 .. 2024-01-16,metac-cdc-data-animations-animation-scripts-r/past_forecasts_rate.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,past_forecasts_timing,28,8,2023-12-15 .. 2024-02-01,metac-cdc-data-animations-animation-scripts-r/past_forecasts_timing.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,weekly_forecast,24,8,2023-11-27 .. 2024-01-15,metac-cdc-data-animations-animation-scripts-r/weekly_forecast.csv.gz,primary
+metac-cdc-data/Animations/Animation_Scripts/R,metaculus_latest_forecasts,21,9,2023-12-16 .. 2024-02-24,metac-cdc-data-animations-animation-scripts-r/metaculus_latest_forecasts.csv.gz,primary
+One Billion Vaccines,eu_vax,231648,18,,one-billion-vaccines/eu_vax.csv.gz,primary
+One Billion Vaccines,eu_vax_sum,231648,6,,one-billion-vaccines/eu_vax_sum.csv.gz,primary
+One Billion Vaccines,eu_vax_all,2447,4,,one-billion-vaccines/eu_vax_all.csv.gz,primary
+One Billion Vaccines,eu_vax_cumulative,2447,6,,one-billion-vaccines/eu_vax_cumulative.csv.gz,primary
+One Billion Vaccines,eu_total_vax,309,4,,one-billion-vaccines/eu_total_vax.csv.gz,primary
+One Billion Vaccines,eu_total_vax_any_dose,309,8,,one-billion-vaccines/eu_total_vax_any_dose.csv.gz,primary
+Refugee Data,debtLimitPrelim,35308,4,,refugee-data/debtLimitPrelim.csv.gz,primary
+Refugee Data,debtLimitLong,9158,3,2005-10-03 .. 2023-12-21,refugee-data/debtLimitLong.csv.gz,primary
+Refugee Data,debtPages,5308,4,,refugee-data/debtPages.csv.gz,primary
+Refugee Data,influenza_data,5141,7,2022-02-12 .. 2023-12-16,refugee-data/influenza_data.csv.gz,primary
+Refugee Data,debtLimit,4579,9,2005-10-03 .. 2023-12-21,refugee-data/debtLimit.csv.gz,primary
+Refugee Data,debtLimitForTable,4579,3,2005-10-03 .. 2023-12-21,refugee-data/debtLimitForTable.csv.gz,primary
+Refugee Data,find_suspension,4579,3,2005-10-03 .. 2023-12-21,refugee-data/find_suspension.csv.gz,primary
+Refugee Data,influenza_data_daily,255,8,2023-11-18 .. 2023-12-16,refugee-data/influenza_data_daily.csv.gz,primary
+Refugee Data,annotate_points,102,7,2023-11-18 .. 2023-12-16,refugee-data/annotate_points.csv.gz,primary
+Refugee Data,state_data,97,4,2022-02-12 .. 2023-12-16,refugee-data/state_data.csv.gz,primary
+Refugee Data,us_influenza_data,97,4,2022-02-12 .. 2023-12-16,refugee-data/us_influenza_data.csv.gz,primary
+Refugee Data,us_influenza_table,97,2,2022-02-12 .. 2023-12-16,refugee-data/us_influenza_table.csv.gz,primary
+Refugee Data,headers_test,69,12,,refugee-data/headers_test.csv.gz,primary
+Refugee Data,headers,63,12,,refugee-data/headers.csv.gz,primary
+Refugee Data,data,53,11,,refugee-data/data.csv.gz,primary
+Refugee Data,influenza_data_reference,53,3,,refugee-data/influenza_data_reference.csv.gz,primary
+Refugee Data,us_influenza_data_recent,53,4,2022-12-17 .. 2023-12-16,refugee-data/us_influenza_data_recent.csv.gz,primary
+Refugee Data,first_last_dates,51,4,2023-11-18 .. 2023-11-18,refugee-data/first_last_dates.csv.gz,primary
+Refugee Data,subset_data,49,2,,refugee-data/subset_data.csv.gz,primary
+Refugee Data,monthly_totals,26,3,2021-10-01 .. 2023-11-01,refugee-data/monthly_totals.csv.gz,primary
+Virginia Hospitalizations,df,66966,135,2020-01-01 .. 2023-07-29,virginia-hospitalizations/df.csv.gz,primary
+Virginia Hospitalizations,data_by_date,1306,7,2020-01-01 .. 2023-07-29,virginia-hospitalizations/data_by_date.csv.gz,primary
+Virginia Hospitalizations,data_by_date_va,1245,7,2020-03-02 .. 2023-07-29,virginia-hospitalizations/data_by_date_va.csv.gz,primary
+Virginia Hospitalizations,df_va,1245,135,2020-03-02 .. 2023-07-29,virginia-hospitalizations/df_va.csv.gz,primary
+Weekly COVID,covid_data,65815,5,2020-01-01 .. 2023-11-17,weekly-covid/covid_data.csv.gz,primary
+Weekly COVID,covid_data_daily,1581,9,2023-10-18 .. 2023-11-17,weekly-covid/covid_data_daily.csv.gz,primary
+Weekly COVID,us_covid_data,1209,5,2020-07-27 .. 2023-11-17,weekly-covid/us_covid_data.csv.gz,primary
+Weekly COVID,us_covid_table,1209,3,2020-07-27 .. 2023-11-17,weekly-covid/us_covid_table.csv.gz,primary
+Weekly COVID,us_covid_data_recent,366,5,2022-11-17 .. 2023-11-17,weekly-covid/us_covid_data_recent.csv.gz,primary
+Weekly COVID,annotate_points,102,7,2023-10-18 .. 2023-11-17,weekly-covid/annotate_points.csv.gz,primary
+Weekly COVID,covid_data_reference,54,3,,weekly-covid/covid_data_reference.csv.gz,primary
+Weekly COVID,first_last_dates,51,4,2023-10-18 .. 2023-10-18,weekly-covid/first_last_dates.csv.gz,primary
+Weekly Flu,influenza_data,4982,7,2022-02-12 .. 2023-11-25,weekly-flu/influenza_data.csv.gz,primary
+Weekly Flu,influenza_data_daily,255,8,2023-10-28 .. 2023-11-25,weekly-flu/influenza_data_daily.csv.gz,primary
+Weekly Flu,annotate_points,102,7,2023-10-28 .. 2023-11-25,weekly-flu/annotate_points.csv.gz,primary
+Weekly Flu,us_influenza_data,94,4,2022-02-12 .. 2023-11-25,weekly-flu/us_influenza_data.csv.gz,primary
+Weekly Flu,us_influenza_table,94,2,2022-02-12 .. 2023-11-25,weekly-flu/us_influenza_table.csv.gz,primary
+Weekly Flu,influenza_data_reference,53,3,,weekly-flu/influenza_data_reference.csv.gz,primary
+Weekly Flu,us_influenza_data_recent,53,4,2022-11-26 .. 2023-11-25,weekly-flu/us_influenza_data_recent.csv.gz,primary
+Weekly Flu,first_last_dates,51,4,2023-10-28 .. 2023-10-28,weekly-flu/first_last_dates.csv.gz,primary

@@ -1,0 +1,173 @@
+/* Plot — chart styling for the forecasting page.
+   Paired with assets/js/plot.js. Everything here inherits the site tokens
+   from site.css; nothing defines its own colour except through them. */
+
+.plot{
+  position:relative;
+  margin:18px 0 4px;
+}
+
+.plot-canvas{
+  position:relative;
+  width:100%;
+  border:1px solid var(--rule);
+  border-radius:6px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,0) 42%),
+    var(--parchment);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
+  cursor:crosshair;
+  touch-action:pan-y;              /* let the page scroll over the chart */
+}
+.plot-canvas:focus-visible{
+  outline:2px solid var(--ember);
+  outline-offset:2px;
+}
+.plot-canvas svg{display:block;width:100%;height:auto}
+
+.plot .plot-axis{
+  font:500 11px/1 var(--sans);
+  letter-spacing:.01em;
+}
+
+/* Reserve the height before the fetch lands so the page does not jolt when
+   fourteen charts arrive at different moments. */
+.plot.is-loading .plot-canvas,
+.plot-mount:empty{
+  min-height:230px;
+}
+.plot-mount:empty{
+  display:block;
+  border:1px solid var(--rule);
+  border-radius:6px;
+  background:var(--parchment);
+  opacity:.55;
+}
+
+/* ---- readout ---- */
+
+.plot-tip{
+  position:absolute;
+  top:0;
+  z-index:3;
+  pointer-events:none;
+  min-width:130px;
+  padding:8px 10px;
+  border:1px solid var(--parchment-edge);
+  border-radius:5px;
+  background:rgba(244,234,217,.97);
+  box-shadow:0 6px 18px rgba(36,28,20,.16);
+  color:var(--ink);
+  font:400 12.5px/1.5 var(--sans);
+  white-space:nowrap;
+}
+.plot-tip[hidden]{display:none}
+.plot-tip b{font-weight:650}
+.plot-tip i{color:var(--ink-faint);font-style:normal}
+.plot-tip .k{
+  display:inline-block;
+  width:9px;height:9px;
+  margin-right:6px;
+  border-radius:2px;
+  background:var(--c);
+  vertical-align:baseline;
+}
+
+/* ---- legend ---- */
+
+.plot-legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px 18px;
+  margin:10px 0 0;
+  padding:0;
+  list-style:none;
+  color:var(--ink-soft);
+  font:400 13px/1.4 var(--sans);
+}
+.plot-legend li{display:flex;align-items:center;gap:7px}
+.plot-swatch{
+  width:16px;height:3px;
+  border-radius:2px;
+  background:var(--c,var(--ember));
+}
+.plot-swatch.is-dash{
+  background:repeating-linear-gradient(90deg,
+    var(--c,var(--ink)) 0 5px,transparent 5px 9px);
+}
+.plot-swatch.is-band{
+  width:14px;height:12px;
+  border-radius:2px;
+  background:rgba(36,28,20,.12);
+}
+
+.plot-error{
+  margin:0;
+  padding:16px 18px;
+  border:1px solid var(--parchment-edge);
+  border-left:3px solid var(--ember);
+  border-radius:5px;
+  background:var(--parchment-2);
+  color:var(--ink-soft);
+  font:400 14px/1.6 var(--sans);
+}
+
+/* ---- the section a chart lives in ---- */
+
+.series{
+  padding:26px 0 30px;
+  border-top:1px solid var(--rule);
+}
+.series:first-of-type{border-top:0}
+.series h2{
+  margin:0 0 4px;
+  font:600 clamp(20px,2.4vw,26px)/1.2 var(--serif);
+  color:var(--ink);
+}
+.series .series-note{
+  max-width:66ch;
+  margin:8px 0 0;
+  color:var(--ink-soft);
+  font:400 15.5px/1.65 var(--sans);
+}
+.series .series-source{
+  margin:10px 0 0;
+  color:var(--ink-faint);
+  font:400 13px/1.5 var(--sans);
+}
+.series .series-source a{color:inherit}
+
+/* Status chip. The colour carries meaning, so each state also carries a word
+   and a dot shape — this line exists because COVIDWeekly showed a green tick
+   for two years while publishing data that had stopped. */
+.status{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin:0 0 2px;
+  padding:3px 10px 3px 8px;
+  border:1px solid var(--parchment-edge);
+  border-radius:999px;
+  background:var(--parchment-2);
+  color:var(--ink-soft);
+  font:500 12px/1.5 var(--sans);
+  letter-spacing:.02em;
+  vertical-align:middle;
+}
+.status::before{
+  content:"";
+  width:8px;height:8px;
+  border-radius:50%;
+  background:var(--ink-faint);
+}
+.status.is-live::before{background:#3f7d4e}
+.status.is-historical::before{
+  background:transparent;
+  border:2px solid var(--ink-faint);
+  width:9px;height:9px;
+}
+.status.is-stale::before{background:var(--ember)}
+
+@media (prefers-reduced-motion:reduce){
+  .plot-canvas{transition:none}
+}

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Forecasting Data &middot; Ryan Beck</title>
+<meta name="description" content="Live data series Ryan Beck maintains for forecasting: the debt limit, refugee admissions, big-tech revenue, flu hospitalisations, semiconductor trade and the bird-flu outbreak.">
+<link rel="canonical" href="https://ryanbeck.com/forecasting-data">
+<meta name="theme-color" content="#f4ead9">
+
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ryan Beck">
+<meta property="og:title" content="Forecasting Data &middot; Ryan Beck">
+<meta property="og:description" content="Live data series maintained for forecasting, each with an interactive chart and the date its data actually ends.">
+<meta property="og:url" content="https://ryanbeck.com/forecasting-data">
+<meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ryanbeck111">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/plot.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="projects.html">Projects</a>
+      <a href="writing.html">Fiction</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="wrap page-head">
+    <span class="runic">Through the first door</span>
+    <h1>Forecasting data</h1>
+    <p class="lede">Numbers I kept reaching for while forecasting, collected so I
+    would stop re-downloading them by hand. Each series below refreshes itself on a
+    schedule, and each one states the date its data actually ends &mdash; which is
+    not always the date it last ran.</p>
+    <p class="lede" style="margin-top:14px">That distinction is the point. A
+    scheduled job reporting success tells you it fetched something, not that anyone
+    upstream is still publishing. One of these pages ran green every ten hours for
+    two years while showing a series that had stopped; the status line on each
+    chart now comes from the data itself, so it cannot make that claim.</p>
+    <p class="lede" style="margin-top:14px"><a href="projects.html">&larr; All projects</a></p>
+  </section>
+
+  <section class="wrap">
+
+  <section class="series" id="debt-limit">
+    <span class="status is-live">Live &middot; data to 20 August 2026</span>
+    <h2>US debt limit</h2>
+    <p class="series-note">Federal debt subject to the statutory ceiling, from Treasury's Daily Treasury Statement, against the ceiling itself. The shaded stretches are the eight periods when Congress suspended the limit rather than raising it — during a suspension there is no number to plot, so the ceiling line stops.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd-millions&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;debt_subject_to_limit&quot;,&quot;label&quot;:&quot;Debt subject to limit&quot;},{&quot;col&quot;:&quot;statutory_limit&quot;,&quot;label&quot;:&quot;Statutory ceiling&quot;,&quot;dash&quot;:true}],&quot;band&quot;:{&quot;col&quot;:&quot;suspended&quot;,&quot;label&quot;:&quot;Limit suspended&quot;},&quot;csv&quot;:&quot;/data/forecasting/debt-limit.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US debt limit&quot;}'></div>
+    <p class="series-source">5,246 rows, latest up to date &middot;
+      source: <a href="https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/debt-subject-to-limit" rel="noopener">Treasury Fiscal Data, Daily Treasury Statement</a> &middot;
+      download: <a href="/data/forecasting/debt-limit.csv">debt-limit.csv</a></p>
+  </section>
+
+  <section class="series" id="refugee-admissions">
+    <span class="status is-live">Live &middot; data to 1 July 2026</span>
+    <h2>US refugee admissions</h2>
+    <p class="series-note">People admitted to the United States as refugees each month, from the State Department's Refugee Processing Center. Fiscal years run October to September; the annual ceiling is set by presidential determination and is a cap, not a target.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Arrivals in month&quot;}],&quot;csv&quot;:&quot;/data/forecasting/refugee-admissions.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US refugee admissions&quot;}'></div>
+    <p class="series-source">310 rows, latest 53 days ago &middot;
+      source: <a href="https://www.wrapsnet.org/admissions-and-arrivals/" rel="noopener">State Department Refugee Processing Center</a> &middot;
+      download: <a href="/data/forecasting/refugee-admissions.csv">refugee-admissions.csv</a> &middot; <a href="/data/forecasting/refugee-admissions-annual.csv">refugee-admissions-annual.csv</a></p>
+  </section>
+
+  <section class="series" id="faamg-revenues">
+    <span class="status is-live">Live &middot; data to 1 January 2025</span>
+    <h2>Big-tech combined revenue</h2>
+    <p class="series-note">Annual revenue of Alphabet, Amazon, Apple, Meta and Microsoft, read straight out of their SEC filings. Billions of dollars. The five do not share a fiscal calendar — Apple's year ends in September and Microsoft's in June — so the combined line is blank for any year where they have not all filed yet.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd-billions&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;combined&quot;,&quot;label&quot;:&quot;All five combined&quot;},{&quot;col&quot;:&quot;amazon&quot;,&quot;label&quot;:&quot;Amazon&quot;},{&quot;col&quot;:&quot;apple&quot;,&quot;label&quot;:&quot;Apple&quot;},{&quot;col&quot;:&quot;alphabet&quot;,&quot;label&quot;:&quot;Alphabet&quot;}],&quot;csv&quot;:&quot;/data/forecasting/faamg-revenues.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Big-tech combined revenue&quot;}'></div>
+    <p class="series-source">20 rows, latest about 1.6 years ago &middot;
+      source: <a href="https://www.sec.gov/edgar/sec-api-documentation" rel="noopener">SEC XBRL company facts</a> &middot;
+      download: <a href="/data/forecasting/faamg-revenues.csv">faamg-revenues.csv</a></p>
+  </section>
+
+  <section class="series" id="flu-hospitalizations">
+    <span class="status is-live">Live &middot; data to 4 July 2026</span>
+    <h2>US influenza hospitalisations</h2>
+    <p class="series-note">Weekly hospital admissions with a confirmed influenza diagnosis, from the CDC's FluSight forecasting hub. Per-state figures are in the companion file.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Weekly admissions&quot;}],&quot;csv&quot;:&quot;/data/forecasting/flu-hospitalizations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US influenza hospitalisations&quot;}'></div>
+    <p class="series-source">231 rows, latest 50 days ago &middot;
+      source: <a href="https://github.com/cdcepi/FluSight-forecast-hub" rel="noopener">CDC FluSight forecast hub</a> &middot;
+      download: <a href="/data/forecasting/flu-hospitalizations.csv">flu-hospitalizations.csv</a> &middot; <a href="/data/forecasting/flu-hospitalizations-states.csv">flu-hospitalizations-states.csv</a></p>
+  </section>
+
+  <section class="series" id="semiconductors-us-exports-china">
+    <span class="status is-live">Live &middot; data to 1 June 2026</span>
+    <h2>US semiconductor exports to China</h2>
+    <p class="series-note">Monthly US exports to China of semiconductors and of the equipment used to make them, from UN Comtrade. This one was dead for three years: the old Comtrade endpoint was retired and the code that built the page had been deleted from the repo. The code was recovered from git history and the series now runs on the current API.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;chips&quot;,&quot;label&quot;:&quot;Chips (HS 8542)&quot;},{&quot;col&quot;:&quot;equipment&quot;,&quot;label&quot;:&quot;Manufacturing equipment&quot;}],&quot;csv&quot;:&quot;/data/forecasting/semiconductors-us-exports-china.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US semiconductor exports to China&quot;}'></div>
+    <p class="series-source">150 rows, latest about 3 months ago &middot;
+      source: <a href="https://comtradeplus.un.org/" rel="noopener">UN Comtrade</a> &middot;
+      download: <a href="/data/forecasting/semiconductors-us-exports-china.csv">semiconductors-us-exports-china.csv</a></p>
+  </section>
+
+  <section class="series" id="semiconductors-china-imports">
+    <span class="status is-live">Live &middot; data to 1 January 2024</span>
+    <h2>China&#x27;s semiconductor imports</h2>
+    <p class="series-note">What China buys from the whole world, annually — the denominator for the export series above.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;chips&quot;,&quot;label&quot;:&quot;Chips (HS 8542)&quot;},{&quot;col&quot;:&quot;equipment&quot;,&quot;label&quot;:&quot;Manufacturing equipment&quot;}],&quot;csv&quot;:&quot;/data/forecasting/semiconductors-china-imports.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;China&#x27;s semiconductor imports&quot;}'></div>
+    <p class="series-source">11 rows, latest about 2.6 years ago &middot;
+      source: <a href="https://comtradeplus.un.org/" rel="noopener">UN Comtrade</a> &middot;
+      download: <a href="/data/forecasting/semiconductors-china-imports.csv">semiconductors-china-imports.csv</a></p>
+  </section>
+
+  <section class="series" id="hpai-depopulations">
+    <span class="status is-stale">Source stalled &middot; data to 9 June 2025</span>
+    <h2>Birds killed in the bird-flu outbreak</h2>
+    <p class="series-note">Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak. Weekly counts are spiky because a single commercial layer flock can be several million birds on its own, so the running total is the clearer line.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;cumulative&quot;,&quot;label&quot;:&quot;Running total&quot;},{&quot;col&quot;:&quot;birds&quot;,&quot;label&quot;:&quot;Killed that week&quot;}],&quot;csv&quot;:&quot;/data/forecasting/hpai-depopulations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Birds killed in the bird-flu outbreak&quot;}'></div>
+    <p class="series-source">152 rows, latest about 1.2 years ago &middot;
+      source: <a href="https://www.cdc.gov/bird-flu/situation-summary/data-map-commercial.html" rel="noopener">CDC mirror of USDA APHIS confirmed detections</a> &middot;
+      download: <a href="/data/forecasting/hpai-depopulations.csv">hpai-depopulations.csv</a></p>
+  </section>
+
+  </section>
+
+  <section class="wrap"><hr class="rule">
+    <h2>The archive</h2>
+    <p class="lede">Several of these series outlived the places they came from.
+    Where a source has gone for good the history is kept here rather than lost with
+    it &mdash; 124 files of it, pulled out of old R session files that were, for a
+    few of these, the only surviving copy.</p>
+    <p class="lede" style="margin-top:14px"><a href="/data/forecasting/archive/MANIFEST.csv">Browse the archive manifest</a>
+    &mdash; every file with its row count and date range.</p>
+  </section>
+
+  <section class="wrap"><hr class="rule">
+    <h2>Want the source?</h2>
+    <p class="lede">The fetchers are small Python scripts and the charts are one
+    dependency-free file. Everything is public &mdash; fork it, or tell me what I
+    got wrong.</p>
+    <div class="btn-row">
+      <a class="btn" href="https://github.com/" rel="me">GitHub</a>
+      <a class="btn ghost" href="mailto:ryanbeckauthor@gmail.com">Get in touch</a>
+    </div>
+  </section>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <span>&copy; 2026 Ryan Beck</span>
+    <span><a href="index.html">&larr; back to the hall</a></span>
+    <span><a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a></span>
+  </div>
+</footer>
+<script src="assets/js/nav.js" defer></script>
+<script src="assets/js/plot.js" defer></script>
+</body>
+</html>

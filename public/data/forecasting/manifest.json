@@ -1,0 +1,61 @@
+{
+  "generated": "2026-08-24T02:44:19Z",
+  "series": {
+    "debt-limit": {
+      "fetched": "2026-08-24T02:35:43Z",
+      "last_date": "2026-08-20",
+      "note": "Millions of dollars. Ceiling is blank while suspended.",
+      "rows": 5246,
+      "source": "Treasury Fiscal Data - Daily Treasury Statement",
+      "status": "live"
+    },
+    "faamg-revenues": {
+      "fetched": "2026-08-24T02:42:35Z",
+      "last_date": "2025-01-01",
+      "note": "Billions of US dollars, by each company's own fiscal year. Combined is blank for years where not all five have filed.",
+      "rows": 20,
+      "source": "SEC XBRL company facts",
+      "status": "live"
+    },
+    "flu-hospitalizations": {
+      "fetched": "2026-08-24T02:41:45Z",
+      "last_date": "2026-07-04",
+      "note": "Weekly hospital admissions with a confirmed influenza diagnosis.",
+      "rows": 231,
+      "source": "CDC FluSight forecast hub",
+      "status": "live"
+    },
+    "hpai-depopulations": {
+      "fetched": "2026-08-24T02:41:45Z",
+      "last_date": "2025-06-09",
+      "note": "Birds killed in confirmed commercial and backyard flocks. The CDC mirror has not been updated since this date; the outbreak itself has not stopped.",
+      "rows": 152,
+      "source": "CDC mirror of USDA APHIS confirmed detections",
+      "status": "stale"
+    },
+    "refugee-admissions": {
+      "fetched": "2026-08-24T02:44:19Z",
+      "last_date": "2026-07-01",
+      "note": "Monthly arrivals. Fiscal years run October-September; the annual file carries the presidential ceiling.",
+      "rows": 310,
+      "source": "State Dept Refugee Processing Center",
+      "status": "live"
+    },
+    "semiconductors-china-imports": {
+      "fetched": "2026-08-24T02:40:02Z",
+      "last_date": "2024-01-01",
+      "note": "US dollars. Chips are HS 8542; equipment is HS 8486, 903082, 903141, 854311 and 901041, summed.",
+      "rows": 11,
+      "source": "UN Comtrade",
+      "status": "live"
+    },
+    "semiconductors-us-exports-china": {
+      "fetched": "2026-08-24T02:40:02Z",
+      "last_date": "2026-06-01",
+      "note": "US dollars. Chips are HS 8542; equipment is HS 8486, 903082, 903141, 854311 and 901041, summed.",
+      "rows": 150,
+      "source": "UN Comtrade",
+      "status": "live"
+    }
+  }
+}
