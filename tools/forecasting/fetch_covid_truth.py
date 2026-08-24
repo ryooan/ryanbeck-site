@@ -1,4 +1,16 @@
-"""Weekly US COVID hospital admissions -- the COVIDWeekly series.
+"""Weekly US COVID hospital admissions as the *archived* reichlab hub had them.
+
+**Superseded by fetch_covid_admissions.py, and kept anyway.** The page charts
+the CDC NHSN series, which is live and covers everything this one did. This
+fetcher is retained because the two do not agree, and the difference is
+methodological rather than a mistake: across 193 overlapping full weeks NHSN
+runs about 4% higher at the median and up to 17% higher in 2020, since the two
+programmes count admissions under different inclusion criteria.
+
+Anyone comparing the new chart against the old dashboard's numbers will see
+that gap. This file is the record of what the old numbers actually were, so
+the comparison can be made rather than argued about. It writes
+`covid-weekly-admissions-reichlab.csv` and is not charted.
 
 Source: reichlab/covid19-forecast-hub, `data-truth/truth-Incident
 Hospitalizations.csv`.
@@ -68,14 +80,15 @@ def run():
     if len(out) > 1:
         out = out[:-1]
 
-    write_csv("covid-weekly-admissions", out, ["date", "admissions"])
+    write_csv("covid-weekly-admissions-reichlab", out, ["date", "admissions"])
 
     last = out[-1]["date"]
-    record("covid-weekly-admissions", rows=len(out), last_date=last,
+    record("covid-weekly-admissions-reichlab", rows=len(out), last_date=last,
            status="historical", source="reichlab COVID-19 Forecast Hub",
-           note=("Weekly US hospital admissions with confirmed COVID-19. The "
-                 "hub was archived in November 2024 and the series ends here."))
-    print("covid-weekly-admissions: %d weeks %s -> %s"
+           note=("Archived. Superseded on the page by the CDC NHSN series, "
+                 "which runs about 4% higher at the median because the two "
+                 "count admissions differently."))
+    print("covid-weekly-admissions-reichlab: %d weeks %s -> %s (archival)"
           % (len(out), out[0]["date"], last))
 
 

@@ -21,6 +21,21 @@ silently returns wrong numbers rather than an error:
    most recent 12 months only; a bare year returns nothing at all. Months are
    requested one year per call.
 3. **Twelve periods per call, maximum.** More than that is a 400.
+
+## Methodology, against the original
+
+The commodity codes and trade flows are unchanged from the recovered `.Rmd`:
+chips are HS 8542; equipment is HS 8486, 903082, 903141, 854311 and 901041,
+summed. The old `rg=2` (US reporter, China partner) is this API's `flowCode=X`,
+and `rg=1` with `p=0` (China reporter, world partner) is `flowCode=M` with
+`partnerCode=0`. Monthly for the US export series, annual for China's imports,
+as before.
+
+Two transforms the old dashboard carried are reproduced here rather than left
+out: a **six-month rolling average**, right-aligned, which is the smoothed line
+the old chart drew over the raw months, and a **twelve-month rolling sum**, the
+trailing-year total. Both refuse to emit a value until their window is full --
+a six-month average computed from two months is not a six-month average.
 """
 import collections
 import datetime as dt
@@ -76,6 +91,25 @@ def total_by_period(rows):
     return out
 
 
+def rolling(vals, n, how):
+    """Trailing n-period mean or sum, right-aligned, None until the window fills.
+
+    Right-aligned and refusing to emit a partial window on purpose: a
+    "6-month average" computed from two months is not a 6-month average, and
+    the old R used align="right" for exactly this series.
+    """
+    out, acc = [], []
+    for v in vals:
+        acc.append(v)
+        if len(acc) > n:
+            acc.pop(0)
+        if len(acc) < n or any(x is None for x in acc):
+            out.append("")
+        else:
+            out.append(round(sum(acc) / (n if how == "mean" else 1), 2))
+    return out
+
+
 def months(year):
     return ",".join("%d%02d" % (year, m) for m in range(1, 13))
 
@@ -106,8 +140,22 @@ def run():
         })
     if not monthly:
         raise FetchError("no monthly rows returned")
+
+    # The derived series the old dashboard carried alongside the raw months.
+    # Monthly trade is noisy enough that the raw line is hard to read a trend
+    # off; the six-month average is what the old chart drew in red over it,
+    # and the twelve-month sum is the trailing-year figure.
+    for col in ("chips", "equipment"):
+        vals = [r[col] for r in monthly]
+        avg6 = rolling(vals, 6, "mean")
+        sum12 = rolling(vals, 12, "sum")
+        for r, a, t in zip(monthly, avg6, sum12):
+            r[col + "_avg6"] = a
+            r[col + "_sum12"] = t
+
     write_csv("semiconductors-us-exports-china", monthly,
-              ["date", "chips", "equipment"])
+              ["date", "chips", "chips_avg6", "chips_sum12",
+               "equipment", "equipment_avg6", "equipment_sum12"])
 
     # ---- annual: China's imports from the world --------------------------
     # Twelve periods per call, so the year range is requested in batches.

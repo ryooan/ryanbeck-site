@@ -304,6 +304,7 @@
         label: s.label || s.col,
         colour: s.color || seriesColour(pal, i),
         dash: !!s.dash,
+        right: s.axis === 'right',
         pts: pts
       };
     });
@@ -333,6 +334,12 @@
        flattens the recent data into a band at the bottom, which defeats the
        point of zooming. */
     var t0, t1, v0, v1, shown;
+    /* A second y-scale, for series marked axis:"right". Two quantities of
+       wildly different magnitude on one axis makes the smaller one a flat
+       line along the bottom -- a cumulative total and its weekly increments
+       differ by two orders of magnitude, so the increments vanish. */
+    var v0R, v1R;
+    var hasRight = opt.series.some(function (x) { return x.axis === 'right'; });
     var ranges = opt.ranges === false ? []
       : (Array.isArray(opt.ranges)
           ? RANGES.filter(function (r) { return opt.ranges.indexOf(r.k) >= 0; })
@@ -349,14 +356,21 @@
       shown = series.map(function (s) {
         return s.pts.filter(function (p) { return p.t >= t0 && p.t <= t1; });
       });
-      var vis = shown.reduce(function (a, b) { return a.concat(b); }, [])
-        .filter(function (p) { return p.v != null; });
-      if (!vis.length) vis = withV;         // never leave a chart with no scale
-      v0 = Math.min.apply(null, vis.map(function (p) { return p.v; }));
-      v1 = Math.max.apply(null, vis.map(function (p) { return p.v; }));
-      if (opt.zero) v0 = Math.min(0, v0);
-      var padV = (v1 - v0) * 0.08 || Math.abs(v1 || 1) * 0.1;
-      v0 -= padV; v1 += padV;
+      function scaleOf(want) {
+        var vis = [];
+        shown.forEach(function (arr, i) {
+          if (!!series[i].right !== want) return;
+          arr.forEach(function (p) { if (p.v != null) vis.push(p.v); });
+        });
+        if (!vis.length) vis = withV.map(function (p) { return p.v; });
+        var a = Math.min.apply(null, vis), b = Math.max.apply(null, vis);
+        if (opt.zero) a = Math.min(0, a);
+        var pad = (b - a) * 0.08 || Math.abs(b || 1) * 0.1;
+        return [a - pad, b + pad];
+      }
+      var L = scaleOf(false);
+      v0 = L[0]; v1 = L[1];
+      if (hasRight) { var R = scaleOf(true); v0R = R[0]; v1R = R[1]; }
     }
     setWindow(active);
 
@@ -410,7 +424,8 @@
       sw.className = 'plot-swatch' + (s.dash ? ' is-dash' : '');
       sw.style.setProperty('--c', s.colour);
       li.appendChild(sw);
-      li.appendChild(document.createTextNode(s.label));
+      li.appendChild(document.createTextNode(
+        s.label + (s.right ? ' (right axis)' : '')));
       legend.appendChild(li);
     });
     if (bands.length && opt.band.label) {
@@ -428,14 +443,15 @@
     function draw() {
       var W = figure.clientWidth || 720;
       var H = opt.height || Math.max(220, Math.min(400, Math.round(W * 0.46)));
-      var m = { t: 12, r: 14, b: 26, l: 56 };
+      var m = { t: 12, r: hasRight ? 56 : 14, b: 26, l: 56 };
       var iw = Math.max(10, W - m.l - m.r);
       var ih = Math.max(10, H - m.t - m.b);
       geom = { W: W, H: H, m: m, iw: iw, ih: ih };
 
       function sx(t) { return m.l + (t - t0) / (t1 - t0 || 1) * iw; }
       function sy(v) { return m.t + ih - (v - v0) / (v1 - v0 || 1) * ih; }
-      geom.sx = sx; geom.sy = sy;
+      function syR(v) { return m.t + ih - (v - v0R) / (v1R - v0R || 1) * ih; }
+      geom.sx = sx; geom.sy = sy; geom.syR = syR;
 
       if (svg) svg.remove();
       svg = el('svg', {
@@ -465,6 +481,22 @@
         svg.appendChild(lab);
       });
 
+      if (hasRight) {
+        var rFmt = FORMATS[opt.formatRight] || fmt;
+        var rCol = (opt.series.filter(function (x) { return x.axis === 'right'; })[0] || {});
+        var rTint = rCol.color || seriesColour(pal, opt.series.indexOf(
+          opt.series.filter(function (x) { return x.axis === 'right'; })[0]));
+        niceTicks(v0R, v1R, 5).forEach(function (v) {
+          if (v < v0R || v > v1R) return;
+          var lab = el('text', {
+            x: m.l + iw + 8, y: syR(v) + 4, 'text-anchor': 'start',
+            class: 'plot-axis', fill: rTint, 'fill-opacity': .85
+          });
+          lab.textContent = rFmt(v);
+          svg.appendChild(lab);
+        });
+      }
+
       dateTicks(t0, t1, Math.max(2, Math.round(iw / 110))).forEach(function (t) {
         var x = sx(t);
         if (x < m.l - 1 || x > m.l + iw + 1) return;
@@ -487,10 +519,11 @@
       series.forEach(function (s, si) {
         var pts = decimate(shown[si], t0, t1, iw);
         drawn.push(pts);
+        var Y = s.right ? syR : sy;
         var d = '', pen = false;
         pts.forEach(function (p) {
           if (p.v == null) { pen = false; return; }
-          d += (pen ? 'L' : 'M') + sx(p.t).toFixed(1) + ' ' + sy(p.v).toFixed(1);
+          d += (pen ? 'L' : 'M') + sx(p.t).toFixed(1) + ' ' + Y(p.v).toFixed(1);
           pen = true;
         });
         if (d) {
@@ -548,7 +581,7 @@
         var dot = geom.dots[k];
         if (p && p.v != null && Math.abs(p.t - at) < 86400000 * 6) {
           dot.setAttribute('cx', geom.sx(p.t));
-          dot.setAttribute('cy', geom.sy(p.v));
+          dot.setAttribute('cy', (s.right ? geom.syR : geom.sy)(p.v));
           dot.setAttribute('visibility', 'visible');
           lines.push('<span class="k" style="--c:' + s.colour + '"></span>' +
             s.label + ' <b>' + fmt(p.v) + '</b>');
@@ -623,20 +656,75 @@
 
   /* ---- small multiples ------------------------------------------------- */
 
-  /* One panel per category, all sharing a y scale.
+  /* A tile grid of the United States: each state one cell, placed roughly
+     where it sits on the map. Reading a grid of fifty boxes alphabetically
+     means hunting for a label every time; laid out geographically you find a
+     state where you expect it and regional patterns show up on their own —
+     a bad flu week in the southeast is a block of colour, not eight
+     scattered cells.
 
-     The shared scale is the whole point and the easy thing to get wrong: with
-     per-panel scales every state peaks at the top of its own box and the grid
-     says only "everywhere had a winter", which is not information. Sharing it
-     means Texas dwarfs Vermont, which is the true shape. Each panel prints its
-     own peak so a small one is still readable as a number. */
+     Rows and columns, 11 wide. This is the arrangement the old dashboard
+     used, which is the common US tile-grid layout. */
+  var US_GRID = {
+    WI: [0, 5], VT: [0, 8], NH: [0, 9], ME: [0, 10],
+    WA: [1, 0], ID: [1, 1], MT: [1, 2], ND: [1, 3], MN: [1, 4],
+    IL: [1, 5], MI: [1, 6], NY: [1, 8], MA: [1, 9],
+    OR: [2, 0], NV: [2, 1], WY: [2, 2], SD: [2, 3], IA: [2, 4],
+    IN: [2, 5], OH: [2, 6], PA: [2, 7], NJ: [2, 8], CT: [2, 9], RI: [2, 10],
+    CA: [3, 0], UT: [3, 1], CO: [3, 2], NE: [3, 3], MO: [3, 4],
+    KY: [3, 5], WV: [3, 6], VA: [3, 7], MD: [3, 8], DE: [3, 9],
+    AZ: [4, 1], NM: [4, 2], KS: [4, 3], AR: [4, 4], TN: [4, 5],
+    NC: [4, 6], SC: [4, 7], DC: [4, 8],
+    OK: [5, 3], LA: [5, 4], MS: [5, 5], AL: [5, 6], GA: [5, 7],
+    HI: [6, 0], AK: [6, 1], TX: [6, 3], FL: [6, 8], PR: [6, 9]
+  };
+
+  var STATE_ABBR = {
+    'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR',
+    'California': 'CA', 'Colorado': 'CO', 'Connecticut': 'CT',
+    'Delaware': 'DE', 'District of Columbia': 'DC', 'Florida': 'FL',
+    'Georgia': 'GA', 'Hawaii': 'HI', 'Idaho': 'ID', 'Illinois': 'IL',
+    'Indiana': 'IN', 'Iowa': 'IA', 'Kansas': 'KS', 'Kentucky': 'KY',
+    'Louisiana': 'LA', 'Maine': 'ME', 'Maryland': 'MD', 'Massachusetts': 'MA',
+    'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS',
+    'Missouri': 'MO', 'Montana': 'MT', 'Nebraska': 'NE', 'Nevada': 'NV',
+    'New Hampshire': 'NH', 'New Jersey': 'NJ', 'New Mexico': 'NM',
+    'New York': 'NY', 'North Carolina': 'NC', 'North Dakota': 'ND',
+    'Ohio': 'OH', 'Oklahoma': 'OK', 'Oregon': 'OR', 'Pennsylvania': 'PA',
+    'Puerto Rico': 'PR', 'Rhode Island': 'RI', 'South Carolina': 'SC',
+    'South Dakota': 'SD', 'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT',
+    'Vermont': 'VT', 'Virginia': 'VA', 'Washington': 'WA',
+    'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY'
+  };
+
+  /* Diverging fill for a percentage change. Red for rising, green for
+     falling, both desaturated toward the page so a grid of fifty does not
+     read as an alarm panel. `mag` saturates at +/-100%: past a doubling the
+     colour stops changing, because the difference between +200% and +400%
+     is not information anyone reads off a fill. */
+  function changeFill(pct) {
+    if (pct == null || !isFinite(pct)) return 'rgba(122,106,88,.12)';
+    var m = Math.min(1, Math.abs(pct) / 100);
+    var a = 0.10 + m * 0.55;
+    return pct >= 0
+      ? 'rgba(184,62,42,' + a.toFixed(3) + ')'
+      : 'rgba(58,110,74,' + a.toFixed(3) + ')';
+  }
+
+  function changeStroke(pct) {
+    if (pct == null || !isFinite(pct)) return 'rgba(122,106,88,.5)';
+    return pct >= 0 ? 'rgb(168,52,34)' : 'rgb(46,96,62)';
+  }
+
   function buildPanels(host, opt, data) {
     var pal = palette();
     var fmt = FORMATS[opt.format] || FORMATS.number;
     var xKey = opt.x || 'date';
     var byKey = opt.panelBy;
     var vKey = opt.value;
+    var geo = opt.layout === 'us-grid';
 
+    /* --- gather --- */
     var groups = {};
     data.rows.forEach(function (r) {
       var name = r[byKey];
@@ -650,83 +738,213 @@
       });
     });
 
-    var names = Object.keys(groups).sort();
+    var names = Object.keys(groups);
     if (!names.length) throw new Error('nothing to panel by "' + byKey + '"');
-
-    var t0 = Infinity, t1 = -Infinity, vMax = 0;
     names.forEach(function (n) {
       groups[n].sort(function (a, b) { return a.t - b.t; });
-      groups[n].forEach(function (p) {
-        if (p.t < t0) t0 = p.t;
-        if (p.t > t1) t1 = p.t;
-        if (p.v != null && p.v > vMax) vMax = p.v;
-      });
     });
-    if (!(vMax > 0)) throw new Error('no numeric data');
 
+    var tMax = -Infinity;
+    names.forEach(function (n) {
+      var p = groups[n];
+      if (p.length && p[p.length - 1].t > tMax) tMax = p[p.length - 1].t;
+    });
+
+    /* --- modes ---
+       'change' is the default and shows the same thing the old dashboard
+       did: percentage change against four weeks earlier, so a state that is
+       small but climbing fast is as visible as a large one. The value modes
+       show the underlying admissions over a window. */
+    var LAG_WEEKS = opt.changeLagWeeks || 4;
+    var modes = [{ k: 'change', label: opt.changeLabel || '4-week change' }];
+    (opt.valueRanges || ['6m', '1y', '2y', '5y']).forEach(function (k) {
+      var r = RANGES.filter(function (x) { return x.k === k; })[0];
+      if (r) modes.push({ k: k, label: r.label, days: r.d });
+    });
+    var mode = opt.defaultMode || 'change';
+
+    /* --- shell --- */
     host.classList.add('plot', 'plot-panels');
     host.innerHTML = '';
-    var grid = document.createElement('div');
-    grid.className = 'panel-grid';
-    host.appendChild(grid);
+
+    var bar = document.createElement('div');
+    bar.className = 'plot-ranges panel-modes';
+    bar.setAttribute('role', 'group');
+    bar.setAttribute('aria-label', 'What each panel shows');
+    var btns = [];
+    modes.forEach(function (m) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'plot-range';
+      b.textContent = m.label;
+      b.dataset.mode = m.k;
+      b.setAttribute('aria-pressed', String(m.k === mode));
+      b.addEventListener('click', function () {
+        if (m.k === mode) return;
+        mode = m.k;
+        btns.forEach(function (o) {
+          o.setAttribute('aria-pressed', String(o.dataset.mode === mode));
+        });
+        render();
+      });
+      btns.push(b);
+      bar.appendChild(b);
+    });
+    host.appendChild(bar);
 
     var note = document.createElement('p');
     note.className = 'panel-note';
-    note.textContent = 'All panels share one vertical scale, topping out at '
-      + fmt(vMax) + ', so their heights are directly comparable. Each panel '
-      + 'also prints its own peak. ' + (opt.panelNote || '');
     host.appendChild(note);
 
-    var W = 200, H = 62, m = 4;
+    var grid = document.createElement('div');
+    grid.className = 'panel-grid' + (geo ? ' is-geo' : '');
+    host.appendChild(grid);
 
-    names.forEach(function (n) {
-      var pts = groups[n];
-      var peak = 0;
-      pts.forEach(function (p) { if (p.v != null && p.v > peak) peak = p.v; });
-
-      var cell = document.createElement('figure');
-      cell.className = 'panel';
-
-      var cap = document.createElement('figcaption');
-      cap.innerHTML = '<span class="panel-name"></span>' +
-        '<span class="panel-peak"></span>';
-      cap.querySelector('.panel-name').textContent = n;
-      cap.querySelector('.panel-peak').textContent = fmt(peak);
-      cell.appendChild(cap);
-
-      var svg = el('svg', {
-        viewBox: '0 0 ' + W + ' ' + H, preserveAspectRatio: 'none',
-        role: 'img', 'aria-label': n + ', peak ' + fmt(peak)
-      });
-
-      function sx(t) { return m + (t - t0) / (t1 - t0 || 1) * (W - m * 2); }
-      function sy(v) { return H - m - (v / vMax) * (H - m * 2); }
-
-      var d = '', area = '', pen = false;
-      pts.forEach(function (p) {
-        if (p.v == null) { pen = false; return; }
-        var x = sx(p.t).toFixed(1), y = sy(p.v).toFixed(1);
-        d += (pen ? 'L' : 'M') + x + ' ' + y;
-        area += (pen ? 'L' : 'M' + x + ' ' + (H - m) + 'L') + x + ' ' + y;
-        pen = true;
-      });
-      if (area) {
-        area += 'L' + sx(pts[pts.length - 1].t).toFixed(1) + ' ' + (H - m) + 'Z';
-        svg.appendChild(el('path', {
-          d: area, fill: pal.ember, 'fill-opacity': .13, stroke: 'none'
-        }));
+    /* --- per-mode series --- */
+    function seriesFor(name) {
+      var pts = groups[name];
+      if (mode !== 'change') {
+        var days = modes.filter(function (m) { return m.k === mode; })[0].days;
+        var from = tMax - days * DAY;
+        return pts.filter(function (p) { return p.t >= from; });
       }
-      if (d) {
-        svg.appendChild(el('path', {
-          d: d, fill: 'none', stroke: pal.ember, 'stroke-width': 1.4,
-          'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke'
-        }));
+      /* Percentage change against LAG_WEEKS earlier, by index — these series
+         are evenly weekly, and matching on index avoids re-deriving the
+         cadence for every state. */
+      var out = [];
+      for (var i = LAG_WEEKS; i < pts.length; i++) {
+        var now = pts[i].v, then = pts[i - LAG_WEEKS].v;
+        if (now == null || then == null || then === 0) {
+          out.push({ t: pts[i].t, v: null });
+        } else {
+          out.push({ t: pts[i].t, v: (now - then) / then * 100 });
+        }
       }
-      cell.appendChild(svg);
-      grid.appendChild(cell);
-    });
+      /* Only the recent stretch: the old chart showed a handful of weeks, and
+         a full history of percentage change is noise at this size. */
+      return out.slice(-(opt.changeWeeks || 6));
+    }
 
-    return { panels: names.length, max: vMax };
+    function render() {
+      grid.innerHTML = '';
+      var isChange = mode === 'change';
+
+      var series = {};
+      names.forEach(function (n) { series[n] = seriesFor(n); });
+
+      /* One shared scale across every panel, in both modes. */
+      var lo = Infinity, hi = -Infinity;
+      names.forEach(function (n) {
+        series[n].forEach(function (p) {
+          if (p.v == null) return;
+          if (p.v < lo) lo = p.v;
+          if (p.v > hi) hi = p.v;
+        });
+      });
+      if (!isFinite(lo)) { lo = 0; hi = 1; }
+      if (isChange) {
+        var span = Math.max(Math.abs(lo), Math.abs(hi), 10);
+        lo = -span; hi = span;                 // symmetric, so zero sits centred
+      } else {
+        lo = Math.min(0, lo);
+        if (hi <= lo) hi = lo + 1;
+      }
+
+      note.innerHTML = isChange
+        ? ('Percentage change in weekly admissions against ' + LAG_WEEKS +
+           ' weeks earlier, over the last ' + (opt.changeWeeks || 6) +
+           ' weeks. <span class="key key-up"></span> rising, ' +
+           '<span class="key key-dn"></span> falling — the fill deepens with ' +
+           'the size of the change and stops at a doubling. Every panel shares ' +
+           'one vertical scale.')
+        : ('Weekly admissions per 100,000 residents. Every panel shares one ' +
+           'vertical scale, topping out at ' + fmt(hi) + ', so a small state ' +
+           'and a large one can be read against each other.');
+
+      var W = 100, H = 44, m = 3;
+      var order = geo
+        ? names.slice().sort(function (a, b) {
+            var ga = US_GRID[STATE_ABBR[a] || a] || [99, 99];
+            var gb = US_GRID[STATE_ABBR[b] || b] || [99, 99];
+            return ga[0] - gb[0] || ga[1] - gb[1];
+          })
+        : names.slice().sort();
+
+      order.forEach(function (n) {
+        var pts = series[n];
+        var abbr = STATE_ABBR[n] || n;
+        var cell = document.createElement('figure');
+        cell.className = 'panel';
+        if (geo && US_GRID[abbr]) {
+          cell.style.gridRow = String(US_GRID[abbr][0] + 1);
+          cell.style.gridColumn = String(US_GRID[abbr][1] + 1);
+        }
+
+        var last = null;
+        for (var i = pts.length - 1; i >= 0; i--) {
+          if (pts[i].v != null) { last = pts[i].v; break; }
+        }
+
+        if (isChange) {
+          cell.style.background = changeFill(last);
+        }
+
+        var cap = document.createElement('figcaption');
+        cap.innerHTML = '<span class="panel-name"></span><span class="panel-peak"></span>';
+        cap.querySelector('.panel-name').textContent = geo ? abbr : n;
+        cap.querySelector('.panel-peak').textContent = last == null ? '–'
+          : (isChange ? (last > 0 ? '+' : '') + Math.round(last) + '%' : fmt(last));
+        cell.appendChild(cap);
+
+        var svg = el('svg', {
+          viewBox: '0 0 ' + W + ' ' + H, preserveAspectRatio: 'none',
+          role: 'img',
+          'aria-label': n + ': ' + (last == null ? 'no data'
+            : (isChange ? Math.round(last) + ' percent change' : fmt(last)))
+        });
+
+        function sx(i) { return m + (pts.length < 2 ? 0.5 : i / (pts.length - 1)) * (W - m * 2); }
+        function sy(v) { return H - m - (v - lo) / (hi - lo || 1) * (H - m * 2); }
+
+        if (isChange) {                     // a zero line to read against
+          svg.appendChild(el('line', {
+            x1: m, x2: W - m, y1: sy(0), y2: sy(0),
+            stroke: pal.ink, 'stroke-opacity': .22, 'stroke-dasharray': '2 2',
+            'vector-effect': 'non-scaling-stroke'
+          }));
+        }
+
+        var d = '', area = '', pen = false;
+        pts.forEach(function (p, i) {
+          if (p.v == null) { pen = false; return; }
+          var x = sx(i).toFixed(1), y = sy(p.v).toFixed(1);
+          d += (pen ? 'L' : 'M') + x + ' ' + y;
+          if (!isChange) {
+            area += (pen ? 'L' : 'M' + x + ' ' + (H - m) + 'L') + x + ' ' + y;
+          }
+          pen = true;
+        });
+        if (area) {
+          area += 'L' + sx(pts.length - 1).toFixed(1) + ' ' + (H - m) + 'Z';
+          svg.appendChild(el('path', {
+            d: area, fill: pal.ember, 'fill-opacity': .13, stroke: 'none'
+          }));
+        }
+        if (d) {
+          svg.appendChild(el('path', {
+            d: d, fill: 'none',
+            stroke: isChange ? changeStroke(last) : pal.ember,
+            'stroke-width': 1.5, 'stroke-linejoin': 'round',
+            'vector-effect': 'non-scaling-stroke'
+          }));
+        }
+        cell.appendChild(svg);
+        grid.appendChild(cell);
+      });
+    }
+
+    render();
+    return { panels: names.length };
   }
 
   function render(host, opt) {

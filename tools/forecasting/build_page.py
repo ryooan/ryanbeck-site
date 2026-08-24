@@ -137,6 +137,37 @@ SECTIONS = [
         "source_url": "https://www.sec.gov/edgar/sec-api-documentation",
     },
     {
+        "slug": "covid-weekly-admissions",
+        "title": "US respiratory hospital admissions, weekly",
+        "csv": "covid-weekly-admissions.csv",
+        "plot": {
+            "format": "number",
+            "zero": True,
+            "defaultRange": "2y",
+            "series": [
+                {"col": "covid", "label": "COVID-19"},
+                {"col": "influenza", "label": "Influenza"},
+                {"col": "rsv", "label": "RSV"},
+            ],
+        },
+        "note": (
+            "This is the series that prompted the rebuild: its job succeeded "
+            "every ten hours for two years and republished a chart each time, "
+            "while the repository behind it had been archived in November 2024 "
+            "and the data had stopped the previous April."
+            "<br><br>"
+            "<strong>It is live again, and longer than it ever was.</strong> "
+            "Hospitals never stopped reporting — the requirement moved to "
+            "the CDC’s National Healthcare Safety Network, which carries "
+            "the same measure from August 2020 to last week. That covers "
+            "everything the archived source had plus the two years it missed. "
+            "Influenza and RSV come from the same rows, so all three "
+            "respiratory admissions are here on one chart."),
+        "source": "CDC NHSN Hospital Respiratory Data",
+        "source_url": "https://data.cdc.gov/resource/ua7e-t2fy",
+        "extra_csv": "covid-weekly-admissions-reichlab.csv",
+    },
+    {
         "slug": "flu-hospitalizations",
         "title": "US influenza hospitalisations",
         "csv": "flu-hospitalizations.csv",
@@ -161,18 +192,21 @@ SECTIONS = [
             "format": "rate",
             "panelBy": "location",
             "value": "rate_per_100k",
-            "panelNote": ("Admissions per 100,000 residents, so a small state "
-                          "and a large one can be read against each other."),
+            "layout": "us-grid",
+            "defaultMode": "change",
+            "changeLagWeeks": 4,
+            "changeWeeks": 6,
+            "valueRanges": ["6m", "1y", "2y", "5y"],
         },
         "note": (
-            "The same weekly flu admissions, split by state and shown as a "
-            "rate per 100,000 residents. Every panel shares one vertical "
-            "scale, so the boxes are directly comparable. The rate rather "
-            "than the raw count is what makes that readable: on raw "
-            "admissions Texas out-tops Hawaii fifty-five-fold and most of "
-            "the grid flattens into unreadable slivers, where per head the "
-            "spread is about four-fold and each state’s season has a "
-            "visible shape."),
+            "The same admissions, state by state, laid out roughly as the map "
+            "is — so you find a state where you expect it, and a bad week "
+            "across the southeast reads as a block of colour rather than eight "
+            "scattered cells. It opens on percentage change against four weeks "
+            "earlier, which is what makes a small state climbing fast as "
+            "visible as a large one. The buttons switch to the underlying "
+            "admissions per 100,000 over a window. Either way every panel "
+            "shares one vertical scale, so the boxes are honestly comparable."),
         "source": "CDC FluSight forecast hub",
         "source_url": "https://github.com/cdcepi/FluSight-forecast-hub",
     },
@@ -225,34 +259,27 @@ SECTIONS = [
             "zero": True,
             "series": [
                 {"col": "cumulative", "label": "Running total"},
-                {"col": "birds", "label": "Killed that week"},
+                {"col": "birds", "label": "Killed that week", "axis": "right"},
             ],
         },
         "note": (
             "Birds killed in confirmed commercial and backyard flocks during "
-            "the H5N1 outbreak. Weekly counts are spiky because a single "
-            "commercial layer flock can be several million birds on its own, "
-            "so the running total is the clearer line."),
+            "the H5N1 outbreak. The weekly count sits on its own axis on the "
+            "right: a single commercial layer flock can be several million "
+            "birds, so the weeks are spiky, and on the running total’s "
+            "scale they would be a flat line along the bottom."
+            "<br><br>"
+            "<strong>The outbreak has not stopped — this feed has.</strong> "
+            "USDA confirmed 38 flocks in the thirty days to late August 2026, "
+            "but the CDC mirror this chart reads stopped updating in June 2025 "
+            "and has not moved since. USDA now publishes the detections "
+            "through a Tableau dashboard with no full machine-readable export, "
+            "so there is nothing to point a fetcher at without scraping a "
+            "dashboard session — which is the sort of dependency that "
+            "killed half these pages in the first place. The history stands; "
+            "the recent months are missing and the label says so."),
         "source": "CDC mirror of USDA APHIS confirmed detections",
-        "source_url": "https://www.cdc.gov/bird-flu/situation-summary/data-map-commercial.html",
-    },
-    {
-        "slug": "covid-weekly-admissions",
-        "title": "US COVID hospital admissions, weekly",
-        "csv": "covid-weekly-admissions.csv",
-        "plot": {
-            "format": "number",
-            "zero": True,
-            "series": [{"col": "admissions", "label": "Weekly admissions"}],
-        },
-        "note": (
-            "This is the series that prompted the rebuild. Its job succeeded "
-            "every ten hours for two years and republished a chart each time, "
-            "while the repository behind it had been archived in November 2024 "
-            "and the data had stopped the previous April. Nothing in the old "
-            "setup would ever have mentioned it."),
-        "source": "reichlab COVID-19 Forecast Hub (archived)",
-        "source_url": "https://github.com/reichlab/covid19-forecast-hub",
+        "source_url": "https://www.aphis.usda.gov/livestock-poultry-disease/avian/avian-influenza/hpai-detections/commercial-backyard-flocks",
     },
     {
         "slug": "covid-hospitalizations",

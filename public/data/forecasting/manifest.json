@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-24T14:09:14Z",
+  "generated": "2026-08-24T14:32:26Z",
   "series": {
     "covid-hospitalizations": {
       "fetched": "2026-08-24T03:05:10Z",
@@ -18,9 +18,17 @@
       "status": "historical"
     },
     "covid-weekly-admissions": {
-      "fetched": "2026-08-24T03:07:01Z",
+      "fetched": "2026-08-24T14:26:55Z",
+      "last_date": "2026-08-15",
+      "note": "Weekly new hospital admissions with a laboratory-confirmed diagnosis, national. Replaces the archived reichlab series and extends it in both directions.",
+      "rows": 315,
+      "source": "CDC NHSN Hospital Respiratory Data",
+      "status": "live"
+    },
+    "covid-weekly-admissions-reichlab": {
+      "fetched": "2026-08-24T14:32:26Z",
       "last_date": "2024-04-08",
-      "note": "Weekly US hospital admissions with confirmed COVID-19. The hub was archived in November 2024 and the series ends here.",
+      "note": "Archived. Superseded on the page by the CDC NHSN series, which runs about 4% higher at the median because the two count admissions differently.",
       "rows": 194,
       "source": "reichlab COVID-19 Forecast Hub",
       "status": "historical"
@@ -90,7 +98,7 @@
       "status": "live"
     },
     "semiconductors-china-imports": {
-      "fetched": "2026-08-24T04:02:41Z",
+      "fetched": "2026-08-24T14:26:27Z",
       "last_date": "2024-01-01",
       "note": "US dollars. Chips are HS 8542; equipment is HS 8486, 903082, 903141, 854311 and 901041, summed.",
       "rows": 25,
@@ -98,7 +106,7 @@
       "status": "live"
     },
     "semiconductors-us-exports-china": {
-      "fetched": "2026-08-24T04:02:41Z",
+      "fetched": "2026-08-24T14:26:27Z",
       "last_date": "2026-06-01",
       "note": "US dollars. Chips are HS 8542; equipment is HS 8486, 903082, 903141, 854311 and 901041, summed.",
       "rows": 198,

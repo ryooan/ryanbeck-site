@@ -219,6 +219,35 @@
   gap:10px 14px;
   margin-top:6px;
 }
+
+/* The tile grid of the US. Eleven fixed columns, so each state keeps its
+   place; below the breakpoint it falls back to a plain flowing grid, because
+   eleven columns on a phone gives every state about 30px. */
+.panel-grid.is-geo{
+  grid-template-columns:repeat(11,minmax(0,1fr));
+  gap:4px;
+}
+.panel-grid.is-geo .panel{ padding:3px 4px 2px }
+.panel-grid.is-geo .panel figcaption{ font-size:10.5px; gap:3px }
+.panel-grid.is-geo .panel svg{ height:30px }
+@media (max-width:820px){
+  .panel-grid.is-geo{
+    grid-template-columns:repeat(auto-fill,minmax(74px,1fr));
+    gap:5px;
+  }
+  /* Placement is set inline for the tile layout; unset it when flowing. */
+  .panel-grid.is-geo .panel{ grid-row:auto !important; grid-column:auto !important }
+}
+
+.panel-modes{ margin-bottom:8px }
+.panel-note .key{
+  display:inline-block;
+  width:11px;height:11px;
+  border-radius:2px;
+  vertical-align:-1px;
+}
+.panel-note .key-up{ background:rgba(184,62,42,.55); border:1px solid rgb(168,52,34) }
+.panel-note .key-dn{ background:rgba(58,110,74,.55); border:1px solid rgb(46,96,62) }
 .panel{
   margin:0;
   padding:6px 8px 4px;

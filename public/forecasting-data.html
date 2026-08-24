@@ -106,6 +106,16 @@
       download: <a href="/data/forecasting/faamg-revenues-quarterly.csv">faamg-revenues-quarterly.csv</a></p>
   </section>
 
+  <section class="series" id="covid-weekly-admissions">
+    <span class="status is-live">Live &middot; data to 15 August 2026</span>
+    <h2>US respiratory hospital admissions, weekly</h2>
+    <p class="series-note">This is the series that prompted the rebuild: its job succeeded every ten hours for two years and republished a chart each time, while the repository behind it had been archived in November 2024 and the data had stopped the previous April.<br><br><strong>It is live again, and longer than it ever was.</strong> Hospitals never stopped reporting — the requirement moved to the CDC’s National Healthcare Safety Network, which carries the same measure from August 2020 to last week. That covers everything the archived source had plus the two years it missed. Influenza and RSV come from the same rows, so all three respiratory admissions are here on one chart.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;defaultRange&quot;:&quot;2y&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;covid&quot;,&quot;label&quot;:&quot;COVID-19&quot;},{&quot;col&quot;:&quot;influenza&quot;,&quot;label&quot;:&quot;Influenza&quot;},{&quot;col&quot;:&quot;rsv&quot;,&quot;label&quot;:&quot;RSV&quot;}],&quot;csv&quot;:&quot;/data/forecasting/covid-weekly-admissions.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US respiratory hospital admissions, weekly&quot;}'></div>
+    <p class="series-source">315 rows, latest up to date &middot;
+      source: <a href="https://data.cdc.gov/resource/ua7e-t2fy" rel="noopener">CDC NHSN Hospital Respiratory Data</a> &middot;
+      download: <a href="/data/forecasting/covid-weekly-admissions.csv">covid-weekly-admissions.csv</a> &middot; <a href="/data/forecasting/covid-weekly-admissions-reichlab.csv">covid-weekly-admissions-reichlab.csv</a></p>
+  </section>
+
   <section class="series" id="flu-hospitalizations">
     <span class="status is-live">Live &middot; data to 4 July 2026</span>
     <h2>US influenza hospitalisations</h2>
@@ -119,8 +129,8 @@
   <section class="series" id="flu-hospitalizations-states">
     <span class="status is-live">Live &middot; data to 4 July 2026</span>
     <h2>Influenza admissions, state by state</h2>
-    <p class="series-note">The same weekly flu admissions, split by state and shown as a rate per 100,000 residents. Every panel shares one vertical scale, so the boxes are directly comparable. The rate rather than the raw count is what makes that readable: on raw admissions Texas out-tops Hawaii fifty-five-fold and most of the grid flattens into unreadable slivers, where per head the spread is about four-fold and each state’s season has a visible shape.</p>
-    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;rate&quot;,&quot;panelBy&quot;:&quot;location&quot;,&quot;value&quot;:&quot;rate_per_100k&quot;,&quot;panelNote&quot;:&quot;Admissions per 100,000 residents, so a small state and a large one can be read against each other.&quot;,&quot;csv&quot;:&quot;/data/forecasting/flu-hospitalizations-states.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Influenza admissions, state by state&quot;}'></div>
+    <p class="series-note">The same admissions, state by state, laid out roughly as the map is — so you find a state where you expect it, and a bad week across the southeast reads as a block of colour rather than eight scattered cells. It opens on percentage change against four weeks earlier, which is what makes a small state climbing fast as visible as a large one. The buttons switch to the underlying admissions per 100,000 over a window. Either way every panel shares one vertical scale, so the boxes are honestly comparable.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;rate&quot;,&quot;panelBy&quot;:&quot;location&quot;,&quot;value&quot;:&quot;rate_per_100k&quot;,&quot;layout&quot;:&quot;us-grid&quot;,&quot;defaultMode&quot;:&quot;change&quot;,&quot;changeLagWeeks&quot;:4,&quot;changeWeeks&quot;:6,&quot;valueRanges&quot;:[&quot;6m&quot;,&quot;1y&quot;,&quot;2y&quot;,&quot;5y&quot;],&quot;csv&quot;:&quot;/data/forecasting/flu-hospitalizations-states.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Influenza admissions, state by state&quot;}'></div>
     <p class="series-source">11,976 rows, latest 51 days ago &middot;
       source: <a href="https://github.com/cdcepi/FluSight-forecast-hub" rel="noopener">CDC FluSight forecast hub</a> &middot;
       download: <a href="/data/forecasting/flu-hospitalizations-states.csv">flu-hospitalizations-states.csv</a></p>
@@ -149,10 +159,10 @@
   <section class="series" id="hpai-depopulations">
     <span class="status is-stale">Source stalled &middot; data to 9 June 2025</span>
     <h2>Birds killed in the bird-flu outbreak</h2>
-    <p class="series-note">Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak. Weekly counts are spiky because a single commercial layer flock can be several million birds on its own, so the running total is the clearer line.</p>
-    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;cumulative&quot;,&quot;label&quot;:&quot;Running total&quot;},{&quot;col&quot;:&quot;birds&quot;,&quot;label&quot;:&quot;Killed that week&quot;}],&quot;csv&quot;:&quot;/data/forecasting/hpai-depopulations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Birds killed in the bird-flu outbreak&quot;}'></div>
+    <p class="series-note">Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak. The weekly count sits on its own axis on the right: a single commercial layer flock can be several million birds, so the weeks are spiky, and on the running total’s scale they would be a flat line along the bottom.<br><br><strong>The outbreak has not stopped — this feed has.</strong> USDA confirmed 38 flocks in the thirty days to late August 2026, but the CDC mirror this chart reads stopped updating in June 2025 and has not moved since. USDA now publishes the detections through a Tableau dashboard with no full machine-readable export, so there is nothing to point a fetcher at without scraping a dashboard session — which is the sort of dependency that killed half these pages in the first place. The history stands; the recent months are missing and the label says so.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;cumulative&quot;,&quot;label&quot;:&quot;Running total&quot;},{&quot;col&quot;:&quot;birds&quot;,&quot;label&quot;:&quot;Killed that week&quot;,&quot;axis&quot;:&quot;right&quot;}],&quot;csv&quot;:&quot;/data/forecasting/hpai-depopulations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Birds killed in the bird-flu outbreak&quot;}'></div>
     <p class="series-source">152 rows, latest about 1.2 years ago &middot;
-      source: <a href="https://www.cdc.gov/bird-flu/situation-summary/data-map-commercial.html" rel="noopener">CDC mirror of USDA APHIS confirmed detections</a> &middot;
+      source: <a href="https://www.aphis.usda.gov/livestock-poultry-disease/avian/avian-influenza/hpai-detections/commercial-backyard-flocks" rel="noopener">CDC mirror of USDA APHIS confirmed detections</a> &middot;
       download: <a href="/data/forecasting/hpai-depopulations.csv">hpai-depopulations.csv</a></p>
   </section>
 
@@ -170,16 +180,6 @@
   </section>
 
   <section class="wrap">
-
-  <section class="series" id="covid-weekly-admissions">
-    <span class="status is-historical">Historical &middot; data to 8 April 2024</span>
-    <h2>US COVID hospital admissions, weekly</h2>
-    <p class="series-note">This is the series that prompted the rebuild. Its job succeeded every ten hours for two years and republished a chart each time, while the repository behind it had been archived in November 2024 and the data had stopped the previous April. Nothing in the old setup would ever have mentioned it.</p>
-    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Weekly admissions&quot;}],&quot;csv&quot;:&quot;/data/forecasting/covid-weekly-admissions.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US COVID hospital admissions, weekly&quot;}'></div>
-    <p class="series-source">194 rows, latest about 2.4 years ago &middot;
-      source: <a href="https://github.com/reichlab/covid19-forecast-hub" rel="noopener">reichlab COVID-19 Forecast Hub (archived)</a> &middot;
-      download: <a href="/data/forecasting/covid-weekly-admissions.csv">covid-weekly-admissions.csv</a></p>
-  </section>
 
   <section class="series" id="covid-hospitalizations">
     <span class="status is-historical">Historical &middot; data to 27 April 2024</span>
