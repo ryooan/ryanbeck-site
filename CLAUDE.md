@@ -315,6 +315,26 @@ old. That is why the bird-flu chart currently says "Source stalled · data to
   the pointer text so it can never happen silently.
 - **healthdata.gov dates are `YYYY/MM/DD`.** `plot.js` only matches dashes, so
   passing them through yields a blank chart with no error anywhere.
+- **NHSN has a real `USA` rollup row.** Summing the 66 state and territory rows
+  double-counts it.
+
+### A dead feed is not a dead subject
+
+Two of these were labelled "the source stopped" when the truth was narrower,
+and it is worth checking which you have before writing the series off:
+
+- **COVID admissions were never discontinued.** The reichlab hub was archived,
+  but the reporting requirement had moved to CDC NHSN, where the same measure
+  runs from 2020 to now. The dashboard was dead; the data was not. It is live
+  again on `ua7e-t2fy`.
+- **The bird-flu outbreak has not stopped either** — USDA confirmed 38 flocks
+  in the thirty days to late August 2026. What stopped is the CDC mirror this
+  fetcher reads, frozen since June 2025. USDA moved to a Tableau dashboard
+  (`publicdashboards.dl.usda.gov`) whose only machine-readable export is one
+  worksheet of backyard-flock counts by month, not bird totals. Scraping a
+  vizql session to get the rest would be precisely the fragile dependency that
+  killed half these pages, so the series stays frozen and the note says why
+  rather than implying the cull ended.
 
 - **Treasury: never narrow the `fields` list.** `debt_catg_desc` is requested
   and never read. Drop it and two "Less Debt Not Subject to Limit" rows that
@@ -384,12 +404,33 @@ on **one shared vertical scale**. Sharing it is the point: per-panel scales
 put every state's peak at the top of its own box, and the grid then says
 nothing beyond "everywhere had a winter".
 
-The state flu grid plots `rate_per_100k`, not raw admissions, and that choice
-is what makes a shared scale usable. On raw counts the spread is 55x — Texas
-4,729 against Hawaii 86 — so four panels are legible and forty-eight are flat
-slivers. Per head the spread is about 4x, every state's season has a shape,
-and the comparison is still honest. It also surfaces something the counts
-hide: Texas is middling per capita (15.1 / 100k against Arizona's 37.5).
+`layout: "us-grid"` places each panel by `US_GRID`, a tile map of the country
+(11 columns), so a state sits where you expect it and regional patterns read
+as blocks of colour. Below 820px it falls back to a flowing grid — eleven
+columns on a phone gives each state about 30px — and the CSS has to `!important`
+away the inline `grid-row`/`grid-column`, since placement is set per panel.
+
+The grid has two modes and **opens on percentage change against four weeks
+earlier**, which is what the old dashboard showed. That framing is the point of
+it: in absolute terms a small state is invisible next to Texas, but "up 44%" is
+the same size everywhere. The fill is a diverging red/green ramp that saturates
+at ±100% — past a doubling the colour stops changing, because nobody reads the
+difference between +200% and +400% off a fill.
+
+The other modes show `rate_per_100k` over 6M/1Y/2Y/5Y. Per head rather than raw
+counts is what makes the shared scale usable: on raw admissions the spread is
+55x (Texas 4,729, Hawaii 86) and forty-eight of fifty-two panels flatten into
+slivers; per head it is about 4x. It also surfaces what the counts hide — Texas
+is middling per capita (15.1 / 100k against Arizona's 37.5).
+
+### Two y-axes
+
+A series with `axis: "right"` is drawn against its own scale, with ticks on the
+right in that series' colour and "(right axis)" appended in the legend. The
+bird-flu chart needs it: a cumulative total and its weekly increments differ by
+two orders of magnitude, so on one scale the weekly bars are a flat line along
+the bottom. Don't reach for it to fit two similar quantities — two axes invite
+a reader to compare heights that are not comparable.
 
 ### plot.js, and why it is not a library
 
