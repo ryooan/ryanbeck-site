@@ -21,7 +21,7 @@ on:
   workflow_dispatch:
     inputs:
       only:
-        description: 'Space-separated fetcher names, or blank for all'
+        description: 'Fetcher names, blank for the live set. Historical (manual only): covid_truth covid_hospitalizations va_vaccinations vdh_age'
         required: false
         default: ''
 
@@ -57,6 +57,11 @@ jobs:
               '32 12 * * 2')       list="flusight hpai" ;;
               '47 13 3 * *')       list="refugees semiconductors" ;;
               '5 14 5 1,4,7,10 *') list="faamg" ;;
+              # Any other trigger (workflow_dispatch with no input) runs the
+              # live set. The historical fetchers are deliberately absent from
+              # every cron: their sources are frozen, so a schedule would burn
+              # runs re-downloading 38 MB to produce an identical file. Run
+              # them by name if a retired source ever republishes.
               *)                   list="debt_limit flusight hpai refugees semiconductors faamg" ;;
             esac
           fi

@@ -129,6 +129,61 @@
   </section>
 
   <section class="wrap"><hr class="rule">
+    <h2>No longer updating</h2>
+    <p class="lede">These stopped, and the pages that drew them mostly did not
+    notice. Where the numbers still exist anywhere, they are here, frozen at the
+    date the source stopped rather than deleted.</p>
+    <p class="lede" style="margin-top:14px">One is missing entirely. The New
+    York evictions series ran on Eviction Lab data that now refuses automated
+    requests, and no copy of it survived locally &mdash; so unlike the rest, it
+    is not here at all. Saying so is more useful than an empty frame.</p>
+  </section>
+
+  <section class="wrap">
+
+  <section class="series" id="covid-weekly-admissions">
+    <span class="status is-historical">Historical &middot; data to 8 April 2024</span>
+    <h2>US COVID hospital admissions, weekly</h2>
+    <p class="series-note">This is the series that prompted the rebuild. Its job succeeded every ten hours for two years and republished a chart each time, while the repository behind it had been archived in November 2024 and the data had stopped the previous April. Nothing in the old setup would ever have mentioned it.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Weekly admissions&quot;}],&quot;csv&quot;:&quot;/data/forecasting/covid-weekly-admissions.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US COVID hospital admissions, weekly&quot;}'></div>
+    <p class="series-source">194 rows, latest about 2.4 years ago &middot;
+      source: <a href="https://github.com/reichlab/covid19-forecast-hub" rel="noopener">reichlab COVID-19 Forecast Hub (archived)</a> &middot;
+      download: <a href="/data/forecasting/covid-weekly-admissions.csv">covid-weekly-admissions.csv</a></p>
+  </section>
+
+  <section class="series" id="covid-hospitalizations">
+    <span class="status is-historical">Historical &middot; data to 27 April 2024</span>
+    <h2>COVID and flu patients in hospital</h2>
+    <p class="series-note">Patients in hospital on a given day, summed across reporting states, from the HHS capacity dataset. Three of the old dashboards ran on this one source and all three died together when the R package they used to read it left CRAN — the plain CSV export worked the whole time. HHS later ended the reporting requirement, so the series genuinely stops in April 2024.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;adult_covid&quot;,&quot;label&quot;:&quot;Adults with COVID&quot;},{&quot;col&quot;:&quot;influenza&quot;,&quot;label&quot;:&quot;Confirmed influenza&quot;},{&quot;col&quot;:&quot;icu_covid&quot;,&quot;label&quot;:&quot;COVID in adult ICU&quot;}],&quot;csv&quot;:&quot;/data/forecasting/covid-hospitalizations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;COVID and flu patients in hospital&quot;}'></div>
+    <p class="series-source">1,579 rows, latest about 2.3 years ago &middot;
+      source: <a href="https://healthdata.gov/dataset/g62h-syeh" rel="noopener">healthdata.gov g62h-syeh (HHS)</a> &middot;
+      download: <a href="/data/forecasting/covid-hospitalizations.csv">covid-hospitalizations.csv</a> &middot; <a href="/data/forecasting/covid-hospitalizations-va.csv">covid-hospitalizations-va.csv</a></p>
+  </section>
+
+  <section class="series" id="va-vaccinations">
+    <span class="status is-historical">Historical &middot; data to 19 September 2023</span>
+    <h2>Virginia COVID vaccinations</h2>
+    <p class="series-note">People in Virginia by vaccination status. The dashboard broke in early 2024 when the state retired the endpoints it read, and the job was switched off by hand. The data was never lost — it moved to Virginia's open-data platform and the history is complete, nearly ten million rows of it. Per-age-group figures are in the companion file.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;at_least_one_dose&quot;,&quot;label&quot;:&quot;At least one dose&quot;},{&quot;col&quot;:&quot;fully_vaccinated&quot;,&quot;label&quot;:&quot;Fully vaccinated&quot;}],&quot;csv&quot;:&quot;/data/forecasting/va-vaccinations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Virginia COVID vaccinations&quot;}'></div>
+    <p class="series-source">909 rows, latest about 2.9 years ago &middot;
+      source: <a href="https://data.virginia.gov/" rel="noopener">data.virginia.gov (VDH)</a> &middot;
+      download: <a href="/data/forecasting/va-vaccinations.csv">va-vaccinations.csv</a> &middot; <a href="/data/forecasting/va-vaccinations-by-age.csv">va-vaccinations-by-age.csv</a></p>
+  </section>
+
+  <section class="series" id="vdh-cases-by-age">
+    <span class="status is-historical">Historical &middot; data to 24 September 2024</span>
+    <h2>Virginia COVID cases by age</h2>
+    <p class="series-note">Five months, and that is all there is. VDH retired this dataset and kept only 2024 — everything before April of that year is gone from the source. Before publishing this as a stub I checked the Internet Archive (its captures hold about one day of data each), the CDC's equivalent (region-level, not state), the datastore behind the retired set (73,920 rows and no more), and every R workspace on my own machine. It is genuinely gone. For an age-stratified Virginia series with no hole in it, the HHS panel above carries age-banded admissions from 2020 to 2023.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;total_cases&quot;,&quot;label&quot;:&quot;Cumulative cases&quot;}],&quot;csv&quot;:&quot;/data/forecasting/vdh-cases-by-age-wide.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Virginia COVID cases by age&quot;}'></div>
+    <p class="series-source">1,771 rows, latest about 1.9 years ago &middot;
+      source: <a href="https://data.virginia.gov/" rel="noopener">data.virginia.gov (VDH, retired dataset)</a> &middot;
+      download: <a href="/data/forecasting/vdh-cases-by-age-wide.csv">vdh-cases-by-age-wide.csv</a> &middot; <a href="/data/forecasting/vdh-cases-by-age.csv">vdh-cases-by-age.csv</a></p>
+  </section>
+
+  </section>
+
+  <section class="wrap"><hr class="rule">
     <h2>The archive</h2>
     <p class="lede">Several of these series outlived the places they came from.
     Where a source has gone for good the history is kept here rather than lost with

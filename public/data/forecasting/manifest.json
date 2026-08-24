@@ -1,6 +1,30 @@
 {
-  "generated": "2026-08-24T02:44:19Z",
+  "generated": "2026-08-24T03:07:01Z",
   "series": {
+    "covid-hospitalizations": {
+      "fetched": "2026-08-24T03:05:10Z",
+      "last_date": "2024-04-27",
+      "note": "Patients in hospital with a confirmed diagnosis, summed across reporting states. HHS ended the reporting requirement this series was built on, so it stops here.",
+      "rows": 1579,
+      "source": "healthdata.gov g62h-syeh (HHS)",
+      "status": "historical"
+    },
+    "covid-hospitalizations-va": {
+      "fetched": "2026-08-24T03:05:10Z",
+      "last_date": "2024-04-27",
+      "note": "Patients in hospital with a confirmed diagnosis, summed across reporting states. HHS ended the reporting requirement this series was built on, so it stops here.",
+      "rows": 1518,
+      "source": "healthdata.gov g62h-syeh (HHS)",
+      "status": "historical"
+    },
+    "covid-weekly-admissions": {
+      "fetched": "2026-08-24T03:07:01Z",
+      "last_date": "2024-04-08",
+      "note": "Weekly US hospital admissions with confirmed COVID-19. The hub was archived in November 2024 and the series ends here.",
+      "rows": 194,
+      "source": "reichlab COVID-19 Forecast Hub",
+      "status": "historical"
+    },
     "debt-limit": {
       "fetched": "2026-08-24T02:35:43Z",
       "last_date": "2026-08-20",
@@ -56,6 +80,30 @@
       "rows": 150,
       "source": "UN Comtrade",
       "status": "live"
+    },
+    "va-vaccinations": {
+      "fetched": "2026-08-24T03:07:01Z",
+      "last_date": "2023-09-19",
+      "note": "People in Virginia by vaccination status. VDH stopped publishing this series in September 2023; the history is complete.",
+      "rows": 909,
+      "source": "data.virginia.gov (VDH)",
+      "status": "historical"
+    },
+    "va-vaccinations-by-age": {
+      "fetched": "2026-08-24T03:07:01Z",
+      "last_date": "2023-07-31",
+      "note": "People in Virginia by vaccination status. VDH stopped publishing this series in September 2023; the history is complete.",
+      "rows": 8380,
+      "source": "data.virginia.gov (VDH)",
+      "status": "historical"
+    },
+    "vdh-cases-by-age": {
+      "fetched": "2026-08-24T03:07:01Z",
+      "last_date": "2024-09-24",
+      "note": "Cumulative counts by age band. VDH retired this dataset and kept only five months of it; everything before 2024-04-17 is gone. See fetch_vdh_age.py for what was ruled out.",
+      "rows": 1771,
+      "source": "data.virginia.gov (VDH, retired)",
+      "status": "historical"
     }
   }
 }

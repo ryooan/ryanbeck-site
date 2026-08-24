@@ -162,6 +162,94 @@ SECTIONS = [
         "source": "CDC mirror of USDA APHIS confirmed detections",
         "source_url": "https://www.cdc.gov/bird-flu/situation-summary/data-map-commercial.html",
     },
+    {
+        "slug": "covid-weekly-admissions",
+        "title": "US COVID hospital admissions, weekly",
+        "csv": "covid-weekly-admissions.csv",
+        "plot": {
+            "format": "number",
+            "zero": True,
+            "series": [{"col": "admissions", "label": "Weekly admissions"}],
+        },
+        "note": (
+            "This is the series that prompted the rebuild. Its job succeeded "
+            "every ten hours for two years and republished a chart each time, "
+            "while the repository behind it had been archived in November 2024 "
+            "and the data had stopped the previous April. Nothing in the old "
+            "setup would ever have mentioned it."),
+        "source": "reichlab COVID-19 Forecast Hub (archived)",
+        "source_url": "https://github.com/reichlab/covid19-forecast-hub",
+    },
+    {
+        "slug": "covid-hospitalizations",
+        "title": "COVID and flu patients in hospital",
+        "csv": "covid-hospitalizations.csv",
+        "plot": {
+            "format": "number",
+            "zero": True,
+            "series": [
+                {"col": "adult_covid", "label": "Adults with COVID"},
+                {"col": "influenza", "label": "Confirmed influenza"},
+                {"col": "icu_covid", "label": "COVID in adult ICU"},
+            ],
+        },
+        "note": (
+            "Patients in hospital on a given day, summed across reporting "
+            "states, from the HHS capacity dataset. Three of the old "
+            "dashboards ran on this one source and all three died together "
+            "when the R package they used to read it left CRAN — the plain "
+            "CSV export worked the whole time. HHS later ended the reporting "
+            "requirement, so the series genuinely stops in April 2024."),
+        "source": "healthdata.gov g62h-syeh (HHS)",
+        "source_url": "https://healthdata.gov/dataset/g62h-syeh",
+        "extra_csv": "covid-hospitalizations-va.csv",
+    },
+    {
+        "slug": "va-vaccinations",
+        "title": "Virginia COVID vaccinations",
+        "csv": "va-vaccinations.csv",
+        "plot": {
+            "format": "number",
+            "zero": True,
+            "series": [
+                {"col": "at_least_one_dose", "label": "At least one dose"},
+                {"col": "fully_vaccinated", "label": "Fully vaccinated"},
+            ],
+        },
+        "note": (
+            "People in Virginia by vaccination status. The dashboard broke in "
+            "early 2024 when the state retired the endpoints it read, and the "
+            "job was switched off by hand. The data was never lost — it "
+            "moved to Virginia's open-data platform and the history is "
+            "complete, nearly ten million rows of it. Per-age-group figures "
+            "are in the companion file."),
+        "source": "data.virginia.gov (VDH)",
+        "source_url": "https://data.virginia.gov/",
+        "extra_csv": "va-vaccinations-by-age.csv",
+    },
+    {
+        "slug": "vdh-cases-by-age",
+        "title": "Virginia COVID cases by age",
+        "csv": "vdh-cases-by-age-wide.csv",
+        "plot": {
+            "format": "number",
+            "zero": True,
+            "series": [{"col": "total_cases", "label": "Cumulative cases"}],
+        },
+        "note": (
+            "Five months, and that is all there is. VDH retired this dataset "
+            "and kept only 2024 — everything before April of that year is "
+            "gone from the source. Before publishing this as a stub I checked "
+            "the Internet Archive (its captures hold about one day of data "
+            "each), the CDC's equivalent (region-level, not state), the "
+            "datastore behind the retired set (73,920 rows and no more), and "
+            "every R workspace on my own machine. It is genuinely gone. For "
+            "an age-stratified Virginia series with no hole in it, the HHS "
+            "panel above carries age-banded admissions from 2020 to 2023."),
+        "source": "data.virginia.gov (VDH, retired dataset)",
+        "source_url": "https://data.virginia.gov/",
+        "extra_csv": "vdh-cases-by-age.csv",
+    },
 ]
 
 STATUS_WORDS = {
@@ -243,7 +331,16 @@ def section_html(sec, meta):
 
 def build():
     meta = load_manifest().get("series", {})
-    body = "".join(section_html(s, meta) for s in SECTIONS)
+
+    def group(pred):
+        return "".join(section_html(x, meta) for x in SECTIONS
+                       if x["slug"] in meta and pred(meta[x["slug"]]["status"]))
+
+    live_html = group(lambda st: st != "historical")
+    hist_html = group(lambda st: st == "historical")
+    body = live_html
+    if hist_html:
+        body += HIST_HEADING + hist_html
 
     live = sum(1 for s in SECTIONS
                if meta.get(s["slug"], {}).get("status") == "live")
@@ -260,6 +357,23 @@ def build():
         f.write(page)
     print("forecasting-data.html: %d sections (%d live)" % (shown, live))
 
+
+HIST_HEADING = """
+  </section>
+
+  <section class="wrap"><hr class="rule">
+    <h2>No longer updating</h2>
+    <p class="lede">These stopped, and the pages that drew them mostly did not
+    notice. Where the numbers still exist anywhere, they are here, frozen at the
+    date the source stopped rather than deleted.</p>
+    <p class="lede" style="margin-top:14px">One is missing entirely. The New
+    York evictions series ran on Eviction Lab data that now refuses automated
+    requests, and no copy of it survived locally &mdash; so unlike the rest, it
+    is not here at all. Saying so is more useful than an empty frame.</p>
+  </section>
+
+  <section class="wrap">
+"""
 
 PAGE = """<!doctype html>
 <html lang="en">
