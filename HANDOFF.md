@@ -1,8 +1,10 @@
 # Start here
 
 Ryan Beck's personal site. Five public pages plus one Cloudflare Worker.
-It has never been deployed — that is still the first real task, though
-wrangler is now authenticated, so it is one command away from being live.
+It has never been deployed — that is still the first real task. Wrangler was
+logged in on the old PC, but that token did not survive the 2026-08-19 move to
+`RYANDESKTOP`, so deploying now means `npx wrangler login` first — and that is
+Ryan's call, not a default.
 
 Since 2026-08-18 this repo lives inside the **AI Wiki and Projects**
 workspace, at `projects/personal/personal-website/`. `AGENTS.md` is the
@@ -82,24 +84,59 @@ is the index.
   of CLAUDE.md before touching any of them.
 - **No framework, no build step.** Argued through in HOSTING.md, including the
   case for Astro and when it becomes worth it (roughly eight pages).
-- **All the artwork is generated** by scripts in `tools/`. The leather, page
-  stock, dust sprites, rings of fire, door scenes and the RYAN BECK lettering
-  are all procedural and regenerable with different parameters. None of it is
-  licensed stock; there is nothing to attribute.
+- **The generated artwork is generated** by scripts in `tools/`. The leather,
+  page stock, dust sprites, rings of fire, two of the three door scenes and the
+  RYAN BECK lettering are all procedural and regenerable with different
+  parameters. None of it is licensed stock; there is nothing to attribute. The
+  book covers, the portrait and the fiction door are now Ryan's real images and
+  are *not* regenerable — do not overwrite them with a `tools/` run.
+
+## The content pass, 2026-08-18 evening
+
+Two commits after the docs were last synced replaced most of the invented
+content with real material, so anything below that still reads "placeholder"
+has been narrowed to what the list in "What is not done" says.
+
+- **Fiction, blog and portrait** (`0c6da10`) came from Ryan's own author site
+  (`github.com/ryooan/ryooan.github.io`): real SEER and *Not Human* covers at
+  their true 0.625 ratio with his own blurbs, a real Amazon link, all nineteen
+  archive posts 2019-2023 with real dates and excerpts, his actual headshot,
+  and the SEER cover art behind the fiction door. An invented pull-quote
+  attributed to the novel was deleted outright — that was a fabrication, not a
+  placeholder. SEER's publication year was corrected to 2019.
+- **Projects** (`275f764`) replaced the six invented cards with the fourteen
+  real forecasting dashboards from `ryooan.github.io`, all verified 200. The
+  lede marks itself a draft for Ryan to prune. **Thumbnails are still the six
+  generated placeholders**, reused across fourteen cards.
+- **Images now revalidate** like the CSS and JS. The old 4h policy made swapped
+  artwork look unchanged in review. `public/_headers` carries a BEFORE LAUNCH
+  note to put images back on a long max-age once filenames carry a content hash.
 
 ## What is not done
 
 Everything in "Known placeholders" in CLAUDE.md, but the short version:
 
-- it has never been deployed (wrangler is logged in; `npm run deploy` is all
-  that's left — but publishing is Ryan's call, never a default)
+- it has never been deployed, and wrangler is no longer logged in on this
+  machine — `npx wrangler login` then `npm run deploy`, but publishing is
+  Ryan's call, never a default
 - no git remote, and `.github/workflows/deploy.yml` triggers on `main` while
   the branch here is `master`
 - no domain: `ryanbeck.com` is assumed in eight files
-- every project card is invented
-- the book covers, the portrait and the door scenes are placeholder art
-- the about-page copy is a template that says so
+- every project card uses the "light float" treatment Ryan chose from three
+  lab rounds (`tools/make-project-thumbs.py`); the dashboard thumbs are real
+  captures, Herder's is its real wordmark, and the projects/forecasting-data
+  ledes remain drafts
+- the dashboards themselves still live in the old `ryooan.github.io` repo —
+  the to-do is to fork them into the current repo, fix bugs, and polish
+- the March Madness card links a deployment that is behind Vercel SSO —
+  visitors get a login page until Ryan disables Deployment Protection
+- the projects door scene is still generated art (the fiction and blog doors
+  are real now, as are both covers and the portrait)
+- the about-page copy no longer labels itself a placeholder, but it was drafted
+  for him rather than by him — it still wants his voice and his sign-off
 - `/api/subscribe` validates an address and then does nothing with it
+- caching is deliberately loose for review; see the BEFORE LAUNCH note in
+  `public/_headers`
 
 ## Working with Ryan
 

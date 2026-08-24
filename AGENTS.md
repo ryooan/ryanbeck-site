@@ -13,15 +13,28 @@ shared-env: none — this project uses no keys from _shared/.env
 Ryan Beck's personal site: a drawn portal-hall landing page, four interior pages,
 an about page rendered as a book, and one Cloudflare Worker for `/api/*`.
 
-> ⛔ **Never send without explicit instruction.** For this project the big one is
-> **deploying**: `npm run deploy`, `npx wrangler deploy`, pushing to a GitHub
-> remote (`.github/workflows/deploy.yml` deploys `main` automatically), and
-> pointing a domain all make the site publicly reachable and need an explicit
-> go-ahead in the current conversation. Full rule: workspace `AGENTS.md`.
+> ⛔ **Publishing this site needs an explicit go-ahead.** `npm run deploy`,
+> `npx wrangler deploy`, pushing to a GitHub remote
+> (`.github/workflows/deploy.yml` deploys `main` automatically), and pointing a
+> domain would all make the site **publicly reachable for the first time** — ask
+> in the current conversation before any of them.
 >
-> **Wrangler is authenticated** as of 2026-08-18 (OAuth, ryooan@gmail.com,
-> account `0efbd4d4…d990`), so nothing technical stands between a stray
-> `npm run deploy` and a live public site. Being able to is not permission to.
+> This is a project rule, not the workspace send rule. The workspace rule was
+> narrowed on 2026-08-21 to cover only email and Slack, and ordinary deploys no
+> longer need an ask — but going from *never published* to *live on the open web*
+> is not reversible, so it still does here. Workspace rule: `AGENTS.md` →
+> "Never send email or Slack without explicit instruction".
+>
+> **Wrangler IS authenticated on this machine** (re-verified 2026-08-22 with
+> `npx wrangler whoami`): OAuth as ryooan@gmail.com, account
+> `0efbd4d43122e579508d8f3b649ed990`, credentials at
+> `%APPDATA%\xdg.config\.wrangler\config\default.toml`. This corrects the earlier
+> note here, which said the token had not survived the 2026-08-19 migration to
+> `RYANDESKTOP` — true when written, no longer true.
+>
+> So `npx wrangler deploy` would now succeed immediately. That makes the gate
+> above *more* important, not less: nothing stands between a stray deploy and
+> this site being publicly reachable for the first time except the rule itself.
 
 ## Read these, in order
 

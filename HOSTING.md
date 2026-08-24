@@ -70,10 +70,11 @@ start there and skip a lot of glue code.
 
 ## What I'd actually do
 
-> **Status, 2026-08-18:** the Cloudflare account exists and wrangler is
-> authenticated (OAuth, ryooan@gmail.com). Step 3 is done — the Worker
-> implements `/api/substack` and it serves Ryan's real feed locally. Steps 1
-> and 2 are the open ones, and step 2 is now literally `npm run deploy`.
+> **Status, 2026-08-19:** the Cloudflare account exists (OAuth, ryooan@gmail.com),
+> but wrangler's saved token did not survive the move to the new PC, so step 2
+> is `npx wrangler login` and then `npm run deploy`. Step 3 is done — the
+> Worker implements `/api/substack` and it serves Ryan's real feed locally.
+> Steps 1 and 2 are the open ones.
 
 1. **Register `ryanbeck.com`** (or whatever's free) and point it at Cloudflare.
    Keep `ryanbeckauthor.com` as a redirect to `/writing` — the links out there

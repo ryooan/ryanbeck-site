@@ -17,6 +17,9 @@ doing real work.
 public/            everything served to a browser
   index.html       the hall — the landing page, and the interesting one
   projects.html  writing.html  blog.html  404.html
+  forecasting-data.html   the fourteen data dashboards, one card on projects
+  park-guides.html        family park guides: overview + open/download PDFs
+  guides/                 the two guide PDFs themselves (RMNP, Grand Teton)
   about.html       the tome — a book you click through
   about-plain.html the same content as an ordinary page
   compare.html  dust-lab.html   experiments, noindex, unlinked (see the end)
@@ -39,12 +42,20 @@ public/            everything served to a browser
     js/substack.js          fetches /api/substack
     js/nav.js               marks the current nav item
     scenes/                 what's behind each door + the fire ring textures
-    cards/  covers/         placeholder art
+    cards/                  every card in the LIGHT FLOAT treatment
+                            (tools/make-project-thumbs.py): fd-*.jpg are
+                            real captures of the dashboards' charts,
+                            em-*.jpg stage Herder's wordmark and a drawn
+                            bracket, forecasting-data.jpg is the composite,
+                            park-guides.jpg the two real guide pages
+    covers/                 real: the two book covers + Ryan's portrait
 worker/index.js    /api/substack and /api/subscribe. Static files never reach it
 tools/             make-fire.py (flames), make-wordmark.py (lettering),
                    make-tome-textures.py (leather + page stock),
                    make-dust.py (dust sprites),
                    trace-wizard.py (the wizard's clip polygon),
+                   prep-scene.py (crop + tone a photo into a door scene),
+                   make-project-thumbs.py (dashboard chart -> card thumb),
                    check-links.mjs, check-docs.mjs (CI)
 wrangler.toml      Cloudflare config
 ```
@@ -109,14 +120,22 @@ it if the artwork or the element box changes (the box is duplicated in the
 script's `BOX`).
 
 Hover, keyboard focus, and a touch long-press (`.is-held`) light his full
-glow. His `.is-awake` turn in the wake cycle lights **only the staff ember**
+glow, over `--glow-in` (.55s). **His body and his staff ember read from that
+one variable on purpose.** They were both .55s before and still did not
+match, because the staff was not transitioning at all — see "Animation
+cancels eat transitions". His `.is-awake` turn in the wake cycle lights **only the staff ember**
 — a wizard flaring up on a timer read as possessed rather than inviting,
 so the always-breathing ember is the whole idle affordance.
 
 The knot of his staff carries `.staff-glow` — wizard-light: a white core,
 cold blue halo, and two crossed off-axis rays (the pseudo-elements), dim
 and breathing at rest, flaring to full when he is hovered, focused, held,
-or awake. Deliberately cold against the warm page — it reads as magic, not
+or awake. **The resting breath animates `filter: brightness()`, not
+`opacity`** — opacity belongs to the flare, and the two cannot share a
+property. He keeps breathing while lit, which is deliberate: stopping the
+breath is what used to require cancelling the animation.
+
+The light is deliberately cold against the warm page — it reads as magic, not
 as a candle. It is a sibling placed **immediately after** the `.wizard`
 anchor (the `+` selector depends on that), and it must live outside him:
 his clip-path would crop any halo drawn inside to his silhouette. Its
@@ -138,12 +157,48 @@ Six stacked spans inside each portal, back to front: `.scene`, `.veil`, `.rim`,
 `.ember`, `.swirl.b`, `.swirl`. Order matters — `.rim` is a dark inset shadow
 and must sit *under* the flames or it mudddies them.
 
-- `.scene` goes from `scale(1)` + `brightness(.07)` to `scale(1.46)` +
-  `brightness(1.22)`, then keeps drifting to `1.62` on a 13s alternating loop.
+- `.scene` goes from `scale(1)` + `brightness(var(--scene-rest))` to
+  `scale(1.46)` + `brightness(1.22)`, then keeps drifting to `1.62` on a 13s alternating loop.
   It's a continuous dolly, not a one-shot zoom — that's what Ryan asked for.
-  The scene art itself is pre-brightened with a soft-knee highlight rolloff so
-  it doesn't bloom at that exposure; if you swap in new art and it looks blown
-  out, that's why.
+  **The zoom is the `scale` property and the drift is `transform`, and they
+  have to stay on separate properties** — see "Animation cancels eat
+  transitions" below for what happens when they share one. The drift is a
+  multiplier (`1 → 1.1096`), always applied and merely paused at rest rather
+  than added and removed, which is what keeps it out of the transition's way.
+  Its keyframes are relative, so changing the `1.46` changes the far end too.
+  The scene art itself is tone-mapped with a soft-knee highlight rolloff so it
+  doesn't bloom at that exposure — `tools/prep-scene.py` does the crop and the
+  curve; if you swap in new art and it looks blown out, that's what you skipped.
+- **A resting door is shrouded, not blank.** The scene is still there at
+  `--scene-rest` exposure, desaturated, contrast pulled *below* 1 (haze lifts
+  blacks; it does not crush them) and softly blurred, under a `.veil` that is
+  three stacked gradients rather than one flat black: a mouth that opens in
+  the middle and closes to solid at the walls, a weighted floor and lintel,
+  and a cold haze where the far end is. The mouth is the whole depth cue —
+  the same picture under a flat alpha reads as a dirty window, and under a
+  converging surround reads as a passage. All three ride the one opacity that
+  fades to `.02` when the door wakes, so the lit state is untouched and the
+  crossfade is a single property.
+
+  `--scene-rest` is **per-door** because the three pictures are nowhere near
+  each other in level. `1.15 / .36 / .46` (projects / fiction / blog). The
+  fiction corridor and the puzzle land near a median of 25 behind the veil;
+  the projects anvil is a different animal and is tuned differently on
+  purpose — it is ~90% pure black with one bright subject, so its median is
+  the background and says nothing about whether you can see it. Tune that
+  one on the SUBJECT (the p95 of the visible window), which is why its value
+  sits above 1: there is so little lit area that dimming it at all erases
+  it.
+- **How close a door stands to its scene is per-door**, via `--scene-bleed`
+  (how much bigger `.scene` is than the opening) and `--scene-zoom` (the hover
+  target). A door shows `1 / (bleed x zoom)` of the art's height and `0.741x`
+  that in width — 56% of the height at the defaults. `[data-portal="blog"]`
+  overrides both (`-3%`, `1.06`) because its art is a close-up photograph
+  rather than a room: at the defaults the blue puzzle piece filled the entire
+  opening. Pulled back it shows about 2.7 pieces across instead of 1.7. That
+  is close to the floor — with no bleed and no zoom a door still only shows
+  74% of the art's width, so a scene cannot show more than its photograph
+  contains.
 - `.rim`'s inset shadow *opens outward* as the scene pushes in. That opposition
   is what reads as vertigo. Don't "simplify" it away.
 - `.swirl` / `.swirl.b` are two rotating ring-of-fire PNGs (24s forward, 15s
@@ -157,6 +212,43 @@ that makes the ring hug the frame is roughly `door_width / 0.60` ≈ 170%. Large
 shows more picture but pushes the flames outside the frame where they get
 clipped into two orange smudges; smaller closes the ring in over the art. Change
 `inner=` in `tools/make-fire.py` and you have to change that percentage too.
+
+### Animation cancels eat transitions
+
+**Never let a CSS animation and a CSS transition own the same property on the
+same element.** If a style change cancels a running animation and alters that
+property in the same frame, the browser starts *no transition at all* — the
+value snaps. Both of the hall's motion bugs were this, and both were reported
+by Ryan as timing complaints rather than as jumps, which is what makes it worth
+writing down.
+
+- **The staff ember flared instantly** while his body took .55s. `.staff-glow`
+  breathed on `opacity` and the hover rule raised `opacity` while setting
+  `animation: none`. Crossing the staff with the cursor showed it worst,
+  because the snap fired on every crossing.
+- **The doorway scenes snapped out of their zoom.** `portal-drift` animated
+  `transform` and the hover rule transitioned `transform`, so leaving a door
+  after the drift had started dropped the scene from wherever it had reached
+  straight back to `scale(1)` while the light was still fading — a visible
+  zoom jump at the end of every hover longer than 1.35s.
+
+The fix in both cases is the same shape: **put the loop and the transition on
+different properties, and never add or remove the animation.** The scene's zoom
+moved to the `scale` property so the drift can keep `transform`, and the drift
+is paused rather than removed. The ember's breath moved to `filter:
+brightness()` so the flare can keep `opacity`.
+
+You can check this without watching a frame, which matters because this
+machine's browser pane does not composite. Apply the class, then ask the
+element what transitions it actually generated:
+
+```js
+el.getAnimations().filter(a => a.transitionProperty)
+  .map(a => a.transitionProperty + ' ' + a.effect.getTiming().duration)
+```
+
+A property you expected to see in that list and don't is a property that is
+snapping. That is how both of these were found and how the fixes were checked.
 
 ### The wake cycle
 
@@ -190,6 +282,66 @@ paddings (`.hall` and `.hall-mark` share the 150px figure — change one,
 change both).
 
 Everything honours `prefers-reduced-motion`.
+
+## The forecasting data
+
+Seven series, fetched by Python, committed as CSV, drawn by `assets/js/plot.js`.
+`public/forecasting-data.html` is **generated** by
+`tools/forecasting/build_page.py` — edit the SECTIONS list in that file, not
+the HTML.
+
+### The rule this whole subsystem exists to enforce
+
+A job succeeding tells you it fetched something. It does not tell you anyone
+upstream is still publishing. COVIDWeekly ran green every ten hours for two
+years while showing a series that stopped in April 2024, and nothing in the
+setup would ever have said so.
+
+So: **status comes from the last date in the data, never from the run time.**
+`_common.record()` takes `last_date`, the page builder renders it, and
+`fetch_hpai.py` flips itself to `stale` when its newest row is over 120 days
+old. That is why the bird-flu chart currently says "Source stalled · data to
+9 June 2025" instead of showing a tick.
+
+### Traps found the hard way, all of which return silently wrong numbers
+
+- **Treasury: never narrow the `fields` list.** `debt_catg_desc` is requested
+  and never read. Drop it and two "Less Debt Not Subject to Limit" rows that
+  differ only by description collapse into one, losing $494M on 45 dates. The
+  fix was found by diffing against Ryan's archived R output, which matched to
+  the dollar on all 4,579 overlapping dates.
+- **Treasury: an absent ceiling row means suspended,** not missing. Only the
+  2023-25 suspension published a literal `0`; the four earlier ones just omit
+  the row. Reading only the `0` finds 395 suspended days instead of 1,732 and
+  leaves four of the eight suspensions unshaded.
+- **Comtrade: `partner2Code=0` is mandatory.** Without it a year comes back
+  broken out by second partner, and taking the first row gives $2,042 where
+  the answer is $230 billion. Monthly also needs explicit `YYYYMM` periods,
+  twelve per call maximum — omitting `period` silently returns only the last
+  twelve months.
+- **Refugees: unreported months are zeros, not blanks.** The workbook always
+  has twelve month columns. Publishing the trailing ones draws admissions
+  collapsing every year, so the "as of" date in the sheet header is parsed and
+  later months dropped.
+- **SEC: the revenue tag changed** around 2018, and every 10-K restates two
+  prior years. Tags are tried in order; entries are filtered to 330-400 day
+  durations and de-duplicated by fiscal-year end, newest filing winning.
+
+### plot.js, and why it is not a library
+
+Every dashboard here died of dependency rot — RSocrata leaving CRAN took two
+pages down, dplyr dropping `summarise_each()` took the debt limit dark for six
+months. A chart library would reproduce that. It is ~21 KB, reads the site's
+CSS custom properties for colour, and breaks the line at missing values rather
+than interpolating, because several of these series have real holes.
+
+**Charts mount eagerly, and that is deliberate.** Two earlier versions
+deferred below-the-fold charts, first with IntersectionObserver and then with
+a scroll handler. Neither could be verified: the embedded browser pane fires
+no IO callbacks, no scroll events and no `requestAnimationFrame`, so a chart
+that never mounts looks identical to one that is merely waiting. The charted
+CSVs come to ~190 KB. Not worth a column of blank rectangles. If the page
+grows enough to need laziness, add it and test it in a real browser.
 
 ## The wordmark
 
@@ -226,6 +378,12 @@ because `compare.html` shows it. Its own notes are kept at the bottom of this
 section in case it is ever revived.
 
 ⚠️ **`tome.css` is two files in a trenchcoat, and `about.html` loads it.**
+A consequence beyond deletion: its hand-built-book half owns generic class
+names — `.leaf`, `.face`, `.sheen`, `.edge` — and they leak into the about
+page. The per-page ageing div was first named `.leaf` and tome.css's
+`width:50%; height:98.8%` promptly halved it, which rendered every page as
+an aged column beside bare stock. It is `.age-leaf` now. Grep tome.css
+before introducing any new class name on the about page.
 Its "stage / page contents / the cover / controls / reduced-motion" sections
 are the shared furniture every version of the book uses — headings, buttons,
 `.plate`, `.folio`, `.kicker`, drop caps. Its "leaves / the curl" sections
@@ -279,10 +437,55 @@ full sheet of inside-cover leather flat on the left for its whole duration.
 `maskLeftPage()` enforces the rule (it also still does the portrait masking),
 runs from `status()` plus two delayed retries at load (the first StPageFlip
 render can land late in a throttled tab), and per-frame during flips via
-`maskLoop`. Its shadow cousin: the `.stf__*Shadow` elements are
+`maskLoop`. Its shadow cousin is `maskShadows()`, and it enforces the same
+rule for StPageFlip's four shadow elements: **nothing can cast a shadow onto
+a half with no book in it.** A hard flip paints `.stf__hardShadow` across the
+full width regardless, so opening the cover laid a grey slab over the bare
+paper beside the book and closing it did the same on the way back — the
+"strange shadow on the left" Ryan reported at several points in the swing.
+Any shadow whose middle sits over the empty half is hidden; "empty" is the
+left board being anything other than fully opaque in landscape, and anything
+left of the sheet in portrait. Beyond that they are
 `visibility:hidden` except while `.libtome.is-flipping` — the initial render
 can park one of those over the empty half too. Visibility, not display,
 because the dust engine reads the outer shadow's box every frame.
+
+⚠️ **StPageFlip does not wrap the pages you give it — it stamps `stf__item`
+onto the very elements you hand over.** `.stf__item` and `.page` are the same
+node, plus a `--hard`/`--soft` class and, during a flip, a lifted `z-index`
+and a rotated inline `transform`. Any code that reaches *into* an item for its
+page — `item.querySelector('.page')` — silently finds nothing and does
+nothing. That is exactly how the first version of `hardInFlight()` failed: it
+could never return true, so the rule it guards never ran once, and the bug it
+was written to fix survived untouched. Test it against the real DOM, not a
+stub: a stub built on the same wrong assumption passes happily.
+
+**A cover in flight owns the left half, and that is decided from the DOM,
+not from a prediction.** `hardInFlight()` asks whether a hard page is in the
+air right now — flight meaning a lifted z-index (≥5), the same convention
+`maskLeftPage()` trusts — and while one is, until the `flip` event says it
+has landed, the left board is held at zero. A rotate-in-transform test was
+tried as a second flight signal and burned us: StPageFlip stamps
+`rotateY(0deg)` into settled pages' cssText on every draw, so the parked
+back cover matched it and the left board vanished during ordinary turns
+near the end of the book. z-index only. This is a second line of defence behind the
+`changeState` choreography below, and it exists because the prediction there
+is `getCurrentPageIndex() + intent` — click back through several pages
+quickly and that index runs a flip or two behind, the target never computes
+to 0, the close is never recognised, and the board stays lit under a cover
+that is already swinging shut. What is actually on screen cannot be stale.
+**A predicted target may hide the left board but must never light it.** The
+second half of the same bug: a close predicted `target > 0` from the stale
+index, and `sizeBoards()` answered by fading the board *in* — actively
+relighting it for the whole closing swing, which is why it read as lingering
+rather than merely late. `sizeBoards(target, true)` now marks a prediction,
+and lighting only ever happens from a settled state (the argument-less
+`status()` call).
+
+The `coverGesture` latch (opened at `changeState`, closed at `flip`) is what
+keeps the rule from fighting the fade-in: `maskLoop` runs for ~1.5s after a
+flip lands, and without the latch it re-hid the board the instant the `flip`
+handler lit it.
 
 **In landscape there are TWO boards, and neither ever moves.** A leather
 rectangle travelling or resizing reads as furniture moving, not as a book
@@ -303,13 +506,108 @@ verso. `maskLeftPage()` runs synchronously with the close-time hide. If any
 of this ever becomes visible, the timing against StPageFlip's events is
 what broke.
 
-**Page staining varies per page.** Each paper page gets its own crop window
-into `page.jpg` — deterministic offsets and an anisotropic stretch set
-inline when the pages are built (and one for the portrait verso). Without
-it every page wears identical foxing and the stock reads as a texture
-overlay rather than as paper. The covers keep their leather from CSS; the
-inline styles are only set on paper pages, because an inline background
-would override the hard pages' leather.
+**Every paper page ages differently** — `stain()` in `tome-lib.js`. One
+texture at nine offsets is not a used book: it was a crop window and a
+stretch, and it still read as one sheet of stock photocopied nine times.
+Each page now gets its own recipe from a PRNG seeded on the page index:
+its patch of `page.jpg`, its own inset edge shadow, three to six foxing
+blotches (warm or cold, round or drawn out), sometimes a cluster of
+freckles, one grubbier edge, sometimes a damp mark, and an overall cast so
+no two sheets are the same white. Seeded means page three's stains are
+always page three's stains — reload, resize and reflow do not shuffle them,
+and a screenshot of a bug is reproducible.
+
+⚠️ **Where it lives is the load-bearing part: a child `.leaf` div, never
+the page element.** StPageFlip rewrites each item's entire `style.cssText`
+on every draw (`simpleDraw`/`drawSoft` in the bundle end in
+`this.element.style.cssText = ...`), so ANY inline style set on a page is
+annihilated by the first frame it renders. Two versions of this feature —
+the original crop-window one and the first recipe one — were installed
+inline on the pages, verified at load, and never survived a single draw:
+every page fell back to the stylesheet's identical `center/cover` and
+Ryan kept seeing one pattern while the DOM checks kept passing. Children
+are not touched, and the item's clip-path folds them with the page, so the
+leaf carries the stock (crop, tint, offset vignette, all inline) and its
+`::before` paints the `--age` gradients. If you add ANY per-page styling
+to this book, it goes on a child. The verso is ours — StPageFlip never
+sees it — so it keeps the direct arrangement.
+
+- **Only paper pages get a leaf.** `data-density="hard"` is both covers;
+  the front keeps its leather and settled dust, and the back keeps the
+  paste-down endpaper styling it gets from `[data-type="backcover"]`.
+
+Two things that took a pass to get right, in case they are ever retuned:
+a damp mark whose centre sits *on* the page reads as a coffee ring, so the
+centre is placed well outside it and only a shallow arc of the tidemark
+crosses — with a second offset ellipse to break the arc, because a clean
+circular edge is a mug no matter how faint. And the tidemark has to stay
+wide and faint: a crisp narrow ring is a mug, a broad soft one is water
+that dried. The portrait verso gets a recipe too, on a seed no real page
+uses — it sits beside the recto and matching one would read as a printing
+error.
+
+**The edge vignette is what the eye reads as "staining", and it has to be
+asymmetric.** This is the one that took three tries to see. Every page carried
+`box-shadow: inset 0 0 Npx` — a perfectly symmetrical brown frame, the same
+shape on all four sides, page after page. Varying its blur and its alpha
+changes how *heavy* that frame is; it never changes that it is the same frame,
+and nothing painted underneath competes with a border drawn round all four
+edges. Offsetting it is what breaks the repeat: the darkening piles into two
+sides and thins on the other two, so one sheet is grubby down its fore-edge
+and the next along its head. Two offset shadows per page, the second thrown
+back the other way.
+
+**The scale range also matters.** `page.jpg` is one sheet
+whose variation is almost entirely large and soft — blur it by 40px and the
+standard deviation barely moves, from 12.1 to 11.8. That means shifting the
+crop window around does very little: at the original 112–184% every page
+showed 54–89% of the same texture, the windows overlapped almost completely,
+and nine pages read as one. **Different offsets into a soft texture are not
+different paper; different scales are.** At 105–290% a page shows anywhere
+from a third of the sheet to nearly all of it, which changes the apparent
+size of the grain. That, the broad tonal patches, and the per-page tint carry
+the difference; the blotches are detail on top.
+
+The tint is a `multiply` blend against a per-page base colour, since the
+stock is opaque and blending is the only way its own tone can differ. Two
+rules keep it honest:
+
+- **Its channels are derived, not rolled independently** — `r >= g >= b` by
+  a bounded step — so it can only run warm. Three free channels produced
+  `rgb(232,238,196)`, and multiplied through the stock that is not an aged
+  sheet, it is a mouldy one.
+- **Every page gets one, over a narrow range** — about 3% across the book on
+  the blue channel, which is the channel that carries yellowing. Tinting
+  only some pages, over a wider range, sorts the book into plainly yellowed
+  sheets and plainly white ones, and the jump between two *facing* pages
+  reads as a mistake rather than as age. Pages of one book came off one
+  batch of stock: they should differ by a shade, not by a generation. The
+  variety belongs in the marks and the vignette, not in the colour.
+
+Cost is 9–17 gradients per page, painted once.
+
+Verifying any of this is awkward, because the browser pane on this machine
+does not composite — the real rAF never fires. But **flips CAN be exercised
+there**: copy `about.html` to a scratch page whose `<head>` starts with a
+script that replaces `requestAnimationFrame` with a queue plus a
+`__pump(n, t)` that drains it with hand-fed timestamps, then drive
+`window.__tomeFlip` (a debug handle `tome-lib.js` exposes) and pump. Layout
+and cssText all update without composited frames, so geometry, board
+opacity and mask state can be sampled mid-swing. Two traps: feed the pump a
+**monotonic clock you own** (`window.__t`), never a fresh
+`performance.now()` per call — synthetic time runs ahead of real time, and
+StPageFlip's `render(h)` computes a negative frame index from a rewound
+clock, throws `frames[u] is not a function`, and its loop dies silently mid
+flip. And pump *between* separate tool calls only via that same clock. This
+is how the `.age-leaf` collision and both board scenarios were finally
+measured mid-flight (rapid close: board 0 for the whole swing; last-page
+turns: board 1 throughout). Three other techniques still apply. `tools/`-style Node
+harnesses can pull a function straight out of this file by name and run it
+against stubs — that is how `stain()` was rendered offline against the real
+`page.jpg`, and how `maskShadows()` and `hardInFlight()` were checked against
+made-up geometry. And `getAnimations()` reports what the browser decided
+without needing a single frame to be painted (see "Animation cancels eat
+transitions").
 
 `.libtome-book` needs `position:relative; z-index:2`. The verso is `z-index:1`,
 and without an explicit z-index on the book, StPageFlip's own
@@ -403,6 +701,14 @@ cannot read a fold at all it falls back to the book's own box.
 Density is one number — `AMOUNT`, exposed as `BookDust.setAmount()`. The
 per-engine counts are **rebased**: `1.0×` is roughly where the lab slider sat
 at 2.2× in the first round, because that is where it was judged to look right.
+
+**The site runs at half of that**: `about.html` carries
+`data-dust-amount="0.5"` and `tome-lib.js` applies it before attaching. Set it
+there rather than by moving `AMOUNT`, so `dust-lab.html` keeps showing every
+engine at the documented baseline — the lab is a bare book on a plain
+background where you are hunting for the dust, and the same cloud over the
+real page was more than the page needed. `setAmount` is global, so a page with
+two books cannot give them different densities.
 Puff sprites are deliberately small (3.5–17px); larger ones read as bubbles no
 matter how they are faded, which was the first version's problem.
 
@@ -571,9 +877,13 @@ Cloudflare Workers with static assets. Static files are served by the asset
 layer and never invoke the Worker, so they're free and unlimited; only `/api/*`
 costs anything against the 100k/day free tier.
 
-**Wrangler is authenticated** (2026-08-18, OAuth as ryooan@gmail.com, account
-`0efbd4d4…d990`), so `npm run deploy` works from this machine. It has still
-never been deployed — publishing is Ryan's call, not a default.
+**Wrangler is not authenticated on this machine.** It was on the old PC
+(2026-08-18, OAuth as ryooan@gmail.com, account `0efbd4d4…d990`), but the
+credential lives in `%APPDATA%\xdg.config\.wrangler\config\default.toml` and did not come across in the
+2026-08-19 migration — `npx wrangler whoami` says so. `wrangler dev` needs no
+account, so local work is unaffected; a deploy needs `npx wrangler login`
+first. It has still never been deployed — publishing is Ryan's call, not a
+default.
 
 Two things to know before wiring up CI:
 
@@ -584,6 +894,10 @@ Two things to know before wiring up CI:
   `CLOUDFLARE_ACCOUNT_ID`. There is no remote configured yet, so none of this
   is live.
 
+Before launch, put `/assets/*` images back on a long `max-age` and give them
+content-hashed filenames — they are on `no-cache` today so swapped artwork
+shows up immediately in review (see the note at the top of `public/_headers`).
+
 `public/_redirects` already maps the old ryanbeckauthor.com paths and gives the
 pages extensionless URLs. `wrangler.toml` has commented-out blocks for the
 custom domain and a Hyperdrive/Neon binding — uncomment when they exist, and
@@ -593,14 +907,55 @@ note `html_handling = "none"` there is load-bearing (see "Running it").
 
 None of this is a bug. All of it is waiting for real content.
 
-- **Every project card** on `projects.html` — art, titles, copy and links are
-  invented.
-- **Both book covers** and the **about-page portrait** are generated images,
-  not real ones. The portrait in particular is an obvious grey silhouette.
-- **The three door scenes** behind the portals are generated. Real artwork
-  wants to be roughly 760×912 with the subject centred, because the ring of
-  fire eats the edges.
-- **All about-page copy** is a template and says so in the text itself.
+As of the 2026-08-18 content pass most of the invented material is gone. What
+is left:
+
+- **The card treatment is "light float", chosen by Ryan from three lab
+  rounds (2026-08-20)**: the real chart warmed so white becomes paper, on a
+  rounded panel, gently rotated, floating over an airy wash of its own
+  colours. `tools/make-project-thumbs.py` builds every card — the fourteen
+  real dashboard captures, the composite, Herder's actual wordmark, a drawn
+  bracket for March Madness (still behind Vercel SSO), and the park guides'
+  real first pages. What was learned choosing it: recoloured screenshots
+  read as screenshots however styled; fully redrawn data loses the
+  "preview of the page" quality; the winner keeps the real chart and puts
+  the energy in the staging. Rerun the script when a dashboard's data
+  moves. Both project pages still mark themselves drafts.
+- **All three door scenes are now real art**, none generated:
+  `scenes/fiction.jpg` is the SEER cover, `scenes/blog.jpg` the puzzle
+  photograph, `scenes/projects.jpg` the voxel anvil Ryan supplied
+  (2026-08-23). Replacement artwork wants to be 760×912 with the subject
+  centred, because the ring of fire eats the edges.
+
+  **Two modes in `tools/prep-scene.py`, and picking the wrong one is the
+  mistake to avoid.** `--focus x,y` crops INTO a picture: right for a scene
+  that fills its frame. `--fit-subject FRAC` pads AROUND one: right for a
+  single bright subject on a plain dark ground, which is what the anvil is.
+  The reason it matters is that a door shows only the middle of its scene —
+  82% of the art at rest but **56% of the height and 50% of the width** once
+  the hover zoom is on — so a subject filling its own frame loses its edges
+  exactly when the door lights up. The anvil spanned ~70% of its square
+  source; a straight crop would have sliced the horns off. Padding a black
+  background is free.
+
+  One trap inside `--fit-subject`: the subject box is the span holding 92% of
+  the image's *light*, not the outermost lit pixel. This art scatters faint
+  voxel debris to the frame edge, and a threshold-and-bound box returned
+  nearly the whole canvas — scaled to fit the door window, that shrank the
+  anvil to a speck. Weight by how much light each row and column carries.
+
+  Tone: neither real scene was matched to the *mean* of the old generated
+  ones — matching a mean built from dark rooms crushes a uniformly lit
+  picture into a murky band. Match highlights, keep the subject readable. The
+  puzzle sits at paper 163 / piece 63, which is 199 / 77 at hover exposure.
+- **The about-page copy** no longer announces itself as a placeholder, and it
+  is factually grounded, but it was drafted rather than written by Ryan. It
+  wants his voice and his sign-off before launch.
+- **Not placeholders any more:** both book covers, the about-page portrait, the
+  blog archive (nineteen real posts), the Substack fallback list, and every
+  project card's title, copy and link. These are Ryan's real images and text —
+  a `tools/` regeneration run must not overwrite the covers, the portrait,
+  or any of the three door scenes.
 - **The newsletter form** posts to `/api/subscribe`, which validates the
   address and returns `{ok: true}` without storing it. See the TODO in
   `worker/index.js`: it needs a Buttondown token or to be repointed at
@@ -637,18 +992,30 @@ loads on `about.html`.
 Roughly in the order they unblock things.
 
 1. **Deploy it.** It is a static site plus one Worker and has never been put
-   online. Wrangler is already logged in, so this is just `npm run deploy` —
-   but it publishes under Ryan's name, so wait for him to ask. Then point the
-   domain. HOSTING.md covers why Cloudflare and what the free tier gives you.
+   online. On this machine that is `npx wrangler login` and then
+   `npm run deploy` — but it publishes under Ryan's name, so wait for him to
+   ask. Then point the domain. HOSTING.md covers why Cloudflare and what the
+   free tier gives you.
 2. **Wire `/api/subscribe`** to a real list, or delete the route and point the
    form at Substack's own subscribe page.
-3. **Replace the placeholder art** — the door scenes, the two book covers and
-   the about-page portrait. See "Known placeholders" for the sizes.
-4. **Real project cards.** The grid takes any number; the card markup is
-   copy-pasteable.
-5. **Rewrite the about-page copy** in Ryan's voice. Each page is one
-   `<article class="page-src">` in `about.html`; adding or reordering pages
-   needs nothing else changed.
+3. **Fork the fourteen dashboards** out of the old `ryooan.github.io` repo
+   into the current personal-projects repo, fix what has drifted, and polish
+   the presentation — Ryan's ask, 2026-08-20; `forecasting-data.html` says
+   the same in its lede. Until then they stay linked where they live.
+3a. **March Madness is behind Vercel deployment protection.** Its card
+   links the stable alias
+   (`march-madness-2026-ryan-8339s-projects.vercel.app`), but every URL on
+   the project currently serves Vercel's SSO login page. Ryan has to turn
+   off Deployment Protection in the Vercel dashboard (project settings)
+   before the card works for visitors. Remaining candidates if wanted:
+   Wordle Analysis, Ballot Research 2026, Desktop Build 2026. Real captures
+   for app-type projects still need a compositing browser; Herder's card
+   uses its actual wordmark re-inked gilt, March Madness a drawn bracket.
+4. **Prune the projects lede**, which still marks itself a draft. (The last
+   generated door scene is done — the anvil landed 2026-08-23.)
+5. **Have Ryan pass over the about-page copy.** It is drafted for him, not by
+   him. Each page is one `<article class="page-src">` in `about.html`; adding
+   or reordering pages needs nothing else changed.
 6. **Decide on Astro** before the site grows past ~8 pages. The header is
    duplicated across six files, which is fine at six and annoying at ten.
    HOSTING.md has the argument, including the case against.
