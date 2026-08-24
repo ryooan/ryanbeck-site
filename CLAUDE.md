@@ -285,7 +285,9 @@ Everything honours `prefers-reduced-motion`.
 
 ## The forecasting data
 
-Seven series, fetched by Python, committed as CSV, drawn by `assets/js/plot.js`.
+Eleven series, fetched by Python, committed as CSV, drawn by
+`assets/js/plot.js`. Six fetchers run on a schedule; four are one-time rescues
+of sources that have since frozen, and are on no cron.
 `public/forecasting-data.html` is **generated** by
 `tools/forecasting/build_page.py` — edit the SECTIONS list in that file, not
 the HTML.
@@ -304,6 +306,15 @@ old. That is why the bird-flu chart currently says "Source stalled · data to
 9 June 2025" instead of showing a tick.
 
 ### Traps found the hard way, all of which return silently wrong numbers
+
+- **git-lfs serves a pointer, not data.** reichlab's truth files are LFS, so
+  `raw.githubusercontent.com` returns 132 bytes reading
+  `version https://git-lfs.github.com/spec/v1`. A fetcher parses that as a
+  one-line CSV and publishes nothing, successfully. Use
+  `media.githubusercontent.com/media/...`; `fetch_covid_truth.py` asserts on
+  the pointer text so it can never happen silently.
+- **healthdata.gov dates are `YYYY/MM/DD`.** `plot.js` only matches dashes, so
+  passing them through yields a blank chart with no error anywhere.
 
 - **Treasury: never narrow the `fields` list.** `debt_catg_desc` is requested
   and never read. Drop it and two "Less Debt Not Subject to Limit" rows that

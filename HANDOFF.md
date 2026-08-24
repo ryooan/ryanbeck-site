@@ -1,6 +1,8 @@
 # Start here
 
-Ryan Beck's personal site. Five public pages plus one Cloudflare Worker.
+Ryan Beck's personal site. Six public pages plus one Cloudflare Worker, one of
+which (`forecasting-data.html`) is generated from committed data and must not
+be hand-edited.
 It has never been deployed — that is still the first real task. Wrangler was
 logged in on the old PC, but that token did not survive the 2026-08-19 move to
 `RYANDESKTOP`, so deploying now means `npx wrangler login` first — and that is
@@ -120,14 +122,21 @@ Everything in "Known placeholders" in CLAUDE.md, but the short version:
   machine — `npx wrangler login` then `npm run deploy`, but publishing is
   Ryan's call, never a default
 - no git remote, and `.github/workflows/deploy.yml` triggers on `main` while
-  the branch here is `master`
+  the branch here is `master`. This now blocks more than deployment:
+  `.github/workflows/forecasting.yml` refreshes the data on a schedule and
+  cannot run at all until the repo has a remote
 - no domain: `ryanbeck.com` is assumed in eight files
 - every project card uses the "light float" treatment Ryan chose from three
   lab rounds (`tools/make-project-thumbs.py`); the dashboard thumbs are real
   captures, Herder's is its real wordmark, and the projects/forecasting-data
   ledes remain drafts
-- the dashboards themselves still live in the old `ryooan.github.io` repo —
-  the to-do is to fork them into the current repo, fix bugs, and polish
+- the forecasting dashboards are **done and in this repo** (2026-08-23):
+  eleven series on a generated `forecasting-data.html`, ten Python fetchers in
+  `tools/forecasting/`, committed CSV under `public/data/forecasting/`. Three
+  were revived from dead. What remains: `COMTRADE_API_KEY` has to be added as
+  an Actions secret before the scheduled workflow can run, and the chart
+  module has no small-multiples view, so the committed 50-state flu file is
+  not drawn yet
 - the March Madness card links a deployment that is behind Vercel SSO —
   visitors get a login page until Ryan disables Deployment Protection
 - the projects door scene is still generated art (the fiction and blog doors

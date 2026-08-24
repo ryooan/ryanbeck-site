@@ -29,10 +29,10 @@ load assets by path.)
 public/               everything that gets served
   index.html          the hall — the three doors + the wizard
   projects.html       card grid: Forecasting Data + featured apps
-  forecasting-data.html  GENERATED — seven live series, each with an
-                      interactive chart and a status line taken from the data
-                      itself. Rebuild with tools/forecasting/build_page.py;
-                      do not hand-edit
+  forecasting-data.html  GENERATED — eleven series, each with an interactive
+                      chart and a status line taken from the data itself.
+                      Rebuild with tools/forecasting/build_page.py; do not
+                      hand-edit
   writing.html        fiction / author page
   blog.html           Substack feed + older archive
   about.html          the book
@@ -92,10 +92,18 @@ turns that into the status line on each chart.
 
 ```bash
 cd tools/forecasting
-python fetch_debt_limit.py      # or flusight, hpai, refugees,
-                                # semiconductors, faamg
+python fetch_debt_limit.py      # live: debt_limit flusight hpai
+                                #       refugees semiconductors faamg
+python fetch_covid_truth.py     # historical, run once: covid_truth
+                                #   covid_hospitalizations va_vaccinations
+                                #   vdh_age
 python build_page.py            # regenerate the page
 ```
+
+Six of the ten fetchers run on a schedule. The other four pull series whose
+sources are frozen; they are one-time rescues and are deliberately not on any
+cron, since re-running them re-downloads tens of megabytes to write an
+identical file.
 
 The split matters. These series used to be R Markdown documents that fetched,
 analysed, plotted and published in one step, which meant a dead source took
@@ -104,6 +112,11 @@ nothing but future rows, and the page can say so: `hpai-depopulations`
 currently reads **"Source stalled · data to 9 June 2025"**, because the CDC
 mirror it depends on stopped updating fourteen months ago while its job kept
 succeeding.
+
+The retired series are kept rather than deleted, under a "No longer updating"
+heading, frozen at the date their source stopped. One is genuinely absent: the
+New York evictions data is gone and no copy survived, and the page says so
+instead of showing an empty frame.
 
 `.github/workflows/forecasting.yml` runs the fetchers on a cadence matched to
 each source (Treasury daily, flu weekly, Comtrade monthly, SEC quarterly) and
@@ -212,9 +225,8 @@ fourteen real project cards. What is still standing in:
 
 - the project thumbnails (six generated images across fourteen cards) and the
   projects lede, which says in the page that it is a draft to prune
-- seven of the fourteen forecasting dashboards are not yet ported; their
-  historical data is in `public/data/forecasting/archive/` but they have no
-  section on the page yet
+- the forecasting page has no small-multiples view yet, so the committed
+  50-state flu file is not charted
 - one of the three door scenes: `scenes/projects.jpg` (the fiction door is the
   real SEER art, and the blog door is Ryan's puzzle photograph)
 - the about-page copy — grounded and no longer self-labelled, but drafted for
