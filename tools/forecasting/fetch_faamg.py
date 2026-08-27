@@ -102,7 +102,7 @@ def raw_entries(cik):
 
 
 def quarters_for(cik):
-    """{period end date: value} for every quarter, including derived ones."""
+    """{period end: (start, end, value)} for every quarter, derived included."""
     es = raw_entries(cik)
 
     q, y = {}, {}
@@ -127,7 +127,7 @@ def quarters_for(cik):
         if y_end not in q:
             q[y_end] = (gap, "derived", max(inside))
 
-    return {b: v for b, (v, _f, _a) in q.items()}
+    return {b: (a, b, v) for b, (v, _f, a) in q.items()}
 
 
 def full_years(cik, tag):
@@ -160,9 +160,22 @@ def full_years(cik, tag):
     return {k: (v[0], v[1]) for k, v in out.items()}
 
 
-def cal_quarter(d):
-    """Label a period-end date by the calendar quarter it falls in."""
-    return d.year, (d.month - 1) // 3 + 1
+def cal_quarter(start, end):
+    """Which calendar quarter a reporting period belongs to.
+
+    By the period's MIDPOINT, not its end date. Fiscal quarters are 13-week
+    blocks whose boundaries drift, so an end date lands a day either side of a
+    calendar boundary often enough to matter: Apple's Q2 FY2023 ran
+    2023-01-01 to 2023-04-01, one day into calendar Q2, and its Q3 ended
+    2023-07-01, one day into Q3 -- where it collided with Q4, which ends
+    2023-09-30. Keying on the end date therefore left 2023Q1 empty and threw
+    one of the two colliding quarters away.
+
+    A 13-week period's midpoint sits six weeks from either edge, so it is
+    never ambiguous.
+    """
+    mid = start + (end - start) / 2
+    return mid.year, (mid.month - 1) // 3 + 1
 
 
 def build_quarterly():
@@ -172,8 +185,13 @@ def build_quarterly():
         if not qs:
             raise FetchError("no quarters found for %s" % slug)
         by_cq = {}
-        for end, val in qs.items():
-            by_cq[cal_quarter(end)] = (val, end)
+        for end, (a, b, val) in qs.items():
+            key = cal_quarter(a, b)
+            # Two periods should never land in one calendar quarter now, but
+            # if a filing ever restates oddly, keep the later one rather than
+            # letting order decide.
+            if key not in by_cq or b > by_cq[key][1]:
+                by_cq[key] = (val, b)
         per[slug] = by_cq
 
     all_q = sorted(set().union(*[set(v) for v in per.values()]))

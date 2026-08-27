@@ -396,7 +396,14 @@
         label: s.label || s.col,
         color: s.color || seriesColor(pal, i),
         dash: !!s.dash,
+        /* A raw series drawn behind the average that smooths it wants to be
+           thinner, or the two compete at equal weight. */
+        width: s.width || null,
         right: s.axis === 'right',
+        /* `off: true` starts a series hidden. The semiconductor chart opens
+           on its two rolling averages, with the monthly lines they smooth a
+           legend click away. */
+        on: !s.off,
         pts: pts
       };
     });
@@ -449,7 +456,9 @@
        line along the bottom -- a cumulative total and its weekly increments
        differ by two orders of magnitude, so the increments vanish. */
     var v0R, v1R;
-    var hasRight = opt.series.some(function (x) { return x.axis === 'right'; });
+    /* Recomputed in setWindow: a right axis is only worth drawing while a
+       series that uses it is showing. */
+    var hasRight = false;
     var ranges = opt.ranges === false ? []
       : (Array.isArray(opt.ranges)
           ? RANGES.filter(function (r) { return opt.ranges.indexOf(r.k) >= 0; })
@@ -466,8 +475,10 @@
       t0 = (r.d === Infinity) ? fullT0 : Math.max(fullT0, t1 - r.d * DAY);
 
       shown = series.map(function (s) {
+        if (!s.on) return [];
         return s.pts.filter(function (p) { return p.t >= t0 && p.t <= t1; });
       });
+      hasRight = series.some(function (x) { return x.right && x.on; });
       function trendExtra() {
         if (!(trendOn && trend && !trend.suppressed)) return [];
         var out = [];
@@ -565,14 +576,43 @@
 
     var legend = document.createElement('ul');
     legend.className = 'plot-legend';
+    /* On a chart with one line there is nothing to compare it against, so
+       the legend stays a caption. With two or more, each entry becomes a
+       button that shows and hides its series. */
+    var canToggle = series.length > 1;
     series.forEach(function (s) {
       var li = document.createElement('li');
+      var box = canToggle ? document.createElement('button') : li;
+      if (canToggle) {
+        box.type = 'button';
+        box.className = 'plot-key';
+        box.setAttribute('aria-pressed', String(s.on));
+      }
       var sw = document.createElement('span');
       sw.className = 'plot-swatch' + (s.dash ? ' is-dash' : '');
       sw.style.setProperty('--c', s.color);
-      li.appendChild(sw);
-      li.appendChild(document.createTextNode(
+      box.appendChild(sw);
+      box.appendChild(document.createTextNode(
         s.label + (s.right ? ' (right axis)' : '')));
+
+      if (canToggle) {
+        li.className = s.on ? '' : 'is-off';
+        li.appendChild(box);
+        box.addEventListener('click', function () {
+          /* Hiding the last visible series leaves an axis scaled off the
+             full history with nothing drawn on it, which reads as a broken
+             chart rather than as a choice. Refuse the click instead. */
+          var lit = series.filter(function (x) { return x.on; }).length;
+          if (s.on && lit < 2) return;
+          s.on = !s.on;
+          li.className = s.on ? '' : 'is-off';
+          box.setAttribute('aria-pressed', String(s.on));
+          hide();
+          host.__at = null;
+          setWindow(active);
+          draw();
+        });
+      }
       legend.appendChild(li);
     });
     if (trend && !trend.suppressed) {
@@ -650,9 +690,8 @@
 
       if (hasRight) {
         var rFmt = FORMATS[opt.formatRight] || fmt;
-        var rCol = (opt.series.filter(function (x) { return x.axis === 'right'; })[0] || {});
-        var rTint = rCol.color || seriesColor(pal, opt.series.indexOf(
-          opt.series.filter(function (x) { return x.axis === 'right'; })[0]));
+        var rTint = (series.filter(function (x) { return x.right && x.on; })[0]
+                     || { color: pal.ink }).color;
         niceTicks(v0R, v1R, 5).forEach(function (v) {
           if (v < v0R || v > v1R) return;
           var lab = el('text', {
@@ -684,7 +723,9 @@
 
       drawn = [];
       series.forEach(function (s, si) {
-        var pts = decimate(shown[si], t0, t1, iw);
+        /* Still pushed, so `drawn` stays index-aligned with `series` and the
+           tooltip can keep addressing them by position. */
+        var pts = s.on ? decimate(shown[si], t0, t1, iw) : [];
         drawn.push(pts);
         var Y = s.right ? syR : sy;
         var d = '', pen = false;
@@ -695,7 +736,8 @@
         });
         if (d) {
           svg.appendChild(el('path', {
-            d: d, fill: 'none', stroke: s.color, 'stroke-width': s.dash ? 1.6 : 2,
+            d: d, fill: 'none', stroke: s.color,
+            'stroke-width': s.width || (s.dash ? 1.6 : 2),
             'stroke-linejoin': 'round', 'stroke-linecap': 'round',
             'stroke-dasharray': s.dash ? '5 4' : null
           }));
@@ -775,6 +817,10 @@
       var head = (labels && labels[at]) || fmtDate(at, (t1 - t0) / 86400000 < 1100);
       var lines = ['<b>' + head + '</b>'];
       series.forEach(function (s, k) {
+        if (!s.on) {
+          geom.dots[k].setAttribute('visibility', 'hidden');
+          return;
+        }
         var pts = drawn[k];
         var j = nearestIndex(pts, at);
         var p = pts[j];

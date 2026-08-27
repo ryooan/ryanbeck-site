@@ -18,6 +18,23 @@ records. The instinct was right; this finishes it.
 through for a chart of a few hundred points. `datastore_search_sql` does the
 GROUP BY and returns thousands of rows instead of millions.
 
+**Two days in this series are wrong at the source, in two different ways.**
+
+2023-02-21 is row duplication: VDH published every row two and three times
+over, 42,593 rows where a normal day has about 13,881. Summing straight
+through tripled the day. The duplicates are not identical either -- the same
+locality, age band and status can appear with 37 and then 38 -- so `DISTINCT`
+does not fix it, because that keeps both and adds them. The query takes MAX at
+the finest grain (date, locality, age group, status) and sums those, which
+collapses a repeat whatever value it carries.
+
+2021-07-24 is not duplication and cannot be fixed by grouping. Every row is
+unique, 135 localities per band as usual; the Case Age Group *values* are
+themselves exactly doubled. The total that day is 9,703,802 against a Vaccine
+Age Group total of 4,851,901 on the same date and roughly 4.85M on either
+side. So the day is dropped by the outlier rule below and left blank, which
+breaks the line rather than drawing a spike VDH never had.
+
 Note the real column names, which is what the half-finished port tripped on:
 they are `Report Date`, `Age Group`, `Vaccination Status` and `People by
 vaccination status count` -- spaces and capitals, so they must be quoted.
@@ -39,12 +56,40 @@ def q(sql):
     return d["result"]["records"]
 
 
+def blank_outliers(rows, cols, ratio=1.4):
+    """Blank a day that stands far above both of its neighbours.
+
+    This is a cumulative count of people vaccinated: it can only creep. A
+    single day 40% above the days on either side, and back down after, is not
+    a surge -- it is an arithmetic error upstream, and 2021-07-24 is exactly
+    double. Blanking breaks the line there, which is honest; leaving it draws
+    a spike the state never reported.
+
+    Deliberately narrow. It needs BOTH neighbours to be far below, so a real
+    step change (a reporting-method switch, say) survives, and it only ever
+    blanks -- nothing is rewritten to a value nobody published.
+    """
+    dropped = []
+    for i in range(1, len(rows) - 1):
+        for c in cols:
+            a, b, d = rows[i - 1][c], rows[i][c], rows[i + 1][c]
+            if "" in (a, b, d):
+                continue
+            a, b, d = float(a), float(b), float(d)
+            if a > 0 and d > 0 and b > a * ratio and b > d * ratio:
+                rows[i][c] = ""
+                dropped.append((rows[i]["date"], c))
+    return dropped
+
+
 def run():
     # ---- statewide, by vaccination status --------------------------------
-    rows = q('SELECT "Report Date" AS d, "Vaccination Status" AS st, '
-             'SUM(("People by vaccination status count")::numeric) AS n '
+    rows = q('SELECT d, st, SUM(n) AS n FROM ('
+             'SELECT "Report Date" AS d, "Vaccination Status" AS st, '
+             '"Locality" AS loc, "Age Group" AS ag, '
+             'MAX(("People by vaccination status count")::numeric) AS n '
              'FROM "%s" WHERE "Age Group Type" = \'%s\' '
-             'GROUP BY 1,2 ORDER BY 1' % (RID, AGE_TYPE))
+             'GROUP BY 1,2,3,4) t GROUP BY 1,2 ORDER BY 1' % (RID, AGE_TYPE))
     if not rows:
         raise FetchError("no rows returned for the statewide query")
 
@@ -63,15 +108,19 @@ def run():
             "at_least_one_dose": v.get("At Least One Dose", ""),
             "fully_vaccinated": v.get("Fully Vaccinated", ""),
         })
+
+    dropped = blank_outliers(out, ["at_least_one_dose", "fully_vaccinated"])
     write_csv("va-vaccinations", out,
               ["date", "at_least_one_dose", "fully_vaccinated"])
 
     # ---- by age group, fully vaccinated ----------------------------------
-    arows = q('SELECT "Report Date" AS d, "Age Group" AS ag, '
-              'SUM(("People by vaccination status count")::numeric) AS n '
+    arows = q('SELECT d, ag, SUM(n) AS n FROM ('
+              'SELECT "Report Date" AS d, "Age Group" AS ag, '
+              '"Locality" AS loc, '
+              'MAX(("People by vaccination status count")::numeric) AS n '
               'FROM "%s" WHERE "Age Group Type" = \'%s\' '
               'AND "Vaccination Status" = \'Fully Vaccinated\' '
-              'GROUP BY 1,2 ORDER BY 1' % (RID, AGE_TYPE))
+              'GROUP BY 1,2,3) t GROUP BY 1,2 ORDER BY 1' % (RID, AGE_TYPE))
     aout = []
     for r in arows:
         d = (r["d"] or "")[:10]
@@ -92,6 +141,9 @@ def run():
            status="historical", source="data.virginia.gov (VDH)", note=note)
     print("va-vaccinations: %d days %s -> %s (+%d age rows)"
           % (len(out), out[0]["date"], last, len(aout)))
+    if dropped:
+        print("  blanked as upstream outliers: %s"
+              % ", ".join("%s/%s" % x for x in dropped))
 
 
 if __name__ == "__main__":

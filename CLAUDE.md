@@ -337,6 +337,17 @@ old. That is why the bird-flu chart currently says "Source stalled · data to
   the pointer text so it can never happen silently.
 - **healthdata.gov dates are `YYYY/MM/DD`.** `plot.js` only matches dashes, so
   passing them through yields a blank chart with no error anywhere.
+- **VDH broke two days in two different ways, and only one is fixable by
+  grouping.** 2023-02-21 is row duplication -- 42,593 rows where a normal day
+  has about 13,881, every locality/age/status repeated two and three times.
+  `DISTINCT` does not help, because the repeats are not always identical (37
+  and then 38 for the same key), so it keeps both and adds them; taking MAX at
+  the finest grain does. 2021-07-24 has a completely normal row count and
+  *doubled values* -- 9,703,802 against the same date's Vaccine Age Group
+  total of 4,851,901 and neighbours near 4.85M. Nothing to collapse, so
+  `blank_outliers()` drops the day and the line breaks there. **Check both
+  shapes before concluding a spike is duplication**; the row count told the
+  two apart in seconds and guessing wrong costs a fetch cycle each way.
 - **NHSN has a real `USA` rollup row.** Summing the 66 state and territory rows
   double-counts it.
 - **NHSN counts are not comparable across mid-2024.** Reporting was mandatory
@@ -417,10 +428,19 @@ and it is worth checking which you have before writing the series off:
   because a gap looks like nothing is wrong. It is derived as annual minus the
   three quarters inside that fiscal year, and checked against what the
   companies reported (Apple FY2023 Q4 derived $89.5B vs reported $89.498B).
-  Quarters are then placed in the calendar quarter they *end* in, so the five
-  line up despite Apple's September and Microsoft's June year-ends -- summing
-  four calendar quarters for those two will not equal their fiscal year, and
-  should not.
+  Quarters are placed in the calendar quarter their period's **midpoint**
+  falls in, so the five line up despite Apple's September and Microsoft's June
+  year-ends -- summing four calendar quarters for those two will not equal
+  their fiscal year, and should not.
+
+  **Placing them by end date instead leaves holes, and it did.** Fiscal
+  quarters are 13-week blocks whose boundaries drift, so an end date lands a
+  day the wrong side of a calendar boundary often enough to matter: Apple's
+  Q2 FY2023 ran to 2023-04-01, one day into calendar Q2, and its Q3 ended
+  2023-07-01, one day into Q3 -- where it collided with the quarter ending
+  2023-09-30. That emptied 2023Q1 and threw one of the colliding pair away. A
+  13-week period's midpoint sits six weeks from either edge and is never
+  ambiguous.
 
 ### Time-range buttons
 
@@ -515,6 +535,31 @@ Solid over the fitted stretch, dashed beyond the last observation, so
 measurement and extrapolation are distinguishable without reading a caption.
 The toggle is on by default and extends the x-axis to reach the projection;
 turning it off refits to the data.
+
+### Clicking the legend
+
+On any chart with more than one series, each legend entry is a button that
+shows and hides its line. The affordance is weight, not a widget: a live entry
+is set in medium with a solid swatch, a hidden one goes light and gray and its
+swatch hollows to an outline. `off: true` in a series' config starts it hidden
+— the semiconductor chart opens on its two rolling averages with the monthly
+lines they smooth a click away, and `width` draws those raw lines thinner so
+they sit behind rather than compete.
+
+Three things the toggle has to keep straight, all of them checked in the
+browser:
+
+- **Hiding the last visible series is refused.** With nothing left to scale
+  from, `scaleOf` falls back to the full history and you get a populated axis
+  with an empty plot, which reads as a broken chart rather than a choice.
+- **`hasRight` is recomputed per redraw**, so hiding the only right-axis
+  series takes its ticks with it instead of leaving a labeled axis measuring
+  nothing. The tint for those ticks is likewise read from a *visible* series.
+- **`drawn` stays index-aligned with `series`** — a hidden series pushes an
+  empty array rather than being skipped, because the tooltip addresses series
+  by position.
+
+Single-series charts keep a plain caption; there is nothing to compare against.
 
 ### Two y-axes
 

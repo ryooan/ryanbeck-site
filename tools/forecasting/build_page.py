@@ -77,7 +77,7 @@ SECTIONS = [
     },
     {
         "slug": "refugee-admissions",
-        "title": "US refugee admissions",
+        "title": "US refugee admissions by month",
         "csv": "refugee-admissions.csv",
         "plot": {
             "format": "number",
@@ -128,6 +128,8 @@ SECTIONS = [
                 {"col": "amazon", "label": "Amazon"},
                 {"col": "apple", "label": "Apple"},
                 {"col": "alphabet", "label": "Alphabet"},
+                {"col": "microsoft", "label": "Microsoft"},
+                {"col": "meta", "label": "Meta"},
             ],
         },
         "note": (
@@ -261,17 +263,23 @@ SECTIONS = [
             "format": "usd",
             "zero": True,
             "series": [
-                {"col": "chips", "label": "Chips (HS 8542)"},
+                # The averages carry the chart and are the only two series
+                # shown on load; the monthly lines they smooth are noisy
+                # enough to bury them, and are a legend click away.
                 {"col": "chips_avg6", "label": "Chips, 6-month average",
-                 "dash": True, "color": "#8a4a1c"},
-                {"col": "equipment", "label": "Manufacturing equipment"},
+                 "color": "#a8481f"},
                 {"col": "equipment_avg6", "label": "Equipment, 6-month average",
-                 "dash": True, "color": "#4a3d30"},
+                 "color": "#2f6b7a"},
+                {"col": "chips", "label": "Chips, monthly (HS 8542)",
+                 "color": "#d59a72", "width": 1.2, "off": True},
+                {"col": "equipment", "label": "Equipment, monthly",
+                 "color": "#8fb6bf", "width": 1.2, "off": True},
             ],
         },
         "note": (
-            "Monthly, with a six-month rolling average over the top. The "
-            "download also carries a twelve-month rolling sum."),
+            "Six-month rolling averages. The monthly lines behind them are "
+            "in the legend, switched off to start with. The download also "
+            "carries a twelve-month rolling sum."),
         "source": "UN Comtrade",
         "source_url": "https://comtradeplus.un.org/",
     },
@@ -289,8 +297,10 @@ SECTIONS = [
             ],
         },
         "note": (
-            "Annual, and the denominator for the export series above — what "
-            "share of China's purchases the US supplies."),
+            "Annual, and reported by China rather than by its trading "
+            "partners, so this is the whole of what China buys from the world "
+            "in the same two categories the chart above tracks for the US "
+            "alone."),
         "source": "UN Comtrade",
         "source_url": "https://comtradeplus.un.org/",
     },
@@ -359,25 +369,6 @@ SECTIONS = [
         "source": "data.virginia.gov (VDH)",
         "source_url": "https://data.virginia.gov/",
         "extra_csv": "va-vaccinations-by-age.csv",
-    },
-    {
-        "slug": "vdh-cases-by-age",
-        "title": "Virginia COVID cases by age",
-        "csv": "vdh-cases-by-age-wide.csv",
-        "plot": {
-            "format": "number",
-            "zero": True,
-            "series": [{"col": "total_cases", "label": "Cumulative cases"}],
-        },
-        "note": (
-            "Cumulative case, hospitalization and death counts by age band. "
-            "Earlier figures do not appear to be available anywhere: the "
-            "Internet Archive’s captures of the original endpoint hold about "
-            "one day of data each, and the CDC’s equivalent series is reported "
-            "by HHS region rather than by state."),
-        "source": "data.virginia.gov (VDH, retired dataset)",
-        "source_url": "https://data.virginia.gov/",
-        "extra_csv": "vdh-cases-by-age.csv",
     },
 ]
 
@@ -517,17 +508,20 @@ GROUPS = [
         "title": "Virginia COVID",
         "kicker": "VDH, retired",
         "blurb": (
-            "<p>Two series from the Virginia Department of Health. Neither is "
-            "still updating.</p><p>Vaccinations run from March 2021 to "
-            "September 2023 and are complete for that window — nearly ten "
-            "million rows, by locality, age group and vaccination "
-            "status.</p><p>Cases by age cover only 17 April to 24 September "
-            "2024, which is the whole of what VDH kept when it retired that "
-            "dataset. For an age-stratified Virginia series without a gap, the "
-            "HHS hospitalization panel on the <a "
+            "<p>People in Virginia by vaccination status, from the Virginia "
+            "Department of Health. March 2021 to September 2023, when VDH "
+            "stopped publishing; the history is complete for that window — "
+            "nearly ten million rows, by locality, age group and vaccination "
+            "status.</p><p>Two days are wrong at the source. On 21 February "
+            "2023 VDH published every row two and three times over, which is "
+            "collapsed here by taking one value per locality, age band and "
+            "status. On 24 July 2021 the values themselves are exactly "
+            "doubled with no duplicate rows to collapse, so that day is left "
+            "blank and the line breaks there.</p><p>For an age-stratified "
+            "Virginia series, the HHS hospitalization panel on the <a "
             "href=\"/forecasting/respiratory\">respiratory page</a> carries "
             "admissions broken down by age band from 2020 to 2023.</p>"),
-        "sections": ["va-vaccinations", "vdh-cases-by-age"],
+        "sections": ["va-vaccinations"],
     },
 ]
 
@@ -715,8 +709,7 @@ def build():
     <p class="series-note" style="margin-top:14px">The largest single item is
     the HHS hospital-capacity panel &mdash; 66,966 rows by 135 columns, every
     state, 2020 to 2023, including admissions broken down by age band. It is
-    the most detailed age-stratified COVID series here, which is why the
-    Virginia cases-by-age section points at it.</p>
+    the most detailed age-stratified COVID series here.</p>
   </section>
   <section class="series">
     <h2>Provenance and caveats</h2>
