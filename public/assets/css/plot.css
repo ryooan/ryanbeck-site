@@ -50,7 +50,10 @@
   display:flex;
   flex-wrap:wrap;
   gap:6px;
-  margin:0 0 10px;
+  /* Below the chart now, with the legend -- the chart draws its own title,
+     and controls above it would sit between that title and whatever text
+     came before. */
+  margin:10px 0 0;
 }
 .plot-range{
   appearance:none;
@@ -497,3 +500,66 @@ body.dash-page{ --maxw:1460px; }
   .dash-nav-foot{display:inline-block;margin-right:18px;padding-left:0}
   .dash-head{padding-top:24px}
 }
+
+/* ---- sharing ---------------------------------------------------------- */
+/* Deliberately quiet: this is a utility beside the chart, not a call to
+   action. It sits under the legend and only gains contrast on hover. */
+.plot-share{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:10px;
+}
+.plot-sharebtn{
+  padding:3px 9px;
+  border:1px solid var(--parchment-edge);
+  border-radius:999px;
+  background:none;
+  color:var(--ink-soft);
+  font:500 11px/1.5 var(--sans);
+  letter-spacing:.02em;
+  cursor:pointer;
+  transition:background .12s ease,border-color .12s ease,color .12s ease;
+}
+.plot-sharebtn:hover{
+  background:var(--parchment-deep,rgba(36,28,20,.05));
+  border-color:var(--ink-soft);
+  color:var(--ink);
+}
+.plot-sharebtn:focus-visible{outline:2px solid var(--ember);outline-offset:1px}
+.plot-share-msg{
+  color:var(--ink-soft);
+  font:400 11px/1.5 var(--sans);
+  font-style:italic;
+}
+.plot-share-msg.is-bad{color:var(--ember)}
+
+/* ---- embed page ------------------------------------------------------- */
+/* One chart, nothing else, sized to whatever iframe it lands in. */
+body.embed-page{
+  margin:0;
+  padding:14px 16px 10px;
+  background:var(--parchment);
+}
+body.embed-page .plot{margin:0}
+.embed-credit{
+  margin:8px 0 0;
+  font:400 11px/1.4 var(--sans);
+  color:var(--ink-soft);
+}
+.embed-credit a{color:inherit}
+
+/* The raw admissions behind each panel's percentage. Deliberately small and
+   quiet -- it is a magnitude check you consult, not something to read across
+   fifty states. */
+.panel-base{
+  margin-top:1px;
+  color:var(--ink-faint);
+  font:400 9px/1.2 var(--sans);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.01em;
+  text-align:right;
+}
+.panel-grid.is-geo .panel-base{font-size:8.5px}
+.panel.is-nodata .panel-base{opacity:.5}

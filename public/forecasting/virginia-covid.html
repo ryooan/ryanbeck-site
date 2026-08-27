@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Virginia COVID &middot; Forecasting Data &middot; Ryan Beck</title>
+<title>Virginia COVID &middot; Data Dashboards &middot; Ryan Beck</title>
 <meta name="description" content="People in Virginia by vaccination status, from the Virginia Department of Health. March 2021 to September 2023, when VDH stopped publishing; the history is complete for that window">
 <link rel="canonical" href="https://ryanbeck.com/forecasting/virginia-covid">
 <meta name="theme-color" content="#f4ead9">
@@ -15,7 +15,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ryan Beck">
-<meta property="og:title" content="Virginia COVID &middot; Forecasting Data &middot; Ryan Beck">
+<meta property="og:title" content="Virginia COVID &middot; Data Dashboards &middot; Ryan Beck">
 <meta property="og:description" content="People in Virginia by vaccination status, from the Virginia Department of Health. March 2021 to September 2023, when VDH stopped publishing; the history is complete for that window">
 <meta property="og:url" content="https://ryanbeck.com/forecasting/virginia-covid">
 <meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
@@ -40,8 +40,8 @@
 </header>
 <div class="dash">
 
-<nav class="dash-nav" aria-label="Forecasting data sections">
-  <p class="dash-nav-head"><a href="/forecasting">Forecasting data</a></p>
+<nav class="dash-nav" aria-label="Data dashboard sections">
+  <p class="dash-nav-head"><a href="/forecasting">Data Dashboards</a></p>
   <ul>
     <li><a href="/forecasting/respiratory">Respiratory illness<span class="dot is-live" aria-hidden="true"></span></a></li>
     <li><a href="/forecasting/debt-limit">The debt limit<span class="dot is-live" aria-hidden="true"></span></a></li>
@@ -62,11 +62,11 @@
     </header>
 
   <section class="series" id="va-vaccinations">
-    <span class="status is-historical">Historical &middot; data to 19 September 2023</span>
-    <h2>Virginia COVID vaccinations</h2>
+    <h2 class="sr-only">Virginia COVID vaccinations</h2>
+    <div class="plot-mount" data-plot='{&quot;yLabel&quot;:&quot;People&quot;,&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;at_least_one_dose&quot;,&quot;label&quot;:&quot;At least one dose&quot;},{&quot;col&quot;:&quot;fully_vaccinated&quot;,&quot;label&quot;:&quot;Fully vaccinated&quot;}],&quot;csv&quot;:&quot;/data/forecasting/va-vaccinations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Virginia COVID vaccinations&quot;,&quot;slug&quot;:&quot;va-vaccinations&quot;,&quot;embed&quot;:&quot;/forecasting/embed/va-vaccinations&quot;,&quot;sourceUrl&quot;:&quot;https://data.virginia.gov/&quot;,&quot;title&quot;:&quot;Virginia COVID vaccinations&quot;,&quot;subtitle&quot;:&quot;data.virginia.gov (VDH) \u00b7 data to 19 September 2023&quot;}'></div>
     <p class="series-note">Counts rather than percentages, from the state’s open-data platform. The companion file carries the same figures split by age group.</p>
-    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;at_least_one_dose&quot;,&quot;label&quot;:&quot;At least one dose&quot;},{&quot;col&quot;:&quot;fully_vaccinated&quot;,&quot;label&quot;:&quot;Fully vaccinated&quot;}],&quot;csv&quot;:&quot;/data/forecasting/va-vaccinations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Virginia COVID vaccinations&quot;}'></div>
-    <p class="series-source">909 rows, latest about 2.9 years ago &middot;
+    <p class="series-source"><span class="status is-historical">Historical</span>
+      909 rows, latest about 2.9 years ago &middot;
       source: <a href="https://data.virginia.gov/" rel="noopener">data.virginia.gov (VDH)</a> &middot;
       download: <a href="/data/forecasting/va-vaccinations.csv">va-vaccinations.csv</a> &middot; <a href="/data/forecasting/va-vaccinations-by-age.csv">va-vaccinations-by-age.csv</a></p>
   </section>

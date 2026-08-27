@@ -286,6 +286,206 @@
     return out.length ? out.concat([RANGES[RANGES.length - 1]]) : [];
   }
 
+  /* ---- type ------------------------------------------------------------ */
+
+  /* SVG text does not wrap, and a title long enough to overflow its chart is
+     the normal case on a phone. Measure with a canvas context -- the same
+     font stack, so the measurement is the real one -- and break greedily. */
+  var SANS = 'ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,Roboto,'
+           + 'Helvetica,Arial,sans-serif';
+  var measurer = null;
+  function textWidth(str, weight, size) {
+    if (!measurer) {
+      var c = document.createElement('canvas');
+      measurer = c.getContext && c.getContext('2d');
+    }
+    if (!measurer) return str.length * size * 0.55;   /* rough, never used */
+    measurer.font = weight + ' ' + size + 'px ' + SANS;
+    return measurer.measureText(str).width;
+  }
+
+  function wrapText(str, weight, size, maxW, maxLines) {
+    var words = String(str).split(/\s+/), lines = [], cur = '';
+    for (var i = 0; i < words.length; i++) {
+      var next = cur ? cur + ' ' + words[i] : words[i];
+      if (cur && textWidth(next, weight, size) > maxW) {
+        lines.push(cur);
+        cur = words[i];
+        if (lines.length === maxLines - 1) break;
+      } else {
+        cur = next;
+      }
+    }
+    var rest = words.slice(lines.join(' ').split(/\s+/).length).join(' ');
+    lines.push(lines.length === maxLines - 1 && rest ? rest : cur);
+    /* Ellipsize only the last line, and only if it still will not fit. */
+    var last = lines[lines.length - 1];
+    if (textWidth(last, weight, size) > maxW) {
+      while (last.length > 4 && textWidth(last + '…', weight, size) > maxW) {
+        last = last.slice(0, -1);
+      }
+      lines[lines.length - 1] = last.replace(/[\s,]+$/, '') + '…';
+    }
+    return lines.filter(Boolean);
+  }
+
+  /* ---- sharing --------------------------------------------------------- */
+
+  function slugify(str) {
+    return String(str || 'chart').toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'chart';
+  }
+
+  /* A copy of the live chart, made to stand on its own.
+     The on-page chart leans on things a detached file does not get: the
+     stylesheet for its tick font, the page's background for contrast, and
+     the HTML legend below it for what the lines mean. An export that skips
+     any of those is a picture of unlabeled lines on a transparent ground,
+     which is worse than no export. So the clone gains a painted background,
+     its own <style>, a drawn legend of whatever is currently showing, and a
+     credit line. */
+  function exportSVG(svg, opt, pal, series, trend, trendOn) {
+    var W = +svg.getAttribute('viewBox').split(' ')[2];
+    var H = +svg.getAttribute('viewBox').split(' ')[3];
+    var PADX = 18, PADT = 14;
+    var clone = svg.cloneNode(true);
+
+    var keys = series.filter(function (x) { return x.on; }).map(function (x) {
+      return { label: x.label + (x.right ? ' (right axis)' : ''),
+               color: x.color, dash: x.dash };
+    });
+    if (trend && !trend.suppressed && trendOn) {
+      keys.push({ label: opt.trend.label || 'Trend', color: TREND, dash: true });
+    }
+    if (opt.band && opt.band.label) {
+      keys.push({ label: opt.band.label, color: null, band: true });
+    }
+
+    /* Lay the key out in rows first, because how many rows there are decides
+       how much taller the image has to be. */
+    var rows = [], row = [], x = 0, GAP = 20, SW = 18;
+    keys.forEach(function (k) {
+      var w = SW + 6 + textWidth(k.label, '500', 12) + GAP;
+      if (row.length && x + w > W - PADX * 2) { rows.push(row); row = []; x = 0; }
+      row.push({ k: k, x: x, w: w });
+      x += w;
+    });
+    if (row.length) rows.push(row);
+
+    var legendH = rows.length * 19 + 8;
+    var creditH = 20;
+    var outW = W + PADX * 2;
+    var outH = H + PADT + legendH + creditH + 14;
+
+    var out = el('svg', {
+      xmlns: NS, viewBox: '0 0 ' + outW + ' ' + outH,
+      width: outW, height: outH
+    });
+    out.appendChild(el('rect', {
+      x: 0, y: 0, width: outW, height: outH, fill: pal.paper
+    }));
+
+    /* The page stylesheet is not coming with us, so the one class the chart
+       relies on is written into the file. */
+    var st = document.createElementNS(NS, 'style');
+    st.textContent = '.plot-axis{font:500 11px ' + SANS + ';letter-spacing:.01em}';
+    out.appendChild(st);
+
+    var g = el('g', { transform: 'translate(' + PADX + ',' + PADT + ')' });
+    while (clone.firstChild) g.appendChild(clone.firstChild);
+    out.appendChild(g);
+
+    var ly = H + PADT + 16;
+    rows.forEach(function (r) {
+      r.forEach(function (item) {
+        var kx = PADX + item.x;
+        if (item.k.band) {
+          out.appendChild(el('rect', {
+            x: kx, y: ly - 9, width: 14, height: 12, rx: 2,
+            fill: pal.ink, 'fill-opacity': .12
+          }));
+        } else {
+          out.appendChild(el('line', {
+            x1: kx, x2: kx + SW, y1: ly - 4, y2: ly - 4,
+            stroke: item.k.color, 'stroke-width': 3, 'stroke-linecap': 'round',
+            'stroke-dasharray': item.k.dash ? '5 4' : null
+          }));
+        }
+        var t = el('text', {
+          x: kx + SW + 6, y: ly, fill: pal.ink,
+          'font-family': SANS, 'font-size': 12, 'font-weight': 500
+        });
+        t.textContent = item.k.label;
+        out.appendChild(t);
+      });
+      ly += 19;
+    });
+
+    var credit = el('text', {
+      x: PADX, y: outH - 8, fill: pal.faint,
+      'font-family': SANS, 'font-size': 11, 'font-weight': 400
+    });
+    /* Host only. A source URL's full path can run longer than the image is
+       wide, and the subtitle above already names the source in words. */
+    var srcHost = '';
+    if (opt.sourceUrl) {
+      srcHost = opt.sourceUrl.replace(/^https?:\/\//, '').split('/')[0]
+                             .replace(/^www\./, '');
+    }
+    credit.textContent = (opt.credit || 'ryanbeck.com/forecasting')
+      + (srcHost ? '  ·  ' + srcHost : '');
+    out.appendChild(credit);
+    return { node: out, w: outW, h: outH };
+  }
+
+  function svgText(node) {
+    node.setAttribute('xmlns', NS);
+    return '<?xml version="1.0" encoding="UTF-8"?>\n'
+      + new XMLSerializer().serializeToString(node);
+  }
+
+  /* Rasterize through a blob URL rather than a data: URI -- a data URI of a
+     big SVG trips URL length limits in some browsers, and a same-origin blob
+     leaves the canvas untainted so toBlob still works. */
+  function toPNG(spec, name, scale, done) {
+    var url = URL.createObjectURL(
+      new Blob([svgText(spec.node)], { type: 'image/svg+xml;charset=utf-8' }));
+    var img = new Image();
+    img.onload = function () {
+      var c = document.createElement('canvas');
+      c.width = Math.round(spec.w * scale);
+      c.height = Math.round(spec.h * scale);
+      var ctx = c.getContext('2d');
+      ctx.drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      c.toBlob(function (b) {
+        if (!b) return done('Could not render the image');
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(b);
+        a.download = name + '.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 5000);
+        done(null);
+      }, 'image/png');
+    };
+    img.onerror = function () {
+      URL.revokeObjectURL(url);
+      done('Could not render the image');
+    };
+    img.src = url;
+  }
+
+  function copyText(str, done) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(str).then(function () { done(true); },
+                                             function () { done(false); });
+      return;
+    }
+    done(false);
+  }
+
   /* ---- trend ----------------------------------------------------------- */
 
   /* A least-squares trend fitted to the CURRENT policy regime only, and
@@ -393,6 +593,7 @@
         return { t: parseDate(r[xKey]), v: (v == null || isNaN(v)) ? null : v };
       }).filter(function (p) { return !isNaN(p.t); });
       return {
+        col: s.col,
         label: s.label || s.col,
         color: s.color || seriesColor(pal, i),
         dash: !!s.dash,
@@ -539,30 +740,6 @@
         rangeBtns.push(b);
         rangeBar.appendChild(b);
       });
-      host.appendChild(rangeBar);
-    }
-
-    var trendBtn = null;
-    if (trend && !trend.suppressed) {
-      if (!rangeBar) {
-        rangeBar = document.createElement('div');
-        rangeBar.className = 'plot-ranges';
-        host.appendChild(rangeBar);
-      }
-      trendBtn = document.createElement('button');
-      trendBtn.type = 'button';
-      trendBtn.className = 'plot-range is-trend';
-      trendBtn.textContent = opt.trend.label || 'Trend';
-      trendBtn.setAttribute('aria-pressed', 'true');
-      trendBtn.addEventListener('click', function () {
-        trendOn = !trendOn;
-        trendBtn.setAttribute('aria-pressed', String(trendOn));
-        hide();
-        host.__at = null;
-        setWindow(active);
-        draw();
-      });
-      rangeBar.appendChild(trendBtn);
     }
 
     var figure = document.createElement('div');
@@ -573,6 +750,7 @@
     tip.hidden = true;
     host.appendChild(figure);
     host.appendChild(tip);
+    if (rangeBar) host.appendChild(rangeBar);
 
     var legend = document.createElement('ul');
     legend.className = 'plot-legend';
@@ -615,12 +793,20 @@
       }
       legend.appendChild(li);
     });
+    /* The trend is toggled from the legend like everything else rather than
+       from a button of its own -- it is a thing on the chart, so it belongs
+       in the key that lists what is on the chart. Its description is built
+       from the fit, never written down: change the data and the date moves. */
     if (trend && !trend.suppressed) {
       var li3 = document.createElement('li');
+      var b3 = document.createElement('button');
+      b3.type = 'button';
+      b3.className = 'plot-key';
+      b3.setAttribute('aria-pressed', 'true');
       var sw3 = document.createElement('span');
       sw3.className = 'plot-swatch is-dash';
       sw3.style.setProperty('--c', TREND);
-      li3.appendChild(sw3);
+      b3.appendChild(sw3);
       var txt = (opt.trend.label || 'Trend') + ' — ';
       if (trend.suspended) {
         txt += 'no ceiling in force, projected a year out';
@@ -629,7 +815,17 @@
       } else {
         txt += 'does not reach the ceiling within three years';
       }
-      li3.appendChild(document.createTextNode(txt));
+      b3.appendChild(document.createTextNode(txt));
+      b3.addEventListener('click', function () {
+        trendOn = !trendOn;
+        li3.className = trendOn ? '' : 'is-off';
+        b3.setAttribute('aria-pressed', String(trendOn));
+        hide();
+        host.__at = null;
+        setWindow(active);
+        draw();
+      });
+      li3.appendChild(b3);
       legend.appendChild(li3);
     }
     if (bands.length && opt.band.label) {
@@ -642,6 +838,68 @@
     }
     host.appendChild(legend);
 
+    /* --- share --------------------------------------------------------- */
+    var shareBar = document.createElement('div');
+    shareBar.className = 'plot-share';
+    var shareMsg = document.createElement('span');
+    shareMsg.className = 'plot-share-msg';
+    shareMsg.setAttribute('role', 'status');
+
+    function say(text, bad) {
+      shareMsg.textContent = text;
+      shareMsg.className = 'plot-share-msg' + (bad ? ' is-bad' : '');
+      clearTimeout(shareMsg.__t);
+      shareMsg.__t = setTimeout(function () { shareMsg.textContent = ''; }, 3200);
+    }
+
+    function shareBtn(label, title, fn) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'plot-sharebtn';
+      b.textContent = label;
+      b.title = title;
+      b.addEventListener('click', fn);
+      shareBar.appendChild(b);
+      return b;
+    }
+
+    var fileName = slugify(opt.title || opt.slug);
+    var pageUrl = opt.slug
+      ? location.origin + location.pathname + '#' + opt.slug
+      : location.href;
+    var embedUrl = opt.embed ? location.origin + opt.embed : null;
+
+    shareBtn('PNG', 'Download this chart as an image', function () {
+      /* Whatever is on screen right now is what gets exported -- the range
+         you picked, the series you left showing. Exporting the default view
+         instead would hand back a different chart than the one you shared. */
+      say('Rendering…');
+      toPNG(exportSVG(svg, opt, pal, series, trend, trendOn), fileName, 2,
+        function (err) { say(err || 'Saved ' + fileName + '.png', !!err); });
+    });
+
+    if (embedUrl) {
+      shareBtn('Embed', 'Copy an iframe for this chart', function () {
+        var snippet = '<iframe src="' + embedUrl + '" width="100%" '
+          + 'height="460" style="border:0" loading="lazy" '
+          + 'title="' + (opt.title || 'Chart') + '"></iframe>';
+        copyText(snippet, function (ok) {
+          if (ok) return say('Embed code copied');
+          window.prompt('Copy the embed code:', snippet);
+        });
+      });
+    }
+
+    shareBtn('Link', 'Copy a link straight to this chart', function () {
+      copyText(pageUrl, function (ok) {
+        if (ok) return say('Link copied');
+        window.prompt('Copy the link:', pageUrl);
+      });
+    });
+
+    shareBar.appendChild(shareMsg);
+    host.appendChild(shareBar);
+
     var svg, geom = {}, drawn = [];
 
     function draw() {
@@ -649,8 +907,27 @@
             /* Height tracks width but is capped, or a full-bleed chart on a wide
          monitor becomes a letterbox. The cap rose with the dashboard's
          column: at 1200px, 0.46 would be 550. */
-      var H = opt.height || Math.max(220, Math.min(460, Math.round(W * 0.42)));
-      var m = { t: 12, r: hasRight ? 56 : 14, b: 26, l: 56 };
+      var H = (opt.height || Math.max(220, Math.min(460, Math.round(W * 0.42))))
+              + (opt.title ? 34 : 0);
+      /* The title block is measured before the plot box is sized, so a title
+         that wraps to two lines pushes the chart down instead of sitting on
+         top of it. */
+      var TSIZE = W < 460 ? 14 : 16, SSIZE = W < 460 ? 11 : 12;
+      var titleLines = opt.title
+        ? wrapText(opt.title, '600', TSIZE, W - 8, 2) : [];
+      var sub = opt.subtitle || '';
+      var subLines = sub ? wrapText(sub, '400', SSIZE, W - 8, 2) : [];
+      var headH = titleLines.length
+        ? titleLines.length * (TSIZE + 4) + (subLines.length
+            ? subLines.length * (SSIZE + 3) + 3 : 0) + 12
+        : 0;
+
+      var m = {
+        t: 12 + headH,
+        r: (hasRight ? 56 : 14) + (hasRight && opt.yLabelRight ? 17 : 0),
+        b: 26,
+        l: 56 + (opt.yLabel ? 17 : 0)
+      };
       var iw = Math.max(10, W - m.l - m.r);
       var ih = Math.max(10, H - m.t - m.b);
       geom = { W: W, H: H, m: m, iw: iw, ih: ih };
@@ -665,6 +942,49 @@
         viewBox: '0 0 ' + W + ' ' + H, width: W, height: H,
         role: 'img', 'aria-label': opt.alt || (opt.title || 'Time series chart')
       });
+
+      /* --- title block ------------------------------------------------ */
+      var ty = 6;
+      titleLines.forEach(function (line, i) {
+        ty += TSIZE;
+        var t = el('text', {
+          x: 0, y: ty, 'text-anchor': 'start', fill: pal.ink,
+          'font-family': SANS, 'font-size': TSIZE, 'font-weight': 600
+        });
+        t.textContent = line;
+        svg.appendChild(t);
+        ty += 4;
+      });
+      if (subLines.length) {
+        ty += 3;
+        subLines.forEach(function (line) {
+          ty += SSIZE;
+          var t = el('text', {
+            x: 0, y: ty, 'text-anchor': 'start', fill: pal.faint,
+            'font-family': SANS, 'font-size': SSIZE, 'font-weight': 400
+          });
+          t.textContent = line;
+          svg.appendChild(t);
+          ty += 3;
+        });
+      }
+
+      /* --- axis captions ----------------------------------------------- */
+      function axisCaption(text, x, tint) {
+        var t = el('text', {
+          x: 0, y: 0, 'text-anchor': 'middle', fill: tint,
+          'font-family': SANS, 'font-size': 11, 'font-weight': 500,
+          transform: 'translate(' + x + ',' + (m.t + ih / 2) + ') rotate(-90)'
+        });
+        t.textContent = text;
+        svg.appendChild(t);
+      }
+      if (opt.yLabel) axisCaption(opt.yLabel, 11, pal.faint);
+      if (hasRight && opt.yLabelRight) {
+        axisCaption(opt.yLabelRight, W - 8,
+          (series.filter(function (x) { return x.right && x.on; })[0]
+           || { color: pal.faint }).color);
+      }
 
       bands.forEach(function (b) {
         svg.appendChild(el('rect', {
@@ -734,6 +1054,24 @@
           d += (pen ? 'L' : 'M') + sx(p.t).toFixed(1) + ' ' + Y(p.v).toFixed(1);
           pen = true;
         });
+        /* The ceiling is a step function that stops at the last published
+           day, so with the projection running past that the two never meet
+           on screen and the crossing the trend exists to show is off the end
+           of the line. Carry the last known ceiling forward at its own level
+           to the intersection -- flat, because that is exactly what an
+           unchanged statutory limit does. */
+        if (trendOn && trend && !trend.suppressed && !trend.suspended
+            && opt.trend && s.col === opt.trend.limitCol && pts.length) {
+          var lastLim = null;
+          for (var q = pts.length - 1; q >= 0; q--) {
+            if (pts[q].v != null) { lastLim = pts[q]; break; }
+          }
+          if (lastLim && trend.endT > lastLim.t) {
+            d += 'L' + sx(Math.min(trend.endT, t1)).toFixed(1)
+              + ' ' + Y(lastLim.v).toFixed(1);
+          }
+        }
+
         if (d) {
           svg.appendChild(el('path', {
             d: d, fill: 'none', stroke: s.color,
@@ -987,7 +1325,11 @@
       if (isNaN(t)) return;
       var raw = r[vKey];
       var v = (raw === '' || raw == null) ? null : +raw;
+      /* The panels are drawn per head, but a percentage change says nothing
+         about size, so the count behind it is kept for the caption. */
+      var cRaw = opt.countCol ? r[opt.countCol] : null;
       (groups[name] || (groups[name] = [])).push({
+        c: (cRaw === '' || cRaw == null) ? null : +cRaw,
         t: t, v: (v == null || isNaN(v)) ? null : v
       });
     });
@@ -1070,9 +1412,9 @@
          A rolling lag gives a series of unrelated comparisons instead, which
          is a different and much harder quantity to read. */
       var refT = tMax - LAG_WEEKS * 7 * DAY;
-      var ref = null;
+      var ref = null, refC = null;
       for (var i = 0; i < pts.length; i++) {
-        if (pts[i].t === refT) { ref = pts[i].v; break; }
+        if (pts[i].t === refT) { ref = pts[i].v; refC = pts[i].c; break; }
       }
       /* No reference, or a reference of zero, means the change is undefined
          rather than large -- a handful of admissions divided by nothing is
@@ -1083,8 +1425,10 @@
       var out = [];
       pts.forEach(function (p) {
         if (p.t < refT || p.t > tMax) return;
-        out.push({ t: p.t, v: p.v == null ? null : (p.v / ref - 1) * 100 });
+        out.push({ t: p.t, c: p.c,
+                   v: p.v == null ? null : (p.v / ref - 1) * 100 });
       });
+      out.refC = refC;
       return out;
     }
 
@@ -1106,7 +1450,7 @@
       if (!isFinite(lo)) { lo = 0; hi = 1; }
       if (isChange) {
         var span = Math.max(Math.abs(lo), Math.abs(hi), 10);
-        lo = -span; hi = span;                 // symmetric, so zero is centred
+        lo = -span; hi = span;                 // symmetric, so zero is centered
       } else {
         lo = Math.min(0, lo);
         if (hi <= lo) hi = lo + 1;
@@ -1115,11 +1459,17 @@
       var gaps = names.filter(function (n) { return !series[n]; }).length;
       note.innerHTML = isChange
         ? ('Percentage change against ' + LAG_WEEKS + ' weeks earlier, traced '
-           + 'week by week from that one reference. The line runs '
-           + '<span class="key key-up"></span> above zero and '
-           + '<span class="key key-dn"></span> below it, so a state that fell '
-           + 'and turned back up shows both. Every panel shares one scale.'
-           + (gaps ? ' ' + gaps + ' greyed panels had no admissions in the '
+           + 'week by week from that one reference. Color follows the value '
+           + 'continuously &mdash; <span class="key key-up"></span> above '
+           + 'zero, <span class="key key-dn"></span> below it, gray at the '
+           + 'crossing &mdash; so a state that fell and turned back up shows '
+           + 'both. All panels share one scale, symmetric about zero and never '
+           + 'narrower than &plusmn;10%, currently &plusmn;'
+           + Math.round(hi) + '%. <strong>A percentage says nothing about '
+           + 'size</strong>, so the admissions it was computed from are '
+           + 'printed under each state, reference week to latest: 1&rarr;2 is '
+           + '+100% and draws as red as a real surge.'
+           + (gaps ? ' ' + gaps + ' grayed panels had no admissions in the '
               + 'reference week, which leaves the change undefined.' : ''))
         : ('Weekly admissions per 100,000 residents. Every panel shares one '
            + 'vertical scale, topping out at ' + fmt(hi) + ', so a small state '
@@ -1165,6 +1515,26 @@
           : (isChange ? (last > 0 ? '+' : '') + Math.round(last) + '%'
                       : fmt(last));
         cell.appendChild(cap);
+
+        /* The raw admissions the percentage was computed from, reference week
+           to latest. This is what the original R annotated every facet with,
+           and it is the only thing on the panel that tells a state going 1 to
+           2 apart from one going 400 to 800. */
+        if (isChange && pts && pts.refC != null) {
+          var lastC = null;
+          for (var ci = pts.length - 1; ci >= 0; ci--) {
+            if (pts[ci].c != null) { lastC = pts[ci].c; break; }
+          }
+          if (lastC != null) {
+            var base = document.createElement('div');
+            base.className = 'panel-base';
+            base.textContent = Math.round(pts.refC) + '\u2192'
+                             + Math.round(lastC);
+            base.title = Math.round(pts.refC) + ' admissions in the reference '
+                       + 'week, ' + Math.round(lastC) + ' in the latest';
+            cell.appendChild(base);
+          }
+        }
 
         var svg = el('svg', {
           viewBox: '0 0 ' + W + ' ' + H, preserveAspectRatio: 'none',

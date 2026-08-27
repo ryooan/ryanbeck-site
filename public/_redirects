@@ -26,6 +26,19 @@
 /forecasting/bird-flu    /forecasting/bird-flu.html   200
 /forecasting/virginia-covid /forecasting/virginia-covid.html   200
 /forecasting/archive     /forecasting/archive.html   200
+/forecasting/embed/debt-limit /forecasting/embed/debt-limit.html   200
+/forecasting/embed/refugee-admissions /forecasting/embed/refugee-admissions.html   200
+/forecasting/embed/refugee-admissions-annual /forecasting/embed/refugee-admissions-annual.html   200
+/forecasting/embed/faamg-revenues /forecasting/embed/faamg-revenues.html   200
+/forecasting/embed/faamg-revenues-quarterly /forecasting/embed/faamg-revenues-quarterly.html   200
+/forecasting/embed/covid-weekly-admissions /forecasting/embed/covid-weekly-admissions.html   200
+/forecasting/embed/flu-hospitalizations /forecasting/embed/flu-hospitalizations.html   200
+/forecasting/embed/flu-hospitalizations-states /forecasting/embed/flu-hospitalizations-states.html   200
+/forecasting/embed/semiconductors-us-exports-china /forecasting/embed/semiconductors-us-exports-china.html   200
+/forecasting/embed/semiconductors-china-imports /forecasting/embed/semiconductors-china-imports.html   200
+/forecasting/embed/hpai-depopulations /forecasting/embed/hpai-depopulations.html   200
+/forecasting/embed/covid-hospitalizations /forecasting/embed/covid-hospitalizations.html   200
+/forecasting/embed/va-vaccinations /forecasting/embed/va-vaccinations.html   200
 # The page these replaced. Redirect to the pretty URL, not
 # to index.html, so the .html spelling never shows up in a bar.
 /forecasting-data       /forecasting              301

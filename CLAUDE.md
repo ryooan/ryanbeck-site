@@ -17,10 +17,10 @@ doing real work.
 public/            everything served to a browser
   index.html       the hall — the landing page, and the interesting one
   projects.html  writing.html  blog.html  404.html
-  forecasting/            GENERATED dashboard — index + one page per
-                          subject, each at its own URL. One card on projects
-                          points at it. Rebuild with
-                          tools/forecasting/build_page.py; never hand-edit
+  forecasting/            GENERATED "Data Dashboards" — index + one page per
+                          subject + embed/<slug>.html per chart, each at its
+                          own URL. One card on projects points at it. Rebuild
+                          with tools/forecasting/build_page.py; never hand-edit
   park-guides.html        family park guides: overview + open/download PDFs
   guides/                 the two guide PDFs themselves (RMNP, Grand Teton)
   about.html       the tome — a book you click through
@@ -498,6 +498,24 @@ Three details of that mode, all taken from the original R:
   to avoid infinities, which makes an all-zero state a flat −100%. Those
   panels are grayed out instead, keeping their place on the map.
 
+**There was never a magnitude guard on the color, and it is worth knowing that
+before someone goes looking for one again.** Both original charts used a plain
+`scale_color_gradient2(low="green", mid="gray", high="red", midpoint=0)` over
+the full data range. Nothing damped a small state. What supplied the magnitude
+was `geom_text(aes(label = round(weekly_total)))`, which printed the **raw
+weekly total** on every facet at its first and last date - so a reader could
+see a `3` beside a +100% line and discount it. That annotation is restored as
+`.panel-base` (`countCol` in the config, `refC` carried through `seriesFor`),
+and the note says why it is there. As of this writing Alaska reads +100% off
+3→6 and North Dakota +100% off 2→4, both drawing as red as a real surge.
+
+Note also that the original's zero-substitution made small states *worse*, not
+better: it manufactured huge percentages out of nothing. Dropping it was
+already the right call.
+
+The shared scale is symmetric about zero and never narrower than ±10%, which
+keeps a quiet week from being blown up into a full red-to-green spread.
+
 `layout: "us-grid"` places tiles on **26 half-columns**, with odd rows starting
 one half-column in. That offset is most of what makes fifty boxes read as a map
 rather than a spreadsheet; doing it with half-columns rather than a transform
@@ -533,8 +551,76 @@ Four rules, all of which have a case in the data to check against:
 
 Solid over the fitted stretch, dashed beyond the last observation, so
 measurement and extrapolation are distinguishable without reading a caption.
-The toggle is on by default and extends the x-axis to reach the projection;
-turning it off refits to the data.
+It is on by default and extends the x-axis to reach the projection; turning it
+off refits to the data.
+
+**It toggles from the legend, like everything else on the chart.** It had a
+button of its own in the range bar for a while, which put one of the chart's
+lines in a different place from the rest of them.
+
+**The ceiling is carried forward to meet it.** The statutory limit is a step
+function that stops at the last published day, so with the projection running
+past that the two never meet on screen and the crossing the whole line exists
+to show falls off the end of the ceiling. The last known ceiling is extended
+flat to the intersection - flat because that is exactly what an unchanged
+statutory limit does. Only when a ceiling is actually in force: during a
+suspension there is nothing to extend.
+
+### Every chart carries its own title
+
+The chart draws its title, a subtitle of `<source> · data to <date>`, and a
+rotated caption on each y axis. This is so a chart can be shared on its own
+and still say what it is; `opt.title`, `opt.subtitle`, `opt.yLabel` and
+`opt.yLabelRight` come from the generator, and the subtitle is built from the
+manifest, so the date in a shared image is the date of the data in it.
+
+Two consequences worth knowing before editing a page:
+
+- **The section's `<h2>` is `.sr-only`.** The visible heading is the one drawn
+  inside the SVG; showing both printed the same words twice. The heading is
+  still there for the document outline, the sidebar anchors and screen
+  readers. The status word moved down to the metadata line under the chart for
+  the same reason - the chart's subtitle already carries the date.
+- **The range buttons sit BELOW the chart**, with the legend. They used to sit
+  above it, which now puts controls between a section's prose and the title
+  the chart draws for itself.
+
+SVG text does not wrap, so titles are measured with a canvas 2d context in the
+same font and broken greedily to at most two lines, then ellipsized. The
+measured height of that block is what sets `m.t`, so a title that wraps pushes
+the plot down instead of landing on top of it.
+
+**Name the quantity, not the unit.** The currency formatters already print
+`$38.5T`, so a y caption reading "Trillions of dollars" says nothing the ticks
+do not. "Debt outstanding" does.
+
+### Sharing a chart
+
+Three buttons under every chart: **PNG**, **Embed**, **Link**.
+
+`exportSVG()` clones the live SVG and makes it stand alone, because a detached
+copy loses things the page was providing:
+
+- a painted background, since the page's own paper color is not coming along
+- its own `<style>`, for the one class (`.plot-axis`) the ticks rely on
+- **a drawn legend of whatever is currently showing**, since the real legend
+  is HTML sitting outside the SVG. Without this an export is unlabeled lines.
+- a credit line - site plus the source's **host only**, because a source URL's
+  full path can run wider than the image
+
+**The export is whatever is on screen**: the range you picked, the series you
+left on, the trend if it is showing. Exporting the default view instead would
+hand back a different chart than the one you meant to share.
+
+Rasterizing goes through a **blob URL, not a `data:` URI** - a data URI of a
+large SVG trips URL length limits, and a same-origin blob leaves the canvas
+untainted so `toBlob` still works.
+
+`public/forecasting/embed/<slug>.html` is one bare page per chart for
+iframing, generated by `write_embeds()` and given its own `_redirects` line
+like every other pretty URL. Its config deliberately omits the `embed` key, so
+an embedded chart offers PNG and Link but not an embed code for the page the
+reader is already looking at.
 
 ### Clicking the legend
 
@@ -574,7 +660,7 @@ a reader to compare heights that are not comparable.
 
 Every dashboard here died of dependency rot — RSocrata leaving CRAN took two
 pages down, dplyr dropping `summarise_each()` took the debt limit dark for six
-months. A chart library would reproduce that. It is ~21 KB, reads the site's
+months. A chart library would reproduce that. It is ~65 KB, reads the site's
 CSS custom properties for color, and breaks the line at missing values rather
 than interpolating, because several of these series have real holes.
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>US refugee admissions &middot; Forecasting Data &middot; Ryan Beck</title>
+<title>US refugee admissions &middot; Data Dashboards &middot; Ryan Beck</title>
 <meta name="description" content="People admitted to the United States as refugees, from the State Department’s Refugee Processing Center. Fiscal years run October to September, so the monthly series maps October t">
 <link rel="canonical" href="https://ryanbeck.com/forecasting/refugee-admissions">
 <meta name="theme-color" content="#f4ead9">
@@ -15,7 +15,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ryan Beck">
-<meta property="og:title" content="US refugee admissions &middot; Forecasting Data &middot; Ryan Beck">
+<meta property="og:title" content="US refugee admissions &middot; Data Dashboards &middot; Ryan Beck">
 <meta property="og:description" content="People admitted to the United States as refugees, from the State Department’s Refugee Processing Center. Fiscal years run October to September, so the monthly series maps October t">
 <meta property="og:url" content="https://ryanbeck.com/forecasting/refugee-admissions">
 <meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
@@ -40,8 +40,8 @@
 </header>
 <div class="dash">
 
-<nav class="dash-nav" aria-label="Forecasting data sections">
-  <p class="dash-nav-head"><a href="/forecasting">Forecasting data</a></p>
+<nav class="dash-nav" aria-label="Data dashboard sections">
+  <p class="dash-nav-head"><a href="/forecasting">Data Dashboards</a></p>
   <ul>
     <li><a href="/forecasting/respiratory">Respiratory illness<span class="dot is-live" aria-hidden="true"></span></a></li>
     <li><a href="/forecasting/debt-limit">The debt limit<span class="dot is-live" aria-hidden="true"></span></a></li>
@@ -62,21 +62,21 @@
     </header>
 
   <section class="series" id="refugee-admissions">
-    <span class="status is-live">Live &middot; data to 1 July 2026</span>
-    <h2>US refugee admissions by month</h2>
+    <h2 class="sr-only">US refugee admissions by month</h2>
+    <div class="plot-mount" data-plot='{&quot;yLabel&quot;:&quot;People admitted&quot;,&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;defaultRange&quot;:&quot;2y&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Arrivals in month&quot;}],&quot;csv&quot;:&quot;/data/forecasting/refugee-admissions.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US refugee admissions by month&quot;,&quot;slug&quot;:&quot;refugee-admissions&quot;,&quot;embed&quot;:&quot;/forecasting/embed/refugee-admissions&quot;,&quot;sourceUrl&quot;:&quot;https://www.wrapsnet.org/admissions-and-arrivals/&quot;,&quot;title&quot;:&quot;US refugee admissions by month&quot;,&quot;subtitle&quot;:&quot;State Department Refugee Processing Center \u00b7 data to 1 July 2026&quot;}'></div>
     <p class="series-note">People admitted to the United States as refugees each month, from the State Department's Refugee Processing Center. Fiscal years run October to September; the annual ceiling is set by presidential determination and is a cap, not a target.</p>
-    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;defaultRange&quot;:&quot;2y&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Arrivals in month&quot;}],&quot;csv&quot;:&quot;/data/forecasting/refugee-admissions.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US refugee admissions by month&quot;}'></div>
-    <p class="series-source">310 rows, latest 57 days ago &middot;
+    <p class="series-source"><span class="status is-live">Live</span>
+      310 rows, latest 57 days ago &middot;
       source: <a href="https://www.wrapsnet.org/admissions-and-arrivals/" rel="noopener">State Department Refugee Processing Center</a> &middot;
       download: <a href="/data/forecasting/refugee-admissions.csv">refugee-admissions.csv</a> &middot; <a href="/data/forecasting/refugee-admissions-annual.csv">refugee-admissions-annual.csv</a></p>
   </section>
 
   <section class="series" id="refugee-admissions-annual">
-    <span class="status is-live">Live &middot; data to FY 2026</span>
-    <h2>Refugee admissions by fiscal year</h2>
+    <h2 class="sr-only">Refugee admissions by fiscal year</h2>
+    <div class="plot-mount" data-plot='{&quot;yLabel&quot;:&quot;People admitted&quot;,&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;labelCol&quot;:&quot;fiscal_year&quot;,&quot;labelPrefix&quot;:&quot;FY &quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Admitted&quot;},{&quot;col&quot;:&quot;ceiling&quot;,&quot;label&quot;:&quot;Presidential ceiling&quot;,&quot;dash&quot;:true}],&quot;csv&quot;:&quot;/data/forecasting/refugee-admissions-annual.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Refugee admissions by fiscal year&quot;,&quot;slug&quot;:&quot;refugee-admissions-annual&quot;,&quot;embed&quot;:&quot;/forecasting/embed/refugee-admissions-annual&quot;,&quot;sourceUrl&quot;:&quot;https://www.wrapsnet.org/admissions-and-arrivals/&quot;,&quot;title&quot;:&quot;Refugee admissions by fiscal year&quot;,&quot;subtitle&quot;:&quot;State Department Refugee Processing Center \u00b7 data to FY 2026&quot;}'></div>
     <p class="series-note">The same arrivals totaled by fiscal year. The dashed line is the annual ceiling, which is only published for recent years.</p>
-    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;labelCol&quot;:&quot;fiscal_year&quot;,&quot;labelPrefix&quot;:&quot;FY &quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Admitted&quot;},{&quot;col&quot;:&quot;ceiling&quot;,&quot;label&quot;:&quot;Presidential ceiling&quot;,&quot;dash&quot;:true}],&quot;csv&quot;:&quot;/data/forecasting/refugee-admissions-annual.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Refugee admissions by fiscal year&quot;}'></div>
-    <p class="series-source">52 rows, latest about 11 months ago &middot;
+    <p class="series-source"><span class="status is-live">Live</span>
+      52 rows, latest about 11 months ago &middot;
       source: <a href="https://www.wrapsnet.org/admissions-and-arrivals/" rel="noopener">State Department Refugee Processing Center</a> &middot;
       download: <a href="/data/forecasting/refugee-admissions-annual.csv">refugee-admissions-annual.csv</a></p>
   </section>

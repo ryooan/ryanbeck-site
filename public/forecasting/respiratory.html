@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Respiratory illness &middot; Forecasting Data &middot; Ryan Beck</title>
+<title>Respiratory illness &middot; Data Dashboards &middot; Ryan Beck</title>
 <meta name="description" content="Weekly hospital admissions for COVID-19, influenza and RSV, nationally and state by state. National figures come from the CDC’s National Healthcare Safety Network. This is meant to">
 <link rel="canonical" href="https://ryanbeck.com/forecasting/respiratory">
 <meta name="theme-color" content="#f4ead9">
@@ -15,7 +15,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ryan Beck">
-<meta property="og:title" content="Respiratory illness &middot; Forecasting Data &middot; Ryan Beck">
+<meta property="og:title" content="Respiratory illness &middot; Data Dashboards &middot; Ryan Beck">
 <meta property="og:description" content="Weekly hospital admissions for COVID-19, influenza and RSV, nationally and state by state. National figures come from the CDC’s National Healthcare Safety Network. This is meant to">
 <meta property="og:url" content="https://ryanbeck.com/forecasting/respiratory">
 <meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
@@ -40,8 +40,8 @@
 </header>
 <div class="dash">
 
-<nav class="dash-nav" aria-label="Forecasting data sections">
-  <p class="dash-nav-head"><a href="/forecasting">Forecasting data</a></p>
+<nav class="dash-nav" aria-label="Data dashboard sections">
+  <p class="dash-nav-head"><a href="/forecasting">Data Dashboards</a></p>
   <ul>
     <li><a href="/forecasting/respiratory" aria-current="page">Respiratory illness<span class="dot is-live" aria-hidden="true"></span></a></li>
     <li><a href="/forecasting/debt-limit">The debt limit<span class="dot is-live" aria-hidden="true"></span></a></li>
@@ -62,31 +62,31 @@
     </header>
 
   <section class="series" id="covid-weekly-admissions">
-    <span class="status is-live">Live &middot; data to 15 August 2026</span>
-    <h2>US respiratory hospital admissions, weekly</h2>
+    <h2 class="sr-only">US respiratory hospital admissions, weekly</h2>
+    <div class="plot-mount" data-plot='{&quot;yLabel&quot;:&quot;New admissions per week&quot;,&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;defaultRange&quot;:&quot;2y&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;covid&quot;,&quot;label&quot;:&quot;COVID-19&quot;},{&quot;col&quot;:&quot;influenza&quot;,&quot;label&quot;:&quot;Influenza&quot;},{&quot;col&quot;:&quot;rsv&quot;,&quot;label&quot;:&quot;RSV&quot;}],&quot;band&quot;:{&quot;col&quot;:&quot;voluntary_reporting&quot;,&quot;label&quot;:&quot;Reporting voluntary \u2014 coverage fell to a third&quot;},&quot;csv&quot;:&quot;/data/forecasting/covid-weekly-admissions.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US respiratory hospital admissions, weekly&quot;,&quot;slug&quot;:&quot;covid-weekly-admissions&quot;,&quot;embed&quot;:&quot;/forecasting/embed/covid-weekly-admissions&quot;,&quot;sourceUrl&quot;:&quot;https://data.cdc.gov/resource/ua7e-t2fy&quot;,&quot;title&quot;:&quot;US respiratory hospital admissions, weekly&quot;,&quot;subtitle&quot;:&quot;CDC NHSN Hospital Respiratory Data \u00b7 data to 15 August 2026&quot;}'></div>
     <p class="series-note">New hospital admissions each week with a laboratory-confirmed diagnosis. Influenza and RSV are reported in the same returns.<br><br><strong>The shaded stretch is not a drop in admissions.</strong> Reporting to NHSN was mandatory under the public health emergency, became voluntary on 1 May 2024, and was made mandatory again by CMS on 1 November 2024. Hospital participation followed exactly: about 93% either side, and a low of 31% in October 2024. Counts inside that window are drawn from roughly a third of the hospitals, so they are not comparable with the rest of the line. The share reporting each week is in the download.<br><br>A different series for the same measure, from the archived reichlab forecast hub, was widely used up to April 2024 and runs about 4% lower at the median. Figures read off older charts will not match these; that series is in the download for comparison.</p>
-    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;defaultRange&quot;:&quot;2y&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;covid&quot;,&quot;label&quot;:&quot;COVID-19&quot;},{&quot;col&quot;:&quot;influenza&quot;,&quot;label&quot;:&quot;Influenza&quot;},{&quot;col&quot;:&quot;rsv&quot;,&quot;label&quot;:&quot;RSV&quot;}],&quot;band&quot;:{&quot;col&quot;:&quot;voluntary_reporting&quot;,&quot;label&quot;:&quot;Reporting voluntary \u2014 coverage fell to a third&quot;},&quot;csv&quot;:&quot;/data/forecasting/covid-weekly-admissions.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US respiratory hospital admissions, weekly&quot;}'></div>
-    <p class="series-source">315 rows, latest 12 days ago &middot;
+    <p class="series-source"><span class="status is-live">Live</span>
+      315 rows, latest 12 days ago &middot;
       source: <a href="https://data.cdc.gov/resource/ua7e-t2fy" rel="noopener">CDC NHSN Hospital Respiratory Data</a> &middot;
       download: <a href="/data/forecasting/covid-weekly-admissions.csv">covid-weekly-admissions.csv</a> &middot; <a href="/data/forecasting/covid-weekly-admissions-reichlab.csv">covid-weekly-admissions-reichlab.csv</a></p>
   </section>
 
   <section class="series" id="flu-hospitalizations-states">
-    <span class="status is-live">Live &middot; data to 4 July 2026</span>
-    <h2>Influenza admissions, state by state</h2>
+    <h2 class="sr-only">Influenza admissions, state by state</h2>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;rate&quot;,&quot;panelBy&quot;:&quot;location&quot;,&quot;value&quot;:&quot;rate_per_100k&quot;,&quot;countCol&quot;:&quot;admissions&quot;,&quot;layout&quot;:&quot;us-grid&quot;,&quot;defaultMode&quot;:&quot;change&quot;,&quot;changeLagWeeks&quot;:4,&quot;changeWeeks&quot;:6,&quot;valueRanges&quot;:[&quot;6m&quot;,&quot;1y&quot;,&quot;2y&quot;,&quot;5y&quot;],&quot;csv&quot;:&quot;/data/forecasting/flu-hospitalizations-states.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Influenza admissions, state by state&quot;,&quot;slug&quot;:&quot;flu-hospitalizations-states&quot;,&quot;embed&quot;:&quot;/forecasting/embed/flu-hospitalizations-states&quot;,&quot;sourceUrl&quot;:&quot;https://github.com/cdcepi/FluSight-forecast-hub&quot;,&quot;title&quot;:&quot;Influenza admissions, state by state&quot;,&quot;subtitle&quot;:&quot;CDC FluSight forecast hub \u00b7 data to 4 July 2026&quot;}'></div>
     <p class="series-note">Influenza admissions state by state, laid out roughly as the map is, so a bad week across one region reads as a block of color. It opens on percentage change against four weeks earlier, which is what makes a small state climbing fast as visible as a large one; the buttons switch to admissions per 100,000 over a window.<br><br>Every panel shares one vertical scale. Per head rather than raw counts is what makes that readable — on raw admissions the spread between the largest and smallest states is more than fiftyfold, and most of the grid flattens into slivers.<br><br>These come from the CDC’s FluSight hub, which republishes NHSN’s figures. They will not match the influenza line above to the digit: FluSight snapshots NHSN and does not always carry its later revisions, so recent weeks can differ by a few percent.</p>
-    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;rate&quot;,&quot;panelBy&quot;:&quot;location&quot;,&quot;value&quot;:&quot;rate_per_100k&quot;,&quot;layout&quot;:&quot;us-grid&quot;,&quot;defaultMode&quot;:&quot;change&quot;,&quot;changeLagWeeks&quot;:4,&quot;changeWeeks&quot;:6,&quot;valueRanges&quot;:[&quot;6m&quot;,&quot;1y&quot;,&quot;2y&quot;,&quot;5y&quot;],&quot;csv&quot;:&quot;/data/forecasting/flu-hospitalizations-states.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Influenza admissions, state by state&quot;}'></div>
-    <p class="series-source">11,976 rows, latest 54 days ago &middot;
+    <p class="series-source"><span class="status is-live">Live</span>
+      11,976 rows, latest 54 days ago &middot;
       source: <a href="https://github.com/cdcepi/FluSight-forecast-hub" rel="noopener">CDC FluSight forecast hub</a> &middot;
       download: <a href="/data/forecasting/flu-hospitalizations-states.csv">flu-hospitalizations-states.csv</a> &middot; <a href="/data/forecasting/flu-hospitalizations.csv">flu-hospitalizations.csv</a></p>
   </section>
 
   <section class="series" id="covid-hospitalizations">
-    <span class="status is-historical">Historical &middot; data to 27 April 2024</span>
-    <h2>COVID and flu patients in the hospital</h2>
+    <h2 class="sr-only">COVID and flu patients in the hospital</h2>
+    <div class="plot-mount" data-plot='{&quot;yLabel&quot;:&quot;Patients in the hospital&quot;,&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;adult_covid&quot;,&quot;label&quot;:&quot;Adults with COVID&quot;},{&quot;col&quot;:&quot;influenza&quot;,&quot;label&quot;:&quot;Confirmed influenza&quot;},{&quot;col&quot;:&quot;icu_covid&quot;,&quot;label&quot;:&quot;COVID in adult ICU&quot;}],&quot;csv&quot;:&quot;/data/forecasting/covid-hospitalizations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;COVID and flu patients in the hospital&quot;,&quot;slug&quot;:&quot;covid-hospitalizations&quot;,&quot;embed&quot;:&quot;/forecasting/embed/covid-hospitalizations&quot;,&quot;sourceUrl&quot;:&quot;https://healthdata.gov/dataset/g62h-syeh&quot;,&quot;title&quot;:&quot;COVID and flu patients in the hospital&quot;,&quot;subtitle&quot;:&quot;healthdata.gov g62h-syeh (HHS) \u00b7 data to 27 April 2024&quot;}'></div>
     <p class="series-note">Patients in the hospital on a given day, summed across reporting states, from the HHS hospital-capacity dataset. This is a census rather than a count of admissions — everyone in a bed that day, however long they have been there — so it runs far higher than the admissions series above and should not be read against it. HHS ended the reporting requirement behind it, so the series stops in April 2024.</p>
-    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;adult_covid&quot;,&quot;label&quot;:&quot;Adults with COVID&quot;},{&quot;col&quot;:&quot;influenza&quot;,&quot;label&quot;:&quot;Confirmed influenza&quot;},{&quot;col&quot;:&quot;icu_covid&quot;,&quot;label&quot;:&quot;COVID in adult ICU&quot;}],&quot;csv&quot;:&quot;/data/forecasting/covid-hospitalizations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;COVID and flu patients in the hospital&quot;}'></div>
-    <p class="series-source">1,579 rows, latest about 2.3 years ago &middot;
+    <p class="series-source"><span class="status is-historical">Historical</span>
+      1,579 rows, latest about 2.3 years ago &middot;
       source: <a href="https://healthdata.gov/dataset/g62h-syeh" rel="noopener">healthdata.gov g62h-syeh (HHS)</a> &middot;
       download: <a href="/data/forecasting/covid-hospitalizations.csv">covid-hospitalizations.csv</a> &middot; <a href="/data/forecasting/covid-hospitalizations-va.csv">covid-hospitalizations-va.csv</a></p>
   </section>

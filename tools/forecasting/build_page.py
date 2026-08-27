@@ -43,6 +43,7 @@ SECTIONS = [
         "title": "US debt limit",
         "csv": "debt-limit.csv",
         "plot": {
+            "yLabel": "Debt outstanding",
             "format": "usd-millions",
             "series": [
                 {"col": "debt_subject_to_limit", "label": "Debt subject to limit"},
@@ -80,6 +81,7 @@ SECTIONS = [
         "title": "US refugee admissions by month",
         "csv": "refugee-admissions.csv",
         "plot": {
+            "yLabel": "People admitted",
             "format": "number",
             "zero": True,
             "defaultRange": "2y",
@@ -99,6 +101,7 @@ SECTIONS = [
         "title": "Refugee admissions by fiscal year",
         "csv": "refugee-admissions-annual.csv",
         "plot": {
+            "yLabel": "People admitted",
             "format": "number",
             "zero": True,
             "labelCol": "fiscal_year",
@@ -119,6 +122,7 @@ SECTIONS = [
         "title": "Big-tech revenue by fiscal year",
         "csv": "faamg-revenues.csv",
         "plot": {
+            "yLabel": "Revenue",
             "format": "usd-billions",
             "zero": True,
             "labelCol": "fiscal_year",
@@ -144,6 +148,7 @@ SECTIONS = [
         "title": "Big-tech revenue by quarter",
         "csv": "faamg-revenues-quarterly.csv",
         "plot": {
+            "yLabel": "Revenue",
             "format": "usd-billions",
             "zero": True,
             "labelCol": "quarter",
@@ -174,6 +179,7 @@ SECTIONS = [
         "title": "US respiratory hospital admissions, weekly",
         "csv": "covid-weekly-admissions.csv",
         "plot": {
+            "yLabel": "New admissions per week",
             "format": "number",
             "zero": True,
             "defaultRange": "2y",
@@ -210,6 +216,7 @@ SECTIONS = [
         "title": "US influenza hospitalizations",
         "csv": "flu-hospitalizations.csv",
         "plot": {
+            "yLabel": "Patients in the hospital",
             "format": "number",
             "zero": True,
             "series": [{"col": "admissions", "label": "Weekly admissions"}],
@@ -230,6 +237,7 @@ SECTIONS = [
             "format": "rate",
             "panelBy": "location",
             "value": "rate_per_100k",
+            "countCol": "admissions",
             "layout": "us-grid",
             "defaultMode": "change",
             "changeLagWeeks": 4,
@@ -260,6 +268,7 @@ SECTIONS = [
         "title": "US semiconductor exports to China",
         "csv": "semiconductors-us-exports-china.csv",
         "plot": {
+            "yLabel": "Export value",
             "format": "usd",
             "zero": True,
             "series": [
@@ -288,6 +297,7 @@ SECTIONS = [
         "title": "China's semiconductor imports",
         "csv": "semiconductors-china-imports.csv",
         "plot": {
+            "yLabel": "Import value",
             "format": "usd",
             "zero": True,
             "labelCol": "year",
@@ -309,6 +319,8 @@ SECTIONS = [
         "title": "Birds killed in the bird-flu outbreak",
         "csv": "hpai-depopulations.csv",
         "plot": {
+            "yLabel": "Birds killed, running total",
+            "yLabelRight": "Birds killed that week",
             "format": "number",
             "zero": True,
             "series": [
@@ -330,6 +342,7 @@ SECTIONS = [
         "title": "COVID and flu patients in the hospital",
         "csv": "covid-hospitalizations.csv",
         "plot": {
+            "yLabel": "Patients in the hospital",
             "format": "number",
             "zero": True,
             "series": [
@@ -355,6 +368,7 @@ SECTIONS = [
         "title": "Virginia COVID vaccinations",
         "csv": "va-vaccinations.csv",
         "plot": {
+            "yLabel": "People",
             "format": "number",
             "zero": True,
             "series": [
@@ -584,6 +598,17 @@ def section_html(sec, meta):
     plot["csv"] = "/data/forecasting/" + sec["csv"]
     plot["x"] = "date"
     plot["alt"] = sec["title"]
+
+    # The chart carries its own title and provenance so a shared PNG stands up
+    # without the page around it. Both are built from the manifest, so the
+    # date in a shared image is the date of the data in it.
+    label = period_label(sec, info)
+    plot["slug"] = sec["slug"]
+    plot["embed"] = "/forecasting/embed/" + sec["slug"]
+    plot["sourceUrl"] = sec["source_url"]
+    plot["title"] = sec["title"]
+    plot["subtitle"] = "%s · data to %s" % (
+        sec["source"], label or human(info["last_date"]))
     cfg = e(json.dumps(plot, separators=(",", ":")))
 
     downloads = ['<a href="/data/forecasting/%s">%s</a>' % (sec["csv"], sec["csv"])]
@@ -591,14 +616,18 @@ def section_html(sec, meta):
         downloads.append('<a href="/data/forecasting/%s">%s</a>'
                          % (sec["extra_csv"], sec["extra_csv"]))
 
-    label = period_label(sec, info)
+    # The heading is for the document outline, the sidebar anchors and screen
+    # readers; the visible one is drawn inside the chart, so showing both
+    # would print the same words twice. Likewise the status word has moved
+    # down to the metadata line -- the chart's own subtitle already carries
+    # the date, and a second pill above it repeated it.
     return """
   <section class="series" id="%(slug)s">
-    <span class="status is-%(status)s">%(word)s &middot; data to %(last_h)s</span>
-    <h2>%(title)s</h2>
-    <p class="series-note">%(note)s</p>
+    <h2 class="sr-only">%(title)s</h2>
     <div class="plot-mount" data-plot='%(cfg)s'></div>
-    <p class="series-source">%(rows)s rows, latest %(age)s &middot;
+    <p class="series-note">%(note)s</p>
+    <p class="series-source"><span class="status is-%(status)s">%(word)s</span>
+      %(rows)s rows, latest %(age)s &middot;
       source: <a href="%(surl)s" rel="noopener">%(source)s</a> &middot;
       download: %(dl)s</p>
   </section>
@@ -629,8 +658,8 @@ def sidebar(active, meta):
                ' aria-current="page"' if g["slug"] == active else "",
                e(g["nav"]), e(worst or "live")))
     return """
-<nav class="dash-nav" aria-label="Forecasting data sections">
-  <p class="dash-nav-head"><a href="/forecasting">Forecasting data</a></p>
+<nav class="dash-nav" aria-label="Data dashboard sections">
+  <p class="dash-nav-head"><a href="/forecasting">Data Dashboards</a></p>
   <ul>
 %s
   </ul>
@@ -663,7 +692,8 @@ def status_table(meta):
 def page(*, slug, title, kicker, blurb, body, meta, desc):
     # Escape the parts, then join with the entity -- escaping the joined
     # string turns "&middot;" into a literal "&middot;" in the tab.
-    parts = [e(title)] if title.lower().startswith("forecasting") else             [e(title), "Forecasting Data"]
+    parts = ([e(title)] if title.lower().startswith("data dashboards")
+             else [e(title), "Data Dashboards"])
     doc_title = " &middot; ".join(parts + ["Ryan Beck"])
     return PAGE % {
         "title": doc_title,
@@ -759,7 +789,7 @@ def build():
   </section>
 """ % {"live": live, "table": status_table(meta)}
 
-    idx = page(slug="", title="Forecasting data", kicker="Through the first door",
+    idx = page(slug="", title="Data Dashboards", kicker="Through the first door",
                blurb=(
                    "<p>Data I use for forecasting, collected in one place and "
                    "kept current. Pick a subject from the list.</p>"
@@ -773,12 +803,58 @@ def build():
               encoding="utf-8", newline="\n") as f:
         f.write(idx)
 
-    write_redirects(written)
-    print("forecasting/: index + %d pages (%d live series)"
-          % (len(written), live))
+    embeds = write_embeds(outdir, meta)
+
+    write_redirects(written, embeds)
+    print("forecasting/: index + %d pages, %d embeds (%d live series)"
+          % (len(written), len(embeds), live))
 
 
-def write_redirects(slugs):
+def write_embeds(outdir, meta):
+    """One bare page per chart, for iframing elsewhere.
+
+    Same plot config as the section on its own page, minus the `embed` key --
+    an embedded chart offering its own embed code is a loop, and the page it
+    would hand out is the one the reader is already looking at.
+    """
+    edir = os.path.join(outdir, "embed")
+    if not os.path.isdir(edir):
+        os.makedirs(edir)
+    out = []
+    for sec in SECTIONS:
+        info = meta.get(sec["slug"])
+        if not info:
+            continue
+        plot = dict(sec["plot"])
+        plot["csv"] = "/data/forecasting/" + sec["csv"]
+        plot["x"] = "date"
+        plot["alt"] = sec["title"]
+        plot["slug"] = sec["slug"]
+        plot["sourceUrl"] = sec["source_url"]
+        plot["title"] = sec["title"]
+        plot["subtitle"] = "%s · data to %s" % (
+            sec["source"], period_label(sec, info) or human(info["last_date"]))
+        with open(os.path.join(edir, sec["slug"] + ".html"), "w",
+                  encoding="utf-8", newline="\n") as f:
+            f.write(EMBED % {
+                "title": e(sec["title"]),
+                "cfg": e(json.dumps(plot, separators=(",", ":"))),
+                "home": "/forecasting/%s#%s" % (
+                    group_of(sec["slug"]), sec["slug"]),
+            })
+        out.append(sec["slug"])
+    return out
+
+
+def group_of(section_slug):
+    """Which grouping page carries a section."""
+    for g in GROUPS:
+        if section_slug in g["sections"]:
+            return g["slug"]
+    return ""
+
+
+def write_redirects(slugs, embeds=()):
     """Keep the pretty-URL rewrites in step with the pages that exist.
 
     wrangler.toml sets html_handling = "none", so /forecasting/respiratory does
@@ -795,6 +871,9 @@ def write_redirects(slugs):
              "/forecasting/           /forecasting/index.html   200"]
     for s in slugs:
         block.append("/forecasting/%-11s /forecasting/%s.html   200" % (s, s))
+    for s in embeds:
+        block.append("/forecasting/embed/%s /forecasting/embed/%s.html   200"
+                     % (s, s))
     block.append("# The page these replaced. Redirect to the pretty URL, not")
     block.append("# to index.html, so the .html spelling never shows up in a bar.")
     block.append("/forecasting-data       /forecasting              301")
@@ -809,6 +888,25 @@ def write_redirects(slugs):
         text = text.rstrip() + "\n\n" + new + "\n"
     with open(path, "w", encoding="utf-8", newline="\n") as f:
         f.write(text)
+
+
+EMBED = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>%(title)s</title>
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/plot.css">
+</head>
+<body class="embed-page">
+<div class="plot-mount" data-plot='%(cfg)s'></div>
+<p class="embed-credit"><a href="%(home)s" target="_blank" rel="noopener">%(title)s &mdash; ryanbeck.com</a></p>
+<script src="/assets/js/plot.js" defer></script>
+</body>
+</html>
+"""
 
 
 PAGE = """<!doctype html>

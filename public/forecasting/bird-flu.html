@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bird flu &middot; Forecasting Data &middot; Ryan Beck</title>
+<title>Bird flu &middot; Data Dashboards &middot; Ryan Beck</title>
 <meta name="description" content="Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak, from USDA APHIS detection records. A flock is counted on the date its infection was confirmed, an">
 <link rel="canonical" href="https://ryanbeck.com/forecasting/bird-flu">
 <meta name="theme-color" content="#f4ead9">
@@ -15,7 +15,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ryan Beck">
-<meta property="og:title" content="Bird flu &middot; Forecasting Data &middot; Ryan Beck">
+<meta property="og:title" content="Bird flu &middot; Data Dashboards &middot; Ryan Beck">
 <meta property="og:description" content="Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak, from USDA APHIS detection records. A flock is counted on the date its infection was confirmed, an">
 <meta property="og:url" content="https://ryanbeck.com/forecasting/bird-flu">
 <meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
@@ -40,8 +40,8 @@
 </header>
 <div class="dash">
 
-<nav class="dash-nav" aria-label="Forecasting data sections">
-  <p class="dash-nav-head"><a href="/forecasting">Forecasting data</a></p>
+<nav class="dash-nav" aria-label="Data dashboard sections">
+  <p class="dash-nav-head"><a href="/forecasting">Data Dashboards</a></p>
   <ul>
     <li><a href="/forecasting/respiratory">Respiratory illness<span class="dot is-live" aria-hidden="true"></span></a></li>
     <li><a href="/forecasting/debt-limit">The debt limit<span class="dot is-live" aria-hidden="true"></span></a></li>
@@ -62,11 +62,11 @@
     </header>
 
   <section class="series" id="hpai-depopulations">
-    <span class="status is-live">Live &middot; data to 17 August 2026</span>
-    <h2>Birds killed in the bird-flu outbreak</h2>
+    <h2 class="sr-only">Birds killed in the bird-flu outbreak</h2>
+    <div class="plot-mount" data-plot='{&quot;yLabel&quot;:&quot;Birds killed, running total&quot;,&quot;yLabelRight&quot;:&quot;Birds killed that week&quot;,&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;cumulative&quot;,&quot;label&quot;:&quot;Running total&quot;},{&quot;col&quot;:&quot;birds&quot;,&quot;label&quot;:&quot;Killed that week&quot;,&quot;axis&quot;:&quot;right&quot;}],&quot;csv&quot;:&quot;/data/forecasting/hpai-depopulations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Birds killed in the bird-flu outbreak&quot;,&quot;slug&quot;:&quot;hpai-depopulations&quot;,&quot;embed&quot;:&quot;/forecasting/embed/hpai-depopulations&quot;,&quot;sourceUrl&quot;:&quot;https://www.aphis.usda.gov/livestock-poultry-disease/avian/avian-influenza/hpai-detections/commercial-backyard-flocks&quot;,&quot;title&quot;:&quot;Birds killed in the bird-flu outbreak&quot;,&quot;subtitle&quot;:&quot;USDA APHIS confirmed detections \u00b7 data to 17 August 2026&quot;}'></div>
     <p class="series-note">Weekly count on the right-hand axis, running total on the left. They differ by two orders of magnitude, so on a shared scale the weeks would be a flat line along the bottom. The download splits each week into commercial and backyard birds, and carries the state, county and production type of every confirmed flock.</p>
-    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;cumulative&quot;,&quot;label&quot;:&quot;Running total&quot;},{&quot;col&quot;:&quot;birds&quot;,&quot;label&quot;:&quot;Killed that week&quot;,&quot;axis&quot;:&quot;right&quot;}],&quot;csv&quot;:&quot;/data/forecasting/hpai-depopulations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Birds killed in the bird-flu outbreak&quot;}'></div>
-    <p class="series-source">202 rows, latest up to date &middot;
+    <p class="series-source"><span class="status is-live">Live</span>
+      202 rows, latest up to date &middot;
       source: <a href="https://www.aphis.usda.gov/livestock-poultry-disease/avian/avian-influenza/hpai-detections/commercial-backyard-flocks" rel="noopener">USDA APHIS confirmed detections</a> &middot;
       download: <a href="/data/forecasting/hpai-depopulations.csv">hpai-depopulations.csv</a></p>
   </section>
