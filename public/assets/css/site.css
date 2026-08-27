@@ -208,10 +208,14 @@ body.hall-page{
    skyline solid black. These land all three at a median around 25 and a p90
    around 37 behind the veil -- present, and still firmly in shadow. Re-derive
    them if the art changes; `tools/prep-scene.py` prints the percentiles. */
-/* The anvil art is ~90% pure black with one bright subject, so its
-   median says nothing about how visible it is -- tune on the subject.
-   Well above 1 because there is so little lit area to dim. */
-.portal[data-portal="projects"]{ --scene-rest:1.15 }
+/* The anvil sits on a large gold disc, so unlike the other two it has real
+   mass at mid-brightness -- only 6% of it is near-black, against 86% for the
+   voxel version this replaced. That version needed 1.15, because it was one
+   thin bright subject on black and dimming it at all erased it. This one is
+   the opposite problem: left at 1.15 the disc glows through the veil as a
+   bright slab and the door stops reading as shadowed. Tuned so the disc lands
+   near the p95 the other two doors sit at. */
+.portal[data-portal="projects"]{ --scene-rest:.75 }
 .portal[data-portal="fiction"] { --scene-rest:.36 }
 .portal[data-portal="blog"]    { --scene-bleed:-3%; --scene-zoom:1.06; --scene-rest:.46 }
 

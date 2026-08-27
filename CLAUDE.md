@@ -58,6 +58,8 @@ tools/             make-fire.py (flames), make-wordmark.py (lettering),
                    make-dust.py (dust sprites),
                    trace-wizard.py (the wizard's clip polygon),
                    prep-scene.py (crop + tone a photo into a door scene),
+                   door-preview.py (show a candidate as the door reveals it),
+                   make-door-carousel.py (project cards -> door art candidates),
                    make-project-thumbs.py (dashboard chart -> card thumb),
                    check-links.mjs, check-docs.mjs (CI)
 wrangler.toml      Cloudflare config
@@ -184,14 +186,23 @@ and must sit *under* the flames or it mudddies them.
   crossfade is a single property.
 
   `--scene-rest` is **per-door** because the three pictures are nowhere near
-  each other in level. `1.15 / .36 / .46` (projects / fiction / blog). The
-  fiction corridor and the puzzle land near a median of 25 behind the veil;
-  the projects anvil is a different animal and is tuned differently on
-  purpose — it is ~90% pure black with one bright subject, so its median is
-  the background and says nothing about whether you can see it. Tune that
-  one on the SUBJECT (the p95 of the visible window), which is why its value
-  sits above 1: there is so little lit area that dimming it at all erases
-  it.
+  each other in level. `.75 / .36 / .46` (projects / fiction / blog). The
+  fiction corridor and the puzzle land near a median of 25 behind the veil.
+
+  **Tune the projects door on the p95, not the median.** Its art is a dark
+  anvil silhouetted against a gold disc, so the median (10.8 at rest) is the
+  background and says nothing about whether anything is visible; the disc is
+  what the eye finds. At `.75` that disc lands at a p95 of 65, against 67 for
+  the fiction corridor and 77 for the puzzle — in line with both.
+
+  The value moved a long way when the art changed, and the reason is worth
+  keeping. The voxel anvil this replaced was ~86% pure black with one thin
+  bright subject, and needed `1.15` — *above* 1, because there was so little
+  lit area that dimming it at all erased it. The current art has real mass at
+  mid-brightness (only 6% near-black), so the same 1.15 would push the disc
+  through the veil as a bright slab and the door would stop reading as
+  shadowed. Same door, opposite correction: check which kind of picture you
+  have before copying a number.
 - **How close a door stands to its scene is per-door**, via `--scene-bleed`
   (how much bigger `.scene` is than the opening) and `--scene-zoom` (the hover
   target). A door shows `1 / (bleed x zoom)` of the art's height and `0.741x`
@@ -1054,9 +1065,20 @@ is left:
   moves. Both project pages still mark themselves drafts.
 - **All three door scenes are now real art**, none generated:
   `scenes/fiction.jpg` is the SEER cover, `scenes/blog.jpg` the puzzle
-  photograph, `scenes/projects.jpg` the voxel anvil Ryan supplied
-  (2026-08-23). Replacement artwork wants to be 760×912 with the subject
-  centred, because the ring of fire eats the edges.
+  photograph, `scenes/projects.jpg` the anvil-on-a-gold-disc Ryan supplied
+  (2026-08-26, replacing the voxel anvil of 2026-08-23). Replacement artwork
+  wants to be 760×912 with the subject centred, because the ring of fire eats
+  the edges.
+
+  **Originals live in `art-source/`** and are committed, so a scene can be
+  re-derived rather than adjusted exactly once. `tools/door-preview.py` crops
+  any candidate to what the door actually reveals, at the resting and hover
+  exposures — judging door art from the full image is how two carousel
+  candidates got through review and failed at the crop.
+
+  On `--fit-subject`: **0.66 is about the ceiling, not 0.80.** The subject box
+  is the span holding 92% of the image's light, so the outer 8% sits outside
+  it; at 0.80 both anvil candidates had the hammer clipped on hover.
 
   **Two modes in `tools/prep-scene.py`, and picking the wrong one is the
   mistake to avoid.** `--focus x,y` crops INTO a picture: right for a scene

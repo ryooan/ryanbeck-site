@@ -226,8 +226,7 @@ fourteen real project cards. What is still standing in:
 - the project thumbnails (six generated images across fourteen cards) and the
   projects lede, which says in the page that it is a draft to prune
 - the forecasting page's intro and the projects lede still want Ryan's voice
-- one of the three door scenes: `scenes/projects.jpg` (the fiction door is the
-  real SEER art, and the blog door is Ryan's puzzle photograph)
+
 - the about-page copy — grounded and no longer self-labelled, but drafted for
   Ryan rather than by him
 - the newsletter form posts nowhere
