@@ -56,34 +56,32 @@
 </nav>
   <main class="dash-main">
     <header class="dash-head">
-      <span class="runic">rescued data</span>
+      <span class="runic">historical data</span>
       <h1>The archive</h1>
-      <div class="dash-blurb"><p>Several of these series outlived the places they came from. Where a source has gone for good the history is kept here rather than lost with it.</p></div>
+      <div class="dash-blurb"><p>Historical data for series whose sources have since been retired, kept as plain gzipped CSV so it stays readable without any particular tool.</p></div>
     </header>
 
   <section class="series">
     <h2>What is in it</h2>
-    <p class="series-note">124 files, about 18 MB, one CSV per data frame,
-    gzipped. <a href="/data/forecasting/archive/MANIFEST.csv">The manifest</a>
-    lists every one with its row count, column count and date range.</p>
+    <p class="series-note">124 files, about 18 MB, one CSV per table, gzipped.
+    <a href="/data/forecasting/archive/MANIFEST.csv">The manifest</a> lists
+    every one with its row count, column count and date range.</p>
     <p class="series-note" style="margin-top:14px">The largest single item is
-    the full HHS hospital-capacity panel &mdash; 66,966 rows by 135 columns,
-    every state, 2020 to 2023, including age-banded admissions. That is the
-    best age-stratified COVID series that survives anywhere for Virginia, and
-    it is the reason the retired VDH cases-by-age page points at it.</p>
+    the HHS hospital-capacity panel &mdash; 66,966 rows by 135 columns, every
+    state, 2020 to 2023, including admissions broken down by age band. It is
+    the most detailed age-stratified COVID series here, which is why the
+    Virginia cases-by-age section points at it.</p>
   </section>
   <section class="series">
-    <h2>Why it exists</h2>
-    <p class="series-note">Because the old dashboards fetched, analysed,
-    plotted and published in one step, nothing was ever kept. A rendered PNG
-    was committed; the numbers behind it were not. When a source went away, so
-    did its history.</p>
-    <p class="series-note" style="margin-top:14px">No source data was ever
-    committed to the old repository &mdash; checked across all 9,026 of its
-    commits. What survived did so by accident, in R session files on one
-    machine, and for several of these series that was the only copy in
-    existence. Extracting them was the first thing done here and the only step
-    that got more expensive by waiting.</p>
+    <h2>Provenance and caveats</h2>
+    <p class="series-note">These were extracted from R session files saved
+    while the series were being maintained. For several of them the upstream
+    source has since been retired, so this is the only copy I am aware of.</p>
+    <p class="series-note" style="margin-top:14px">Figures are as the sources
+    reported them at the time and have not been adjusted. Agencies restate, so
+    a few values differ from what the same source returns today &mdash; in the
+    HHS hospitalisation panel about 2% of Virginia dates differ, all by under
+    1% and in both directions.</p>
   </section>
 
   </main>

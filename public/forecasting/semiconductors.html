@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Semiconductor trade &middot; Forecasting Data &middot; Ryan Beck</title>
-<meta name="description" content="US exports of chips and chipmaking equipment to China, and what China buys from the whole world. Built for a set of questions on export controls. Chips are HS 8542; equipment is HS">
+<meta name="description" content="US exports of chips and chipmaking equipment to China, and what China buys from the whole world, from UN Comtrade. Values are US dollars. Chips are HS 8542. Equipment is HS 8486, 9">
 <link rel="canonical" href="https://ryanbeck.com/forecasting/semiconductors">
 <meta name="theme-color" content="#f4ead9">
 
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ryan Beck">
 <meta property="og:title" content="Semiconductor trade &middot; Forecasting Data &middot; Ryan Beck">
-<meta property="og:description" content="US exports of chips and chipmaking equipment to China, and what China buys from the whole world. Built for a set of questions on export controls. Chips are HS 8542; equipment is HS">
+<meta property="og:description" content="US exports of chips and chipmaking equipment to China, and what China buys from the whole world, from UN Comtrade. Values are US dollars. Chips are HS 8542. Equipment is HS 8486, 9">
 <meta property="og:url" content="https://ryanbeck.com/forecasting/semiconductors">
 <meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -58,13 +58,13 @@
     <header class="dash-head">
       <span class="runic">UN Comtrade</span>
       <h1>Semiconductor trade</h1>
-      <div class="dash-blurb"><p>US exports of chips and chipmaking equipment to China, and what China buys from the whole world. Built for a set of questions on export controls.</p><p>Chips are HS 8542; equipment is HS 8486, 903082, 903141, 854311 and 901041, summed — the same commodity codes the original used. Monthly trade is noisy, so a six-month rolling average is carried alongside the raw months, as before.</p></div>
+      <div class="dash-blurb"><p>US exports of chips and chipmaking equipment to China, and what China buys from the whole world, from UN Comtrade. Values are US dollars.</p><p>Chips are HS 8542. Equipment is HS 8486, 903082, 903141, 854311 and 901041, summed. Monthly trade is noisy enough that the raw line is hard to read a trend off, so a six-month rolling average is carried alongside it.</p><p>The two charts are measured independently and will not reconcile. US exports are monthly and reported by the United States; China’s imports are annual and reported by China. Trading partners routinely disagree about the same shipments, since they classify goods differently and record them at different moments.</p></div>
     </header>
 
   <section class="series" id="semiconductors-us-exports-china">
     <span class="status is-live">Live &middot; data to 1 June 2026</span>
     <h2>US semiconductor exports to China</h2>
-    <p class="series-note">Monthly US exports to China of semiconductors and of the equipment used to make them, from UN Comtrade. This one was dead for three years: the old Comtrade endpoint was retired and the code that built the page had been deleted from the repo. The code was recovered from git history and the series now runs on the current API.</p>
+    <p class="series-note">Monthly US exports to China of semiconductors and of the equipment used to make them. Chips are HS 8542; equipment is five codes summed. The download also carries a six-month rolling average and a twelve-month rolling sum, both of which are easier to read a trend off than the raw months.</p>
     <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;chips&quot;,&quot;label&quot;:&quot;Chips (HS 8542)&quot;},{&quot;col&quot;:&quot;equipment&quot;,&quot;label&quot;:&quot;Manufacturing equipment&quot;}],&quot;csv&quot;:&quot;/data/forecasting/semiconductors-us-exports-china.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US semiconductor exports to China&quot;}'></div>
     <p class="series-source">198 rows, latest about 3 months ago &middot;
       source: <a href="https://comtradeplus.un.org/" rel="noopener">UN Comtrade</a> &middot;
@@ -74,9 +74,9 @@
   <section class="series" id="semiconductors-china-imports">
     <span class="status is-live">Live &middot; data to 1 January 2024</span>
     <h2>China&#x27;s semiconductor imports</h2>
-    <p class="series-note">What China buys from the whole world, annually — the denominator for the export series above.</p>
+    <p class="series-note">What China buys from the whole world, annually — the denominator for the export series above. Reported by China, where the export series is reported by the United States, so the two are measured independently.</p>
     <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;chips&quot;,&quot;label&quot;:&quot;Chips (HS 8542)&quot;},{&quot;col&quot;:&quot;equipment&quot;,&quot;label&quot;:&quot;Manufacturing equipment&quot;}],&quot;csv&quot;:&quot;/data/forecasting/semiconductors-china-imports.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;China&#x27;s semiconductor imports&quot;}'></div>
-    <p class="series-source">25 rows, latest about 2.6 years ago &middot;
+    <p class="series-source">25 rows, latest about 2.7 years ago &middot;
       source: <a href="https://comtradeplus.un.org/" rel="noopener">UN Comtrade</a> &middot;
       download: <a href="/data/forecasting/semiconductors-china-imports.csv">semiconductors-china-imports.csv</a></p>
   </section>

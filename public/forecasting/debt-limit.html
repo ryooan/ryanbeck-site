@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The US debt limit &middot; Forecasting Data &middot; Ryan Beck</title>
-<meta name="description" content="Federal debt subject to the statutory ceiling, against the ceiling itself, from the Daily Treasury Statement. Built to forecast X-date questions without re-reading a spreadsheet ev">
+<meta name="description" content="Federal debt subject to the statutory ceiling, against the ceiling itself, from Treasury’s Daily Treasury Statement. Millions of dollars, updated each business day. The shaded stre">
 <link rel="canonical" href="https://ryanbeck.com/forecasting/debt-limit">
 <meta name="theme-color" content="#f4ead9">
 
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ryan Beck">
 <meta property="og:title" content="The US debt limit &middot; Forecasting Data &middot; Ryan Beck">
-<meta property="og:description" content="Federal debt subject to the statutory ceiling, against the ceiling itself, from the Daily Treasury Statement. Built to forecast X-date questions without re-reading a spreadsheet ev">
+<meta property="og:description" content="Federal debt subject to the statutory ceiling, against the ceiling itself, from Treasury’s Daily Treasury Statement. Millions of dollars, updated each business day. The shaded stre">
 <meta property="og:url" content="https://ryanbeck.com/forecasting/debt-limit">
 <meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -58,13 +58,13 @@
     <header class="dash-head">
       <span class="runic">Treasury, daily</span>
       <h1>The US debt limit</h1>
-      <div class="dash-blurb"><p>Federal debt subject to the statutory ceiling, against the ceiling itself, from the Daily Treasury Statement. Built to forecast X-date questions without re-reading a spreadsheet every morning.</p><p>The shaded stretches are the eight occasions Congress has suspended the limit rather than raised it. During a suspension there is no ceiling to plot, so the line stops — which is more honest than the alternative, because Treasury publishes a zero in that field and drawing it would send the ceiling to the floor.</p></div>
+      <div class="dash-blurb"><p>Federal debt subject to the statutory ceiling, against the ceiling itself, from Treasury’s Daily Treasury Statement. Millions of dollars, updated each business day.</p><p>The shaded stretches are the eight occasions Congress has suspended the limit rather than raised it. There is no ceiling during a suspension, so the line stops rather than running flat — Treasury publishes a zero in that field, and plotting it would send the ceiling to the floor. When a suspension ends, the limit is reset to whatever the debt has reached by then.</p></div>
     </header>
 
   <section class="series" id="debt-limit">
     <span class="status is-live">Live &middot; data to 20 August 2026</span>
     <h2>US debt limit</h2>
-    <p class="series-note">Federal debt subject to the statutory ceiling, from Treasury's Daily Treasury Statement, against the ceiling itself. The shaded stretches are the eight periods when Congress suspended the limit rather than raising it — during a suspension there is no number to plot, so the ceiling line stops.</p>
+    <p class="series-note">Shaded bands are the eight suspensions. The ceiling line breaks inside each one because there is no ceiling to plot. Hovering a suspended date reads “no data” for the ceiling rather than zero.</p>
     <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd-millions&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;debt_subject_to_limit&quot;,&quot;label&quot;:&quot;Debt subject to limit&quot;},{&quot;col&quot;:&quot;statutory_limit&quot;,&quot;label&quot;:&quot;Statutory ceiling&quot;,&quot;dash&quot;:true}],&quot;band&quot;:{&quot;col&quot;:&quot;suspended&quot;,&quot;label&quot;:&quot;Limit suspended&quot;},&quot;csv&quot;:&quot;/data/forecasting/debt-limit.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US debt limit&quot;}'></div>
     <p class="series-source">5,246 rows, latest up to date &middot;
       source: <a href="https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/debt-subject-to-limit" rel="noopener">Treasury Fiscal Data, Daily Treasury Statement</a> &middot;

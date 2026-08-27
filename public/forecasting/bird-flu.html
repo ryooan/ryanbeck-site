@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Bird flu &middot; Forecasting Data &middot; Ryan Beck</title>
-<meta name="description" content="Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak, from USDA’s detection records. This one is worth reading twice. It spent months showing 174.8 mil">
+<meta name="description" content="Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak, from USDA APHIS detection records. A flock is counted on the date its infection was confirmed, an">
 <link rel="canonical" href="https://ryanbeck.com/forecasting/bird-flu">
 <meta name="theme-color" content="#f4ead9">
 
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ryan Beck">
 <meta property="og:title" content="Bird flu &middot; Forecasting Data &middot; Ryan Beck">
-<meta property="og:description" content="Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak, from USDA’s detection records. This one is worth reading twice. It spent months showing 174.8 mil">
+<meta property="og:description" content="Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak, from USDA APHIS detection records. A flock is counted on the date its infection was confirmed, an">
 <meta property="og:url" content="https://ryanbeck.com/forecasting/bird-flu">
 <meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -58,13 +58,13 @@
     <header class="dash-head">
       <span class="runic">USDA APHIS</span>
       <h1>Bird flu</h1>
-      <div class="dash-blurb"><p>Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak, from USDA’s detection records.</p><p>This one is worth reading twice. It spent months showing 174.8 million birds and a note saying its source had stalled — true, but the wrong conclusion. The feed it read, a CDC mirror, had quietly stopped updating while still returning a perfectly valid file. The outbreak had not stopped at all, and USDA had moved its data behind a dashboard with no obvious download. The real total was 33 million birds higher.</p></div>
+      <div class="dash-blurb"><p>Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak, from USDA APHIS detection records.</p><p>A flock is counted on the date its infection was confirmed, and confirmation means the entire flock is depopulated — so a single commercial layer operation can add several million birds in one week. That makes the weekly figure extremely spiky and the running total the more readable line.</p><p>Backyard flocks are a large share of the detections and a very small share of the birds. The download splits the two.</p></div>
     </header>
 
   <section class="series" id="hpai-depopulations">
     <span class="status is-live">Live &middot; data to 17 August 2026</span>
     <h2>Birds killed in the bird-flu outbreak</h2>
-    <p class="series-note">Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak. The weekly count sits on its own axis on the right: a single commercial layer flock can be several million birds, so the weeks are spiky, and on the running total’s scale they would be a flat line along the bottom. The download splits each week into commercial and backyard birds.<br><br>This chart read “source stalled” until recently, and the reason is worth keeping. It was fed by a CDC mirror that still returns a perfectly valid file and stopped being updated in June 2025 — nothing failed, the numbers simply stopped moving. USDA had put the data behind a Tableau dashboard with no obvious download. It turned out the dashboard publishes a second hidden view, and asking for that view as CSV returns the whole detection table. Thirty-three million birds were missing from this chart.</p>
+    <p class="series-note">Weekly count on the right-hand axis, running total on the left. They differ by two orders of magnitude, so on a shared scale the weeks would be a flat line along the bottom. The download splits each week into commercial and backyard birds, and carries the state, county and production type of every confirmed flock.</p>
     <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;cumulative&quot;,&quot;label&quot;:&quot;Running total&quot;},{&quot;col&quot;:&quot;birds&quot;,&quot;label&quot;:&quot;Killed that week&quot;,&quot;axis&quot;:&quot;right&quot;}],&quot;csv&quot;:&quot;/data/forecasting/hpai-depopulations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Birds killed in the bird-flu outbreak&quot;}'></div>
     <p class="series-source">202 rows, latest up to date &middot;
       source: <a href="https://www.aphis.usda.gov/livestock-poultry-disease/avian/avian-influenza/hpai-detections/commercial-backyard-flocks" rel="noopener">USDA APHIS confirmed detections</a> &middot;

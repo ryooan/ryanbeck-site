@@ -58,29 +58,26 @@
     <header class="dash-head">
       <span class="runic">Through the first door</span>
       <h1>Forecasting data</h1>
-      <div class="dash-blurb"><p>Numbers I kept reaching for while forecasting, collected so I would stop re-downloading them by hand. Pick a subject from the list.</p><p>Each series states the date its data actually ends, which is not always the date it last ran. That distinction is the point: a scheduled job reporting success tells you it fetched something, not that anyone upstream is still publishing.</p></div>
+      <div class="dash-blurb"><p>Data I use for forecasting, collected in one place and kept current. Pick a subject from the list.</p><p>Each chart shows the last date present in its data, links to its source, and can be downloaded as CSV.</p></div>
     </header>
 
   <section class="series">
     <h2>Every series at a glance</h2>
-    <p class="series-note">11 of these refresh on a schedule. The rest are
-    frozen at the date their source stopped, and are kept rather than deleted.
-    <strong>Every state below is computed from the last date in the data, never
-    from when the job last ran</strong> &mdash; which is the one thing the
-    versions these replaced could not tell you.</p>
+    <p class="series-note">11 of these refresh on a schedule; the rest are
+    frozen at the point their source stopped publishing. <strong>Every date
+    below is the last date present in the data</strong>, not the last time it
+    was fetched.</p>
     <div class="table-wrap"><table class="status-table"><thead><tr><th>Series</th><th>State</th><th>Data ends</th><th class="num">Rows</th></tr></thead><tbody><tr><td><a href="/forecasting/respiratory#covid-weekly-admissions">US respiratory hospital admissions, weekly</a></td><td><span class="status is-live">Live</span></td><td>15 August 2026</td><td class="num">315</td></tr><tr><td><a href="/forecasting/respiratory#flu-hospitalizations">US influenza hospitalisations</a></td><td><span class="status is-live">Live</span></td><td>4 July 2026</td><td class="num">231</td></tr><tr><td><a href="/forecasting/respiratory#flu-hospitalizations-states">Influenza admissions, state by state</a></td><td><span class="status is-live">Live</span></td><td>4 July 2026</td><td class="num">11,976</td></tr><tr><td><a href="/forecasting/respiratory#covid-hospitalizations">COVID and flu patients in hospital</a></td><td><span class="status is-historical">Historical</span></td><td>27 April 2024</td><td class="num">1,579</td></tr><tr><td><a href="/forecasting/debt-limit#debt-limit">US debt limit</a></td><td><span class="status is-live">Live</span></td><td>20 August 2026</td><td class="num">5,246</td></tr><tr><td><a href="/forecasting/big-tech-revenue#faamg-revenues">Big-tech combined revenue</a></td><td><span class="status is-live">Live</span></td><td>1 January 2025</td><td class="num">20</td></tr><tr><td><a href="/forecasting/big-tech-revenue#faamg-revenues-quarterly">Big-tech revenue by quarter</a></td><td><span class="status is-live">Live</span></td><td>1 June 2026</td><td class="num">76</td></tr><tr><td><a href="/forecasting/refugee-admissions#refugee-admissions">US refugee admissions</a></td><td><span class="status is-live">Live</span></td><td>1 July 2026</td><td class="num">310</td></tr><tr><td><a href="/forecasting/refugee-admissions#refugee-admissions-annual">Refugee admissions by fiscal year</a></td><td><span class="status is-live">Live</span></td><td>1 October 2025</td><td class="num">52</td></tr><tr><td><a href="/forecasting/semiconductors#semiconductors-us-exports-china">US semiconductor exports to China</a></td><td><span class="status is-live">Live</span></td><td>1 June 2026</td><td class="num">198</td></tr><tr><td><a href="/forecasting/semiconductors#semiconductors-china-imports">China&#x27;s semiconductor imports</a></td><td><span class="status is-live">Live</span></td><td>1 January 2024</td><td class="num">25</td></tr><tr><td><a href="/forecasting/bird-flu#hpai-depopulations">Birds killed in the bird-flu outbreak</a></td><td><span class="status is-live">Live</span></td><td>17 August 2026</td><td class="num">202</td></tr><tr><td><a href="/forecasting/virginia-covid#va-vaccinations">Virginia COVID vaccinations</a></td><td><span class="status is-historical">Historical</span></td><td>19 September 2023</td><td class="num">909</td></tr><tr><td><a href="/forecasting/virginia-covid#vdh-cases-by-age">Virginia COVID cases by age</a></td><td><span class="status is-historical">Historical</span></td><td>24 September 2024</td><td class="num">1,771</td></tr></tbody></table></div>
   </section>
   <section class="series">
-    <h2>How it works</h2>
-    <p class="series-note">Small Python fetchers pull each source, write tidy
-    CSV, and record what they found. This page is generated from that record.
-    The charts are one dependency-free file: every dashboard here died of
-    dependency rot at least once, so importing a charting library to fix them
-    would have been reproducing the disease.</p>
-    <p class="series-note" style="margin-top:14px">Every series is downloadable
-    from its own section, and
-    <a href="/data/forecasting/manifest.json">manifest.json</a> carries the
-    machine-readable state of all of them.</p>
+    <h2>Using the data</h2>
+    <p class="series-note">Every series can be downloaded as CSV from its own
+    section. The files are tidy &mdash; one row per period, one column per
+    measure, ISO dates &mdash; so they open straight into a spreadsheet or load
+    in one line of pandas or readr.</p>
+    <p class="series-note" style="margin-top:14px"><a href="/data/forecasting/manifest.json">manifest.json</a>
+    carries the same information machine-readably: row count, last date and
+    source for every series.</p>
   </section>
 
   </main>

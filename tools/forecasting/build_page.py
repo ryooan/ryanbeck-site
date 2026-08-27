@@ -50,11 +50,9 @@ SECTIONS = [
             "band": {"col": "suspended", "label": "Limit suspended"},
         },
         "note": (
-            "Federal debt subject to the statutory ceiling, from Treasury's "
-            "Daily Treasury Statement, against the ceiling itself. The shaded "
-            "stretches are the eight periods when Congress suspended the limit "
-            "rather than raising it — during a suspension there is no "
-            "number to plot, so the ceiling line stops."),
+            "Shaded bands are the eight suspensions. The ceiling line breaks "
+            "inside each one because there is no ceiling to plot. Hovering a "
+            "suspended date reads “no data” for the ceiling rather than zero."),
         "source": "Treasury Fiscal Data, Daily Treasury Statement",
         "source_url": "https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/debt-subject-to-limit",
     },
@@ -143,14 +141,13 @@ SECTIONS = [
         },
         "note": (
             "The same five by quarter, which is where the seasonality lives — "
-            "Amazon and Apple both spike every December. "
-            "<strong>The old version of this chart had two false spikes in it</strong>: "
-            "Apple appearing to earn $383bn in a quarter and Microsoft $332bn. "
-            "Those are the companies’ <em>annual</em> figures, which reached the "
-            "quarterly series because the old code selected filings by form "
-            "rather than by how long the reporting period actually was. Quarters "
-            "here are picked by duration. The fourth quarter is then derived "
-            "from the annual total, because a 10-K often reports the year "
+            "Amazon and Apple both spike every December.<br><br>Two notes on "
+            "the derivation. Quarters are selected by the length of the "
+            "reporting period rather than by filing type, because a 10-K "
+            "carries both the twelve-month total and three-month figures, and "
+            "mixing them puts an annual number in the quarterly line. The "
+            "fourth quarter is calculated as the annual total minus the three "
+            "reported quarters, since a 10-K frequently reports the year "
             "without ever stating Q4 on its own."),
         "source": "SEC XBRL company facts",
         "source_url": "https://www.sec.gov/edgar/sec-api-documentation",
@@ -170,18 +167,14 @@ SECTIONS = [
             ],
         },
         "note": (
-            "This is the series that prompted the rebuild: its job succeeded "
-            "every ten hours for two years and republished a chart each time, "
-            "while the repository behind it had been archived in November 2024 "
-            "and the data had stopped the previous April."
-            "<br><br>"
-            "<strong>It is live again, and longer than it ever was.</strong> "
-            "Hospitals never stopped reporting — the requirement moved to "
-            "the CDC’s National Healthcare Safety Network, which carries "
-            "the same measure from August 2020 to last week. That covers "
-            "everything the archived source had plus the two years it missed. "
-            "Influenza and RSV come from the same rows, so all three "
-            "respiratory admissions are here on one chart."),
+            "New hospital admissions each week with a laboratory-confirmed "
+            "diagnosis, summed nationally. Influenza and RSV are reported in "
+            "the same returns and are shown alongside COVID-19.<br><br>A "
+            "different series for the same measure, from the archived reichlab "
+            "forecast hub, was widely used up to April 2024 and runs about 4% "
+            "lower at the median — the two programmes count admissions under "
+            "different criteria. Figures read off older charts will not match "
+            "these. That series is included in the download for comparison."),
         "source": "CDC NHSN Hospital Respiratory Data",
         "source_url": "https://data.cdc.gov/resource/ua7e-t2fy",
         "extra_csv": "covid-weekly-admissions-reichlab.csv",
@@ -218,14 +211,15 @@ SECTIONS = [
             "valueRanges": ["6m", "1y", "2y", "5y"],
         },
         "note": (
-            "The same admissions, state by state, laid out roughly as the map "
-            "is — so you find a state where you expect it, and a bad week "
-            "across the southeast reads as a block of colour rather than eight "
-            "scattered cells. It opens on percentage change against four weeks "
-            "earlier, which is what makes a small state climbing fast as "
-            "visible as a large one. The buttons switch to the underlying "
-            "admissions per 100,000 over a window. Either way every panel "
-            "shares one vertical scale, so the boxes are honestly comparable."),
+            "The same admissions state by state, laid out roughly as the map "
+            "is, so a bad week across one region reads as a block of colour. It "
+            "opens on percentage change against four weeks earlier, which is "
+            "what makes a small state climbing fast as visible as a large one; "
+            "the buttons switch to admissions per 100,000 over a "
+            "window.<br><br>Every panel shares one vertical scale. Per head "
+            "rather than raw counts is what makes that readable — on raw "
+            "admissions the spread between the largest and smallest states is "
+            "more than fiftyfold, and most of the grid flattens into slivers."),
         "source": "CDC FluSight forecast hub",
         "source_url": "https://github.com/cdcepi/FluSight-forecast-hub",
     },
@@ -242,12 +236,11 @@ SECTIONS = [
             ],
         },
         "note": (
-            "Monthly US exports to China of semiconductors and of the "
-            "equipment used to make them, from UN Comtrade. This one was dead "
-            "for three years: the old Comtrade endpoint was retired and the "
-            "code that built the page had been deleted from the repo. The code "
-            "was recovered from git history and the series now runs on the "
-            "current API."),
+            "Monthly US exports to China of semiconductors and of the equipment "
+            "used to make them. Chips are HS 8542; equipment is five codes "
+            "summed. The download also carries a six-month rolling average and "
+            "a twelve-month rolling sum, both of which are easier to read a "
+            "trend off than the raw months."),
         "source": "UN Comtrade",
         "source_url": "https://comtradeplus.un.org/",
     },
@@ -264,8 +257,10 @@ SECTIONS = [
             ],
         },
         "note": (
-            "What China buys from the whole world, annually — the "
-            "denominator for the export series above."),
+            "What China buys from the whole world, annually — the denominator "
+            "for the export series above. Reported by China, where the export "
+            "series is reported by the United States, so the two are measured "
+            "independently."),
         "source": "UN Comtrade",
         "source_url": "https://comtradeplus.un.org/",
     },
@@ -282,22 +277,11 @@ SECTIONS = [
             ],
         },
         "note": (
-            "Birds killed in confirmed commercial and backyard flocks during "
-            "the H5N1 outbreak. The weekly count sits on its own axis on the "
-            "right: a single commercial layer flock can be several million "
-            "birds, so the weeks are spiky, and on the running total’s "
-            "scale they would be a flat line along the bottom. The download "
-            "splits each week into commercial and backyard birds."
-            "<br><br>"
-            "This chart read “source stalled” until recently, and "
-            "the reason is worth keeping. It was fed by a CDC mirror that "
-            "still returns a perfectly valid file and stopped being updated in "
-            "June 2025 — nothing failed, the numbers simply stopped "
-            "moving. USDA had put the data behind a Tableau dashboard with no "
-            "obvious download. It turned out the dashboard publishes a second "
-            "hidden view, and asking for that view as CSV returns the whole "
-            "detection table. Thirty-three million birds were missing from "
-            "this chart."),
+            "Weekly count on the right-hand axis, running total on the left. "
+            "They differ by two orders of magnitude, so on a shared scale the "
+            "weeks would be a flat line along the bottom. The download splits "
+            "each week into commercial and backyard birds, and carries the "
+            "state, county and production type of every confirmed flock."),
         "source": "USDA APHIS confirmed detections",
         "source_url": "https://www.aphis.usda.gov/livestock-poultry-disease/avian/avian-influenza/hpai-detections/commercial-backyard-flocks",
     },
@@ -316,11 +300,12 @@ SECTIONS = [
         },
         "note": (
             "Patients in hospital on a given day, summed across reporting "
-            "states, from the HHS capacity dataset. Three of the old "
-            "dashboards ran on this one source and all three died together "
-            "when the R package they used to read it left CRAN — the plain "
-            "CSV export worked the whole time. HHS later ended the reporting "
-            "requirement, so the series genuinely stops in April 2024."),
+            "states, from the HHS hospital-capacity dataset. This is a census "
+            "rather than a count of admissions — everyone in a bed that day, "
+            "however long they have been there — so it runs far higher than the "
+            "admissions series above and should not be read against it. HHS "
+            "ended the reporting requirement behind it, so the series stops in "
+            "April 2024."),
         "source": "healthdata.gov g62h-syeh (HHS)",
         "source_url": "https://healthdata.gov/dataset/g62h-syeh",
         "extra_csv": "covid-hospitalizations-va.csv",
@@ -338,12 +323,11 @@ SECTIONS = [
             ],
         },
         "note": (
-            "People in Virginia by vaccination status. The dashboard broke in "
-            "early 2024 when the state retired the endpoints it read, and the "
-            "job was switched off by hand. The data was never lost — it "
-            "moved to Virginia's open-data platform and the history is "
-            "complete, nearly ten million rows of it. Per-age-group figures "
-            "are in the companion file."),
+            "People in Virginia by vaccination status, from the state’s "
+            "open-data platform. Counts rather than percentages; the companion "
+            "file carries the same figures split by age group. VDH stopped "
+            "publishing in September 2023 and the history is complete to that "
+            "point."),
         "source": "data.virginia.gov (VDH)",
         "source_url": "https://data.virginia.gov/",
         "extra_csv": "va-vaccinations-by-age.csv",
@@ -358,15 +342,13 @@ SECTIONS = [
             "series": [{"col": "total_cases", "label": "Cumulative cases"}],
         },
         "note": (
-            "Five months, and that is all there is. VDH retired this dataset "
-            "and kept only 2024 — everything before April of that year is "
-            "gone from the source. Before publishing this as a stub I checked "
-            "the Internet Archive (its captures hold about one day of data "
-            "each), the CDC's equivalent (region-level, not state), the "
-            "datastore behind the retired set (73,920 rows and no more), and "
-            "every R workspace on my own machine. It is genuinely gone. For "
-            "an age-stratified Virginia series with no hole in it, the HHS "
-            "panel above carries age-banded admissions from 2020 to 2023."),
+            "Cumulative case, hospitalisation and death counts by age band, for "
+            "17 April to 24 September 2024. That window is the entire series — "
+            "VDH retired the dataset and kept five months of it.<br><br>Earlier "
+            "figures do not appear to be available anywhere. The Internet "
+            "Archive’s captures of the original endpoint hold about one day of "
+            "data each, and the CDC’s equivalent series is reported by HHS "
+            "region rather than by state."),
         "source": "data.virginia.gov (VDH, retired dataset)",
         "source_url": "https://data.virginia.gov/",
         "extra_csv": "vdh-cases-by-age.csv",
@@ -392,20 +374,15 @@ GROUPS = [
         "title": "Respiratory illness",
         "kicker": "COVID, influenza and RSV",
         "blurb": (
-            "<p>Weekly hospital admissions for the three respiratory viruses "
-            "that get forecast most, nationally and by state.</p>"
-            "<p><strong>This grouping is why the whole set was rebuilt.</strong> "
-            "The old COVID page ran a scheduled job every ten hours for two "
-            "years and reported success every time, while the repository "
-            "behind it had been archived and its data had stopped in April "
-            "2024. Nobody was lying; nothing failed. The job fetched a file, "
-            "the file was valid, and the chart was redrawn with today’s "
-            "date on it. What was missing was any statement of when the "
-            "<em>data</em> ended.</p>"
-            "<p>Hospitals had never stopped reporting — the requirement "
-            "moved to the CDC’s National Healthcare Safety Network, where "
-            "the same measure runs from August 2020 to last week. So the "
-            "series is not only alive, it is longer than it ever was.</p>"),
+            "<p>Weekly hospital admissions for COVID-19, influenza and RSV, "
+            "nationally and state by state.</p><p>National figures come from "
+            "the CDC’s National Healthcare Safety Network, which hospitals "
+            "report to each week; the series runs from August 2020. State-level "
+            "influenza comes from the CDC’s FluSight forecasting hub.</p><p>All "
+            "of these count <em>laboratory-confirmed</em> admissions rather "
+            "than everyone admitted with the illness, so they undercount by a "
+            "margin that moves with how much testing is being done. They read "
+            "more reliably as a trend than as a total.</p>"),
         "sections": ["covid-weekly-admissions", "flu-hospitalizations",
                      "flu-hospitalizations-states", "covid-hospitalizations"],
     },
@@ -416,15 +393,14 @@ GROUPS = [
         "kicker": "Treasury, daily",
         "blurb": (
             "<p>Federal debt subject to the statutory ceiling, against the "
-            "ceiling itself, from the Daily Treasury Statement. Built to "
-            "forecast X-date questions without re-reading a spreadsheet every "
-            "morning.</p>"
-            "<p>The shaded stretches are the eight occasions Congress has "
-            "suspended the limit rather than raised it. During a suspension "
-            "there is no ceiling to plot, so the line stops — which is "
-            "more honest than the alternative, because Treasury publishes a "
-            "zero in that field and drawing it would send the ceiling to the "
-            "floor.</p>"),
+            "ceiling itself, from Treasury’s Daily Treasury Statement. Millions "
+            "of dollars, updated each business day.</p><p>The shaded stretches "
+            "are the eight occasions Congress has suspended the limit rather "
+            "than raised it. There is no ceiling during a suspension, so the "
+            "line stops rather than running flat — Treasury publishes a zero in "
+            "that field, and plotting it would send the ceiling to the floor. "
+            "When a suspension ends, the limit is reset to whatever the debt "
+            "has reached by then.</p>"),
         "sections": ["debt-limit"],
     },
     {
@@ -434,13 +410,14 @@ GROUPS = [
         "kicker": "SEC filings",
         "blurb": (
             "<p>Revenue for Alphabet, Amazon, Apple, Meta and Microsoft, read "
-            "out of their SEC filings, annually and by quarter. Built for a "
-            "question on their combined revenue.</p>"
-            "<p>The five do not share a fiscal calendar — Apple’s "
-            "year ends in September and Microsoft’s in June — so the "
-            "combined line is blank for any period where they have not all "
-            "filed. A partial sum drawn on the same axis reads as revenue "
-            "collapsing.</p>"),
+            "out of their SEC filings, annually and by quarter. Billions of US "
+            "dollars.</p><p>The five do not share a fiscal calendar — Apple’s "
+            "year ends in September and Microsoft’s in June — so the combined "
+            "line is blank for any period where they have not all filed yet. "
+            "Quarters are placed in the calendar quarter they <em>end</em> in, "
+            "which is what lets the five line up; the consequence is that "
+            "adding four calendar quarters for Apple or Microsoft will not "
+            "equal their fiscal year.</p>"),
         "sections": ["faamg-revenues", "faamg-revenues-quarterly"],
     },
     {
@@ -450,13 +427,14 @@ GROUPS = [
         "kicker": "State Department, monthly",
         "blurb": (
             "<p>People admitted to the United States as refugees, from the "
-            "State Department’s Refugee Processing Center. Fiscal years "
-            "run October to September.</p>"
-            "<p>The annual ceiling is set by presidential determination and is "
-            "a cap rather than a target — admissions have come in well "
-            "under it far more often than they have approached it. The long "
-            "view reaches back to 1975, where the two peaks are the Vietnamese "
-            "and Soviet resettlements.</p>"),
+            "State Department’s Refugee Processing Center. Fiscal years run "
+            "October to September, so the monthly series maps October through "
+            "December onto the previous calendar year.</p><p>The annual ceiling "
+            "is set by presidential determination and is a cap rather than a "
+            "target: admissions have come in well under it far more often than "
+            "they have approached it. The long view reaches back to 1975 — the "
+            "two peaks are the Indochinese resettlement of the late 1970s and "
+            "the Soviet and Southeast Asian programmes around 1990.</p>"),
         "sections": ["refugee-admissions", "refugee-admissions-annual"],
     },
     {
@@ -465,13 +443,17 @@ GROUPS = [
         "title": "Semiconductor trade",
         "kicker": "UN Comtrade",
         "blurb": (
-            "<p>US exports of chips and chipmaking equipment to China, and "
-            "what China buys from the whole world. Built for a set of "
-            "questions on export controls.</p>"
-            "<p>Chips are HS 8542; equipment is HS 8486, 903082, 903141, "
-            "854311 and 901041, summed — the same commodity codes the "
-            "original used. Monthly trade is noisy, so a six-month rolling "
-            "average is carried alongside the raw months, as before.</p>"),
+            "<p>US exports of chips and chipmaking equipment to China, and what "
+            "China buys from the whole world, from UN Comtrade. Values are US "
+            "dollars.</p><p>Chips are HS 8542. Equipment is HS 8486, 903082, "
+            "903141, 854311 and 901041, summed. Monthly trade is noisy enough "
+            "that the raw line is hard to read a trend off, so a six-month "
+            "rolling average is carried alongside it.</p><p>The two charts are "
+            "measured independently and will not reconcile. US exports are "
+            "monthly and reported by the United States; China’s imports are "
+            "annual and reported by China. Trading partners routinely disagree "
+            "about the same shipments, since they classify goods differently "
+            "and record them at different moments.</p>"),
         "sections": ["semiconductors-us-exports-china",
                      "semiconductors-china-imports"],
     },
@@ -481,15 +463,15 @@ GROUPS = [
         "title": "Bird flu",
         "kicker": "USDA APHIS",
         "blurb": (
-            "<p>Birds killed in confirmed commercial and backyard flocks "
-            "during the H5N1 outbreak, from USDA’s detection records.</p>"
-            "<p>This one is worth reading twice. It spent months showing 174.8 "
-            "million birds and a note saying its source had stalled — "
-            "true, but the wrong conclusion. The feed it read, a CDC mirror, "
-            "had quietly stopped updating while still returning a perfectly "
-            "valid file. The outbreak had not stopped at all, and USDA had "
-            "moved its data behind a dashboard with no obvious download. The "
-            "real total was 33 million birds higher.</p>"),
+            "<p>Birds killed in confirmed commercial and backyard flocks during "
+            "the H5N1 outbreak, from USDA APHIS detection records.</p><p>A "
+            "flock is counted on the date its infection was confirmed, and "
+            "confirmation means the entire flock is depopulated — so a single "
+            "commercial layer operation can add several million birds in one "
+            "week. That makes the weekly figure extremely spiky and the running "
+            "total the more readable line.</p><p>Backyard flocks are a large "
+            "share of the detections and a very small share of the birds. The "
+            "download splits the two.</p>"),
         "sections": ["hpai-depopulations"],
     },
     {
@@ -498,13 +480,16 @@ GROUPS = [
         "title": "Virginia COVID",
         "kicker": "VDH, retired",
         "blurb": (
-            "<p>Two Virginia series that no longer update, kept because the "
-            "history is real and in one case is the only copy left.</p>"
-            "<p>The vaccination series is complete: nearly ten million rows, "
-            "which turned out never to have been lost when the old endpoints "
-            "started returning 404s — the dataset had simply moved hosts. "
-            "The cases-by-age series is not complete, and the page says so "
-            "rather than showing a stub and hoping nobody checks.</p>"),
+            "<p>Two series from the Virginia Department of Health. Neither is "
+            "still updating.</p><p>Vaccinations run from March 2021 to "
+            "September 2023 and are complete for that window — nearly ten "
+            "million rows, by locality, age group and vaccination "
+            "status.</p><p>Cases by age cover only 17 April to 24 September "
+            "2024, which is the whole of what VDH kept when it retired that "
+            "dataset. For an age-stratified Virginia series without a gap, the "
+            "HHS hospitalisation panel on the <a "
+            "href=\"/forecasting/respiratory\">respiratory page</a> carries "
+            "admissions broken down by age band from 2020 to 2023.</p>"),
         "sections": ["va-vaccinations", "vdh-cases-by-age"],
     },
 ]
@@ -663,34 +648,32 @@ def build():
     archive_body = """
   <section class="series">
     <h2>What is in it</h2>
-    <p class="series-note">124 files, about 18 MB, one CSV per data frame,
-    gzipped. <a href="/data/forecasting/archive/MANIFEST.csv">The manifest</a>
-    lists every one with its row count, column count and date range.</p>
+    <p class="series-note">124 files, about 18 MB, one CSV per table, gzipped.
+    <a href="/data/forecasting/archive/MANIFEST.csv">The manifest</a> lists
+    every one with its row count, column count and date range.</p>
     <p class="series-note" style="margin-top:14px">The largest single item is
-    the full HHS hospital-capacity panel &mdash; 66,966 rows by 135 columns,
-    every state, 2020 to 2023, including age-banded admissions. That is the
-    best age-stratified COVID series that survives anywhere for Virginia, and
-    it is the reason the retired VDH cases-by-age page points at it.</p>
+    the HHS hospital-capacity panel &mdash; 66,966 rows by 135 columns, every
+    state, 2020 to 2023, including admissions broken down by age band. It is
+    the most detailed age-stratified COVID series here, which is why the
+    Virginia cases-by-age section points at it.</p>
   </section>
   <section class="series">
-    <h2>Why it exists</h2>
-    <p class="series-note">Because the old dashboards fetched, analysed,
-    plotted and published in one step, nothing was ever kept. A rendered PNG
-    was committed; the numbers behind it were not. When a source went away, so
-    did its history.</p>
-    <p class="series-note" style="margin-top:14px">No source data was ever
-    committed to the old repository &mdash; checked across all 9,026 of its
-    commits. What survived did so by accident, in R session files on one
-    machine, and for several of these series that was the only copy in
-    existence. Extracting them was the first thing done here and the only step
-    that got more expensive by waiting.</p>
+    <h2>Provenance and caveats</h2>
+    <p class="series-note">These were extracted from R session files saved
+    while the series were being maintained. For several of them the upstream
+    source has since been retired, so this is the only copy I am aware of.</p>
+    <p class="series-note" style="margin-top:14px">Figures are as the sources
+    reported them at the time and have not been adjusted. Agencies restate, so
+    a few values differ from what the same source returns today &mdash; in the
+    HHS hospitalisation panel about 2% of Virginia dates differ, all by under
+    1% and in both directions.</p>
   </section>
 """
     arch = page(slug="archive", title="The archive",
-                kicker="rescued data", blurb=(
-                    "<p>Several of these series outlived the places they came "
-                    "from. Where a source has gone for good the history is kept "
-                    "here rather than lost with it.</p>"),
+                kicker="historical data", blurb=(
+                    "<p>Historical data for series whose sources have since "
+                    "been retired, kept as plain gzipped CSV so it stays "
+                    "readable without any particular tool.</p>"),
                 body=archive_body, meta=meta,
                 desc="The rescued historical data behind the forecasting "
                      "dashboards: 124 files pulled out of old R session files.")
@@ -704,37 +687,30 @@ def build():
     idx_body = """
   <section class="series">
     <h2>Every series at a glance</h2>
-    <p class="series-note">%(live)d of these refresh on a schedule. The rest are
-    frozen at the date their source stopped, and are kept rather than deleted.
-    <strong>Every state below is computed from the last date in the data, never
-    from when the job last ran</strong> &mdash; which is the one thing the
-    versions these replaced could not tell you.</p>
+    <p class="series-note">%(live)d of these refresh on a schedule; the rest are
+    frozen at the point their source stopped publishing. <strong>Every date
+    below is the last date present in the data</strong>, not the last time it
+    was fetched.</p>
     %(table)s
   </section>
   <section class="series">
-    <h2>How it works</h2>
-    <p class="series-note">Small Python fetchers pull each source, write tidy
-    CSV, and record what they found. This page is generated from that record.
-    The charts are one dependency-free file: every dashboard here died of
-    dependency rot at least once, so importing a charting library to fix them
-    would have been reproducing the disease.</p>
-    <p class="series-note" style="margin-top:14px">Every series is downloadable
-    from its own section, and
-    <a href="/data/forecasting/manifest.json">manifest.json</a> carries the
-    machine-readable state of all of them.</p>
+    <h2>Using the data</h2>
+    <p class="series-note">Every series can be downloaded as CSV from its own
+    section. The files are tidy &mdash; one row per period, one column per
+    measure, ISO dates &mdash; so they open straight into a spreadsheet or load
+    in one line of pandas or readr.</p>
+    <p class="series-note" style="margin-top:14px"><a href="/data/forecasting/manifest.json">manifest.json</a>
+    carries the same information machine-readably: row count, last date and
+    source for every series.</p>
   </section>
 """ % {"live": live, "table": status_table(meta)}
 
     idx = page(slug="", title="Forecasting data", kicker="Through the first door",
                blurb=(
-                   "<p>Numbers I kept reaching for while forecasting, collected "
-                   "so I would stop re-downloading them by hand. Pick a subject "
-                   "from the list.</p>"
-                   "<p>Each series states the date its data actually ends, which "
-                   "is not always the date it last ran. That distinction is the "
-                   "point: a scheduled job reporting success tells you it "
-                   "fetched something, not that anyone upstream is still "
-                   "publishing.</p>"),
+                   "<p>Data I use for forecasting, collected in one place and "
+                   "kept current. Pick a subject from the list.</p>"
+                   "<p>Each chart shows the last date present in its data, links "
+                   "to its source, and can be downloaded as CSV.</p>"),
                body=idx_body, meta=meta,
                desc="Live data series maintained for forecasting: the debt "
                     "limit, respiratory illness, refugee admissions, big-tech "

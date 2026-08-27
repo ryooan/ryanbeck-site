@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Big-tech revenue &middot; Forecasting Data &middot; Ryan Beck</title>
-<meta name="description" content="Revenue for Alphabet, Amazon, Apple, Meta and Microsoft, read out of their SEC filings, annually and by quarter. Built for a question on their combined revenue. The five do not sha">
+<meta name="description" content="Revenue for Alphabet, Amazon, Apple, Meta and Microsoft, read out of their SEC filings, annually and by quarter. Billions of US dollars. The five do not share a fiscal calendar — A">
 <link rel="canonical" href="https://ryanbeck.com/forecasting/big-tech-revenue">
 <meta name="theme-color" content="#f4ead9">
 
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ryan Beck">
 <meta property="og:title" content="Big-tech revenue &middot; Forecasting Data &middot; Ryan Beck">
-<meta property="og:description" content="Revenue for Alphabet, Amazon, Apple, Meta and Microsoft, read out of their SEC filings, annually and by quarter. Built for a question on their combined revenue. The five do not sha">
+<meta property="og:description" content="Revenue for Alphabet, Amazon, Apple, Meta and Microsoft, read out of their SEC filings, annually and by quarter. Billions of US dollars. The five do not share a fiscal calendar — A">
 <meta property="og:url" content="https://ryanbeck.com/forecasting/big-tech-revenue">
 <meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -58,7 +58,7 @@
     <header class="dash-head">
       <span class="runic">SEC filings</span>
       <h1>Big-tech revenue</h1>
-      <div class="dash-blurb"><p>Revenue for Alphabet, Amazon, Apple, Meta and Microsoft, read out of their SEC filings, annually and by quarter. Built for a question on their combined revenue.</p><p>The five do not share a fiscal calendar — Apple’s year ends in September and Microsoft’s in June — so the combined line is blank for any period where they have not all filed. A partial sum drawn on the same axis reads as revenue collapsing.</p></div>
+      <div class="dash-blurb"><p>Revenue for Alphabet, Amazon, Apple, Meta and Microsoft, read out of their SEC filings, annually and by quarter. Billions of US dollars.</p><p>The five do not share a fiscal calendar — Apple’s year ends in September and Microsoft’s in June — so the combined line is blank for any period where they have not all filed yet. Quarters are placed in the calendar quarter they <em>end</em> in, which is what lets the five line up; the consequence is that adding four calendar quarters for Apple or Microsoft will not equal their fiscal year.</p></div>
     </header>
 
   <section class="series" id="faamg-revenues">
@@ -74,7 +74,7 @@
   <section class="series" id="faamg-revenues-quarterly">
     <span class="status is-live">Live &middot; data to 1 June 2026</span>
     <h2>Big-tech revenue by quarter</h2>
-    <p class="series-note">The same five by quarter, which is where the seasonality lives — Amazon and Apple both spike every December. <strong>The old version of this chart had two false spikes in it</strong>: Apple appearing to earn $383bn in a quarter and Microsoft $332bn. Those are the companies’ <em>annual</em> figures, which reached the quarterly series because the old code selected filings by form rather than by how long the reporting period actually was. Quarters here are picked by duration. The fourth quarter is then derived from the annual total, because a 10-K often reports the year without ever stating Q4 on its own.</p>
+    <p class="series-note">The same five by quarter, which is where the seasonality lives — Amazon and Apple both spike every December.<br><br>Two notes on the derivation. Quarters are selected by the length of the reporting period rather than by filing type, because a 10-K carries both the twelve-month total and three-month figures, and mixing them puts an annual number in the quarterly line. The fourth quarter is calculated as the annual total minus the three reported quarters, since a 10-K frequently reports the year without ever stating Q4 on its own.</p>
     <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd-billions&quot;,&quot;zero&quot;:true,&quot;labelCol&quot;:&quot;quarter&quot;,&quot;defaultRange&quot;:&quot;5y&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;amazon&quot;,&quot;label&quot;:&quot;Amazon&quot;},{&quot;col&quot;:&quot;apple&quot;,&quot;label&quot;:&quot;Apple&quot;},{&quot;col&quot;:&quot;alphabet&quot;,&quot;label&quot;:&quot;Alphabet&quot;},{&quot;col&quot;:&quot;microsoft&quot;,&quot;label&quot;:&quot;Microsoft&quot;},{&quot;col&quot;:&quot;meta&quot;,&quot;label&quot;:&quot;Meta&quot;}],&quot;csv&quot;:&quot;/data/forecasting/faamg-revenues-quarterly.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Big-tech revenue by quarter&quot;}'></div>
     <p class="series-source">76 rows, latest about 3 months ago &middot;
       source: <a href="https://www.sec.gov/edgar/sec-api-documentation" rel="noopener">SEC XBRL company facts</a> &middot;
