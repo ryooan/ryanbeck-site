@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Respiratory illness &middot; Forecasting Data &middot; Ryan Beck</title>
-<meta name="description" content="Weekly hospital admissions for COVID-19, influenza and RSV, nationally and state by state. National figures come from the CDC’s National Healthcare Safety Network, which hospitals ">
+<meta name="description" content="Weekly hospital admissions for COVID-19, influenza and RSV, nationally and state by state. National figures come from the CDC’s National Healthcare Safety Network. This is meant to">
 <link rel="canonical" href="https://ryanbeck.com/forecasting/respiratory">
 <meta name="theme-color" content="#f4ead9">
 
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ryan Beck">
 <meta property="og:title" content="Respiratory illness &middot; Forecasting Data &middot; Ryan Beck">
-<meta property="og:description" content="Weekly hospital admissions for COVID-19, influenza and RSV, nationally and state by state. National figures come from the CDC’s National Healthcare Safety Network, which hospitals ">
+<meta property="og:description" content="Weekly hospital admissions for COVID-19, influenza and RSV, nationally and state by state. National figures come from the CDC’s National Healthcare Safety Network. This is meant to">
 <meta property="og:url" content="https://ryanbeck.com/forecasting/respiratory">
 <meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -58,15 +58,15 @@
     <header class="dash-head">
       <span class="runic">COVID, influenza and RSV</span>
       <h1>Respiratory illness</h1>
-      <div class="dash-blurb"><p>Weekly hospital admissions for COVID-19, influenza and RSV, nationally and state by state.</p><p>National figures come from the CDC’s National Healthcare Safety Network, which hospitals report to each week; the series runs from August 2020. State-level influenza comes from the CDC’s FluSight forecasting hub.</p><p>All of these count <em>laboratory-confirmed</em> admissions rather than everyone admitted with the illness, so they undercount by a margin that moves with how much testing is being done. They read more reliably as a trend than as a total.</p></div>
+      <div class="dash-blurb"><p>Weekly hospital admissions for COVID-19, influenza and RSV, nationally and state by state.</p><p>National figures come from the CDC’s National Healthcare Safety Network. This is meant to be a census rather than a sample — CMS requires every acute care and critical access hospital to report weekly — but the requirement has lapsed once, and participation moves with it. Around 93% of hospitals report in a normal week, and the share behind each week is in the download. State-level influenza comes from the CDC’s FluSight forecasting hub.</p><p>All of these count <em>laboratory-confirmed</em> admissions rather than everyone admitted with the illness, so they undercount by a margin that moves with how much testing is being done. They read more reliably as a trend than as a total.</p></div>
     </header>
 
   <section class="series" id="covid-weekly-admissions">
     <span class="status is-live">Live &middot; data to 15 August 2026</span>
     <h2>US respiratory hospital admissions, weekly</h2>
-    <p class="series-note">New hospital admissions each week with a laboratory-confirmed diagnosis, summed nationally. Influenza and RSV are reported in the same returns and are shown alongside COVID-19.<br><br>A different series for the same measure, from the archived reichlab forecast hub, was widely used up to April 2024 and runs about 4% lower at the median — the two programs count admissions under different criteria. Figures read off older charts will not match these. That series is included in the download for comparison.</p>
-    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;defaultRange&quot;:&quot;2y&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;covid&quot;,&quot;label&quot;:&quot;COVID-19&quot;},{&quot;col&quot;:&quot;influenza&quot;,&quot;label&quot;:&quot;Influenza&quot;},{&quot;col&quot;:&quot;rsv&quot;,&quot;label&quot;:&quot;RSV&quot;}],&quot;csv&quot;:&quot;/data/forecasting/covid-weekly-admissions.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US respiratory hospital admissions, weekly&quot;}'></div>
-    <p class="series-source">315 rows, latest 11 days ago &middot;
+    <p class="series-note">New hospital admissions each week with a laboratory-confirmed diagnosis. Influenza and RSV are reported in the same returns.<br><br><strong>The shaded stretch is not a drop in admissions.</strong> Reporting to NHSN was mandatory under the public health emergency, became voluntary on 1 May 2024, and was made mandatory again by CMS on 1 November 2024. Hospital participation followed exactly: about 93% either side, and a low of 31% in October 2024. Counts inside that window are drawn from roughly a third of the hospitals, so they are not comparable with the rest of the line. The share reporting each week is in the download.<br><br>A different series for the same measure, from the archived reichlab forecast hub, was widely used up to April 2024 and runs about 4% lower at the median. Figures read off older charts will not match these; that series is in the download for comparison.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;defaultRange&quot;:&quot;2y&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;covid&quot;,&quot;label&quot;:&quot;COVID-19&quot;},{&quot;col&quot;:&quot;influenza&quot;,&quot;label&quot;:&quot;Influenza&quot;},{&quot;col&quot;:&quot;rsv&quot;,&quot;label&quot;:&quot;RSV&quot;}],&quot;band&quot;:{&quot;col&quot;:&quot;voluntary_reporting&quot;,&quot;label&quot;:&quot;Reporting voluntary \u2014 coverage fell to a third&quot;},&quot;csv&quot;:&quot;/data/forecasting/covid-weekly-admissions.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US respiratory hospital admissions, weekly&quot;}'></div>
+    <p class="series-source">315 rows, latest 12 days ago &middot;
       source: <a href="https://data.cdc.gov/resource/ua7e-t2fy" rel="noopener">CDC NHSN Hospital Respiratory Data</a> &middot;
       download: <a href="/data/forecasting/covid-weekly-admissions.csv">covid-weekly-admissions.csv</a> &middot; <a href="/data/forecasting/covid-weekly-admissions-reichlab.csv">covid-weekly-admissions-reichlab.csv</a></p>
   </section>
@@ -76,7 +76,7 @@
     <h2>US influenza hospitalizations</h2>
     <p class="series-note">Weekly hospital admissions with a confirmed influenza diagnosis, from the CDC's FluSight forecasting hub. Per-state figures are in the companion file.</p>
     <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Weekly admissions&quot;}],&quot;csv&quot;:&quot;/data/forecasting/flu-hospitalizations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US influenza hospitalizations&quot;}'></div>
-    <p class="series-source">231 rows, latest 53 days ago &middot;
+    <p class="series-source">231 rows, latest 54 days ago &middot;
       source: <a href="https://github.com/cdcepi/FluSight-forecast-hub" rel="noopener">CDC FluSight forecast hub</a> &middot;
       download: <a href="/data/forecasting/flu-hospitalizations.csv">flu-hospitalizations.csv</a> &middot; <a href="/data/forecasting/flu-hospitalizations-states.csv">flu-hospitalizations-states.csv</a></p>
   </section>
@@ -86,7 +86,7 @@
     <h2>Influenza admissions, state by state</h2>
     <p class="series-note">The same admissions state by state, laid out roughly as the map is, so a bad week across one region reads as a block of color. It opens on percentage change against four weeks earlier, which is what makes a small state climbing fast as visible as a large one; the buttons switch to admissions per 100,000 over a window.<br><br>Every panel shares one vertical scale. Per head rather than raw counts is what makes that readable — on raw admissions the spread between the largest and smallest states is more than fiftyfold, and most of the grid flattens into slivers.</p>
     <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;rate&quot;,&quot;panelBy&quot;:&quot;location&quot;,&quot;value&quot;:&quot;rate_per_100k&quot;,&quot;layout&quot;:&quot;us-grid&quot;,&quot;defaultMode&quot;:&quot;change&quot;,&quot;changeLagWeeks&quot;:4,&quot;changeWeeks&quot;:6,&quot;valueRanges&quot;:[&quot;6m&quot;,&quot;1y&quot;,&quot;2y&quot;,&quot;5y&quot;],&quot;csv&quot;:&quot;/data/forecasting/flu-hospitalizations-states.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Influenza admissions, state by state&quot;}'></div>
-    <p class="series-source">11,976 rows, latest 53 days ago &middot;
+    <p class="series-source">11,976 rows, latest 54 days ago &middot;
       source: <a href="https://github.com/cdcepi/FluSight-forecast-hub" rel="noopener">CDC FluSight forecast hub</a> &middot;
       download: <a href="/data/forecasting/flu-hospitalizations-states.csv">flu-hospitalizations-states.csv</a></p>
   </section>

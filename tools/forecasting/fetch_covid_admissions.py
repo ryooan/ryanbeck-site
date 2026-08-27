@@ -38,6 +38,24 @@ COLS = {
 # many hospitals reported that week.
 RATE = {"totalconfc19newadmper100k": "covid_per_100k"}
 
+# How much of the hospital system is behind each week's figure. This is not
+# incidental -- see the note below.
+COVERAGE = {
+    "totalconfc19newadmperchosprep": "pct_hospitals_reporting",
+    "totalconfc19newadmhosprep": "hospitals_reporting",
+}
+
+# Reporting to NHSN was mandatory under the public health emergency, became
+# VOLUNTARY on 2024-05-01, and was made mandatory again by CMS on 2024-11-01
+# as a Condition of Participation. Coverage tracks that exactly: about 93% of
+# hospitals reporting either side, and a trough of 31% in October 2024.
+#
+# So raw counts are not comparable across that window. A drop of two thirds in
+# mid-2024 is mostly hospitals leaving the denominator, not patients leaving
+# beds. The flag is emitted so the chart can shade the period rather than
+# leaving a reader to infer a collapse that did not happen.
+VOLUNTARY_FROM, VOLUNTARY_TO = "2024-05-01", "2024-10-31"
+
 
 def num(v):
     if v in (None, ""):
@@ -49,7 +67,7 @@ def num(v):
 
 
 def run():
-    sel = ",".join(["weekendingdate"] + list(COLS) + list(RATE))
+    sel = ",".join(["weekendingdate"] + list(COLS) + list(RATE) + list(COVERAGE))
     rows = []
     offset, page = 0, 5000
     while True:
@@ -87,11 +105,16 @@ def run():
         for src, name in RATE.items():
             v = num(r.get(src))
             rec[name] = "" if v is None else round(v, 2)
+        for src, name in COVERAGE.items():
+            v = num(r.get(src))
+            rec[name] = "" if v is None else round(v, 2)
+        rec["voluntary_reporting"] = 1 if VOLUNTARY_FROM <= d <= VOLUNTARY_TO else 0
         if got:
             out.append(rec)
 
     out.sort(key=lambda r: r["date"])
-    fields = ["date"] + list(COLS.values()) + list(RATE.values())
+    fields = (["date"] + list(COLS.values()) + list(RATE.values())
+              + list(COVERAGE.values()) + ["voluntary_reporting"])
     write_csv("covid-weekly-admissions", out, fields)
 
     last = out[-1]["date"]
@@ -100,10 +123,15 @@ def run():
            status="live" if age <= 45 else "stale",
            source="CDC NHSN Hospital Respiratory Data",
            note=("Weekly new hospital admissions with a laboratory-confirmed "
-                 "diagnosis, national. Replaces the archived reichlab series "
-                 "and extends it in both directions."))
+                 "diagnosis, national. Carries the share of hospitals "
+                 "reporting each week, which is not constant."))
+    cov = [r["pct_hospitals_reporting"] for r in out
+           if r["pct_hospitals_reporting"] != ""]
+    vol = [r for r in out if r["voluntary_reporting"]]
     print("covid-weekly-admissions: %d weeks %s -> %s (latest COVID %s)"
           % (len(out), out[0]["date"], last, out[-1]["covid"]))
+    print("  hospital coverage %.0f%%-%.0f%%; %d weeks in the voluntary window"
+          % (min(cov), max(cov), len(vol)))
 
 
 if __name__ == "__main__":

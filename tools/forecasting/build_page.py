@@ -162,16 +162,25 @@ SECTIONS = [
                 {"col": "influenza", "label": "Influenza"},
                 {"col": "rsv", "label": "RSV"},
             ],
+            "band": {"col": "voluntary_reporting",
+                     "label": "Reporting voluntary — coverage fell to a third"},
         },
         "note": (
             "New hospital admissions each week with a laboratory-confirmed "
-            "diagnosis, summed nationally. Influenza and RSV are reported in "
-            "the same returns and are shown alongside COVID-19.<br><br>A "
-            "different series for the same measure, from the archived reichlab "
-            "forecast hub, was widely used up to April 2024 and runs about 4% "
-            "lower at the median — the two programs count admissions under "
-            "different criteria. Figures read off older charts will not match "
-            "these. That series is included in the download for comparison."),
+            "diagnosis. Influenza and RSV are reported in the same "
+            "returns.<br><br><strong>The shaded stretch is not a drop in "
+            "admissions.</strong> Reporting to NHSN was mandatory under the "
+            "public health emergency, became voluntary on 1 May 2024, and was "
+            "made mandatory again by CMS on 1 November 2024. Hospital "
+            "participation followed exactly: about 93% either side, and a low "
+            "of 31% in October 2024. Counts inside that window are drawn from "
+            "roughly a third of the hospitals, so they are not comparable with "
+            "the rest of the line. The share reporting each week is in the "
+            "download.<br><br>A different series for the same measure, from the "
+            "archived reichlab forecast hub, was widely used up to April 2024 "
+            "and runs about 4% lower at the median. Figures read off older "
+            "charts will not match these; that series is in the download for "
+            "comparison."),
         "source": "CDC NHSN Hospital Respiratory Data",
         "source_url": "https://data.cdc.gov/resource/ua7e-t2fy",
         "extra_csv": "covid-weekly-admissions-reichlab.csv",
@@ -369,13 +378,17 @@ GROUPS = [
         "blurb": (
             "<p>Weekly hospital admissions for COVID-19, influenza and RSV, "
             "nationally and state by state.</p><p>National figures come from "
-            "the CDC’s National Healthcare Safety Network, which hospitals "
-            "report to each week; the series runs from August 2020. State-level "
-            "influenza comes from the CDC’s FluSight forecasting hub.</p><p>All "
-            "of these count <em>laboratory-confirmed</em> admissions rather "
-            "than everyone admitted with the illness, so they undercount by a "
-            "margin that moves with how much testing is being done. They read "
-            "more reliably as a trend than as a total.</p>"),
+            "the CDC’s National Healthcare Safety Network. This is meant to be "
+            "a census rather than a sample — CMS requires every acute care and "
+            "critical access hospital to report weekly — but the requirement "
+            "has lapsed once, and participation moves with it. Around 93% of "
+            "hospitals report in a normal week, and the share behind each week "
+            "is in the download. State-level influenza comes from the CDC’s "
+            "FluSight forecasting hub.</p><p>All of these count "
+            "<em>laboratory-confirmed</em> admissions rather than everyone "
+            "admitted with the illness, so they undercount by a margin that "
+            "moves with how much testing is being done. They read more reliably "
+            "as a trend than as a total.</p>"),
         "sections": ["covid-weekly-admissions", "flu-hospitalizations",
                      "flu-hospitalizations-states", "covid-hospitalizations"],
     },

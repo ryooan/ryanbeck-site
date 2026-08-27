@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-24T15:24:17Z",
+  "generated": "2026-08-27T05:15:17Z",
   "series": {
     "covid-hospitalizations": {
       "fetched": "2026-08-24T03:05:10Z",
@@ -18,9 +18,9 @@
       "status": "historical"
     },
     "covid-weekly-admissions": {
-      "fetched": "2026-08-24T14:26:55Z",
+      "fetched": "2026-08-27T05:15:17Z",
       "last_date": "2026-08-15",
-      "note": "Weekly new hospital admissions with a laboratory-confirmed diagnosis, national. Replaces the archived reichlab series and extends it in both directions.",
+      "note": "Weekly new hospital admissions with a laboratory-confirmed diagnosis, national. Carries the share of hospitals reporting each week, which is not constant.",
       "rows": 315,
       "source": "CDC NHSN Hospital Respiratory Data",
       "status": "live"

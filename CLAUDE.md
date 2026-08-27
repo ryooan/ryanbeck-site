@@ -339,6 +339,17 @@ old. That is why the bird-flu chart currently says "Source stalled · data to
   passing them through yields a blank chart with no error anywhere.
 - **NHSN has a real `USA` rollup row.** Summing the 66 state and territory rows
   double-counts it.
+- **NHSN counts are not comparable across mid-2024.** Reporting was mandatory
+  under the public health emergency, went voluntary on 2024-05-01, and CMS
+  made it mandatory again on 2024-11-01. Hospital participation followed
+  exactly: ~93% either side, 31% at the trough in October 2024. Plotting raw
+  counts straight through shows a two-thirds collapse that is hospitals
+  leaving the denominator, not patients leaving beds. `fetch_covid_admissions`
+  emits `pct_hospitals_reporting` and a `voluntary_reporting` flag, and the
+  chart shades the window. **Check for this shape in any series whose
+  reporting is a legal requirement rather than a survey** — the mandate
+  changing is invisible in the numbers unless you go looking for the
+  denominator.
 
 ### A dead feed is not a dead subject
 
