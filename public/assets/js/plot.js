@@ -286,6 +286,98 @@
     return out.length ? out.concat([RANGES[RANGES.length - 1]]) : [];
   }
 
+  /* ---- trend ----------------------------------------------------------- */
+
+  /* A least-squares trend fitted to the CURRENT policy regime only, and
+     projected to the thing that would end it.
+
+     Fitting the whole history would be meaningless here: the debt limit is a
+     step function, and each step resets the problem. What matters is the run
+     since the last change -- how fast debt is climbing under the ceiling in
+     force now, and when that pace would reach it.
+
+     A discontinuity is a change in the ceiling OR the start or end of a
+     suspension. Everything from the most recent one is the fit window.
+
+     Where the projection stops:
+       - with a ceiling in force, at the date the fitted line reaches it
+       - during a suspension there is nothing to reach, so one year out
+
+     And it is suppressed entirely when debt is already at the ceiling. In
+     early 2025 the gap sat at exactly 0.000% for months while Treasury ran
+     extraordinary measures; a trend line there would project a crossing that
+     has already happened and imply room that does not exist. */
+  function computeTrend(rows, opt, xKey) {
+    var cfg = opt.trend;
+    if (!cfg) return null;
+
+    var pts = [];
+    rows.forEach(function (r) {
+      var t = parseDate(r[xKey]);
+      var v = r[cfg.col] === '' || r[cfg.col] == null ? null : +r[cfg.col];
+      if (isNaN(t) || v == null || isNaN(v)) return;
+      var lim = (cfg.limitCol && r[cfg.limitCol] !== '' && r[cfg.limitCol] != null)
+        ? +r[cfg.limitCol] : null;
+      var susp = cfg.suspendedCol
+        ? (r[cfg.suspendedCol] === '1' || r[cfg.suspendedCol] === 'true') : false;
+      pts.push({ t: t, v: v, lim: lim, susp: susp });
+    });
+    if (pts.length < 10) return null;
+    pts.sort(function (a, b) { return a.t - b.t; });
+
+    var start = 0;
+    for (var i = 1; i < pts.length; i++) {
+      if (pts[i].susp !== pts[i - 1].susp || pts[i].lim !== pts[i - 1].lim) start = i;
+    }
+    var seg = pts.slice(start);
+    if (seg.length < (cfg.minPoints || 8)) return null;
+
+    var last = seg[seg.length - 1];
+    var atPct = cfg.atLimitPct == null ? 0.5 : cfg.atLimitPct;
+    if (last.lim != null && (last.lim - last.v) / last.lim * 100 < atPct) {
+      return { suppressed: 'at-limit' };
+    }
+
+    var t0 = seg[0].t, n = seg.length;
+    var mx = 0, my = 0, k;
+    for (k = 0; k < n; k++) { mx += (seg[k].t - t0) / DAY; my += seg[k].v; }
+    mx /= n; my /= n;
+    var num = 0, den = 0;
+    for (k = 0; k < n; k++) {
+      var dx = (seg[k].t - t0) / DAY - mx;
+      num += dx * (seg[k].v - my);
+      den += dx * dx;
+    }
+    if (!den) return null;
+    var slope = num / den;               // units per day
+    var icpt = my - slope * mx;
+    function at(days) { return slope * days + icpt; }
+
+    var lastDay = (last.t - t0) / DAY;
+    var capDay = lastDay + (cfg.maxMonths || 36) * 30.44;
+    var endDay, hits = null;
+
+    if (last.lim == null) {
+      endDay = lastDay + (cfg.suspendedMonths || 12) * 30.44;
+    } else if (slope <= 0) {
+      return null;                       // going nowhere near the ceiling
+    } else {
+      var cross = (last.lim - icpt) / slope;
+      if (cross <= lastDay) return null; // already there; the at-limit test
+                                         // above normally catches this
+      endDay = Math.min(cross, capDay);
+      if (cross <= capDay) hits = t0 + cross * DAY;
+    }
+
+    return {
+      t0: t0, slope: slope, icpt: icpt,
+      startT: seg[0].t, lastT: last.t, endT: t0 + endDay * DAY,
+      startV: at(0), lastV: at(lastDay), endV: at(endDay),
+      hitsT: hits, limit: last.lim, suspended: last.lim == null,
+      perMonth: slope * 30.44
+    };
+  }
+
   /* ---- the chart ------------------------------------------------------- */
 
   function build(host, opt, data) {
@@ -341,6 +433,9 @@
     var withV = all.filter(function (p) { return p.v != null; });
     if (!withV.length) throw new Error('no numeric data');
 
+    var trend = computeTrend(data.rows, opt, xKey);
+    var trendOn = !!(trend && !trend.suppressed);
+
     var fullT0 = Math.min.apply(null, all.map(function (p) { return p.t; }));
     var fullT1 = Math.max.apply(null, all.map(function (p) { return p.t; }));
 
@@ -365,18 +460,32 @@
     function setWindow(key) {
       active = key;
       var r = RANGES.filter(function (x) { return x.k === key; })[0] || RANGES[RANGES.length - 1];
-      t1 = fullT1;
-      t0 = (r.d === Infinity) ? fullT0 : Math.max(fullT0, fullT1 - r.d * DAY);
+      /* With the trend showing, the axis has to reach the projection or the
+         forecast falls off the end. Turning it off refits to the data. */
+      t1 = (trendOn && trend && trend.endT > fullT1) ? trend.endT : fullT1;
+      t0 = (r.d === Infinity) ? fullT0 : Math.max(fullT0, t1 - r.d * DAY);
 
       shown = series.map(function (s) {
         return s.pts.filter(function (p) { return p.t >= t0 && p.t <= t1; });
       });
+      function trendExtra() {
+        if (!(trendOn && trend && !trend.suppressed)) return [];
+        var out = [];
+        [trend.startT, trend.lastT, trend.endT].forEach(function (t) {
+          if (t >= t0 && t <= t1) {
+            out.push(trend.slope * ((t - trend.t0) / DAY) + trend.icpt);
+          }
+        });
+        return out;
+      }
+
       function scaleOf(want) {
         var vis = [];
         shown.forEach(function (arr, i) {
           if (!!series[i].right !== want) return;
           arr.forEach(function (p) { if (p.v != null) vis.push(p.v); });
         });
+        if (!want) vis = vis.concat(trendExtra());
         if (!vis.length) vis = withV.map(function (p) { return p.v; });
         var a = Math.min.apply(null, vis), b = Math.max.apply(null, vis);
         if (opt.zero) a = Math.min(0, a);
@@ -422,6 +531,29 @@
       host.appendChild(rangeBar);
     }
 
+    var trendBtn = null;
+    if (trend && !trend.suppressed) {
+      if (!rangeBar) {
+        rangeBar = document.createElement('div');
+        rangeBar.className = 'plot-ranges';
+        host.appendChild(rangeBar);
+      }
+      trendBtn = document.createElement('button');
+      trendBtn.type = 'button';
+      trendBtn.className = 'plot-range is-trend';
+      trendBtn.textContent = opt.trend.label || 'Trend';
+      trendBtn.setAttribute('aria-pressed', 'true');
+      trendBtn.addEventListener('click', function () {
+        trendOn = !trendOn;
+        trendBtn.setAttribute('aria-pressed', String(trendOn));
+        hide();
+        host.__at = null;
+        setWindow(active);
+        draw();
+      });
+      rangeBar.appendChild(trendBtn);
+    }
+
     var figure = document.createElement('div');
     figure.className = 'plot-canvas';
     var tip = document.createElement('div');
@@ -443,6 +575,23 @@
         s.label + (s.right ? ' (right axis)' : '')));
       legend.appendChild(li);
     });
+    if (trend && !trend.suppressed) {
+      var li3 = document.createElement('li');
+      var sw3 = document.createElement('span');
+      sw3.className = 'plot-swatch is-dash';
+      sw3.style.setProperty('--c', TREND);
+      li3.appendChild(sw3);
+      var txt = (opt.trend.label || 'Trend') + ' — ';
+      if (trend.suspended) {
+        txt += 'no ceiling in force, projected a year out';
+      } else if (trend.hitsT) {
+        txt += 'reaches the ceiling ' + fmtDate(trend.hitsT, false);
+      } else {
+        txt += 'does not reach the ceiling within three years';
+      }
+      li3.appendChild(document.createTextNode(txt));
+      legend.appendChild(li3);
+    }
     if (bands.length && opt.band.label) {
       var li2 = document.createElement('li');
       var sw2 = document.createElement('span');
@@ -552,6 +701,38 @@
           }));
         }
       });
+
+      if (trendOn && trend && !trend.suppressed) {
+        function ty(t) {
+          return sy(trend.slope * ((t - trend.t0) / DAY) + trend.icpt);
+        }
+        var a = Math.max(trend.startT, t0), b = Math.min(trend.lastT, t1);
+        /* Solid across the stretch it was fitted to, dashed beyond the last
+           observation. The reader should be able to see where measurement
+           stops and extrapolation starts without reading a caption. */
+        if (b > a) {
+          svg.appendChild(el('line', {
+            x1: sx(a), y1: ty(a), x2: sx(b), y2: ty(b),
+            stroke: TREND, 'stroke-width': 1.8, 'stroke-opacity': .95
+          }));
+        }
+        var c = Math.max(trend.lastT, t0), d2 = Math.min(trend.endT, t1);
+        if (d2 > c) {
+          svg.appendChild(el('line', {
+            x1: sx(c), y1: ty(c), x2: sx(d2), y2: ty(d2),
+            stroke: TREND, 'stroke-width': 1.8, 'stroke-dasharray': '6 4',
+            'stroke-opacity': .95
+          }));
+          /* Mark the crossing, which is the number the whole line exists to
+             produce. */
+          if (trend.hitsT && trend.hitsT >= t0 && trend.hitsT <= t1) {
+            svg.appendChild(el('circle', {
+              cx: sx(trend.hitsT), cy: ty(trend.hitsT), r: 4,
+              fill: pal.paper, stroke: TREND, 'stroke-width': 2
+            }));
+          }
+        }
+      }
 
       geom.cursor = el('line', {
         y1: m.t, y2: m.t + ih, stroke: pal.ink,
@@ -735,6 +916,10 @@
      the color depends only on the y value. One gradient, mapped to the
      panel's own scale, tints every segment correctly and blends within a
      segment the way a continuous scale should. */
+  /* Cool against a warm page, so a computed line never reads as another
+     measured series. */
+  var TREND = 'rgb(72,88,140)';
+
   var CHANGE_UP = 'rgb(168,52,34)';
   var CHANGE_MID = 'rgb(150,138,122)';
   var CHANGE_DOWN = 'rgb(46,96,62)';

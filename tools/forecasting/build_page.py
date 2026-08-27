@@ -49,11 +49,29 @@ SECTIONS = [
                 {"col": "statutory_limit", "label": "Statutory ceiling", "dash": True},
             ],
             "band": {"col": "suspended", "label": "Limit suspended"},
+            "trend": {
+                "col": "debt_subject_to_limit",
+                "limitCol": "statutory_limit",
+                "suspendedCol": "suspended",
+                "label": "Trend",
+                "atLimitPct": 0.5,
+                "suspendedMonths": 12,
+                "maxMonths": 36,
+            },
         },
         "note": (
             "Shaded bands are the eight suspensions. The ceiling line breaks "
-            "inside each one because there is no ceiling to plot. Hovering a "
-            "suspended date reads “no data” for the ceiling rather than zero."),
+            "inside each one because there is no ceiling to plot; hovering a "
+            "suspended date reads “no data” rather than zero.<br><br>The "
+            "<strong>trend</strong> is a least-squares fit to the run since the "
+            "most recent change in the ceiling — a raise, or a suspension "
+            "starting or ending — projected to the date that pace would reach "
+            "the current ceiling. It is solid over the stretch it was fitted to "
+            "and dashed beyond the last observation. During a suspension there "
+            "is nothing to reach, so it runs a year out instead. It disappears "
+            "when debt is already at the ceiling, as through the first half of "
+            "2025, when a projection would imply room that does not exist. Turn "
+            "it off to fit the chart back to the data."),
         "source": "Treasury Fiscal Data, Daily Treasury Statement",
         "source_url": "https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/debt-subject-to-limit",
     },

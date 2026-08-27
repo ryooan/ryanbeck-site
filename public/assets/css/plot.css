@@ -79,6 +79,15 @@
   outline:2px solid var(--ember);
   outline-offset:2px;
 }
+/* The trend toggle is not a time range, so it sits apart from them and takes
+   the cool accent the line itself uses. */
+.plot-range.is-trend{margin-left:auto}
+.plot-range.is-trend[aria-pressed="true"]{
+  background:rgb(72,88,140);
+  border-color:rgb(72,88,140);
+  color:#fff;
+}
+@media (max-width:560px){ .plot-range.is-trend{margin-left:0} }
 @media (prefers-reduced-motion:reduce){
   .plot-range{transition:none}
 }

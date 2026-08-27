@@ -490,6 +490,32 @@ counts is what makes the shared scale usable: on raw admissions the spread is
 slivers; per head it is about 4x. It also surfaces what the counts hide — Texas
 is middling per capita (15.1 / 100k against Arizona's 37.5).
 
+### The debt-limit trend line
+
+`opt.trend` fits least squares to the run since the most recent **discontinuity
+in the ceiling** — a raise, or a suspension starting or ending — and
+projects it to whatever would end that run. Fitting the whole history would be
+meaningless: the debt limit is a step function and each step resets the
+problem.
+
+Four rules, all of which have a case in the data to check against:
+
+- **Ceiling in force** → project to the date the fit reaches it, capped at
+  three years. Currently March 2027.
+- **Suspended** → nothing to reach, so a year out.
+- **Already at the ceiling** → draw nothing, and hide the toggle. Through the
+  first half of 2025 the gap sat at exactly 0.000% for months while Treasury
+  ran extraordinary measures; a trend there projects a crossing that has
+  already happened. The test is on the latest point, at 0.5% of the ceiling —
+  the pinned stretch reads 0.000% against 3.07% now, so the threshold is not
+  delicate.
+- **Negative slope** → nothing.
+
+Solid over the fitted stretch, dashed beyond the last observation, so
+measurement and extrapolation are distinguishable without reading a caption.
+The toggle is on by default and extends the x-axis to reach the projection;
+turning it off refits to the data.
+
 ### Two y-axes
 
 A series with `axis: "right"` is drawn against its own scale, with ticks on the
