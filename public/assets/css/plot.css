@@ -223,10 +223,23 @@
 /* The tile grid of the US. Eleven fixed columns, so each state keeps its
    place; below the breakpoint it falls back to a plain flowing grid, because
    eleven columns on a phone gives every state about 30px. */
+/* 12 tiles laid out on 26 half-columns, so odd rows can start one half
+   column in without overflowing. The offset is what makes it read as a map. */
 .panel-grid.is-geo{
-  grid-template-columns:repeat(11,minmax(0,1fr));
-  gap:4px;
+  grid-template-columns:repeat(26,minmax(0,1fr));
+  gap:4px 3px;
 }
+/* A state with no admissions in the reference week has no defined change.
+   Greyed rather than hidden: the tile still holds its place on the map. */
+.panel-grid.is-geo .panel.is-nodata,
+.panel-grid .panel.is-nodata{
+  background:repeating-linear-gradient(135deg,
+    rgba(36,28,20,.05) 0 4px, transparent 4px 8px), var(--parchment-2);
+  border-style:dashed;
+  border-color:var(--rule);
+}
+.panel.is-nodata .panel-name{color:var(--ink-faint);font-weight:500}
+.panel.is-nodata .panel-peak{color:var(--ink-faint)}
 .panel-grid.is-geo .panel{ padding:3px 4px 2px }
 .panel-grid.is-geo .panel figcaption{ font-size:10.5px; gap:3px }
 .panel-grid.is-geo .panel svg{ height:30px }

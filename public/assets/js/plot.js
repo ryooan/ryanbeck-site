@@ -685,18 +685,27 @@
      Rows and columns, 11 wide. This is the arrangement the old dashboard
      used, which is the common US tile-grid layout. */
   var US_GRID = {
-    WI: [0, 5], VT: [0, 8], NH: [0, 9], ME: [0, 10],
-    WA: [1, 0], ID: [1, 1], MT: [1, 2], ND: [1, 3], MN: [1, 4],
-    IL: [1, 5], MI: [1, 6], NY: [1, 8], MA: [1, 9],
-    OR: [2, 0], NV: [2, 1], WY: [2, 2], SD: [2, 3], IA: [2, 4],
-    IN: [2, 5], OH: [2, 6], PA: [2, 7], NJ: [2, 8], CT: [2, 9], RI: [2, 10],
-    CA: [3, 0], UT: [3, 1], CO: [3, 2], NE: [3, 3], MO: [3, 4],
-    KY: [3, 5], WV: [3, 6], VA: [3, 7], MD: [3, 8], DE: [3, 9],
-    AZ: [4, 1], NM: [4, 2], KS: [4, 3], AR: [4, 4], TN: [4, 5],
-    NC: [4, 6], SC: [4, 7], DC: [4, 8],
-    OK: [5, 3], LA: [5, 4], MS: [5, 5], AL: [5, 6], GA: [5, 7],
-    HI: [6, 0], AK: [6, 1], TX: [6, 3], FL: [6, 8], PR: [6, 9]
+    AK: [0, 0], ME: [0, 11],
+    WA: [1, 1], ID: [1, 2], MT: [1, 3], ND: [1, 4], MN: [1, 5], WI: [1, 6],
+    MI: [1, 7], NY: [1, 9], VT: [1, 10], NH: [1, 11],
+    OR: [2, 1], NV: [2, 2], WY: [2, 3], SD: [2, 4], IA: [2, 5], IL: [2, 6],
+    IN: [2, 7], OH: [2, 8], PA: [2, 9], CT: [2, 10], MA: [2, 11],
+    CA: [3, 1], UT: [3, 2], CO: [3, 3], NE: [3, 4], MO: [3, 5], KY: [3, 6],
+    WV: [3, 7], VA: [3, 8], MD: [3, 9], NJ: [3, 10], RI: [3, 11],
+    AZ: [4, 2], NM: [4, 3], KS: [4, 4], AR: [4, 5], TN: [4, 6], NC: [4, 7],
+    SC: [4, 8], DC: [4, 9], DE: [4, 10],
+    OK: [5, 4], LA: [5, 5], MS: [5, 6], AL: [5, 7], GA: [5, 8],
+    HI: [6, 1], TX: [6, 4], FL: [6, 9],
+    PR: [6, 11]
   };
+
+  /* Odd rows are offset half a tile. That single change is most of what makes
+     this read as a map rather than a spreadsheet -- a strict rectangular grid
+     of fifty boxes never does, however carefully the states are placed. The
+     offset is done by laying the grid out in HALF columns and starting odd
+     rows one half-column in, rather than by transforming the tiles, so
+     nothing overflows its container. */
+  var GRID_COLS = 12;
 
   var STATE_ABBR = {
     'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR',
@@ -716,24 +725,19 @@
     'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY'
   };
 
-  /* Diverging fill for a percentage change. Red for rising, green for
-     falling, both desaturated toward the page so a grid of fifty does not
-     read as an alarm panel. `mag` saturates at +/-100%: past a doubling the
-     color stops changing, because the difference between +200% and +400%
-     is not information anyone reads off a fill. */
-  function changeFill(pct) {
-    if (pct == null || !isFinite(pct)) return 'rgba(122,106,88,.12)';
-    var m = Math.min(1, Math.abs(pct) / 100);
-    var a = 0.10 + m * 0.55;
-    return pct >= 0
-      ? 'rgba(184,62,42,' + a.toFixed(3) + ')'
-      : 'rgba(58,110,74,' + a.toFixed(3) + ')';
-  }
+  /* The line carries the color, and carries it PER POINT: a stretch above
+     zero is red, a stretch below is green, and it passes through gray at the
+     crossing. So one panel can show both, which is the information -- a state
+     that fell and then turned back up says so in the shape and the color at
+     once.
 
-  function changeStroke(pct) {
-    if (pct == null || !isFinite(pct)) return 'rgba(122,106,88,.5)';
-    return pct >= 0 ? 'rgb(168,52,34)' : 'rgb(46,96,62)';
-  }
+     Drawn as a vertical gradient rather than as per-segment strokes, because
+     the color depends only on the y value. One gradient, mapped to the
+     panel's own scale, tints every segment correctly and blends within a
+     segment the way a continuous scale should. */
+  var CHANGE_UP = 'rgb(168,52,34)';
+  var CHANGE_MID = 'rgb(150,138,122)';
+  var CHANGE_DOWN = 'rgb(46,96,62)';
 
   function buildPanels(host, opt, data) {
     var pal = palette();
@@ -827,21 +831,30 @@
         var from = tMax - days * DAY;
         return pts.filter(function (p) { return p.t >= from; });
       }
-      /* Percentage change against LAG_WEEKS earlier, by index — these series
-         are evenly weekly, and matching on index avoids re-deriving the
-         cadence for every state. */
-      var out = [];
-      for (var i = LAG_WEEKS; i < pts.length; i++) {
-        var now = pts[i].v, then = pts[i - LAG_WEEKS].v;
-        if (now == null || then == null || then === 0) {
-          out.push({ t: pts[i].t, v: null });
-        } else {
-          out.push({ t: pts[i].t, v: (now - then) / then * 100 });
-        }
+
+      /* Percentage change against ONE fixed reference week -- the week
+         LAG_WEEKS before the latest -- not against a rolling lag. Every point
+         is measured from the same starting line, so the first is 0% by
+         construction and the line traces where the state has got to since.
+         A rolling lag gives a series of unrelated comparisons instead, which
+         is a different and much harder quantity to read. */
+      var refT = tMax - LAG_WEEKS * 7 * DAY;
+      var ref = null;
+      for (var i = 0; i < pts.length; i++) {
+        if (pts[i].t === refT) { ref = pts[i].v; break; }
       }
-      /* Only the recent stretch: the old chart showed a handful of weeks, and
-         a full history of percentage change is noise at this size. */
-      return out.slice(-(opt.changeWeeks || 6));
+      /* No reference, or a reference of zero, means the change is undefined
+         rather than large -- a handful of admissions divided by nothing is
+         not a percentage. Those panels are drawn as no-data rather than given
+         an arbitrary denominator. */
+      if (ref == null || ref === 0) return null;
+
+      var out = [];
+      pts.forEach(function (p) {
+        if (p.t < refT || p.t > tMax) return;
+        out.push({ t: p.t, v: p.v == null ? null : (p.v / ref - 1) * 100 });
+      });
+      return out;
     }
 
     function render() {
@@ -851,10 +864,9 @@
       var series = {};
       names.forEach(function (n) { series[n] = seriesFor(n); });
 
-      /* One shared scale across every panel, in both modes. */
       var lo = Infinity, hi = -Infinity;
       names.forEach(function (n) {
-        series[n].forEach(function (p) {
+        (series[n] || []).forEach(function (p) {
           if (p.v == null) return;
           if (p.v < lo) lo = p.v;
           if (p.v > hi) hi = p.v;
@@ -863,24 +875,26 @@
       if (!isFinite(lo)) { lo = 0; hi = 1; }
       if (isChange) {
         var span = Math.max(Math.abs(lo), Math.abs(hi), 10);
-        lo = -span; hi = span;                 // symmetric, so zero sits centerd
+        lo = -span; hi = span;                 // symmetric, so zero is centred
       } else {
         lo = Math.min(0, lo);
         if (hi <= lo) hi = lo + 1;
       }
 
+      var gaps = names.filter(function (n) { return !series[n]; }).length;
       note.innerHTML = isChange
-        ? ('Percentage change in weekly admissions against ' + LAG_WEEKS +
-           ' weeks earlier, over the last ' + (opt.changeWeeks || 6) +
-           ' weeks. <span class="key key-up"></span> rising, ' +
-           '<span class="key key-dn"></span> falling — the fill deepens with ' +
-           'the size of the change and stops at a doubling. Every panel shares ' +
-           'one vertical scale.')
-        : ('Weekly admissions per 100,000 residents. Every panel shares one ' +
-           'vertical scale, topping out at ' + fmt(hi) + ', so a small state ' +
-           'and a large one can be read against each other.');
+        ? ('Percentage change against ' + LAG_WEEKS + ' weeks earlier, traced '
+           + 'week by week from that one reference. The line runs '
+           + '<span class="key key-up"></span> above zero and '
+           + '<span class="key key-dn"></span> below it, so a state that fell '
+           + 'and turned back up shows both. Every panel shares one scale.'
+           + (gaps ? ' ' + gaps + ' greyed panels had no admissions in the '
+              + 'reference week, which leaves the change undefined.' : ''))
+        : ('Weekly admissions per 100,000 residents. Every panel shares one '
+           + 'vertical scale, topping out at ' + fmt(hi) + ', so a small state '
+           + 'and a large one can be read against each other.');
 
-      var W = 100, H = 44, m = 3;
+      var W = 100, H = 46, m = 3;
       var order = geo
         ? names.slice().sort(function (a, b) {
             var ga = US_GRID[STATE_ABBR[a] || a] || [99, 99];
@@ -893,26 +907,32 @@
         var pts = series[n];
         var abbr = STATE_ABBR[n] || n;
         var cell = document.createElement('figure');
-        cell.className = 'panel';
+        cell.className = 'panel' + (pts ? '' : ' is-nodata');
+
         if (geo && US_GRID[abbr]) {
-          cell.style.gridRow = String(US_GRID[abbr][0] + 1);
-          cell.style.gridColumn = String(US_GRID[abbr][1] + 1);
+          var gr = US_GRID[abbr];
+          /* Half-column placement: odd rows start one half-column in. That
+             offset is most of what makes the grid read as a map. */
+          var start = gr[1] * 2 + 1 + (gr[0] % 2 ? 1 : 0);
+          cell.style.gridRow = String(gr[0] + 1);
+          cell.style.gridColumn = start + ' / span 2';
         }
 
         var last = null;
-        for (var i = pts.length - 1; i >= 0; i--) {
-          if (pts[i].v != null) { last = pts[i].v; break; }
-        }
-
-        if (isChange) {
-          cell.style.background = changeFill(last);
+        if (pts) {
+          for (var i = pts.length - 1; i >= 0; i--) {
+            if (pts[i].v != null) { last = pts[i].v; break; }
+          }
         }
 
         var cap = document.createElement('figcaption');
-        cap.innerHTML = '<span class="panel-name"></span><span class="panel-peak"></span>';
+        cap.innerHTML = '<span class="panel-name"></span>'
+                      + '<span class="panel-peak"></span>';
         cap.querySelector('.panel-name').textContent = geo ? abbr : n;
-        cap.querySelector('.panel-peak').textContent = last == null ? '–'
-          : (isChange ? (last > 0 ? '+' : '') + Math.round(last) + '%' : fmt(last));
+        cap.querySelector('.panel-peak').textContent = last == null
+          ? '\u2013'
+          : (isChange ? (last > 0 ? '+' : '') + Math.round(last) + '%'
+                      : fmt(last));
         cell.appendChild(cap);
 
         var svg = el('svg', {
@@ -922,40 +942,64 @@
             : (isChange ? Math.round(last) + ' percent change' : fmt(last)))
         });
 
-        function sx(i) { return m + (pts.length < 2 ? 0.5 : i / (pts.length - 1)) * (W - m * 2); }
+        function sx(i, len) {
+          return m + (len < 2 ? 0.5 : i / (len - 1)) * (W - m * 2);
+        }
         function sy(v) { return H - m - (v - lo) / (hi - lo || 1) * (H - m * 2); }
 
-        if (isChange) {                     // a zero line to read against
+        if (isChange) {
           svg.appendChild(el('line', {
             x1: m, x2: W - m, y1: sy(0), y2: sy(0),
-            stroke: pal.ink, 'stroke-opacity': .22, 'stroke-dasharray': '2 2',
+            stroke: pal.ink, 'stroke-opacity': 0.22, 'stroke-dasharray': '2 2',
             'vector-effect': 'non-scaling-stroke'
           }));
         }
 
-        var d = '', area = '', pen = false;
-        pts.forEach(function (p, i) {
-          if (p.v == null) { pen = false; return; }
-          var x = sx(i).toFixed(1), y = sy(p.v).toFixed(1);
-          d += (pen ? 'L' : 'M') + x + ' ' + y;
-          if (!isChange) {
-            area += (pen ? 'L' : 'M' + x + ' ' + (H - m) + 'L') + x + ' ' + y;
+        if (pts && pts.length) {
+          var stroke = pal.ember;
+          if (isChange) {
+            var gid = 'chg-' + abbr;
+            var defs = el('defs', {});
+            var lg = el('linearGradient', {
+              id: gid, gradientUnits: 'userSpaceOnUse',
+              x1: 0, y1: sy(hi), x2: 0, y2: sy(lo)
+            });
+            [[0, CHANGE_UP], [0.5, CHANGE_MID], [1, CHANGE_DOWN]]
+              .forEach(function (st) {
+                lg.appendChild(el('stop', {
+                  offset: st[0], 'stop-color': st[1]
+                }));
+              });
+            defs.appendChild(lg);
+            svg.appendChild(defs);
+            stroke = 'url(#' + gid + ')';
           }
-          pen = true;
-        });
-        if (area) {
-          area += 'L' + sx(pts.length - 1).toFixed(1) + ' ' + (H - m) + 'Z';
-          svg.appendChild(el('path', {
-            d: area, fill: pal.ember, 'fill-opacity': .13, stroke: 'none'
-          }));
-        }
-        if (d) {
-          svg.appendChild(el('path', {
-            d: d, fill: 'none',
-            stroke: isChange ? changeStroke(last) : pal.ember,
-            'stroke-width': 1.5, 'stroke-linejoin': 'round',
-            'vector-effect': 'non-scaling-stroke'
-          }));
+
+          var d = '', area = '', pen = false;
+          pts.forEach(function (p, i) {
+            if (p.v == null) { pen = false; return; }
+            var x = sx(i, pts.length).toFixed(1), y = sy(p.v).toFixed(1);
+            d += (pen ? 'L' : 'M') + x + ' ' + y;
+            if (!isChange) {
+              area += (pen ? 'L' : 'M' + x + ' ' + (H - m) + 'L') + x + ' ' + y;
+            }
+            pen = true;
+          });
+          if (area) {
+            area += 'L' + sx(pts.length - 1, pts.length).toFixed(1)
+                 + ' ' + (H - m) + 'Z';
+            svg.appendChild(el('path', {
+              d: area, fill: pal.ember, 'fill-opacity': 0.13, stroke: 'none'
+            }));
+          }
+          if (d) {
+            svg.appendChild(el('path', {
+              d: d, fill: 'none', stroke: stroke,
+              'stroke-width': isChange ? 2 : 1.5,
+              'stroke-linejoin': 'round', 'stroke-linecap': 'round',
+              'vector-effect': 'non-scaling-stroke'
+            }));
+          }
         }
         cell.appendChild(svg);
         grid.appendChild(cell);

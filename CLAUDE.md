@@ -459,11 +459,30 @@ columns on a phone gives each state about 30px — and the CSS has to `!importan
 away the inline `grid-row`/`grid-column`, since placement is set per panel.
 
 The grid has two modes and **opens on percentage change against four weeks
-earlier**, which is what the old dashboard showed. That framing is the point of
-it: in absolute terms a small state is invisible next to Texas, but "up 44%" is
-the same size everywhere. The fill is a diverging red/green ramp that saturates
-at ±100% — past a doubling the color stops changing, because nobody reads the
-difference between +200% and +400% off a fill.
+earlier**. In absolute terms a small state is invisible next to Texas, but
+"up 44%" is the same size everywhere.
+
+Three details of that mode, all taken from the original R:
+
+- **One fixed reference week, not a rolling lag.** Every point is measured
+  against the week 28 days before the latest, so the line starts at 0% and
+  traces where the state has got to since. A rolling lag gives a series of
+  unrelated comparisons instead, which is a different and much harder quantity
+  to read.
+- **The line carries the color, per point** — red above zero, green below,
+  gray at the crossing — so one panel can be both, which is the information.
+  Done as a vertical `linearGradient` in user space rather than per-segment
+  strokes, since the color depends only on y; that also blends *within* a
+  segment the way a continuous scale should.
+- **A zero reference means undefined, not large.** The original substituted 1
+  to avoid infinities, which makes an all-zero state a flat −100%. Those
+  panels are grayed out instead, keeping their place on the map.
+
+`layout: "us-grid"` places tiles on **26 half-columns**, with odd rows starting
+one half-column in. That offset is most of what makes fifty boxes read as a map
+rather than a spreadsheet; doing it with half-columns rather than a transform
+means nothing overflows its container. Below 820px it falls back to a flowing
+grid and has to `!important` away the inline placement.
 
 The other modes show `rate_per_100k` over 6M/1Y/2Y/5Y. Per head rather than raw
 counts is what makes the shared scale usable: on raw admissions the spread is

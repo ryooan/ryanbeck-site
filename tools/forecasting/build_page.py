@@ -299,7 +299,7 @@ SECTIONS = [
     },
     {
         "slug": "covid-hospitalizations",
-        "title": "COVID and flu patients in hospital",
+        "title": "COVID and flu patients in the hospital",
         "csv": "covid-hospitalizations.csv",
         "plot": {
             "format": "number",
@@ -311,7 +311,7 @@ SECTIONS = [
             ],
         },
         "note": (
-            "Patients in hospital on a given day, summed across reporting "
+            "Patients in the hospital on a given day, summed across reporting "
             "states, from the HHS hospital-capacity dataset. This is a census "
             "rather than a count of admissions — everyone in a bed that day, "
             "however long they have been there — so it runs far higher than the "
