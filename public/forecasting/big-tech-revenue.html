@@ -62,17 +62,17 @@
     </header>
 
   <section class="series" id="faamg-revenues">
-    <span class="status is-live">Live &middot; data to 1 January 2025</span>
-    <h2>Big-tech combined revenue</h2>
-    <p class="series-note">Annual revenue of Alphabet, Amazon, Apple, Meta and Microsoft, read straight out of their SEC filings. Billions of dollars. The five do not share a fiscal calendar — Apple's year ends in September and Microsoft's in June — so the combined line is blank for any year where they have not all filed yet.</p>
-    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd-billions&quot;,&quot;zero&quot;:true,&quot;labelCol&quot;:&quot;fiscal_year&quot;,&quot;labelPrefix&quot;:&quot;FY &quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;combined&quot;,&quot;label&quot;:&quot;All five combined&quot;},{&quot;col&quot;:&quot;amazon&quot;,&quot;label&quot;:&quot;Amazon&quot;},{&quot;col&quot;:&quot;apple&quot;,&quot;label&quot;:&quot;Apple&quot;},{&quot;col&quot;:&quot;alphabet&quot;,&quot;label&quot;:&quot;Alphabet&quot;}],&quot;csv&quot;:&quot;/data/forecasting/faamg-revenues.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Big-tech combined revenue&quot;}'></div>
+    <span class="status is-live">Live &middot; data to FY 2025</span>
+    <h2>Big-tech revenue by fiscal year</h2>
+    <p class="series-note">Each company's full fiscal year, and the five added together. The combined line is blank for a year any of them has not finished reporting.</p>
+    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd-billions&quot;,&quot;zero&quot;:true,&quot;labelCol&quot;:&quot;fiscal_year&quot;,&quot;labelPrefix&quot;:&quot;FY &quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;combined&quot;,&quot;label&quot;:&quot;All five combined&quot;},{&quot;col&quot;:&quot;amazon&quot;,&quot;label&quot;:&quot;Amazon&quot;},{&quot;col&quot;:&quot;apple&quot;,&quot;label&quot;:&quot;Apple&quot;},{&quot;col&quot;:&quot;alphabet&quot;,&quot;label&quot;:&quot;Alphabet&quot;}],&quot;csv&quot;:&quot;/data/forecasting/faamg-revenues.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Big-tech revenue by fiscal year&quot;}'></div>
     <p class="series-source">20 rows, latest about 1.6 years ago &middot;
       source: <a href="https://www.sec.gov/edgar/sec-api-documentation" rel="noopener">SEC XBRL company facts</a> &middot;
       download: <a href="/data/forecasting/faamg-revenues.csv">faamg-revenues.csv</a></p>
   </section>
 
   <section class="series" id="faamg-revenues-quarterly">
-    <span class="status is-live">Live &middot; data to 1 June 2026</span>
+    <span class="status is-live">Live &middot; data to 2026Q2</span>
     <h2>Big-tech revenue by quarter</h2>
     <p class="series-note">The same five by quarter, which is where the seasonality lives — Amazon and Apple both spike every December.<br><br>Two notes on the derivation. Quarters are selected by the length of the reporting period rather than by filing type, because a 10-K carries both the twelve-month total and three-month figures, and mixing them puts an annual number in the quarterly line. The fourth quarter is calculated as the annual total minus the three reported quarters, since a 10-K frequently reports the year without ever stating Q4 on its own.</p>
     <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;usd-billions&quot;,&quot;zero&quot;:true,&quot;labelCol&quot;:&quot;quarter&quot;,&quot;defaultRange&quot;:&quot;5y&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;amazon&quot;,&quot;label&quot;:&quot;Amazon&quot;},{&quot;col&quot;:&quot;apple&quot;,&quot;label&quot;:&quot;Apple&quot;},{&quot;col&quot;:&quot;alphabet&quot;,&quot;label&quot;:&quot;Alphabet&quot;},{&quot;col&quot;:&quot;microsoft&quot;,&quot;label&quot;:&quot;Microsoft&quot;},{&quot;col&quot;:&quot;meta&quot;,&quot;label&quot;:&quot;Meta&quot;}],&quot;csv&quot;:&quot;/data/forecasting/faamg-revenues-quarterly.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Big-tech revenue by quarter&quot;}'></div>

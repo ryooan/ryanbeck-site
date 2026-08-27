@@ -175,13 +175,17 @@ def run():
             continue
         annual.append({
             "date": "%s-01-01" % p,
+            # The row is dated 1 January so it sorts on a time axis, but it
+            # covers the whole year -- carry the label so nothing has to
+            # render "1 January 2024" for a year's worth of trade.
+            "year": p,
             "chips": round(ch.get(p, 0.0), 2),
             "equipment": round(eq.get(p, 0.0), 2),
         })
     if not annual:
         raise FetchError("no annual rows returned")
     write_csv("semiconductors-china-imports", annual,
-              ["date", "chips", "equipment"])
+              ["date", "year", "chips", "equipment"])
 
     note = ("US dollars. Chips are HS 8542; equipment is HS 8486, 903082, "
             "903141, 854311 and 901041, summed.")

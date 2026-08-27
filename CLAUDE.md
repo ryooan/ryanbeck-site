@@ -1005,6 +1005,14 @@ Worker implements it: fetch, parse, decode entities, cache 30 minutes.
   Always set `width`/`height` attributes.
 - **Copy**: em dashes and real punctuation, sentence case for headings. Ryan
   writes plainly; don't make it markety.
+- **US English spelling**, in page copy, comments and docs alike — color,
+  center, analyze, labeled, traveling, gray, aging, hospitalization. This is
+  easy to get wrong at length: `hospitalisation` shipped in two section titles
+  before it was caught. Do not blanket-replace `-ise` with `-ize` when fixing
+  it — surprise, advertise, exercise, compromise and franchise are American
+  too — and leave `tools/forecasting/reference-INFER_Trade_Data.Rmd` alone,
+  since it is a recovered original and its `summarise()` is dplyr's real
+  function name.
 - **Links**: `tools/check-links.mjs` runs in CI and fails the build on a dead
   internal link. Run it after any rename.
 - **Docs**: `tools/check-docs.mjs` also runs in CI. It asserts that the files

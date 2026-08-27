@@ -26,6 +26,7 @@ Run after the fetchers:
 
     python tools/forecasting/build_page.py
 """
+import csv
 import datetime as dt
 import html
 import json
@@ -90,16 +91,14 @@ SECTIONS = [
             ],
         },
         "note": (
-            "The same arrivals totalled by fiscal year, back to 1975 — the "
-            "Vietnamese and Soviet resettlements are the two peaks. The dashed "
-            "line is the annual ceiling set by presidential determination, a "
-            "cap rather than a target, and only published for recent years."),
+            "The same arrivals totaled by fiscal year. The dashed line is the "
+            "annual ceiling, which is only published for recent years."),
         "source": "State Department Refugee Processing Center",
         "source_url": "https://www.wrapsnet.org/admissions-and-arrivals/",
     },
     {
         "slug": "faamg-revenues",
-        "title": "Big-tech combined revenue",
+        "title": "Big-tech revenue by fiscal year",
         "csv": "faamg-revenues.csv",
         "plot": {
             "format": "usd-billions",
@@ -114,11 +113,9 @@ SECTIONS = [
             ],
         },
         "note": (
-            "Annual revenue of Alphabet, Amazon, Apple, Meta and Microsoft, "
-            "read straight out of their SEC filings. Billions of dollars. The "
-            "five do not share a fiscal calendar — Apple's year ends in "
-            "September and Microsoft's in June — so the combined line is "
-            "blank for any year where they have not all filed yet."),
+            "Each company's full fiscal year, and the five added together. The "
+            "combined line is blank for a year any of them has not finished "
+            "reporting."),
         "source": "SEC XBRL company facts",
         "source_url": "https://www.sec.gov/edgar/sec-api-documentation",
     },
@@ -172,7 +169,7 @@ SECTIONS = [
             "the same returns and are shown alongside COVID-19.<br><br>A "
             "different series for the same measure, from the archived reichlab "
             "forecast hub, was widely used up to April 2024 and runs about 4% "
-            "lower at the median — the two programmes count admissions under "
+            "lower at the median — the two programs count admissions under "
             "different criteria. Figures read off older charts will not match "
             "these. That series is included in the download for comparison."),
         "source": "CDC NHSN Hospital Respiratory Data",
@@ -232,15 +229,16 @@ SECTIONS = [
             "zero": True,
             "series": [
                 {"col": "chips", "label": "Chips (HS 8542)"},
+                {"col": "chips_avg6", "label": "Chips, 6-month average",
+                 "dash": True, "color": "#8a4a1c"},
                 {"col": "equipment", "label": "Manufacturing equipment"},
+                {"col": "equipment_avg6", "label": "Equipment, 6-month average",
+                 "dash": True, "color": "#4a3d30"},
             ],
         },
         "note": (
-            "Monthly US exports to China of semiconductors and of the equipment "
-            "used to make them. Chips are HS 8542; equipment is five codes "
-            "summed. The download also carries a six-month rolling average and "
-            "a twelve-month rolling sum, both of which are easier to read a "
-            "trend off than the raw months."),
+            "Monthly, with a six-month rolling average over the top. The "
+            "download also carries a twelve-month rolling sum."),
         "source": "UN Comtrade",
         "source_url": "https://comtradeplus.un.org/",
     },
@@ -251,16 +249,15 @@ SECTIONS = [
         "plot": {
             "format": "usd",
             "zero": True,
+            "labelCol": "year",
             "series": [
                 {"col": "chips", "label": "Chips (HS 8542)"},
                 {"col": "equipment", "label": "Manufacturing equipment"},
             ],
         },
         "note": (
-            "What China buys from the whole world, annually — the denominator "
-            "for the export series above. Reported by China, where the export "
-            "series is reported by the United States, so the two are measured "
-            "independently."),
+            "Annual, and the denominator for the export series above — what "
+            "share of China's purchases the US supplies."),
         "source": "UN Comtrade",
         "source_url": "https://comtradeplus.un.org/",
     },
@@ -323,11 +320,9 @@ SECTIONS = [
             ],
         },
         "note": (
-            "People in Virginia by vaccination status, from the state’s "
-            "open-data platform. Counts rather than percentages; the companion "
-            "file carries the same figures split by age group. VDH stopped "
-            "publishing in September 2023 and the history is complete to that "
-            "point."),
+            "Counts rather than percentages, from the state’s open-data "
+            "platform. The companion file carries the same figures split by age "
+            "group."),
         "source": "data.virginia.gov (VDH)",
         "source_url": "https://data.virginia.gov/",
         "extra_csv": "va-vaccinations-by-age.csv",
@@ -342,13 +337,11 @@ SECTIONS = [
             "series": [{"col": "total_cases", "label": "Cumulative cases"}],
         },
         "note": (
-            "Cumulative case, hospitalization and death counts by age band, for "
-            "17 April to 24 September 2024. That window is the entire series — "
-            "VDH retired the dataset and kept five months of it.<br><br>Earlier "
-            "figures do not appear to be available anywhere. The Internet "
-            "Archive’s captures of the original endpoint hold about one day of "
-            "data each, and the CDC’s equivalent series is reported by HHS "
-            "region rather than by state."),
+            "Cumulative case, hospitalization and death counts by age band. "
+            "Earlier figures do not appear to be available anywhere: the "
+            "Internet Archive’s captures of the original endpoint hold about "
+            "one day of data each, and the CDC’s equivalent series is reported "
+            "by HHS region rather than by state."),
         "source": "data.virginia.gov (VDH, retired dataset)",
         "source_url": "https://data.virginia.gov/",
         "extra_csv": "vdh-cases-by-age.csv",
@@ -433,8 +426,9 @@ GROUPS = [
             "is set by presidential determination and is a cap rather than a "
             "target: admissions have come in well under it far more often than "
             "they have approached it. The long view reaches back to 1975 — the "
-            "two peaks are the Indochinese resettlement of the late 1970s and "
-            "the Soviet and Southeast Asian programmes around 1990.</p>"),
+            "two peaks are the Indochinese resettlement after the fall of "
+            "Saigon and the Soviet and Southeast Asian programs around "
+            "1990.</p>"),
         "sections": ["refugee-admissions", "refugee-admissions-annual"],
     },
     {
@@ -470,8 +464,7 @@ GROUPS = [
             "commercial layer operation can add several million birds in one "
             "week. That makes the weekly figure extremely spiky and the running "
             "total the more readable line.</p><p>Backyard flocks are a large "
-            "share of the detections and a very small share of the birds. The "
-            "download splits the two.</p>"),
+            "share of the detections and a very small share of the birds.</p>"),
         "sections": ["hpai-depopulations"],
     },
     {
@@ -521,6 +514,28 @@ def e(s):
 SECTION_BY_SLUG = {s["slug"]: s for s in SECTIONS}
 
 
+def period_label(sec, info):
+    """The label for the last period, for series dated to a period start.
+
+    A fiscal-year row is dated 1 October of the *previous* calendar year, and
+    an annual trade row to 1 January, so "data to 1 October 2025" reads as
+    stale when the chart is showing FY2026. Where a section names a label
+    column, the status line uses that instead of the raw date.
+    """
+    col = sec.get("plot", {}).get("labelCol")
+    if not col:
+        return None
+    path = os.path.join(DATA, sec["csv"])
+    if not os.path.exists(path):
+        return None
+    want = info["last_date"][:10]
+    with open(path, newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            if row.get("date", "")[:10] == want and row.get(col):
+                return (sec["plot"].get("labelPrefix") or "") + row[col]
+    return None
+
+
 def section_html(sec, meta):
     info = meta.get(sec["slug"])
     if not info:
@@ -538,6 +553,7 @@ def section_html(sec, meta):
         downloads.append('<a href="/data/forecasting/%s">%s</a>'
                          % (sec["extra_csv"], sec["extra_csv"]))
 
+    label = period_label(sec, info)
     return """
   <section class="series" id="%(slug)s">
     <span class="status is-%(status)s">%(word)s &middot; data to %(last_h)s</span>
@@ -551,7 +567,7 @@ def section_html(sec, meta):
 """ % {
         "slug": e(sec["slug"]), "status": e(status),
         "word": e(STATUS_WORDS.get(status, status.title())),
-        "last_h": e(human(info["last_date"])), "title": e(sec["title"]),
+        "last_h": e(label or human(info["last_date"])), "title": e(sec["title"]),
         "note": sec["note"], "cfg": cfg,
         "rows": format(info["rows"], ","), "age": e(age_phrase(info["last_date"])),
         "surl": e(sec["source_url"]), "source": e(sec["source"]),
@@ -598,7 +614,8 @@ def status_table(meta):
                 '<td>%s</td><td class="num">%s</td></tr>'
                 % (e(g["slug"]), e(slug), e(sec["title"]), e(info["status"]),
                    e(STATUS_WORDS.get(info["status"], info["status"])),
-                   e(human(info["last_date"])), format(info["rows"], ",")))
+                   e(period_label(sec, info) or human(info["last_date"])),
+                   format(info["rows"], ",")))
     return ("<div class=\"table-wrap\"><table class=\"status-table\">"
             "<thead><tr><th>Series</th><th>State</th><th>Data ends</th>"
             "<th class=\"num\">Rows</th></tr></thead><tbody>"
