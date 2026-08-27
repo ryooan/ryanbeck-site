@@ -164,6 +164,6 @@ He reviews by **screen recording** — short `.mp4`s of the thing misbehaving.
 Extract frames and look at them; several bugs here were only diagnosable a
 frame at a time. When he describes motion ("it slides left"), trust the
 description over your reading of the source: twice it was correct about
-behaviour that the current code could no longer produce, because his browser
+behavior that the current code could no longer produce, because his browser
 was running cached JavaScript. Assets now answer `no-cache`, which should
 retire that particular ghost.

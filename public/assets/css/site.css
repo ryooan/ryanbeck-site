@@ -92,7 +92,7 @@ body.hall-page{
    The zoom rides the `scale` property and the drift rides `transform`, and
    they must stay on separate properties. Both used to be `transform`, and
    the drift was declared inside the awake rule -- so leaving the door
-   cancelled an animation and changed the property in the same style change,
+   canceled an animation and changed the property in the same style change,
    and a browser starts NO transition for that. The scene snapped from
    whatever the drift had reached straight back to 1 while the light was
    still fading: the zoom jump Ryan reported. See "Animation cancels eat
@@ -122,7 +122,7 @@ body.hall-page{
    1. THE MOUTH. Open in the middle, closing to solid black at the walls.
       This is the whole depth cue: the eye reads a converging dark surround
       with something faintly lit at the far end as a corridor, and reads the
-      same image at a flat alpha as a dirty window. The centre stop is what
+      same image at a flat alpha as a dirty window. The center stop is what
       you tune -- lower shows more, higher shrouds it.
    2. THE FLOOR AND LINTEL. A near-black band top and bottom. The mouth
       gradient is elliptical and leaves the top and bottom corners lighter
@@ -130,7 +130,7 @@ body.hall-page{
       floor puts the viewer on the near side of it.
    3. THE HAZE. A cold, thin wash hanging where the far end is. Distance
       desaturates and lifts blacks -- aerial perspective -- and against the
-      warm `.ember` glow below it separates near from far by colour, not
+      warm `.ember` glow below it separates near from far by color, not
       just by value.
 
    All three ride the same opacity, which is what fades to .02 when the door
@@ -292,7 +292,7 @@ body.hall-page{
    full brightness instantly while his body took .55s. That is the "staff
    is faster than the body" Ryan reported, and passing the cursor across
    the staff showed it worst because the snap fired on every crossing.
-   On two properties nothing has to be cancelled, both ends of the flare
+   On two properties nothing has to be canceled, both ends of the flare
    ease over --glow-in, and he keeps breathing while lit. */
 
 /* the rays: two crossed streaks, slightly off-axis like a lens flare.
@@ -340,7 +340,7 @@ body.hall-page{
 
 /* On a portrait phone the artwork is landscape, so it leaves a lot of empty
    page. Scale it past the viewport and let the faded edges crop — the page is
-   the same colour as the paper, so there's nothing to see out there anyway. */
+   the same color as the paper, so there's nothing to see out there anyway. */
 @media (max-width:760px) and (orientation:portrait){
   body.hall-page{overflow-x:hidden}
   .hall{width:152%;margin-left:-26%}

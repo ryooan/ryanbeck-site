@@ -4,7 +4,7 @@ A door scene is displayed by `.portal .scene`, which at rest is nearly black
 (brightness .07) and at hover is pushed to brightness(1.22) and scaled past
 1.46. Two consequences, and this script exists for both:
 
-  1. The frame is 760x912 (0.833) with the subject centred, because the ring
+  1. The frame is 760x912 (0.833) with the subject centerd, because the ring
      of fire and the rim shadow eat the edges. Give --focus the point that
      should end up in the middle and it crops around it.
 
@@ -28,7 +28,7 @@ Prints before/after percentiles and what they become at hover exposure.
 plain dark ground. Instead of cropping INTO the picture it pads AROUND it: the
 subject is measured, the whole image scaled so it fills FRAC of the door's
 hover-visible window, and the result composited onto a canvas of the art's own
-background colour. This exists because a door only shows the middle of its
+background color. This exists because a door only shows the middle of its
 scene -- 56% of the art's height and 50% of its width once the hover zoom is
 on -- so a subject that fills its own frame loses its edges exactly when the
 door lights up. Padding a dark background is free; cropping a subject is not.
@@ -58,7 +58,7 @@ def show(label, s, hover=False):
 
 
 def crop_to_frame(im, fx, fy):
-    """Crop the largest 760x912-shaped rectangle centred on (fx, fy)."""
+    """Crop the largest 760x912-shaped rectangle centerd on (fx, fy)."""
     w, h = im.size
     if w / h > W / H:
         cw, ch = int(round(h * W / H)), h
@@ -130,7 +130,7 @@ def subject_box(a, keep=0.92):
 
 def fit_subject(im, target, focus_y=0.46):
     """Scale so the subject fills `target` of the hover window, then pad with
-    the art's own background colour. Centred on the door's optical centre
+    the art's own background color. Centerd on the door's optical center
     (background-position: center 46%), not the geometric middle."""
     a = np.asarray(im).astype(float)
     x0, y0, x1, y1 = subject_box(a)
@@ -155,9 +155,9 @@ def main():
     p.add_argument('--scale', type=float, default=0.76,
                    help='linear level before the knee (1.0 leaves it alone)')
     p.add_argument('--knee', type=float, default=0.72,
-                   help='normalised level above which highlights roll off')
+                   help='normalized level above which highlights roll off')
     p.add_argument('--focus', default='0.5,0.5',
-                   help='x,y in 0..1 of the point to centre the crop on')
+                   help='x,y in 0..1 of the point to center the crop on')
     p.add_argument('--quality', type=int, default=88)
     p.add_argument('--fit-subject', type=float, metavar='FRAC',
                    help='pad instead of cropping: scale so the bright subject '

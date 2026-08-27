@@ -352,7 +352,7 @@
     // the free edge of the sheet, which is where the dust actually comes off
     var edge = g.spine + Math.cos(ang) * g.page * dir;
 
-    // how fast that edge is travelling — new dust inherits some of it, so it
+    // how fast that edge is traveling — new dust inherits some of it, so it
     // looks flung off the paper rather than dropped in place
     var ev = emitter.edge === null ? 0 : (edge - emitter.edge);
     emitter.edge = edge;

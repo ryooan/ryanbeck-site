@@ -3,7 +3,7 @@
 
 The wizard's hover glow is a drop-shadow on his clipped element, so the glow
 is only as good as the clip. This traces his actual outline from
-portal-hall.png and prints the normalised polygon for #clip-wizard in
+portal-hall.png and prints the normalized polygon for #clip-wizard in
 index.html.
 
 The element box (left/top/width/height percentages of .wizard in site.css)

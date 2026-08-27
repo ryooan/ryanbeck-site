@@ -8,7 +8,7 @@ with the door's own exposure applied.
 Two reasons this exists rather than eyeballing the full image.
 
 **Framing.** A door shows about 82% of the height at rest and 56% of the
-height by 50% of the width once the hover zoom runs, centred on 46% of the
+height by 50% of the width once the hover zoom runs, centerd on 46% of the
 height rather than the middle. Compositions that look fine flat lose their
 outer third exactly when someone looks at them.
 

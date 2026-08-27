@@ -181,7 +181,7 @@ SECTIONS = [
     },
     {
         "slug": "flu-hospitalizations",
-        "title": "US influenza hospitalisations",
+        "title": "US influenza hospitalizations",
         "csv": "flu-hospitalizations.csv",
         "plot": {
             "format": "number",
@@ -212,7 +212,7 @@ SECTIONS = [
         },
         "note": (
             "The same admissions state by state, laid out roughly as the map "
-            "is, so a bad week across one region reads as a block of colour. It "
+            "is, so a bad week across one region reads as a block of color. It "
             "opens on percentage change against four weeks earlier, which is "
             "what makes a small state climbing fast as visible as a large one; "
             "the buttons switch to admissions per 100,000 over a "
@@ -342,7 +342,7 @@ SECTIONS = [
             "series": [{"col": "total_cases", "label": "Cumulative cases"}],
         },
         "note": (
-            "Cumulative case, hospitalisation and death counts by age band, for "
+            "Cumulative case, hospitalization and death counts by age band, for "
             "17 April to 24 September 2024. That window is the entire series — "
             "VDH retired the dataset and kept five months of it.<br><br>Earlier "
             "figures do not appear to be available anywhere. The Internet "
@@ -366,7 +366,7 @@ STATUS_WORDS = {
 # up rather than running one long scroll.
 #
 # Grouped by subject, not by status: a reader looking for flu wants the live
-# series and the frozen one next to each other, with each labelled.
+# series and the frozen one next to each other, with each labeled.
 GROUPS = [
     {
         "slug": "respiratory",
@@ -487,7 +487,7 @@ GROUPS = [
             "status.</p><p>Cases by age cover only 17 April to 24 September "
             "2024, which is the whole of what VDH kept when it retired that "
             "dataset. For an age-stratified Virginia series without a gap, the "
-            "HHS hospitalisation panel on the <a "
+            "HHS hospitalization panel on the <a "
             "href=\"/forecasting/respiratory\">respiratory page</a> carries "
             "admissions broken down by age band from 2020 to 2023.</p>"),
         "sections": ["va-vaccinations", "vdh-cases-by-age"],
@@ -665,7 +665,7 @@ def build():
     <p class="series-note" style="margin-top:14px">Figures are as the sources
     reported them at the time and have not been adjusted. Agencies restate, so
     a few values differ from what the same source returns today &mdash; in the
-    HHS hospitalisation panel about 2% of Virginia dates differ, all by under
+    HHS hospitalization panel about 2% of Virginia dates differ, all by under
     1% and in both directions.</p>
   </section>
 """

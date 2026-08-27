@@ -347,7 +347,7 @@ dashboards; the chart module; the unified page; status lines driven by the
 data's own last date.
 
 **Phase 3 — fold in the retired ones** as historical sections, reading from
-the Phase 0 archive, clearly labelled with the date the series ended.
+the Phase 0 archive, clearly labeled with the date the series ended.
 
 **Phase 4 — decommission.** Point the old URLs at the new page, stop the old
 workflows, and decide what to do about the 2.4 GB repo.

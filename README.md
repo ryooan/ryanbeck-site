@@ -106,7 +106,7 @@ cron, since re-running them re-downloads tens of megabytes to write an
 identical file.
 
 The split matters. These series used to be R Markdown documents that fetched,
-analysed, plotted and published in one step, which meant a dead source took
+analyzed, plotted and published in one step, which meant a dead source took
 the whole page with it and no data was ever kept. Now a source dying costs
 nothing but future rows, and the page can say so: `hpai-depopulations`
 currently reads **"Source stalled · data to 9 June 2025"**, because the CDC
@@ -158,7 +158,7 @@ One line in `index.html`:
 ```
 
 Portrait images around 760×912 work best — the doorway is roughly 5:6. Put the
-thing you want people to notice dead centre; the ring of fire eats the edges.
+thing you want people to notice dead center; the ring of fire eats the edges.
 
 ### Retuning the effect
 
@@ -167,7 +167,7 @@ All in `assets/css/site.css` under `/* --- a doorway --- */`:
 - **zoom depth** — `.portal:is(:hover,…) .scene { transform: scale(1.17) }` and the `portal-drift` keyframes
 - **how dark at rest** — `.portal .scene { filter: brightness(.07) }` and `.portal .veil`
 - **fire speed** — the `fire-spin` / `fire-spin-r` durations
-- **fire size** — `.swirl { width: 164% }` and `.swirl.b { width: 184% }`. Bigger = the ring hugs the frame more tightly; smaller = it closes in around the centre of the image
+- **fire size** — `.swirl { width: 164% }` and `.swirl.b { width: 184% }`. Bigger = the ring hugs the frame more tightly; smaller = it closes in around the center of the image
 
 The fire rings are generated PNGs, not gradients. `tools/make-fire.py` regenerates
 them if you want different flames.
@@ -227,7 +227,7 @@ fourteen real project cards. What is still standing in:
   projects lede, which says in the page that it is a draft to prune
 - the forecasting page's intro and the projects lede still want Ryan's voice
 
-- the about-page copy — grounded and no longer self-labelled, but drafted for
+- the about-page copy — grounded and no longer self-labeled, but drafted for
   Ryan rather than by him
 - the newsletter form posts nowhere
 

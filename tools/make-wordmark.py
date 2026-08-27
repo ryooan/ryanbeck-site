@@ -145,7 +145,7 @@ def _is_counter(pts):
 
 # ----------------------------------------------------------------- glyphs
 # Cap height 100. Each glyph returns (list of loops, advance width).
-S = 12.0                 # left stem centre
+S = 12.0                 # left stem center
 
 def G_R():
     return ([*vstem(S),

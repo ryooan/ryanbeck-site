@@ -1,6 +1,6 @@
 /* Plot — chart styling for the forecasting page.
    Paired with assets/js/plot.js. Everything here inherits the site tokens
-   from site.css; nothing defines its own colour except through them. */
+   from site.css; nothing defines its own color except through them. */
 
 .plot{
   position:relative;
@@ -176,7 +176,7 @@
 }
 .series .series-source a{color:inherit}
 
-/* Status chip. The colour carries meaning, so each state also carries a word
+/* Status chip. The color carries meaning, so each state also carries a word
    and a dot shape — this line exists because COVIDWeekly showed a green tick
    for two years while publishing data that had stopped. */
 .status{

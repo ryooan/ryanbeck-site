@@ -53,9 +53,9 @@
     };
   }
 
-  /* Series colours, in the order lines are declared. Ember first because the
+  /* Series colors, in the order lines are declared. Ember first because the
      first series is the subject of the chart; the rest recede. */
-  function seriesColour(pal, i) {
+  function seriesColor(pal, i) {
     return [pal.ember, pal.ink, pal.gold, pal.faint][i % 4];
   }
 
@@ -171,7 +171,7 @@
     return out;
   }
 
-  /* Date ticks on boundaries a reader recognises — years, or months when the
+  /* Date ticks on boundaries a reader recognizes — years, or months when the
      window is short enough that every tick would otherwise read the same. */
   function dateTicks(t0, t1, count) {
     var span = (t1 - t0) / 86400000, out = [], d, y;
@@ -302,7 +302,7 @@
       }).filter(function (p) { return !isNaN(p.t); });
       return {
         label: s.label || s.col,
-        colour: s.color || seriesColour(pal, i),
+        color: s.color || seriesColor(pal, i),
         dash: !!s.dash,
         right: s.axis === 'right',
         pts: pts
@@ -437,7 +437,7 @@
       var li = document.createElement('li');
       var sw = document.createElement('span');
       sw.className = 'plot-swatch' + (s.dash ? ' is-dash' : '');
-      sw.style.setProperty('--c', s.colour);
+      sw.style.setProperty('--c', s.color);
       li.appendChild(sw);
       li.appendChild(document.createTextNode(
         s.label + (s.right ? ' (right axis)' : '')));
@@ -502,7 +502,7 @@
       if (hasRight) {
         var rFmt = FORMATS[opt.formatRight] || fmt;
         var rCol = (opt.series.filter(function (x) { return x.axis === 'right'; })[0] || {});
-        var rTint = rCol.color || seriesColour(pal, opt.series.indexOf(
+        var rTint = rCol.color || seriesColor(pal, opt.series.indexOf(
           opt.series.filter(function (x) { return x.axis === 'right'; })[0]));
         niceTicks(v0R, v1R, 5).forEach(function (v) {
           if (v < v0R || v > v1R) return;
@@ -546,7 +546,7 @@
         });
         if (d) {
           svg.appendChild(el('path', {
-            d: d, fill: 'none', stroke: s.colour, 'stroke-width': s.dash ? 1.6 : 2,
+            d: d, fill: 'none', stroke: s.color, 'stroke-width': s.dash ? 1.6 : 2,
             'stroke-linejoin': 'round', 'stroke-linecap': 'round',
             'stroke-dasharray': s.dash ? '5 4' : null
           }));
@@ -560,7 +560,7 @@
       svg.appendChild(geom.cursor);
       geom.dots = series.map(function (s) {
         var c = el('circle', {
-          r: 3.5, fill: pal.paper, stroke: s.colour,
+          r: 3.5, fill: pal.paper, stroke: s.color,
           'stroke-width': 2, visibility: 'hidden'
         });
         svg.appendChild(c);
@@ -602,11 +602,11 @@
           dot.setAttribute('cx', geom.sx(p.t));
           dot.setAttribute('cy', (s.right ? geom.syR : geom.sy)(p.v));
           dot.setAttribute('visibility', 'visible');
-          lines.push('<span class="k" style="--c:' + s.colour + '"></span>' +
+          lines.push('<span class="k" style="--c:' + s.color + '"></span>' +
             s.label + ' <b>' + fmt(p.v) + '</b>');
         } else {
           dot.setAttribute('visibility', 'hidden');
-          lines.push('<span class="k" style="--c:' + s.colour + '"></span>' +
+          lines.push('<span class="k" style="--c:' + s.color + '"></span>' +
             s.label + ' <i>no data</i>');
         }
       });
@@ -679,7 +679,7 @@
      where it sits on the map. Reading a grid of fifty boxes alphabetically
      means hunting for a label every time; laid out geographically you find a
      state where you expect it and regional patterns show up on their own —
-     a bad flu week in the southeast is a block of colour, not eight
+     a bad flu week in the southeast is a block of color, not eight
      scattered cells.
 
      Rows and columns, 11 wide. This is the arrangement the old dashboard
@@ -719,7 +719,7 @@
   /* Diverging fill for a percentage change. Red for rising, green for
      falling, both desaturated toward the page so a grid of fifty does not
      read as an alarm panel. `mag` saturates at +/-100%: past a doubling the
-     colour stops changing, because the difference between +200% and +400%
+     color stops changing, because the difference between +200% and +400%
      is not information anyone reads off a fill. */
   function changeFill(pct) {
     if (pct == null || !isFinite(pct)) return 'rgba(122,106,88,.12)';
@@ -863,7 +863,7 @@
       if (!isFinite(lo)) { lo = 0; hi = 1; }
       if (isChange) {
         var span = Math.max(Math.abs(lo), Math.abs(hi), 10);
-        lo = -span; hi = span;                 // symmetric, so zero sits centred
+        lo = -span; hi = span;                 // symmetric, so zero sits centerd
       } else {
         lo = Math.min(0, lo);
         if (hi <= lo) hi = lo + 1;

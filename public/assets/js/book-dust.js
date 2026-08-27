@@ -313,7 +313,7 @@
         }
 
         ctx.clearRect(0, 0, W, H);
-        // blur smears neighbours together so the blobs stop reading as blobs
+        // blur smears neighbors together so the blobs stop reading as blobs
         ctx.filter = 'blur(6px)';
         ctx.globalAlpha = 0.95;
         ctx.drawImage(off, 0, 0);
@@ -395,7 +395,7 @@
             else x = rnd(f.bx0, f.bx1);
             y = f.top + Math.random() * f.h;
             if (f.by1 > f.by0) y = Math.max(f.by0, Math.min(f.by1, y));
-            // most of it is thrown the way the page is travelling, the rest
+            // most of it is thrown the way the page is traveling, the rest
             // goes wherever it likes. The 0.32 is the overall speed of the
             // effect: dust drifts, it does not fly.
             vx = v.vx * (body ? 0.22 : 0.32);

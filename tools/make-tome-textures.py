@@ -110,12 +110,12 @@ print('wear mask')
 # ------------------------------------------------------------------ page
 W, H = 1000, 1300
 grain = fbm(W, H, 7, seed=21, persistence=.62)
-fibre = fbm(W, H, 8, seed=22, persistence=.78)
+fiber = fbm(W, H, 8, seed=22, persistence=.78)
 tint = np.array([243, 233, 213], np.float32)
 dark = np.array([214, 196, 166], np.float32)
-t = np.clip(grain * .6 + fibre * .4, 0, 1)
+t = np.clip(grain * .6 + fiber * .4, 0, 1)
 page = dark[None, None, :] + (tint - dark)[None, None, :] * (0.55 + t * 0.62)[:, :, None]
-# foxing — the little rust-coloured age spots
+# foxing — the little rust-colored age spots
 rng = np.random.default_rng(31)
 spots = Image.new('L', (W, H), 0); ds = ImageDraw.Draw(spots)
 for _ in range(64):

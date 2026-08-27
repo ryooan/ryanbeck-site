@@ -21,7 +21,7 @@
   var tsParticles = window.LibTome.tsParticles;
 
 
-  /* ------------------------------------------------- per-page ageing */
+  /* ------------------------------------------------- per-page aging */
   /* A real book is not one texture at nine offsets. Every paper page gets
      its own recipe: a different patch of the stock, its own tint, its own
      foxing, an edge it darkens along, and sometimes a damp mark. All of it
@@ -58,7 +58,7 @@
     el.style.backgroundSize = n(f(105, 290)) + '% ' + n(f(105, 290)) + '%';
 
     /* How yellowed this sheet is. The stock is opaque, so the only way its
-       own tone can differ page to page is to blend it against a colour --
+       own tone can differ page to page is to blend it against a color --
        multiply pushes a page towards the base, normal leaves it alone. Two
        in five get pushed, none of them far. */
     /* The channels are derived, not drawn independently: r >= g >= b by a
@@ -95,7 +95,7 @@
     var L = [];
 
     /* One or two broad tonal patches: not marks you would point at, but the
-       reason one page looks browner at the top and its neighbour does not.
+       reason one page looks browner at the top and its neighbor does not.
        These carry most of the page-to-page difference. */
     var patches = 1 + Math.floor(r() * 2);
     while (patches--) {
@@ -130,7 +130,7 @@
            ') 0%, rgba(126,94,50,0) ' + n(f(16, 44)) + '%)');
 
     /* Damp, on roughly a third of them. Two things keep it from reading as a
-       coffee ring: the centre sits well outside the page, so only a shallow
+       coffee ring: the center sits well outside the page, so only a shallow
        arc of the tidemark crosses it, and a second offset ellipse breaks the
        arc so its edge is not a clean circle. The tidemark itself has to stay
        faint and wide -- a crisp narrow ring is a mug, a broad soft one is
@@ -320,7 +320,7 @@
 
     if (landscape) {
       /* Two half-width boards, and NEITHER ever moves or resizes — a
-         rectangle travelling on its own reads as furniture, not a book.
+         rectangle traveling on its own reads as furniture, not a book.
          The right board is simply always there. The left one is always
          positioned and only its opacity changes: it fades in IN PLACE
          under the cover in the same frame the cover lands flat on it
@@ -416,7 +416,7 @@
      than of a predicted target, because prediction is what broke here: the
      target is `getCurrentPageIndex() + intent`, and clicking back through
      several pages quickly leaves that index a flip or two behind, so the
-     close was never recognised and the left board stayed lit under a cover
+     close was never recognized and the left board stayed lit under a cover
      that was already swinging shut. What is actually on screen cannot be
      stale. */
   /* NOTE StPageFlip does not wrap the pages it is given -- it stamps
@@ -499,7 +499,7 @@
   /* Nothing lies under the half a cover has not reached, and nothing can
      cast a shadow onto a half with no book in it. StPageFlip disagrees: a
      hard flip paints .stf__hardShadow across the full width, so opening the
-     book laid a grey slab over the bare page beside it, and closing it did
+     book laid a gray slab over the bare page beside it, and closing it did
      the same on the way back. Hide any shadow whose middle is over the empty
      half. Visibility, never display — the dust engine measures
      .stf__outerShadow's box every frame. */

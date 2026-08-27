@@ -1,10 +1,10 @@
 """Card thumbnails for the projects pages, from the projects' own graphics.
 
 The chosen treatment is **light float** (picked from three lab rounds,
-2026-08-20): the real rendered chart -- title, axes, its own colours, a
+2026-08-20): the real rendered chart -- title, axes, its own colors, a
 genuine preview of the page -- warmed so white becomes soft paper, set on a
 rounded panel, gently rotated, floating with a soft shadow over an airy
-ambient wash of the chart's own colours. Every card previews real content;
+ambient wash of the chart's own colors. Every card previews real content;
 the staging carries the energy.
 
 The fourteen forecasting dashboards are self-contained R Markdown pages with
@@ -92,7 +92,7 @@ def dense_span(mass, keep=0.94):
 
 def crop_chart(a):
     """Trim the chart to its content (keeping title and axes -- the card is
-    a preview, not an abstraction), lightly biased toward the coloured ink."""
+    a preview, not an abstraction), lightly biased toward the colored ink."""
     sat = a.max(axis=2) - a.min(axis=2)
     col = (sat > 0.10) & (a.max(axis=2) > 0.25)
     if col.sum() < 500:
@@ -125,7 +125,7 @@ def rounded(im, radius):
 
 
 def ambient_bg(source, blur=90):
-    """The source image's own colours smeared into an airy full-bleed wash."""
+    """The source image's own colors smeared into an airy full-bleed wash."""
     bg = source.resize((W, H)).filter(ImageFilter.GaussianBlur(blur))
     a = np.asarray(bg).astype(float) / 255
     sat = a.max(axis=2, keepdims=True) - a.min(axis=2, keepdims=True)
@@ -149,7 +149,7 @@ def paste_panel(bg, panel, xy, shadow_dxy=(14, 22), blur=18, alpha=120):
 
 def float_card(panel_src, ambient_src=None, rot=-3.5, width=.80, radius=22):
     """The treatment: a rounded panel, gently rotated, floating on an airy
-    wash of the ambient source's colours (the panel itself by default)."""
+    wash of the ambient source's colors (the panel itself by default)."""
     bg = ambient_bg(ambient_src or panel_src).convert('RGBA')
     pw = int(W * width)
     ph = int(pw * panel_src.size[1] / panel_src.size[0])

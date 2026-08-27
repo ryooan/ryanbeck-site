@@ -18,14 +18,14 @@ height at rest, and **56% of the height by 50% of the width** once the hover
 zoom runs. So a composition that reads well as a flat image can lose its
 whole outer third exactly when someone looks at it.
 
-Hence: one card dead centre, upright and largest, carrying the image on its
+Hence: one card dead center, upright and largest, carrying the image on its
 own. The flanking cards lean away on a perspective arc and are deliberately
 allowed to run out of frame -- at rest they say "there are more of these",
 and on hover they are mostly gone, which is the intent rather than an
 accident. Nothing that has to be read sits outside the middle half.
 
 The ground is near-black because the door's resting state is a shrouded
-corridor; a light background would glow through the veil as a grey slab.
+corridor; a light background would glow through the veil as a gray slab.
 """
 import argparse
 import os
@@ -42,7 +42,7 @@ OUT = os.path.join(ROOT, "art-source")
 # so the door framed a grid of miniature charts and nothing read at all.
 HERO = "fd-hpai.jpg"          # a single filled area, legible as a shape
 
-# The receding panels. These are blurred, so what matters is colour and mass,
+# The receding panels. These are blurred, so what matters is color and mass,
 # not what they say.
 PICKS = [
     "fd-debt-limit.jpg",
@@ -65,7 +65,7 @@ EMBER = (200, 114, 42)
 DOOR_BLEED, DOOR_ZOOM, DOOR_ASPECT = 1.22, 1.46, 0.741
 VIS_H = H / (DOOR_BLEED * DOOR_ZOOM)                    # ~1021 px
 VIS_W = VIS_H * (DOOR_ASPECT / (W / H))                 # ~759 px
-EYE_Y = H * 0.46                                        # the door's optical centre
+EYE_Y = H * 0.46                                        # the door's optical center
 
 
 def find_coeffs(dst, src):
@@ -109,7 +109,7 @@ def find_coeffs(dst, src):
 def card_art(name, w, h):
     """A card: the thumbnail, cropped to portrait, with a warm border."""
     im = Image.open(os.path.join(CARDS, name)).convert("RGB")
-    # Thumbs are landscape; take a centred portrait slice.
+    # Thumbs are landscape; take a centerd portrait slice.
     tw = int(im.height * w / h)
     if tw <= im.width:
         x = (im.width - tw) // 2
@@ -143,7 +143,7 @@ def place(base, art, quad, *, dim, glow):
     if dim < 1:
         layer = Image.blend(Image.new("RGBA", (W, H), INK + (255,)), layer, dim)
     if glow:
-        # A soft warm bloom behind the centre card so it reads as lit rather
+        # A soft warm bloom behind the center card so it reads as lit rather
         # than merely brighter.
         halo = mask.filter(ImageFilter.GaussianBlur(46)).point(
             lambda v: int(v * 0.55))
@@ -206,11 +206,11 @@ def render(variant):
     hero_w = hero_h / 1.30                   # portrait panels
 
     # Lay the panels out first, then move the whole arrangement so its
-    # bounding box is centred on the door's optical centre. Positioning them
+    # bounding box is centerd on the door's optical center. Positioning them
     # directly against a hand-picked base_y does not survive a parameter
     # change: the alternating stagger accumulates a net sideways drift, and
     # the stack always grows in one direction, so the composition ends up
-    # off-centre and the hover crop clips it. Centring afterwards is exact
+    # off-center and the hover crop clips it. Centring afterwards is exact
     # whatever the numbers are.
     panels = []
     for i in range(n):

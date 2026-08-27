@@ -1,4 +1,4 @@
-"""COVID and influenza hospitalisations, national and Virginia.
+"""COVID and influenza hospitalizations, national and Virginia.
 
 Source: healthdata.gov dataset g62h-syeh, the HHS "COVID-19 Reported Patient
 Impact and Hospital Capacity by State" timeseries.
@@ -36,7 +36,7 @@ WANT = {
 
 
 def iso(d):
-    """Normalise the source's date to ISO.
+    """Normalize the source's date to ISO.
 
     healthdata.gov serves this column as YYYY/MM/DD, not YYYY-MM-DD. Passing
     it straight through produces a CSV the chart module silently refuses to

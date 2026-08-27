@@ -1,4 +1,4 @@
-/* The Hall — portal behaviour
+/* The Hall — portal behavior
    One of the doors (or the wizard) is always awake, everywhere: the same
    3.6s rotation runs on desktop and on touch. On desktop, hover outranks
    it — the moment a pointer settles on any of them the rotation stands

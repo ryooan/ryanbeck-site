@@ -57,7 +57,7 @@
   padding:clamp(18px,3.2vw,42px) clamp(18px,3.4vw,46px);
   font-size:var(--sheet-fs, clamp(.72rem,1vw,.98rem)); line-height:1.62;
 }
-/* Each paper page's own ageing, composed by stain() in tome-lib.js. It
+/* Each paper page's own aging, composed by stain() in tome-lib.js. It
    lives on a child .leaf because StPageFlip rewrites the page element's
    entire style.cssText on every draw -- inline styles on the item itself do
    not survive the first frame. The leaf carries the sheet of stock (its
@@ -181,7 +181,7 @@
 .libtome .page[data-type="backcover"]::after{ content:none }
 
 /* The inside back board carries no ornament. It used to hold a single
-   centred U+25C6 diamond, which read as an artifact rather than as tooling
+   centerd U+25C6 diamond, which read as an artifact rather than as tooling
    -- one small shape floating in the middle of an otherwise empty endpaper
    looks like something went wrong, not like a decision. A real paste-down
    endpaper is blank. */

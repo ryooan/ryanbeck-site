@@ -86,10 +86,10 @@ one page's CSS; misleading for anything about routing.
 This is the part that will bite you if you change it carelessly.
 
 `portal-hall.png` is a drawing whose **three doorways are fully transparent**. The
-rest of it has been flattened onto `#e9dac9` — the paper colour sampled from the
+rest of it has been flattened onto `#e9dac9` — the paper color sampled from the
 original's own fade zone — and `body.hall-page` uses that exact value, so the
 vignette dissolves into the page with no visible edge. **If you re-export the
-artwork, flatten it onto that same colour and punch out only the doorways**, or
+artwork, flatten it onto that same color and punch out only the doorways**, or
 the seam comes back. `tools/` has no script for this; the recipe is: flood-fill
 from the border to find the outside, treat the remaining transparent regions as
 the doorways, composite everything else over `#e9dac9`.
@@ -107,7 +107,7 @@ Two things follow from that, both load-bearing:
 
 1. **`clipPathUnits="objectBoundingBox"` means the coordinates are 0–1 fractions
    of the element's box**, so the whole thing scales with the viewport. If you
-   ever regenerate these, keep them normalised — pixel coordinates will break
+   ever regenerate these, keep them normalized — pixel coordinates will break
    responsiveness.
 2. **`clip-path` clips hit-testing too.** Hovering the stone pillar between two
    doors does nothing, which is the entire point. If you replace `clip-path`
@@ -119,8 +119,8 @@ artwork itself, re-positioned via
 PNG lines up exactly inside his little box. His polygon is **traced from the
 ink** by `tools/trace-wizard.py` — the hover glow is a drop-shadow on the
 clipped element, so the glow is only as good as the clip; the script
-thresholds the drawing against the paper colour, fences off the rubble
-behind the staff, and emits the normalised points for `#clip-wizard`. Re-run
+thresholds the drawing against the paper color, fences off the rubble
+behind the staff, and emits the normalized points for `#clip-wizard`. Re-run
 it if the artwork or the element box changes (the box is duplicated in the
 script's `BOX`).
 
@@ -138,7 +138,7 @@ and breathing at rest, flaring to full when he is hovered, focused, held,
 or awake. **The resting breath animates `filter: brightness()`, not
 `opacity`** — opacity belongs to the flare, and the two cannot share a
 property. He keeps breathing while lit, which is deliberate: stopping the
-breath is what used to require cancelling the animation.
+breath is what used to require canceling the animation.
 
 The light is deliberately cold against the warm page — it reads as magic, not
 as a candle. It is a sibling placed **immediately after** the `.wizard`
@@ -281,7 +281,7 @@ browser's own long-press link menu from hijacking it. A touchmove cancels
 the hold so scrolling never triggers it. Below 760px the artwork is also
 scaled to 152% of the viewport and its faded edges are allowed to crop,
 which makes the doors a real tap target — that only works because the page
-is the same colour as the paper.
+is the same color as the paper.
 
 `.hall-nav` is a plain text nav shown at **every** size, positioned
 **absolutely inside `.hall`, at `bottom: 13%`** — the drawing's rocks run out
@@ -295,7 +295,7 @@ below it: the art's size budget is `100svh` minus ~150px for the wordmark and
 paddings (`.hall` and `.hall-mark` share the 150px figure — change one,
 change both).
 
-Everything honours `prefers-reduced-motion`.
+Everything honors `prefers-reduced-motion`.
 
 ## The forecasting data
 
@@ -342,7 +342,7 @@ old. That is why the bird-flu chart currently says "Source stalled · data to
 
 ### A dead feed is not a dead subject
 
-Two of these were labelled "the source stopped" when the truth was narrower,
+Two of these were labeled "the source stopped" when the truth was narrower,
 and it is worth checking which you have before writing the series off:
 
 - **COVID admissions were never discontinued.** The reichlab hub was archived,
@@ -443,7 +443,7 @@ nothing beyond "everywhere had a winter".
 
 `layout: "us-grid"` places each panel by `US_GRID`, a tile map of the country
 (11 columns), so a state sits where you expect it and regional patterns read
-as blocks of colour. Below 820px it falls back to a flowing grid — eleven
+as blocks of color. Below 820px it falls back to a flowing grid — eleven
 columns on a phone gives each state about 30px — and the CSS has to `!important`
 away the inline `grid-row`/`grid-column`, since placement is set per panel.
 
@@ -451,7 +451,7 @@ The grid has two modes and **opens on percentage change against four weeks
 earlier**, which is what the old dashboard showed. That framing is the point of
 it: in absolute terms a small state is invisible next to Texas, but "up 44%" is
 the same size everywhere. The fill is a diverging red/green ramp that saturates
-at ±100% — past a doubling the colour stops changing, because nobody reads the
+at ±100% — past a doubling the color stops changing, because nobody reads the
 difference between +200% and +400% off a fill.
 
 The other modes show `rate_per_100k` over 6M/1Y/2Y/5Y. Per head rather than raw
@@ -463,7 +463,7 @@ is middling per capita (15.1 / 100k against Arizona's 37.5).
 ### Two y-axes
 
 A series with `axis: "right"` is drawn against its own scale, with ticks on the
-right in that series' colour and "(right axis)" appended in the legend. The
+right in that series' color and "(right axis)" appended in the legend. The
 bird-flu chart needs it: a cumulative total and its weekly increments differ by
 two orders of magnitude, so on one scale the weekly bars are a flat line along
 the bottom. Don't reach for it to fit two similar quantities — two axes invite
@@ -474,7 +474,7 @@ a reader to compare heights that are not comparable.
 Every dashboard here died of dependency rot — RSocrata leaving CRAN took two
 pages down, dplyr dropping `summarise_each()` took the debt limit dark for six
 months. A chart library would reproduce that. It is ~21 KB, reads the site's
-CSS custom properties for colour, and breaks the line at missing values rather
+CSS custom properties for color, and breaks the line at missing values rather
 than interpolating, because several of these series have real holes.
 
 **Charts mount eagerly, and that is deliberate.** Two earlier versions
@@ -498,7 +498,7 @@ Two things to know if you touch it:
 
 - Fill is `nonzero`, and every solid loop is wound the same direction while
   counters are wound the opposite way. That's what lets overlapping strokes
-  union instead of cancelling. `orient()` enforces it; if you add a glyph and
+  union instead of canceling. `orient()` enforces it; if you add a glyph and
   it comes out with white notches where strokes cross, that's the winding.
 - To change the text: `build('SOME TEXT')`. Only the eight letters in
   RYAN BECK exist in `GLYPHS`. Anything else needs drawing, and the reference
@@ -522,7 +522,7 @@ section in case it is ever revived.
 ⚠️ **`tome.css` is two files in a trenchcoat, and `about.html` loads it.**
 A consequence beyond deletion: its hand-built-book half owns generic class
 names — `.leaf`, `.face`, `.sheen`, `.edge` — and they leak into the about
-page. The per-page ageing div was first named `.leaf` and tome.css's
+page. The per-page aging div was first named `.leaf` and tome.css's
 `width:50%; height:98.8%` promptly halved it, which rendered every page as
 an aged column beside bare stock. It is `.age-leaf` now. Grep tome.css
 before introducing any new class name on the about page.
@@ -552,7 +552,7 @@ sliver reads as a glitch rather than as a spread.
 Two things have to agree with that decision or the seam shows:
 `maskLeftPage()` hides any *settled* page StPageFlip leaves rendered left of
 the spine mid-turn, and it hides the **text** of the sheet in flight once that
-sheet's centre crosses the spine — keeping its paper. So the page lifts with
+sheet's center crosses the spine — keeping its paper. So the page lifts with
 its words, goes blank as it passes edge-on, and lands matching the verso.
 Without the second half, the words sat on the left until StPageFlip hid the
 element, then popped out of existence.
@@ -582,7 +582,7 @@ render can land late in a throttled tab), and per-frame during flips via
 `maskLoop`. Its shadow cousin is `maskShadows()`, and it enforces the same
 rule for StPageFlip's four shadow elements: **nothing can cast a shadow onto
 a half with no book in it.** A hard flip paints `.stf__hardShadow` across the
-full width regardless, so opening the cover laid a grey slab over the bare
+full width regardless, so opening the cover laid a gray slab over the bare
 paper beside the book and closing it did the same on the way back — the
 "strange shadow on the left" Ryan reported at several points in the swing.
 Any shadow whose middle sits over the empty half is hidden; "empty" is the
@@ -610,11 +610,11 @@ has landed, the left board is held at zero. A rotate-in-transform test was
 tried as a second flight signal and burned us: StPageFlip stamps
 `rotateY(0deg)` into settled pages' cssText on every draw, so the parked
 back cover matched it and the left board vanished during ordinary turns
-near the end of the book. z-index only. This is a second line of defence behind the
+near the end of the book. z-index only. This is a second line of defense behind the
 `changeState` choreography below, and it exists because the prediction there
 is `getCurrentPageIndex() + intent` — click back through several pages
 quickly and that index runs a flip or two behind, the target never computes
-to 0, the close is never recognised, and the board stays lit under a cover
+to 0, the close is never recognized, and the board stays lit under a cover
 that is already swinging shut. What is actually on screen cannot be stale.
 **A predicted target may hide the left board but must never light it.** The
 second half of the same bug: a close predicted `target > 0` from the stale
@@ -630,7 +630,7 @@ flip lands, and without the latch it re-hid the board the instant the `flip`
 handler lit it.
 
 **In landscape there are TWO boards, and neither ever moves.** A leather
-rectangle travelling or resizing reads as furniture moving, not as a book
+rectangle traveling or resizing reads as furniture moving, not as a book
 opening — that was tried twice (a paced transition, then a snap-with-settle)
 and rejected twice; physically the board *is* the cover, so nothing should
 lie under the half the cover has not reached, and nothing should slide to
@@ -679,8 +679,8 @@ sees it — so it keeps the direct arrangement.
   paste-down endpaper styling it gets from `[data-type="backcover"]`.
 
 Two things that took a pass to get right, in case they are ever retuned:
-a damp mark whose centre sits *on* the page reads as a coffee ring, so the
-centre is placed well outside it and only a shallow arc of the tidemark
+a damp mark whose center sits *on* the page reads as a coffee ring, so the
+center is placed well outside it and only a shallow arc of the tidemark
 crosses — with a second offset ellipse to break the arc, because a clean
 circular edge is a mug no matter how faint. And the tidemark has to stay
 wide and faint: a crisp narrow ring is a mug, a broad soft one is water
@@ -710,7 +710,7 @@ from a third of the sheet to nearly all of it, which changes the apparent
 size of the grain. That, the broad tonal patches, and the per-page tint carry
 the difference; the blotches are detail on top.
 
-The tint is a `multiply` blend against a per-page base colour, since the
+The tint is a `multiply` blend against a per-page base color, since the
 stock is opaque and blending is the only way its own tone can differ. Two
 rules keep it honest:
 
@@ -724,7 +724,7 @@ rules keep it honest:
   sheets and plainly white ones, and the jump between two *facing* pages
   reads as a mistake rather than as age. Pages of one book came off one
   batch of stock: they should differ by a shade, not by a generation. The
-  variety belongs in the marks and the vignette, not in the colour.
+  variety belongs in the marks and the vignette, not in the color.
 
 Cost is 9–17 gradients per page, painted once.
 
@@ -1055,7 +1055,7 @@ is left:
 - **The card treatment is "light float", chosen by Ryan from three lab
   rounds (2026-08-20)**: the real chart warmed so white becomes paper, on a
   rounded panel, gently rotated, floating over an airy wash of its own
-  colours. `tools/make-project-thumbs.py` builds every card — the fourteen
+  colors. `tools/make-project-thumbs.py` builds every card — the fourteen
   real dashboard captures, the composite, Herder's actual wordmark, a drawn
   bracket for March Madness (still behind Vercel SSO), and the park guides'
   real first pages. What was learned choosing it: recoloured screenshots
@@ -1067,7 +1067,7 @@ is left:
   `scenes/fiction.jpg` is the SEER cover, `scenes/blog.jpg` the puzzle
   photograph, `scenes/projects.jpg` the anvil-on-a-gold-disc Ryan supplied
   (2026-08-26, replacing the voxel anvil of 2026-08-23). Replacement artwork
-  wants to be 760×912 with the subject centred, because the ring of fire eats
+  wants to be 760×912 with the subject centerd, because the ring of fire eats
   the edges.
 
   **Originals live in `art-source/`** and are committed, so a scene can be
