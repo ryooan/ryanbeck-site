@@ -18,7 +18,7 @@ enabled = true
 
 # Uncomment once the domain is pointed at Cloudflare:
 # [[routes]]
-# pattern = "ryanbeck.com"
+# pattern = "ryanbeck.com"   # site-url
 # custom_domain = true
 
 # A Postgres connection (Neon) for the first project that needs one.

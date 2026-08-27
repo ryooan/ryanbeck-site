@@ -71,7 +71,8 @@ wrangler.toml      Cloudflare config
 npm run dev       # wrangler on :8787 — the real thing, use this
 npm run serve     # python http.server on :8000 — quick, but see below
 npm run deploy    # pushes to Cloudflare
-npm test          # check-links + check-docs, the same pair CI runs
+npm run site-url  # propagate site.config.json's domain into every file
+npm test          # check-links + check-docs + site-url drift, as CI runs them
 ```
 
 **Prefer `npm run dev`.** Wrangler serves the pages, `/api/*`, `_redirects`
@@ -498,6 +499,23 @@ Three details of that mode, all taken from the original R:
   to avoid infinities, which makes an all-zero state a flat −100%. Those
   panels are grayed out instead, keeping their place on the map.
 
+**The change is a DAMPED ratio, `(b + K) / (a + K)`, K = 5 admissions.** This
+one change answers two problems that turned out to be the same problem:
+
+- A plain `b / a` is undefined at `a = 0`. Six states reported a real zero in
+  a July off-season week, and graying them made published zeros look like a
+  reporting failure. **Gray now means one thing: the reference week is absent
+  from the data.** A published zero is data and gets drawn.
+- A plain `b / a` is useless when `a` is small. 1 to 2 is +100%, drawn exactly
+  as red as 400 to 800. In a quiet week the median state has about seven
+  admissions and 31 of 52 have fewer than ten, so nearly the whole map is
+  noise.
+
+At K = 5: 1→2 reads +17%, 2→4 reads +29%, 400→800 still reads +99%. K counts
+**admissions, not rates** — counting noise scales with the count, not with
+population — and it is fixed rather than derived per week so the colors mean
+the same thing from one week to the next.
+
 **There was never a magnitude guard on the color, and it is worth knowing that
 before someone goes looking for one again.** Both original charts used a plain
 `scale_color_gradient2(low="green", mid="gray", high="red", midpoint=0)` over
@@ -514,7 +532,22 @@ better: it manufactured huge percentages out of nothing. Dropping it was
 already the right call.
 
 The shared scale is symmetric about zero and never narrower than ±10%, which
-keeps a quiet week from being blown up into a full red-to-green spread.
+keeps a quiet week from being blown up into a full red-to-green spread. It is
+still **auto-scaled to the week**, which is why a +100% state can look pale:
+the scale is set by the largest swing anywhere in the window, and before
+damping a tiny state could push that to ±300% and wash everyone else out.
+That was never magnitude logic, just an accident of the scale.
+
+**And the scale is now drawn.** `.scale-key` is a panel-shaped box carrying
+the shared range, placed in the tile map's empty northern band (row 1,
+half-columns 4-6). Without it, "every panel shares one scale" was a claim with
+nothing on screen behind it. Place it from the MEASURED free space, not from
+instinct: the first attempt put it top-right, which is where Maine lives, and
+it landed on Maine, Vermont and New Hampshire.
+
+**The methodology sits in a `<details>`.** The note above the grid was a wall
+of text; it is now two sentences with the full derivation folded behind "How
+this is calculated".
 
 `layout: "us-grid"` places tiles on **26 half-columns**, with odd rows starting
 one half-column in. That offset is most of what makes fifty boxes read as a map
@@ -1310,9 +1343,33 @@ is left:
   Substack's own subscribe page.
 - **The blog page's post lists** are hand-written. The Substack half is
   replaced at runtime once `/api/substack` is live.
-- **The domain** is assumed to be `ryanbeck.com` in `sitemap.xml`, `robots.txt`
-  and the canonical/OG tags. Change it there if it ends up being something
-  else.
+- ⛔ **THE DOMAIN IS NOT CHOSEN, AND IT WILL NOT BE `ryanbeck.com`.** That one
+  is taken and Ryan's name is common enough that the real address will be
+  something else entirely. Everything currently says `ryanbeck.com` as a
+  stand-in.
+
+  **It is defined in exactly one place: `site.config.json`.** To change it,
+  edit `origin` there, run `npm run site-url`, then
+  `python tools/forecasting/build_page.py`, and flip `chosen` to `true`.
+  `npm test` fails if any file has drifted from the config, so a stray
+  hardcoded domain cannot survive CI.
+
+  Who reads it how:
+  - **Python** (`_common.py` exports `ORIGIN`/`HOST`; `build_page.py` and the
+    fetchers' user-agent) reads the JSON directly — nothing to propagate.
+  - **The Worker** imports it (`import SITE from '../site.config.json'`).
+  - **The browser** holds no domain at all. `plot.js` takes `opt.credit` from
+    the generator and falls back to `location.host`, which is right by
+    construction — that is what stamps the credit on every exported PNG.
+  - **Static HTML, `sitemap.xml`, `robots.txt`, `wrangler.toml`** are rewritten
+    by `tools/site-url.mjs`, because there is no build step to interpolate
+    into them.
+
+  ⚠ `site-url.mjs` matches **specific slots** — canonical tags, `og:`/
+  `twitter:` tags, `<loc>`, robots' `Sitemap:` line, and any line ending in a
+  `# site-url` marker. An earlier version rewrote every host that was not on
+  an allowlist, which meant it cheerfully pointed `amazon.com` and
+  `goodreads.com` at this site. Do not reintroduce a heuristic here.
 
 ## Experiments that can be deleted
 
@@ -1339,6 +1396,14 @@ loads on `about.html`.
 
 Roughly in the order they unblock things.
 
+0. ⛔ **Pick the domain before launch.** `ryanbeck.com` is taken; the real
+   address is undecided. Nothing else on this list should happen first,
+   because the domain is baked into canonical tags, OG tags, the sitemap, the
+   fetchers' user-agent and the credit line stamped on every chart PNG people
+   share. It is a one-line edit — `origin` in `site.config.json`, then
+   `npm run site-url` — but it has to be a real decision.
+   **Remind Ryan of this as launch gets close.** `npm test` prints a
+   placeholder warning on every run until `chosen` is set to `true`.
 1. **Deploy it.** It is a static site plus one Worker and has never been put
    online. On this machine that is `npx wrangler login` and then
    `npm run deploy` — but it publishes under Ryan's name, so wait for him to

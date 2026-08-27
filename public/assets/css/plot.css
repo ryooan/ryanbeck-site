@@ -563,3 +563,49 @@ body.embed-page .plot{margin:0}
 }
 .panel-grid.is-geo .panel-base{font-size:8.5px}
 .panel.is-nodata .panel-base{opacity:.5}
+
+/* ---- the shared scale ------------------------------------------------- */
+/* The grid has no axis on any panel, so "every panel shares one scale" was a
+   claim with nothing on screen to back it. This is that scale, drawn once and
+   shaped like a panel so it reads as "one box means this much". It sits in
+   the empty ocean at the top right of the tile map. */
+.panel.scale-key{
+  position:relative;
+  background:var(--parchment-deep,rgba(36,28,20,.04));
+  border-style:dashed;
+}
+.panel.scale-key svg{opacity:.9}
+.scale-ticks{position:absolute;inset:0;pointer-events:none}
+.scale-tick{
+  position:absolute;
+  left:5px;
+  transform:translateY(-50%);
+  color:var(--ink-soft);
+  font:500 9px/1 var(--sans);
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+.panel-grid.is-geo .scale-tick{font-size:8.5px}
+.scale-tick.is-zero{color:var(--ink-faint);font-weight:400}
+
+/* ---- the methodology disclosure --------------------------------------- */
+/* The full explanation used to sit above the chart as a wall of text. It is
+   still here in full, just folded away until asked for. */
+.panel-how{margin-top:7px}
+.panel-how summary{
+  display:inline-block;
+  color:var(--ink-soft);
+  font-weight:500;
+  cursor:pointer;
+  text-decoration:underline;
+  text-decoration-style:dotted;
+  text-underline-offset:3px;
+}
+.panel-how summary:hover{color:var(--ink)}
+.panel-how[open] summary{margin-bottom:6px}
+.panel-how[open]{
+  padding:8px 12px 10px;
+  border-left:2px solid var(--rule);
+  background:var(--parchment-deep,rgba(36,28,20,.03));
+  border-radius:0 4px 4px 0;
+}

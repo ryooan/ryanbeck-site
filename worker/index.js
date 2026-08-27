@@ -3,6 +3,11 @@
  * The Worker only wakes up for /api/* routes.
  */
 
+/* The site's address comes from site.config.json, the one place it is
+   defined. Wrangler bundles the JSON import at deploy time. */
+import SITE from '../site.config.json';
+const SITE_HOST = SITE.origin.replace(/^https?:\/\//, '');
+
 const SUBSTACK_FEED = 'https://themissingnuance.substack.com/feed';
 
 export default {
@@ -35,7 +40,7 @@ async function substack(request, ctx) {
   let posts = [];
   try {
     const res = await fetch(SUBSTACK_FEED, {
-      headers: { 'user-agent': 'ryanbeck.com/1.0' },
+      headers: { 'user-agent': SITE_HOST + '/1.0' },
       cf: { cacheTtl: 1800, cacheEverything: true },
     });
     if (!res.ok) throw new Error('feed ' + res.status);

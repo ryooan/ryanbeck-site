@@ -39,15 +39,13 @@ import csv
 import datetime as dt
 import io as _io
 
-from _common import FetchError, get, main, record, write_csv
+from _common import UA, FetchError, get, main, record, write_csv
 
 URL = ("https://publicdashboards.dl.usda.gov/t/MRP_PUB/views/"
        "VS_Avian_HPAIConfirmedDetections2022/ExportToCsv.csv")
 
 # Tableau serves this through a CDN that is picky about a bare user agent.
-HEADERS = {"User-Agent": ("Mozilla/5.0 (compatible; ryanbeck.com "
-                          "forecasting-data; +https://ryanbeck.com/"
-                          "forecasting-data)")}
+HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; %s)" % UA}
 
 DATE_COL = "Confirmed Diagnosis"
 BIRDS_COL = "Birds Affected (Table)"

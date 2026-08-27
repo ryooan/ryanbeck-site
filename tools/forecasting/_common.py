@@ -29,10 +29,18 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 DATA = os.path.join(ROOT, "public", "data", "forecasting")
 MANIFEST = os.path.join(DATA, "manifest.json")
 
+# The site's address lives in exactly one place. Everything that needs it
+# reads it from there, so changing the domain is a one-line edit plus
+# `npm run site-url` for the files that cannot read JSON at runtime.
+with open(os.path.join(ROOT, "site.config.json"), encoding="utf-8") as _f:
+    SITE = json.load(_f)
+ORIGIN = SITE["origin"].rstrip("/")
+HOST = ORIGIN.split("//", 1)[-1]
+
 # Some sources (the CDC bird-flu CSV in particular) filter on user agent and
 # return 403 to anything that looks automated. That endpoint is NOT dead --
 # it works from GitHub Actions. Identify honestly and it behaves.
-UA = "ryanbeck.com forecasting-data (+https://ryanbeck.com/forecasting-data)"
+UA = "%s forecasting-data (+%s/forecasting)" % (HOST, ORIGIN)
 
 
 def secret(name, *, required=True):

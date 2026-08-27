@@ -33,7 +33,7 @@ import json
 import os
 import re
 
-from _common import DATA, ROOT, load_manifest
+from _common import DATA, HOST, ORIGIN, ROOT, load_manifest
 
 # Every chart on the site, keyed by slug. GROUPS below decides which page each
 # one lands on and in what order; this list is just the definitions.
@@ -604,6 +604,7 @@ def section_html(sec, meta):
     # date in a shared image is the date of the data in it.
     label = period_label(sec, info)
     plot["slug"] = sec["slug"]
+    plot["credit"] = HOST + "/forecasting"
     plot["embed"] = "/forecasting/embed/" + sec["slug"]
     plot["sourceUrl"] = sec["source_url"]
     plot["title"] = sec["title"]
@@ -696,10 +697,11 @@ def page(*, slug, title, kicker, blurb, body, meta, desc):
              else [e(title), "Data Dashboards"])
     doc_title = " &middot; ".join(parts + ["Ryan Beck"])
     return PAGE % {
+        "origin": ORIGIN,
         "title": doc_title,
         "desc": e(desc),
-        "canonical": "https://ryanbeck.com/forecasting/%s" % slug if slug else
-                     "https://ryanbeck.com/forecasting",
+        "canonical": "%s/forecasting/%s" % (ORIGIN, slug) if slug else
+                     "%s/forecasting" % ORIGIN,
         "sidebar": sidebar(slug, meta),
         "kicker": e(kicker),
         "h1": e(title),
@@ -830,6 +832,7 @@ def write_embeds(outdir, meta):
         plot["x"] = "date"
         plot["alt"] = sec["title"]
         plot["slug"] = sec["slug"]
+        plot["credit"] = HOST + "/forecasting"
         plot["sourceUrl"] = sec["source_url"]
         plot["title"] = sec["title"]
         plot["subtitle"] = "%s · data to %s" % (
@@ -837,6 +840,7 @@ def write_embeds(outdir, meta):
         with open(os.path.join(edir, sec["slug"] + ".html"), "w",
                   encoding="utf-8", newline="\n") as f:
             f.write(EMBED % {
+                "host": e(HOST),
                 "title": e(sec["title"]),
                 "cfg": e(json.dumps(plot, separators=(",", ":"))),
                 "home": "/forecasting/%s#%s" % (
@@ -902,7 +906,7 @@ EMBED = """<!doctype html>
 </head>
 <body class="embed-page">
 <div class="plot-mount" data-plot='%(cfg)s'></div>
-<p class="embed-credit"><a href="%(home)s" target="_blank" rel="noopener">%(title)s &mdash; ryanbeck.com</a></p>
+<p class="embed-credit"><a href="%(home)s" target="_blank" rel="noopener">%(title)s &mdash; %(host)s</a></p>
 <script src="/assets/js/plot.js" defer></script>
 </body>
 </html>
@@ -929,7 +933,7 @@ PAGE = """<!doctype html>
 <meta property="og:title" content="%(title)s">
 <meta property="og:description" content="%(desc)s">
 <meta property="og:url" content="%(canonical)s">
-<meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
+<meta property="og:image" content="%(origin)s/assets/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">

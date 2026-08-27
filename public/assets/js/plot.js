@@ -432,7 +432,10 @@
       srcHost = opt.sourceUrl.replace(/^https?:\/\//, '').split('/')[0]
                              .replace(/^www\./, '');
     }
-    credit.textContent = (opt.credit || 'ryanbeck.com/forecasting')
+    /* No domain is written down here. The generator passes `credit` from
+       site.config.json; the fallback is the host the page is actually being
+       served from, which is right by construction. */
+    credit.textContent = (opt.credit || location.host + '/forecasting')
       + (srcHost ? '  ·  ' + srcHost : '');
     out.appendChild(credit);
     return { node: out, w: outW, h: outH };
@@ -914,19 +917,20 @@
          top of it. */
       var TSIZE = W < 460 ? 14 : 16, SSIZE = W < 460 ? 11 : 12;
       var titleLines = opt.title
-        ? wrapText(opt.title, '600', TSIZE, W - 8, 2) : [];
+        ? wrapText(opt.title, '600', TSIZE, W - 24, 2) : [];
       var sub = opt.subtitle || '';
-      var subLines = sub ? wrapText(sub, '400', SSIZE, W - 8, 2) : [];
+      var subLines = sub ? wrapText(sub, '400', SSIZE, W - 24, 2) : [];
       var headH = titleLines.length
         ? titleLines.length * (TSIZE + 4) + (subLines.length
             ? subLines.length * (SSIZE + 3) + 3 : 0) + 12
         : 0;
 
+      var PADL = 12;                 /* left inset for all chart furniture */
       var m = {
         t: 12 + headH,
-        r: (hasRight ? 56 : 14) + (hasRight && opt.yLabelRight ? 17 : 0),
+        r: (hasRight ? 56 : 14) + (hasRight && opt.yLabelRight ? 20 : 0),
         b: 26,
-        l: 56 + (opt.yLabel ? 17 : 0)
+        l: PADL + 52 + (opt.yLabel ? 20 : 0)
       };
       var iw = Math.max(10, W - m.l - m.r);
       var ih = Math.max(10, H - m.t - m.b);
@@ -948,7 +952,7 @@
       titleLines.forEach(function (line, i) {
         ty += TSIZE;
         var t = el('text', {
-          x: 0, y: ty, 'text-anchor': 'start', fill: pal.ink,
+          x: 12, y: ty, 'text-anchor': 'start', fill: pal.ink,
           'font-family': SANS, 'font-size': TSIZE, 'font-weight': 600
         });
         t.textContent = line;
@@ -960,7 +964,7 @@
         subLines.forEach(function (line) {
           ty += SSIZE;
           var t = el('text', {
-            x: 0, y: ty, 'text-anchor': 'start', fill: pal.faint,
+            x: 12, y: ty, 'text-anchor': 'start', fill: pal.faint,
             'font-family': SANS, 'font-size': SSIZE, 'font-weight': 400
           });
           t.textContent = line;
@@ -979,16 +983,22 @@
         t.textContent = text;
         svg.appendChild(t);
       }
-      if (opt.yLabel) axisCaption(opt.yLabel, 11, pal.faint);
+      if (opt.yLabel) axisCaption(opt.yLabel, PADL + 5, pal.faint);
       if (hasRight && opt.yLabelRight) {
-        axisCaption(opt.yLabelRight, W - 8,
+        axisCaption(opt.yLabelRight, W - 11,
           (series.filter(function (x) { return x.right && x.on; })[0]
            || { color: pal.faint }).color);
       }
 
       bands.forEach(function (b) {
+        /* Clamp to the plot box. A band starting before the visible window
+           has a negative sx(), which painted the shading back across the y
+           tick labels and out to the left edge of the image. */
+        var bx0 = Math.max(m.l, Math.min(m.l + iw, sx(b[0])));
+        var bx1 = Math.max(m.l, Math.min(m.l + iw, sx(b[1])));
+        if (bx1 <= bx0) return;
         svg.appendChild(el('rect', {
-          x: sx(b[0]), y: m.t, width: Math.max(1, sx(b[1]) - sx(b[0])), height: ih,
+          x: bx0, y: m.t, width: Math.max(1, bx1 - bx0), height: ih,
           fill: pal.ink, opacity: 0.07
         }));
       });
@@ -1392,6 +1402,60 @@
     note.className = 'panel-note';
     host.appendChild(note);
 
+    var scaleKey = document.createElement('figure');
+    scaleKey.className = 'panel scale-key';
+
+    function drawScaleKey(lo, hi, isChange) {
+      scaleKey.innerHTML = '';
+      var cap = document.createElement('figcaption');
+      cap.innerHTML = '<span class="panel-name">Scale</span>';
+      scaleKey.appendChild(cap);
+
+      var W = 100, H = 46, m = 3;
+      var svg = el('svg', {
+        viewBox: '0 0 ' + W + ' ' + H, preserveAspectRatio: 'none',
+        role: 'img', 'aria-label': 'Shared vertical scale for every panel'
+      });
+      function sy(v) { return H - m - (v - lo) / (hi - lo || 1) * (H - m * 2); }
+
+      svg.appendChild(el('line', {
+        x1: W - 8, x2: W - 8, y1: sy(hi), y2: sy(lo),
+        stroke: pal.ink, 'stroke-opacity': .35,
+        'vector-effect': 'non-scaling-stroke'
+      }));
+      [hi, lo].forEach(function (v) {
+        svg.appendChild(el('line', {
+          x1: W - 12, x2: W - 4, y1: sy(v), y2: sy(v),
+          stroke: pal.ink, 'stroke-opacity': .35,
+          'vector-effect': 'non-scaling-stroke'
+        }));
+      });
+      if (isChange) {
+        svg.appendChild(el('line', {
+          x1: m, x2: W - 4, y1: sy(0), y2: sy(0),
+          stroke: pal.ink, 'stroke-opacity': .22, 'stroke-dasharray': '2 2',
+          'vector-effect': 'non-scaling-stroke'
+        }));
+      }
+      scaleKey.appendChild(svg);
+
+      var ticks = document.createElement('div');
+      ticks.className = 'scale-ticks';
+      function row(v, cls) {
+        var d = document.createElement('span');
+        d.className = 'scale-tick' + (cls ? ' ' + cls : '');
+        d.style.top = (sy(v) / H * 100) + '%';
+        d.textContent = isChange
+          ? (v > 0 ? '+' : '') + Math.round(v) + '%'
+          : fmt(v);
+        ticks.appendChild(d);
+      }
+      row(hi);
+      if (isChange) row(0, 'is-zero');
+      row(lo);
+      scaleKey.appendChild(ticks);
+    }
+
     var grid = document.createElement('div');
     grid.className = 'panel-grid' + (geo ? ' is-geo' : '');
     host.appendChild(grid);
@@ -1410,25 +1474,53 @@
          is measured from the same starting line, so the first is 0% by
          construction and the line traces where the state has got to since.
          A rolling lag gives a series of unrelated comparisons instead, which
-         is a different and much harder quantity to read. */
+         is a different and much harder quantity to read.
+
+         The ratio is DAMPED, and the reason is the whole difficulty of this
+         chart. A plain b/a is undefined when a is 0 -- six states reported a
+         real zero in the reference week of a July off-season, and graying
+         them made published zeros look like a reporting failure. It is also
+         useless when a is small: 1 to 2 is +100%, which draws exactly as red
+         as 400 to 800, and in a quiet week the median state has about seven
+         admissions.
+
+         Both problems are the same problem, so one fix answers both. Compare
+         (b + K) / (a + K) instead: it is defined at a = 0, it pulls a change
+         built on a handful of admissions toward no-change, and it leaves a
+         large state essentially untouched. At K = 5, 1 to 2 reads +17% and
+         400 to 800 still reads +99%.
+
+         K counts ADMISSIONS, not rates, because that is where the counting
+         noise lives -- a state with few admissions has a noisy ratio whatever
+         its population. It is fixed rather than derived from the week so the
+         colors mean the same thing from one week to the next. */
       var refT = tMax - LAG_WEEKS * 7 * DAY;
-      var ref = null, refC = null;
+      var refP = null;
       for (var i = 0; i < pts.length; i++) {
-        if (pts[i].t === refT) { ref = pts[i].v; refC = pts[i].c; break; }
+        if (pts[i].t === refT) { refP = pts[i]; break; }
       }
-      /* No reference, or a reference of zero, means the change is undefined
-         rather than large -- a handful of admissions divided by nothing is
-         not a percentage. Those panels are drawn as no-data rather than given
-         an arbitrary denominator. */
-      if (ref == null || ref === 0) return null;
+      /* Gray now means one thing only: the reference week is genuinely absent
+         from the data. A published zero is data, and gets drawn. */
+      if (!refP) return null;
+
+      var K = opt.shrink == null ? 5 : opt.shrink;
+      var useCounts = refP.c != null;
+      var ref = useCounts ? refP.c : refP.v;
+      if (!useCounts && (ref == null || ref === 0)) return null;
 
       var out = [];
       pts.forEach(function (p) {
         if (p.t < refT || p.t > tMax) return;
-        out.push({ t: p.t, c: p.c,
-                   v: p.v == null ? null : (p.v / ref - 1) * 100 });
+        var v = null;
+        if (useCounts) {
+          if (p.c != null) v = ((p.c + K) / (ref + K) - 1) * 100;
+        } else if (p.v != null) {
+          v = (p.v / ref - 1) * 100;
+        }
+        out.push({ t: p.t, c: p.c, v: v });
       });
-      out.refC = refC;
+      out.refC = useCounts ? refP.c : null;
+      out.damped = useCounts;
       return out;
     }
 
@@ -1457,23 +1549,37 @@
       }
 
       var gaps = names.filter(function (n) { return !series[n]; }).length;
+      var K = opt.shrink == null ? 5 : opt.shrink;
       note.innerHTML = isChange
-        ? ('Percentage change against ' + LAG_WEEKS + ' weeks earlier, traced '
-           + 'week by week from that one reference. Color follows the value '
-           + 'continuously &mdash; <span class="key key-up"></span> above '
-           + 'zero, <span class="key key-dn"></span> below it, gray at the '
-           + 'crossing &mdash; so a state that fell and turned back up shows '
-           + 'both. All panels share one scale, symmetric about zero and never '
-           + 'narrower than &plusmn;10%, currently &plusmn;'
-           + Math.round(hi) + '%. <strong>A percentage says nothing about '
-           + 'size</strong>, so the admissions it was computed from are '
-           + 'printed under each state, reference week to latest: 1&rarr;2 is '
-           + '+100% and draws as red as a real surge.'
-           + (gaps ? ' ' + gaps + ' grayed panels had no admissions in the '
-              + 'reference week, which leaves the change undefined.' : ''))
-        : ('Weekly admissions per 100,000 residents. Every panel shares one '
-           + 'vertical scale, topping out at ' + fmt(hi) + ', so a small state '
-           + 'and a large one can be read against each other.');
+        ? ('Change against ' + LAG_WEEKS + ' weeks earlier, '
+           + '<span class="key key-up"></span> up and '
+           + '<span class="key key-dn"></span> down, against the shared scale '
+           + 'marked on the grid. Small counts are damped, so a state going '
+           + 'from one '
+           + 'admission to two does not read as a surge; the admissions '
+           + 'behind each number are printed under it.'
+           + (gaps ? ' ' + gaps + ' gray: no data that week.' : '')
+           + '<details class="panel-how"><summary>How this is '
+           + 'calculated</summary>Every point is measured against one fixed '
+           + 'reference week &mdash; the week ' + (LAG_WEEKS * 7) + ' days '
+           + 'before the latest &mdash; so each line starts at zero and '
+           + 'traces where the state has got to since, rather than being a '
+           + 'series of unrelated week-on-week comparisons.<br><br>The ratio '
+           + 'is (b + ' + K + ') / (a + ' + K + '), not b / a, where a and b '
+           + 'are admissions in the reference and current weeks. Adding ' + K
+           + ' does two things at once: it is defined when a state reported '
+           + 'zero that week, and it pulls a change built on a handful of '
+           + 'admissions toward no-change while leaving a large state alone. '
+           + '1&rarr;2 reads +17%; 400&rarr;800 still reads +99%.<br><br>'
+           + 'Color follows the value continuously, gray at the crossing, so '
+           + 'a state that fell and then turned back up shows both. All '
+           + 'panels share one scale, symmetric about zero and never narrower '
+           + 'than &plusmn;10% &mdash; currently &plusmn;' + Math.round(hi)
+           + '%.</details>')
+        : ('Weekly admissions per 100,000 residents, against the shared scale '
+           + 'marked on the grid &mdash; every panel is drawn to the same height, '
+           + 'topping out at ' + fmt(hi) + ', so a small state and a large '
+           + 'one can be read against each other.');
 
       var W = 100, H = 46, m = 3;
       var order = geo
@@ -1483,6 +1589,18 @@
             return ga[0] - gb[0] || ga[1] - gb[1];
           })
         : names.slice().sort();
+
+      drawScaleKey(lo, hi, isChange);
+      if (geo) {
+        /* Row 1 of the tile map holds only Alaska (half-columns 1-2) and
+           Maine (23-24); everything between is empty. Measured, not guessed
+           -- the first attempt put this at the top RIGHT, which is where
+           Maine lives, and it landed on top of Maine, Vermont and New
+           Hampshire. */
+        scaleKey.style.gridRow = '1';
+        scaleKey.style.gridColumn = '4 / span 3';
+      }
+      grid.appendChild(scaleKey);
 
       order.forEach(function (n) {
         var pts = series[n];
