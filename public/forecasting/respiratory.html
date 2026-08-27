@@ -71,24 +71,14 @@
       download: <a href="/data/forecasting/covid-weekly-admissions.csv">covid-weekly-admissions.csv</a> &middot; <a href="/data/forecasting/covid-weekly-admissions-reichlab.csv">covid-weekly-admissions-reichlab.csv</a></p>
   </section>
 
-  <section class="series" id="flu-hospitalizations">
-    <span class="status is-live">Live &middot; data to 4 July 2026</span>
-    <h2>US influenza hospitalizations</h2>
-    <p class="series-note">Weekly hospital admissions with a confirmed influenza diagnosis, from the CDC's FluSight forecasting hub. Per-state figures are in the companion file.</p>
-    <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;admissions&quot;,&quot;label&quot;:&quot;Weekly admissions&quot;}],&quot;csv&quot;:&quot;/data/forecasting/flu-hospitalizations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US influenza hospitalizations&quot;}'></div>
-    <p class="series-source">231 rows, latest 54 days ago &middot;
-      source: <a href="https://github.com/cdcepi/FluSight-forecast-hub" rel="noopener">CDC FluSight forecast hub</a> &middot;
-      download: <a href="/data/forecasting/flu-hospitalizations.csv">flu-hospitalizations.csv</a> &middot; <a href="/data/forecasting/flu-hospitalizations-states.csv">flu-hospitalizations-states.csv</a></p>
-  </section>
-
   <section class="series" id="flu-hospitalizations-states">
     <span class="status is-live">Live &middot; data to 4 July 2026</span>
     <h2>Influenza admissions, state by state</h2>
-    <p class="series-note">The same admissions state by state, laid out roughly as the map is, so a bad week across one region reads as a block of color. It opens on percentage change against four weeks earlier, which is what makes a small state climbing fast as visible as a large one; the buttons switch to admissions per 100,000 over a window.<br><br>Every panel shares one vertical scale. Per head rather than raw counts is what makes that readable — on raw admissions the spread between the largest and smallest states is more than fiftyfold, and most of the grid flattens into slivers.</p>
+    <p class="series-note">Influenza admissions state by state, laid out roughly as the map is, so a bad week across one region reads as a block of color. It opens on percentage change against four weeks earlier, which is what makes a small state climbing fast as visible as a large one; the buttons switch to admissions per 100,000 over a window.<br><br>Every panel shares one vertical scale. Per head rather than raw counts is what makes that readable — on raw admissions the spread between the largest and smallest states is more than fiftyfold, and most of the grid flattens into slivers.<br><br>These come from the CDC’s FluSight hub, which republishes NHSN’s figures. They will not match the influenza line above to the digit: FluSight snapshots NHSN and does not always carry its later revisions, so recent weeks can differ by a few percent.</p>
     <div class="plot-mount" data-plot='{&quot;format&quot;:&quot;rate&quot;,&quot;panelBy&quot;:&quot;location&quot;,&quot;value&quot;:&quot;rate_per_100k&quot;,&quot;layout&quot;:&quot;us-grid&quot;,&quot;defaultMode&quot;:&quot;change&quot;,&quot;changeLagWeeks&quot;:4,&quot;changeWeeks&quot;:6,&quot;valueRanges&quot;:[&quot;6m&quot;,&quot;1y&quot;,&quot;2y&quot;,&quot;5y&quot;],&quot;csv&quot;:&quot;/data/forecasting/flu-hospitalizations-states.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Influenza admissions, state by state&quot;}'></div>
     <p class="series-source">11,976 rows, latest 54 days ago &middot;
       source: <a href="https://github.com/cdcepi/FluSight-forecast-hub" rel="noopener">CDC FluSight forecast hub</a> &middot;
-      download: <a href="/data/forecasting/flu-hospitalizations-states.csv">flu-hospitalizations-states.csv</a></p>
+      download: <a href="/data/forecasting/flu-hospitalizations-states.csv">flu-hospitalizations-states.csv</a> &middot; <a href="/data/forecasting/flu-hospitalizations.csv">flu-hospitalizations.csv</a></p>
   </section>
 
   <section class="series" id="covid-hospitalizations">

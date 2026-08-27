@@ -217,7 +217,7 @@ SECTIONS = [
             "valueRanges": ["6m", "1y", "2y", "5y"],
         },
         "note": (
-            "The same admissions state by state, laid out roughly as the map "
+            "Influenza admissions state by state, laid out roughly as the map "
             "is, so a bad week across one region reads as a block of color. It "
             "opens on percentage change against four weeks earlier, which is "
             "what makes a small state climbing fast as visible as a large one; "
@@ -225,9 +225,15 @@ SECTIONS = [
             "window.<br><br>Every panel shares one vertical scale. Per head "
             "rather than raw counts is what makes that readable — on raw "
             "admissions the spread between the largest and smallest states is "
-            "more than fiftyfold, and most of the grid flattens into slivers."),
+            "more than fiftyfold, and most of the grid flattens into "
+            "slivers.<br><br>These come from the CDC’s FluSight hub, which "
+            "republishes NHSN’s figures. They will not match the influenza line "
+            "above to the digit: FluSight snapshots NHSN and does not always "
+            "carry its later revisions, so recent weeks can differ by a few "
+            "percent."),
         "source": "CDC FluSight forecast hub",
         "source_url": "https://github.com/cdcepi/FluSight-forecast-hub",
+        "extra_csv": "flu-hospitalizations.csv",
     },
     {
         "slug": "semiconductors-us-exports-china",
@@ -389,7 +395,14 @@ GROUPS = [
             "admitted with the illness, so they undercount by a margin that "
             "moves with how much testing is being done. They read more reliably "
             "as a trend than as a total.</p>"),
-        "sections": ["covid-weekly-admissions", "flu-hospitalizations",
+        # flu-hospitalizations is deliberately absent: FluSight's national
+        # target data IS NHSN's, snapshotted. Across all 231 of its weeks the
+        # median difference from the NHSN line above is 0.12%, and the largest
+        # gaps are at the recent end where FluSight has not yet picked up
+        # NHSN's backfill. NHSN also starts 2020 rather than 2022 and runs
+        # fresher, so the second chart was the same series, shorter and
+        # staler. The fetcher stays -- the state grid needs its per-state file.
+        "sections": ["covid-weekly-admissions",
                      "flu-hospitalizations-states", "covid-hospitalizations"],
     },
     {
