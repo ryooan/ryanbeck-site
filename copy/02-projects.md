@@ -19,7 +19,7 @@ Projects · Ryan Beck
 ## Search + social description
 <!-- id: projects.meta.description -->
 
-Tools, data sets and experiments built by Ryan Beck.
+Tools, data sets, and experiments built by Ryan Beck.
 
 ## Page heading
 <!-- id: projects.h1 -->
@@ -29,12 +29,7 @@ Projects
 ## Projects — intro paragraph
 <!-- id: projects.p.1 -->
 
-Things I have built because I wanted them to exist — forecasting infrastructure, small apps for real problems in my own life, and the occasional experiment that got out of hand.
-
-## Projects — intro paragraph
-<!-- id: projects.p.2 -->
-
-<em>Draft — more projects are being pulled in and the presentation is still settling.</em>
+Stuff I've created that I thought would be handy and may be handy for you too.
 
 ## Sub-heading
 <!-- id: projects.h3.1 -->
@@ -44,22 +39,12 @@ Data Dashboards
 ## Data Dashboards — body paragraph
 <!-- id: projects.p.3 -->
 
-The numbers I kept reaching for while forecasting — the debt limit, refugee admissions, big-tech revenue, flu admissions, semiconductor trade, the bird-flu cull — on one page, with charts you can read values off. Each series refreshes on its own schedule and states the date its data actually ends, which is not always the date it last ran.
-
-## Data Dashboards — card tag
-<!-- id: projects.tag.1 -->
-
-Live data
-
-## Data Dashboards — card tag
-<!-- id: projects.tag.2 -->
-
-Python
+Most of these were initially created to help with forecasting, but they tend to be genuinely interesting and useful data sources that were in need of nice visuals. Up to date (where possible) dashboards on the debt limit, refugee admissions, respiratory disease trends, semiconductor trade, the bird-flu cull, and more.
 
 ## Data Dashboards — card tag
 <!-- id: projects.tag.3 -->
 
-GitHub Actions
+Exportable
 
 ## Sub-heading
 <!-- id: projects.h3.2 -->
@@ -69,7 +54,7 @@ Herder
 ## Herder — body paragraph
 <!-- id: projects.p.4 -->
 
-An app for herding a group toward a plan: propose activities, vote on them — ranked-choice if you like — and schedule around everyone's availability. Share a link; nobody needs an account.
+An app for herding a group toward a plan: propose activities, vote on them (ranked-choice if you like) and schedule around everyone's availability. Share a link; nobody needs an account.
 
 ## Herder — card tag
 <!-- id: projects.tag.4 -->
@@ -89,17 +74,12 @@ March Madness 2026
 ## March Madness 2026 — body paragraph
 <!-- id: projects.p.5 -->
 
-An analytics dashboard for the NCAA tournament field: custom power scores, injury tracking, strength of schedule, a 68×68 head-to-head grid, and a bracket builder that remembers your picks.
+Making a bracket is fun, but if you're like me and know absolutely nothing about the teams involved or their general stats, this is for you. A bracket builder with relevant season stats, head to head histories, and some (shaky at best) power ratings all in one place.
 
 ## March Madness 2026 — card tag
 <!-- id: projects.tag.6 -->
 
 Web app
-
-## March Madness 2026 — card tag
-<!-- id: projects.tag.7 -->
-
-React
 
 ## March Madness 2026 — card tag
 <!-- id: projects.tag.8 -->
@@ -114,7 +94,7 @@ National Park Guides
 ## National Park Guides — body paragraph
 <!-- id: projects.p.6 -->
 
-Printable one-sheet activity guides for park trips with small kids — short hikes, parking strategy, drive times, and what to do when the trailhead is full. Rocky Mountain and Grand Teton so far.
+I love visiting Grand Teton National Park and Rocky Mountain national park, and wanted a reusable activity planning aid for families with small kids so I didn't have to recall anew each time what options there are. Short hikes, parking strategy, drive times, and more details.
 
 ## National Park Guides — card tag
 <!-- id: projects.tag.9 -->
@@ -125,19 +105,4 @@ Guides
 <!-- id: projects.tag.10 -->
 
 PDF
-
-## National Park Guides — card tag
-<!-- id: projects.tag.11 -->
-
-Free
-
-## Section heading
-<!-- id: projects.h2.1 -->
-
-Want the source?
-
-## Want the source? — intro paragraph
-<!-- id: projects.p.7 -->
-
-Nearly everything here is public. Poke around, fork it, tell me what I got wrong.
 

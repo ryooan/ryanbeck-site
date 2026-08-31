@@ -488,3 +488,29 @@ blockquote.pull{
   .portal:is(:hover,:focus-visible,.is-awake) .scene{scale:1.08!important}
   .portal[data-portal="blog"]{--scene-zoom:1.08}
 }
+
+/* ---------- blanked copy ----------
+   Emptying a field in the copy editor should leave NOTHING on the page, not
+   an empty box. `apply` writes the text inside an element, so a blanked field
+   yields `<span class="tag"></span>` -- which still has its border, padding
+   and pill radius, so it renders as a small empty capsule. Headings and
+   paragraphs leave dead vertical space the same way.
+
+   `:empty` only matches an element with no child nodes at all, which is
+   exactly what apply produces, so this cannot hide anything that has content.
+   Do not add whitespace inside these elements in the templates. */
+h1:empty, h2:empty, h3:empty,
+p:empty, .lede:empty, .meta:empty, .kicker:empty, .runic:empty,
+.tag:empty, .status:empty, figcaption:empty, li:empty{
+  display:none;
+}
+
+/* A row whose every tag is blank still reserved its 12px of padding.
+
+   Deliberately NOT extended to whole sections. A `.wrap` whose heading and
+   lede are both blank may still hold buttons, a chart or an image that has
+   to stay, and `:has(h2)` matches an EMPTY h2 anyway -- so a rule meant to
+   tidy up a blanked section would either do nothing or hide a section with
+   real content in it. If an entire section should go, delete it from the
+   HTML rather than blanking its words. */
+.tags:not(:has(.tag:not(:empty))){display:none}

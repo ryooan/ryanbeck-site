@@ -253,6 +253,12 @@ function pyDecode(raw) {
 }
 
 function pyEncode(text, indent) {
+  /* An emptied field must still be a STRING. Returning nothing left the
+     surrounding parentheses behind as `"note": ()`, which is an empty tuple:
+     the page then published the literal characters "()" as copy, and the
+     block stopped parsing as a string literal at all, so the editor could no
+     longer see the field to type it back. */
+  if (!text.trim()) return '""';
   /* Wrap at 72 columns into adjacent literals, the way the file is written. */
   const esc = text.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
   const words = esc.split(' ');

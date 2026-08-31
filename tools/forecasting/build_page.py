@@ -626,7 +626,7 @@ def section_html(sec, meta):
   <section class="series" id="%(slug)s">
     <h2 class="sr-only">%(title)s</h2>
     <div class="plot-mount" data-plot='%(cfg)s'></div>
-    <p class="series-note">%(note)s</p>
+    %(note)s
     <p class="series-source"><span class="status is-%(status)s">%(word)s</span>
       %(rows)s rows, latest %(age)s &middot;
       source: <a href="%(surl)s" rel="noopener">%(source)s</a> &middot;
@@ -636,7 +636,13 @@ def section_html(sec, meta):
         "slug": e(sec["slug"]), "status": e(status),
         "word": e(STATUS_WORDS.get(status, status.title())),
         "last_h": e(label or human(info["last_date"])), "title": e(sec["title"]),
-        "note": sec["note"], "cfg": cfg,
+        # A blanked note leaves no element at all rather than an empty one.
+        # These pages are generated, so the right answer is not to emit it --
+        # the CSS :empty fallback is for the hand-written pages, which have no
+        # generator to make the decision for them.
+        "note": ('<p class="series-note">%s</p>' % sec["note"]
+                 if str(sec["note"]).strip() else ""),
+        "cfg": cfg,
         "rows": format(info["rows"], ","), "age": e(age_phrase(info["last_date"])),
         "surl": e(sec["source_url"]), "source": e(sec["source"]),
         "dl": " &middot; ".join(downloads),

@@ -1272,6 +1272,36 @@ Two things that are easy to get wrong here:
   `.series[id]` sections it is actually showing and the server picks the
   matching `dash.chart.*` blocks, so no extra coupling to `GROUPS` is needed.
 
+### Blanking a field
+
+Emptying a field in the editor removes it from the page rather than leaving an
+empty element behind, and the two kinds of page get there differently:
+
+- **Hand-written pages**: CSS. `apply` writes text *inside* an element, so a
+  blanked field yields `<span class="tag"></span>` — which keeps its border,
+  padding and pill radius and renders as a small empty capsule. `:empty` only
+  matches an element with no child nodes at all, which is exactly what `apply`
+  produces, so it cannot hide anything with content in it. **Don't put
+  whitespace inside these elements in the markup** or the rule stops matching.
+  `.tags` is hidden via `:has()` when every tag in it is blank, since the row
+  reserved 12px of padding regardless.
+- **Generated pages**: the generator omits the element. `build_page.py` emits
+  no `<p class="series-note">` at all for a blank note — it has the chance to
+  decide, so it should, and the CSS fallback is for the pages that have no
+  generator.
+
+Not extended to whole sections. A `.wrap` whose heading and lede are both
+blank may still hold buttons or a chart, and `:has(h2)` matches an *empty*
+`h2` anyway — so the rule would either do nothing or hide a section with real
+content. Delete a section from the HTML rather than blanking its words.
+
+⚠️ **An emptied Python-backed field must still be a string.** `pyEncode('')`
+returned nothing, which left `"note": ()` — an empty tuple. The page then
+published the literal characters `()` as copy, AND the block stopped parsing
+as a string literal, so `extract` dropped it and the editor could no longer
+see the field to type it back. It returns `""` now. Blank-and-restore is
+verified byte-identical.
+
 **The lock file is the whole design.** Extraction has to read HTML and Python;
 putting text back must not. So extraction records each block's exact file,
 byte range and original text, and `apply` never parses anything — it splices
