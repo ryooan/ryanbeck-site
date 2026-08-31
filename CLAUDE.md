@@ -1324,14 +1324,18 @@ Three rules that make it safe, each of which was a bug first:
   showed `everyone’s` for a page that renders `everyone's`.
 - **A block with no words in it is not extracted.** `<h1><img></h1>` has no
   copy; extracting it handed back markup to edit and re-escaped it on return.
-- **CRLF is stripped when reading.** These files check out with `
-` on
-  Windows, and the unwrap left a stray `
-` sitting inside the paragraph —
-  invisible in the markdown, but a `<textarea>` strips it, so every such block
-  came back from the browser editor looking edited when nobody had touched
-  it. Byte offsets are still taken from the raw file, so splicing is
-  unaffected.
+- **CRLF is stripped when reading.** These files check out with CRLF line
+  endings on Windows, and the unwrap left a stray carriage return sitting
+  inside the paragraph -- invisible in the markdown, but a `<textarea>`
+  strips it, so every such block came back from the browser editor looking
+  edited when nobody had touched it. Byte offsets are still taken from the
+  raw file, so splicing is unaffected.
+- **An entirely empty element is a BLANKED FIELD and must be kept.** The
+  rule above it skips elements holding markup but no words (`<h1><img></h1>`);
+  written as "renders to nothing" it also swallowed every field somebody had
+  blanked, which took those fields out of the editor so the words could never
+  be typed back. Four on the projects page vanished that way. Test for
+  "content that is all markup", not "no content".
 
 The proof is `extract` then `apply` with no edits leaving a clean git diff,
 which is what `check` runs — do that after touching this tool.

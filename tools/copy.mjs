@@ -153,9 +153,17 @@ function fileEnts(file, src) {
 function push(file, src, range, id, label, shape) {
   if (!range) return;
   const raw = src.slice(range.start, range.end);
-  /* A heading whose only child is an <img> has no copy in it. Extracting it
-     hands back markup to edit and re-escapes the quotes on the way home. */
-  if (!raw.replace(/<[^>]*>/g, '').replace(/&[a-z#0-9]+;/gi, '').trim()) return;
+  /* Skip an element that holds MARKUP but no words -- `<h1><img></h1>` has no
+     copy in it, and extracting it hands back a tag to edit and re-escapes its
+     quotes on the way home.
+
+     An element that is entirely EMPTY is the opposite case and must be kept:
+     that is a field somebody blanked, and dropping it took the field out of
+     the editor so the words could never be typed back. Four fields on the
+     projects page vanished that way. The test is therefore "has content that
+     is all markup", not "renders to nothing". */
+  const words = raw.replace(/<[^>]*>/g, '').replace(/&[a-z#0-9]+;/gi, '').trim();
+  if (raw.trim() && !words) return;
   blocks.push({
     id, file, label, shape: shape || 'plain',
     start: range.start, end: range.end,

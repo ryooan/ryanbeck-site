@@ -31,6 +31,11 @@ Projects
 
 Stuff I've created that I thought would be handy and may be handy for you too.
 
+## Projects — intro paragraph
+<!-- id: projects.p.2 -->
+
+
+
 ## Sub-heading
 <!-- id: projects.h3.1 -->
 
@@ -40,6 +45,16 @@ Data Dashboards
 <!-- id: projects.p.3 -->
 
 Most of these were initially created to help with forecasting, but they tend to be genuinely interesting and useful data sources that were in need of nice visuals. Up to date (where possible) dashboards on the debt limit, refugee admissions, respiratory disease trends, semiconductor trade, the bird-flu cull, and more.
+
+## Data Dashboards — card tag
+<!-- id: projects.tag.1 -->
+
+Live data
+
+## Data Dashboards — card tag
+<!-- id: projects.tag.2 -->
+
+
 
 ## Data Dashboards — card tag
 <!-- id: projects.tag.3 -->
@@ -82,6 +97,11 @@ Making a bracket is fun, but if you're like me and know absolutely nothing about
 Web app
 
 ## March Madness 2026 — card tag
+<!-- id: projects.tag.7 -->
+
+
+
+## March Madness 2026 — card tag
 <!-- id: projects.tag.8 -->
 
 Seasonal
@@ -105,4 +125,19 @@ Guides
 <!-- id: projects.tag.10 -->
 
 PDF
+
+## National Park Guides — card tag
+<!-- id: projects.tag.11 -->
+
+
+
+## Section heading
+<!-- id: projects.h2.1 -->
+
+
+
+## Intro paragraph
+<!-- id: projects.p.7 -->
+
+
 

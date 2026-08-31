@@ -6,7 +6,7 @@
   "public/blog.html": "fa537526c0624d0c",
   "public/index.html": "e0caf8636f7375c4",
   "public/park-guides.html": "3f9515f9ccf79ddf",
-  "public/projects.html": "6e3cb9bdefba90fd",
+  "public/projects.html": "b9b5d72be292ab31",
   "public/writing.html": "17bfd3b444d4ac60",
   "tools/forecasting/build_page.py": "c8972ad20838e25e"
  },
@@ -1546,6 +1546,16 @@
    "ents": []
   },
   {
+   "id": "projects.p.2",
+   "file": "public/projects.html",
+   "label": "Projects — intro paragraph",
+   "shape": "plain",
+   "start": 1947,
+   "end": 1947,
+   "text": "",
+   "ents": []
+  },
+  {
    "id": "projects.h3.1",
    "file": "public/projects.html",
    "label": "Sub-heading",
@@ -1566,12 +1576,32 @@
    "ents": []
   },
   {
+   "id": "projects.tag.1",
+   "file": "public/projects.html",
+   "label": "Data Dashboards — card tag",
+   "shape": "plain",
+   "start": 2648,
+   "end": 2657,
+   "text": "Live data",
+   "ents": []
+  },
+  {
+   "id": "projects.tag.2",
+   "file": "public/projects.html",
+   "label": "Data Dashboards — card tag",
+   "shape": "plain",
+   "start": 2682,
+   "end": 2682,
+   "text": "",
+   "ents": []
+  },
+  {
    "id": "projects.tag.3",
    "file": "public/projects.html",
    "label": "Data Dashboards — card tag",
    "shape": "plain",
-   "start": 2698,
-   "end": 2708,
+   "start": 2707,
+   "end": 2717,
    "text": "Exportable",
    "ents": []
   },
@@ -1580,8 +1610,8 @@
    "file": "public/projects.html",
    "label": "Sub-heading",
    "shape": "plain",
-   "start": 2972,
-   "end": 2978,
+   "start": 2981,
+   "end": 2987,
    "text": "Herder",
    "ents": []
   },
@@ -1590,8 +1620,8 @@
    "file": "public/projects.html",
    "label": "Herder — body paragraph",
    "shape": "plain",
-   "start": 2998,
-   "end": 3184,
+   "start": 3007,
+   "end": 3193,
    "text": "An app for herding a group toward a plan: propose activities, vote on them (ranked-choice if you like) and schedule around everyone's availability. Share a link; nobody needs an account.",
    "ents": []
   },
@@ -1600,8 +1630,8 @@
    "file": "public/projects.html",
    "label": "Herder — card tag",
    "shape": "plain",
-   "start": 3237,
-   "end": 3244,
+   "start": 3246,
+   "end": 3253,
    "text": "Web app",
    "ents": []
   },
@@ -1610,8 +1640,8 @@
    "file": "public/projects.html",
    "label": "Herder — card tag",
    "shape": "plain",
-   "start": 3269,
-   "end": 3282,
+   "start": 3278,
+   "end": 3291,
    "text": "useherder.com",
    "ents": []
   },
@@ -1620,8 +1650,8 @@
    "file": "public/projects.html",
    "label": "Sub-heading",
    "shape": "plain",
-   "start": 3589,
-   "end": 3607,
+   "start": 3598,
+   "end": 3616,
    "text": "March Madness 2026",
    "ents": []
   },
@@ -1630,8 +1660,8 @@
    "file": "public/projects.html",
    "label": "March Madness 2026 — body paragraph",
    "shape": "plain",
-   "start": 3627,
-   "end": 3894,
+   "start": 3636,
+   "end": 3903,
    "text": "Making a bracket is fun, but if you're like me and know absolutely nothing about the teams involved or their general stats, this is for you. A bracket builder with relevant season stats, head to head histories, and some (shaky at best) power ratings all in one place.",
    "ents": []
   },
@@ -1640,9 +1670,19 @@
    "file": "public/projects.html",
    "label": "March Madness 2026 — card tag",
    "shape": "plain",
-   "start": 3947,
-   "end": 3954,
+   "start": 3956,
+   "end": 3963,
    "text": "Web app",
+   "ents": []
+  },
+  {
+   "id": "projects.tag.7",
+   "file": "public/projects.html",
+   "label": "March Madness 2026 — card tag",
+   "shape": "plain",
+   "start": 3988,
+   "end": 3988,
+   "text": "",
    "ents": []
   },
   {
@@ -1650,8 +1690,8 @@
    "file": "public/projects.html",
    "label": "March Madness 2026 — card tag",
    "shape": "plain",
-   "start": 4004,
-   "end": 4012,
+   "start": 4013,
+   "end": 4021,
    "text": "Seasonal",
    "ents": []
   },
@@ -1660,8 +1700,8 @@
    "file": "public/projects.html",
    "label": "Sub-heading",
    "shape": "plain",
-   "start": 4273,
-   "end": 4293,
+   "start": 4282,
+   "end": 4302,
    "text": "National Park Guides",
    "ents": []
   },
@@ -1670,8 +1710,8 @@
    "file": "public/projects.html",
    "label": "National Park Guides — body paragraph",
    "shape": "plain",
-   "start": 4313,
-   "end": 4589,
+   "start": 4322,
+   "end": 4598,
    "text": "I love visiting Grand Teton National Park and Rocky Mountain national park, and wanted a reusable activity planning aid for families with small kids so I didn't have to recall anew each time what options there are. Short hikes, parking strategy, drive times, and more details.",
    "ents": []
   },
@@ -1680,8 +1720,8 @@
    "file": "public/projects.html",
    "label": "National Park Guides — card tag",
    "shape": "plain",
-   "start": 4642,
-   "end": 4648,
+   "start": 4651,
+   "end": 4657,
    "text": "Guides",
    "ents": []
   },
@@ -1690,9 +1730,39 @@
    "file": "public/projects.html",
    "label": "National Park Guides — card tag",
    "shape": "plain",
-   "start": 4673,
-   "end": 4676,
+   "start": 4682,
+   "end": 4685,
    "text": "PDF",
+   "ents": []
+  },
+  {
+   "id": "projects.tag.11",
+   "file": "public/projects.html",
+   "label": "National Park Guides — card tag",
+   "shape": "plain",
+   "start": 4710,
+   "end": 4710,
+   "text": "",
+   "ents": []
+  },
+  {
+   "id": "projects.h2.1",
+   "file": "public/projects.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 4834,
+   "end": 4834,
+   "text": "",
+   "ents": []
+  },
+  {
+   "id": "projects.p.7",
+   "file": "public/projects.html",
+   "label": "Intro paragraph",
+   "shape": "plain",
+   "start": 4861,
+   "end": 4861,
+   "text": "",
    "ents": []
   },
   {
