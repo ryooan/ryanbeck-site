@@ -72,6 +72,8 @@ npm run dev       # wrangler on :8787 — the real thing, use this
 npm run serve     # python http.server on :8000 — quick, but see below
 npm run deploy    # pushes to Cloudflare
 npm run site-url  # propagate site.config.json's domain into every file
+npm run copy      # site -> copy/*.md, for a prose review
+npm run copy-apply  # copy/*.md -> site
 npm test          # check-links + check-docs + site-url drift, as CI runs them
 ```
 
@@ -1213,6 +1215,43 @@ Substack's RSS feed sends no CORS headers, so a browser can't read it
 directly. `assets/js/substack.js` calls `/api/substack` on your own origin and
 silently falls back to the hand-written list if that route is missing. The
 Worker implements it: fetch, parse, decode entities, cache 30 minutes.
+
+## Reviewing the copy
+
+`copy/` holds every word on the site as editable markdown, so a prose pass
+does not mean hunting through eight HTML files and a Python list.
+
+```bash
+npm run copy        # site -> copy/*.md  (+ copy/.copy-lock.json)
+npm run copy-apply  # copy/*.md -> site
+node tools/copy.mjs check   # do these files still match the site?
+```
+
+**The lock file is the whole design.** Extraction has to read HTML and Python;
+putting text back must not. So extraction records each block's exact file,
+byte range and original text, and `apply` never parses anything — it splices
+into recorded ranges and refuses if the source file's hash has moved since.
+
+Three rules that make it safe, each of which was a bug first:
+
+- **An unedited block is written back byte for byte.** Re-rendering one would
+  reflow its line wraps and re-spell its entities, so every run churned files
+  nobody had edited and `check` could never come back clean.
+- **Entities are restored per block, from what that block originally used.**
+  Converting globally turned a literal `·` in a `<title>` into `&middot;`, and
+  turned an `<a href="...">` inside a Python string into `&quot;`. The Python
+  branch needs this too — it was pushing blocks without the entity list and
+  silently fell back to converting everything.
+- **A block with no words in it is not extracted.** `<h1><img></h1>` has no
+  copy; extracting it handed back markup to edit and re-escaped it on return.
+
+The proof is `extract` then `apply` with no edits leaving a clean git diff,
+which is what `check` runs — do that after touching this tool.
+
+Not extracted, deliberately: anything computed from the data (chart subtitles,
+status words, row counts), since the whole subsystem exists to keep those out
+of hand-written prose. `about.html` and `about-plain.html` are extracted
+separately and **nothing syncs them** — the generated file says so at the top.
 
 ## Conventions
 

@@ -1,0 +1,2284 @@
+{
+ "files": {
+  "public/404.html": "9fe3ae5bb30ea2ab",
+  "public/about-plain.html": "a5604b7f5c556ea1",
+  "public/about.html": "e257a131ce225078",
+  "public/blog.html": "fa537526c0624d0c",
+  "public/index.html": "e0caf8636f7375c4",
+  "public/park-guides.html": "3f9515f9ccf79ddf",
+  "public/projects.html": "b1abf10be8acad05",
+  "public/writing.html": "17bfd3b444d4ac60",
+  "tools/forecasting/build_page.py": "210baeb8803f2cb9"
+ },
+ "blocks": [
+  {
+   "id": "notfound.meta.title",
+   "file": "public/404.html",
+   "label": "Browser tab / search result title",
+   "shape": "plain",
+   "start": 143,
+   "end": 180,
+   "text": "Nothing through this door · Ryan Beck",
+   "ents": []
+  },
+  {
+   "id": "notfound.h1",
+   "file": "public/404.html",
+   "label": "Page heading",
+   "shape": "plain",
+   "start": 678,
+   "end": 681,
+   "text": "404",
+   "ents": []
+  },
+  {
+   "id": "notfound.p.1",
+   "file": "public/404.html",
+   "label": "404 — body paragraph",
+   "shape": "plain",
+   "start": 695,
+   "end": 763,
+   "text": "There's no door here. The wizard doesn't know about this one either.",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.meta.title",
+   "file": "public/about-plain.html",
+   "label": "Browser tab / search result title",
+   "shape": "plain",
+   "start": 143,
+   "end": 168,
+   "text": "About (plain) · Ryan Beck",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.meta.description",
+   "file": "public/about-plain.html",
+   "label": "Search + social description",
+   "shape": "plain",
+   "start": 212,
+   "end": 259,
+   "text": "Writer, forecaster, recovering bridge engineer.",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.h1",
+   "file": "public/about-plain.html",
+   "label": "Page heading",
+   "shape": "plain",
+   "start": 1769,
+   "end": 1774,
+   "text": "About",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.p.1",
+   "file": "public/about-plain.html",
+   "label": "About — body paragraph",
+   "shape": "plain",
+   "start": 1857,
+   "end": 1911,
+   "text": "<a href=\"about.html\">Read it as the book instead →</a>",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.p.2",
+   "file": "public/about-plain.html",
+   "label": "About — intro paragraph",
+   "shape": "plain",
+   "start": 2612,
+   "end": 2749,
+   "text": "I write science fiction, I think about forecasting for a living, and I\r have never once managed to have only one hobby at a time.",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.p.3",
+   "file": "public/about-plain.html",
+   "label": "About — body paragraph",
+   "shape": "plain",
+   "start": 2768,
+   "end": 3196,
+   "text": "I live in Iowa with my wife and daughters. For a decade I designed bridges, which is a\r job that teaches you to respect load paths, tolerances, and the difference between a model\r and the thing the model is about. These days I coordinate forecasting programs at\r Metaculus, where the same instinct shows up in a different form: how confident should\r anyone be, and what would it take to find out?",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.p.4",
+   "file": "public/about-plain.html",
+   "label": "About — body paragraph",
+   "shape": "plain",
+   "start": 3215,
+   "end": 3687,
+   "text": "The fiction came first. <em>SEER</em> started as a question I couldn't put down — if a\r system could reliably predict what you wanted, would you still call it wanting? — and grew\r into a novel about Maria, who is kidnapped by the people trying to bring the algorithm\r down and has to work out which of them is telling the truth. <em>Not Human</em> is a\r shorter, colder cousin of the same question. <a href=\"writing.html\">Both are here.</a>",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.p.5",
+   "file": "public/about-plain.html",
+   "label": "About — body paragraph",
+   "shape": "plain",
+   "start": 3706,
+   "end": 3850,
+   "text": "Everything else lands in <em>The Missing Nuance</em>, a newsletter about the parts of an\r argument that get sanded off in the retelling.",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.h2.1",
+   "file": "public/about-plain.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 3899,
+   "end": 3921,
+   "text": "Roughly how I got here",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.h3.1",
+   "file": "public/about-plain.html",
+   "label": "Sub-heading",
+   "shape": "plain",
+   "start": 4004,
+   "end": 4013,
+   "text": "Metaculus",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.p.6",
+   "file": "public/about-plain.html",
+   "label": "Metaculus — body paragraph",
+   "shape": "plain",
+   "start": 4021,
+   "end": 4128,
+   "text": "Forecasting Program Coordinator. Questions, resolution criteria, and a great deal of arguing about wording.",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.h3.2",
+   "file": "public/about-plain.html",
+   "label": "Sub-heading",
+   "shape": "plain",
+   "start": 4185,
+   "end": 4189,
+   "text": "SEER",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.p.7",
+   "file": "public/about-plain.html",
+   "label": "SEER — body paragraph",
+   "shape": "plain",
+   "start": 4197,
+   "end": 4233,
+   "text": "First novel published, October 2019.",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.h3.3",
+   "file": "public/about-plain.html",
+   "label": "Sub-heading",
+   "shape": "plain",
+   "start": 4290,
+   "end": 4307,
+   "text": "Writing in public",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.p.8",
+   "file": "public/about-plain.html",
+   "label": "Writing in public — body paragraph",
+   "shape": "plain",
+   "start": 4315,
+   "end": 4383,
+   "text": "Started the blog, and later <em>The Missing Nuance</em> on Substack.",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.h3.4",
+   "file": "public/about-plain.html",
+   "label": "Sub-heading",
+   "shape": "plain",
+   "start": 4442,
+   "end": 4460,
+   "text": "Bridge engineering",
+   "ents": []
+  },
+  {
+   "id": "aboutplain.p.9",
+   "file": "public/about-plain.html",
+   "label": "Bridge engineering — body paragraph",
+   "shape": "plain",
+   "start": 4468,
+   "end": 4526,
+   "text": "Ten years of structural design and inspection across Iowa.",
+   "ents": []
+  },
+  {
+   "id": "about.meta.title",
+   "file": "public/about.html",
+   "label": "Browser tab / search result title",
+   "shape": "plain",
+   "start": 143,
+   "end": 160,
+   "text": "About · Ryan Beck",
+   "ents": []
+  },
+  {
+   "id": "about.meta.description",
+   "file": "public/about.html",
+   "label": "Search + social description",
+   "shape": "plain",
+   "start": 204,
+   "end": 269,
+   "text": "About Ryan Beck — writer, forecaster, recovering bridge engineer.",
+   "ents": []
+  },
+  {
+   "id": "about.h1",
+   "file": "public/about.html",
+   "label": "Page heading",
+   "shape": "plain",
+   "start": 1923,
+   "end": 1928,
+   "text": "About",
+   "ents": []
+  },
+  {
+   "id": "about.p.1",
+   "file": "public/about.html",
+   "label": "About — body paragraph",
+   "shape": "plain",
+   "start": 2722,
+   "end": 2734,
+   "text": "Frontispiece",
+   "ents": []
+  },
+  {
+   "id": "about.p.2",
+   "file": "public/about.html",
+   "label": "About — chapter label",
+   "shape": "plain",
+   "start": 2837,
+   "end": 2854,
+   "text": "Chapter the first",
+   "ents": []
+  },
+  {
+   "id": "about.h2.1",
+   "file": "public/about.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 2872,
+   "end": 2889,
+   "text": "The short version",
+   "ents": []
+  },
+  {
+   "id": "about.p.3",
+   "file": "public/about.html",
+   "label": "The short version — body paragraph",
+   "shape": "plain",
+   "start": 2920,
+   "end": 3048,
+   "text": "I write science fiction, I think about forecasting for a living, and I have never once managed to have only one hobby at a time.",
+   "ents": []
+  },
+  {
+   "id": "about.p.4",
+   "file": "public/about.html",
+   "label": "The short version — body paragraph",
+   "shape": "plain",
+   "start": 3065,
+   "end": 3267,
+   "text": "I'm the author of a novel, <em>SEER</em>, and a short story, <em>Not Human</em>. I like exciting and thought-provoking fiction of a lot of different kinds, and I live in Iowa with my wife and daughters.",
+   "ents": []
+  },
+  {
+   "id": "about.p.5",
+   "file": "public/about.html",
+   "label": "The short version — body paragraph",
+   "shape": "plain",
+   "start": 3284,
+   "end": 3560,
+   "text": "The through-line, if there is one, is a stubborn interest in the gap between a model and the thing the model is about. Bridges taught me that gap has consequences. Forecasting taught me how to put a number on it. Fiction is where I get to ask what happens when nobody bothers.",
+   "ents": []
+  },
+  {
+   "id": "about.p.6",
+   "file": "public/about.html",
+   "label": "The short version — body paragraph",
+   "shape": "plain",
+   "start": 3591,
+   "end": 3597,
+   "text": "Page 1",
+   "ents": []
+  },
+  {
+   "id": "about.p.7",
+   "file": "public/about.html",
+   "label": "The short version — chapter label",
+   "shape": "plain",
+   "start": 3700,
+   "end": 3718,
+   "text": "Chapter the second",
+   "ents": []
+  },
+  {
+   "id": "about.h2.2",
+   "file": "public/about.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 3736,
+   "end": 3747,
+   "text": "Before this",
+   "ents": []
+  },
+  {
+   "id": "about.p.8",
+   "file": "public/about.html",
+   "label": "Before this — body paragraph",
+   "shape": "plain",
+   "start": 3778,
+   "end": 3842,
+   "text": "For about a decade I designed and inspected bridges across Iowa.",
+   "ents": []
+  },
+  {
+   "id": "about.p.9",
+   "file": "public/about.html",
+   "label": "Before this — body paragraph",
+   "shape": "plain",
+   "start": 3859,
+   "end": 4132,
+   "text": "It is a profession that makes you honest. A load path either exists or it doesn't. A tolerance is not a matter of opinion. You learn to ask what you would have to believe for your own analysis to be wrong, and then you go and check, because the alternative is unacceptable.",
+   "ents": []
+  },
+  {
+   "id": "about.p.10",
+   "file": "public/about.html",
+   "label": "Before this — body paragraph",
+   "shape": "plain",
+   "start": 4149,
+   "end": 4222,
+   "text": "I think about that habit constantly in work that has far softer feedback.",
+   "ents": []
+  },
+  {
+   "id": "about.p.11",
+   "file": "public/about.html",
+   "label": "Before this — body paragraph",
+   "shape": "plain",
+   "start": 4253,
+   "end": 4259,
+   "text": "Page 2",
+   "ents": []
+  },
+  {
+   "id": "about.p.12",
+   "file": "public/about.html",
+   "label": "Before this — chapter label",
+   "shape": "plain",
+   "start": 4362,
+   "end": 4379,
+   "text": "Chapter the third",
+   "ents": []
+  },
+  {
+   "id": "about.h2.3",
+   "file": "public/about.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 4397,
+   "end": 4400,
+   "text": "Now",
+   "ents": []
+  },
+  {
+   "id": "about.p.13",
+   "file": "public/about.html",
+   "label": "Now — body paragraph",
+   "shape": "plain",
+   "start": 4431,
+   "end": 4489,
+   "text": "These days I coordinate forecasting programs at Metaculus.",
+   "ents": []
+  },
+  {
+   "id": "about.p.14",
+   "file": "public/about.html",
+   "label": "Now — body paragraph",
+   "shape": "plain",
+   "start": 4506,
+   "end": 4837,
+   "text": "Most of the job is not prediction. It is writing questions that can actually resolve, arguing about wording until the ambiguity is gone, and then finding out in public whether the crowd was right. It turns out that \"what exactly would count as this happening?\" is one of the more useful questions you can ask about almost anything.",
+   "ents": []
+  },
+  {
+   "id": "about.p.15",
+   "file": "public/about.html",
+   "label": "Now — body paragraph",
+   "shape": "plain",
+   "start": 4871,
+   "end": 4908,
+   "text": "Calibration is a habit, not a talent.",
+   "ents": []
+  },
+  {
+   "id": "about.p.16",
+   "file": "public/about.html",
+   "label": "Now — body paragraph",
+   "shape": "plain",
+   "start": 4939,
+   "end": 4945,
+   "text": "Page 3",
+   "ents": []
+  },
+  {
+   "id": "about.p.17",
+   "file": "public/about.html",
+   "label": "Now — chapter label",
+   "shape": "plain",
+   "start": 5048,
+   "end": 5066,
+   "text": "Chapter the fourth",
+   "ents": []
+  },
+  {
+   "id": "about.h2.4",
+   "file": "public/about.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 5084,
+   "end": 5095,
+   "text": "The fiction",
+   "ents": []
+  },
+  {
+   "id": "about.p.18",
+   "file": "public/about.html",
+   "label": "The fiction — body paragraph",
+   "shape": "plain",
+   "start": 5126,
+   "end": 5171,
+   "text": "SEER began as a question I couldn't put down.",
+   "ents": []
+  },
+  {
+   "id": "about.p.19",
+   "file": "public/about.html",
+   "label": "The fiction — body paragraph",
+   "shape": "plain",
+   "start": 5188,
+   "end": 5550,
+   "text": "If a system could reliably predict what you wanted — not guess, not nudge, but <em>know</em> — would you still call it wanting? In the 22nd century the algorithm does exactly that, and almost nobody minds. The novel follows Maria, who is kidnapped by the people trying to bring it down and then has to work out which of them is telling her the truth.",
+   "ents": [
+    "&mdash;"
+   ]
+  },
+  {
+   "id": "about.p.20",
+   "file": "public/about.html",
+   "label": "The fiction — body paragraph",
+   "shape": "plain",
+   "start": 5567,
+   "end": 5743,
+   "text": "<em>Not Human</em> is a shorter, colder cousin of the same question: Lisa is the first person in the world to have her mind copied to a machine, and the copy insists it is her.",
+   "ents": []
+  },
+  {
+   "id": "about.p.21",
+   "file": "public/about.html",
+   "label": "The fiction — body paragraph",
+   "shape": "plain",
+   "start": 5760,
+   "end": 5816,
+   "text": "<a href=\"writing.html\">Both are on the fiction page.</a>",
+   "ents": []
+  },
+  {
+   "id": "about.p.22",
+   "file": "public/about.html",
+   "label": "The fiction — body paragraph",
+   "shape": "plain",
+   "start": 5847,
+   "end": 5853,
+   "text": "Page 4",
+   "ents": []
+  },
+  {
+   "id": "about.p.23",
+   "file": "public/about.html",
+   "label": "The fiction — chapter label",
+   "shape": "plain",
+   "start": 5956,
+   "end": 5973,
+   "text": "Chapter the fifth",
+   "ents": []
+  },
+  {
+   "id": "about.h2.5",
+   "file": "public/about.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 5991,
+   "end": 6009,
+   "text": "The Missing Nuance",
+   "ents": []
+  },
+  {
+   "id": "about.p.24",
+   "file": "public/about.html",
+   "label": "The Missing Nuance — body paragraph",
+   "shape": "plain",
+   "start": 6040,
+   "end": 6081,
+   "text": "The newsletter is where the arguments go.",
+   "ents": []
+  },
+  {
+   "id": "about.p.25",
+   "file": "public/about.html",
+   "label": "The Missing Nuance — body paragraph",
+   "shape": "plain",
+   "start": 6098,
+   "end": 6340,
+   "text": "It's named for the thing that gets sanded off when a position is repeated enough times — the caveat that made it true in the first place. Mostly forecasting, occasionally technology, occasionally an essay I couldn't place anywhere else.",
+   "ents": [
+    "&mdash;"
+   ]
+  },
+  {
+   "id": "about.p.26",
+   "file": "public/about.html",
+   "label": "The Missing Nuance — body paragraph",
+   "shape": "plain",
+   "start": 6357,
+   "end": 6438,
+   "text": "<a href=\"https://themissingnuance.substack.com\">themissingnuance.substack.com</a>",
+   "ents": []
+  },
+  {
+   "id": "about.p.27",
+   "file": "public/about.html",
+   "label": "The Missing Nuance — body paragraph",
+   "shape": "plain",
+   "start": 6469,
+   "end": 6475,
+   "text": "Page 5",
+   "ents": []
+  },
+  {
+   "id": "about.p.28",
+   "file": "public/about.html",
+   "label": "The Missing Nuance — chapter label",
+   "shape": "plain",
+   "start": 6578,
+   "end": 6595,
+   "text": "Chapter the sixth",
+   "ents": []
+  },
+  {
+   "id": "about.h2.6",
+   "file": "public/about.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 6613,
+   "end": 6626,
+   "text": "Off the clock",
+   "ents": []
+  },
+  {
+   "id": "about.p.29",
+   "file": "public/about.html",
+   "label": "Off the clock — body paragraph",
+   "shape": "plain",
+   "start": 6657,
+   "end": 6690,
+   "text": "Married, with daughters, in Iowa.",
+   "ents": []
+  },
+  {
+   "id": "about.p.30",
+   "file": "public/about.html",
+   "label": "Off the clock — body paragraph",
+   "shape": "plain",
+   "start": 6707,
+   "end": 6976,
+   "text": "The serial-hobbyist thing is not a bit. There is always some half-learned skill in progress and a shelf of evidence from the last one. Reading, mostly; building things that didn't need to exist; and a persistent belief that this is the year I finish everything I start.",
+   "ents": []
+  },
+  {
+   "id": "about.p.31",
+   "file": "public/about.html",
+   "label": "Off the clock — body paragraph",
+   "shape": "plain",
+   "start": 7007,
+   "end": 7013,
+   "text": "Page 6",
+   "ents": []
+  },
+  {
+   "id": "about.p.32",
+   "file": "public/about.html",
+   "label": "Off the clock — chapter label",
+   "shape": "plain",
+   "start": 7116,
+   "end": 7135,
+   "text": "Chapter the seventh",
+   "ents": []
+  },
+  {
+   "id": "about.h2.7",
+   "file": "public/about.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 7153,
+   "end": 7162,
+   "text": "Elsewhere",
+   "ents": []
+  },
+  {
+   "id": "about.p.33",
+   "file": "public/about.html",
+   "label": "Elsewhere — body paragraph",
+   "shape": "plain",
+   "start": 7633,
+   "end": 7710,
+   "text": "The fastest way to reach me is email. I read all of it and answer most of it.",
+   "ents": []
+  },
+  {
+   "id": "about.p.34",
+   "file": "public/about.html",
+   "label": "Elsewhere — body paragraph",
+   "shape": "plain",
+   "start": 7741,
+   "end": 7747,
+   "text": "Page 7",
+   "ents": []
+  },
+  {
+   "id": "about.p.35",
+   "file": "public/about.html",
+   "label": "Elsewhere — chapter label",
+   "shape": "plain",
+   "start": 7850,
+   "end": 7858,
+   "text": "Colophon",
+   "ents": []
+  },
+  {
+   "id": "about.h2.8",
+   "file": "public/about.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 7876,
+   "end": 7891,
+   "text": "About this book",
+   "ents": []
+  },
+  {
+   "id": "about.p.36",
+   "file": "public/about.html",
+   "label": "About this book — body paragraph",
+   "shape": "plain",
+   "start": 7909,
+   "end": 8062,
+   "text": "Set in the same hand as the doors. The lettering was drawn rather than typeset; the leather, the page stock and the dust are generated, not photographed.",
+   "ents": []
+  },
+  {
+   "id": "about.p.37",
+   "file": "public/about.html",
+   "label": "About this book — body paragraph",
+   "shape": "plain",
+   "start": 8079,
+   "end": 8136,
+   "text": "<a href=\"about-plain.html\">Prefer it as a plain page?</a>",
+   "ents": []
+  },
+  {
+   "id": "about.p.38",
+   "file": "public/about.html",
+   "label": "About this book — body paragraph",
+   "shape": "plain",
+   "start": 8167,
+   "end": 8170,
+   "text": "Fin",
+   "ents": []
+  },
+  {
+   "id": "about.p.39",
+   "file": "public/about.html",
+   "label": "About this book — body paragraph",
+   "shape": "plain",
+   "start": 8311,
+   "end": 8353,
+   "text": "Click a page to turn it — or drag a corner",
+   "ents": []
+  },
+  {
+   "id": "blog.meta.title",
+   "file": "public/blog.html",
+   "label": "Browser tab / search result title",
+   "shape": "plain",
+   "start": 143,
+   "end": 159,
+   "text": "Blog · Ryan Beck",
+   "ents": []
+  },
+  {
+   "id": "blog.meta.description",
+   "file": "public/blog.html",
+   "label": "Search + social description",
+   "shape": "plain",
+   "start": 203,
+   "end": 266,
+   "text": "Essays on forecasting, uncertainty and technology by Ryan Beck.",
+   "ents": []
+  },
+  {
+   "id": "blog.h1",
+   "file": "public/blog.html",
+   "label": "Page heading",
+   "shape": "plain",
+   "start": 1789,
+   "end": 1793,
+   "text": "Blog",
+   "ents": []
+  },
+  {
+   "id": "blog.p.1",
+   "file": "public/blog.html",
+   "label": "Blog — intro paragraph",
+   "shape": "plain",
+   "start": 1820,
+   "end": 1981,
+   "text": "Essays on forecasting, uncertainty, and the parts of technology that don't fit\r in a headline. Most new writing goes out through <em>The Missing Nuance</em>.",
+   "ents": []
+  },
+  {
+   "id": "blog.h2.1",
+   "file": "public/blog.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 2265,
+   "end": 2283,
+   "text": "The Missing Nuance",
+   "ents": []
+  },
+  {
+   "id": "blog.p.2",
+   "file": "public/blog.html",
+   "label": "The Missing Nuance — intro paragraph",
+   "shape": "plain",
+   "start": 2336,
+   "end": 2362,
+   "text": "Pulled live from Substack.",
+   "ents": []
+  },
+  {
+   "id": "blog.p.3",
+   "file": "public/blog.html",
+   "label": "The Missing Nuance — post excerpt",
+   "shape": "plain",
+   "start": 2721,
+   "end": 2778,
+   "text": "What if \"attack\" wasn’t our first instinct",
+   "ents": [
+    "&#x27;",
+    "&quot;"
+   ]
+  },
+  {
+   "id": "blog.p.4",
+   "file": "public/blog.html",
+   "label": "The Missing Nuance — post excerpt",
+   "shape": "plain",
+   "start": 3102,
+   "end": 3190,
+   "text": "How much does a good result tell you about the quality of the decision-making behind it?",
+   "ents": []
+  },
+  {
+   "id": "blog.p.5",
+   "file": "public/blog.html",
+   "label": "The Missing Nuance — post excerpt",
+   "shape": "plain",
+   "start": 3485,
+   "end": 3525,
+   "text": "A short explanation of what persuaded me",
+   "ents": []
+  },
+  {
+   "id": "blog.p.6",
+   "file": "public/blog.html",
+   "label": "The Missing Nuance — post excerpt",
+   "shape": "plain",
+   "start": 3860,
+   "end": 3922,
+   "text": "Lightly edited from a Facebook post I shared in February 2017.",
+   "ents": []
+  },
+  {
+   "id": "blog.p.7",
+   "file": "public/blog.html",
+   "label": "The Missing Nuance — body paragraph",
+   "shape": "plain",
+   "start": 3989,
+   "end": 4071,
+   "text": "<a href=\"https://themissingnuance.substack.com/archive\">See the full archive →</a>",
+   "ents": []
+  },
+  {
+   "id": "blog.h2.2",
+   "file": "public/blog.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 4112,
+   "end": 4127,
+   "text": "Earlier writing",
+   "ents": []
+  },
+  {
+   "id": "blog.p.8",
+   "file": "public/blog.html",
+   "label": "Earlier writing — intro paragraph",
+   "shape": "plain",
+   "start": 4180,
+   "end": 4413,
+   "text": "Nineteen posts from 2019–2023, written before the\r newsletter and still living at <a href=\"https://www.ryanbeckauthor.com\">ryanbeckauthor.com</a>.\r Books, forecasting, elections, vaccines, and one argument with a moose.",
+   "ents": [
+    "&ndash;"
+   ]
+  },
+  {
+   "id": "blog.p.9",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 4734,
+   "end": 4893,
+   "text": "I’ve been reading Empire of Liberty: A history of the Early Republic, 1780-1815 by Gordon S. Wood and while it’s full of fascinating information one…",
+   "ents": [
+    "&#x27;"
+   ]
+  },
+  {
+   "id": "blog.p.10",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 5164,
+   "end": 5313,
+   "text": "I have a few Rmarkdown scripts that I’ve created to visualize data for forecasting. I host them on Github so they appear as html pages on my website…",
+   "ents": []
+  },
+  {
+   "id": "blog.p.11",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 5559,
+   "end": 5713,
+   "text": "I’ve been increasingly frustrated with the public conversation around Afghanistan. The whole situation is a tragedy, and instead of sober reflection…",
+   "ents": [
+    "&#x27;"
+   ]
+  },
+  {
+   "id": "blog.p.12",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 5985,
+   "end": 6129,
+   "text": "The Europeans who pass into America degenerate, as do the animals; a proof that the climate is unfavourable to the improvement of either man or…",
+   "ents": []
+  },
+  {
+   "id": "blog.p.13",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 6361,
+   "end": 6505,
+   "text": "I forgot to post here about it, but a few weeks ago I turned my vaccine spreadsheet into a webpage on my site. You can check it out at the link…",
+   "ents": []
+  },
+  {
+   "id": "blog.p.14",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 6827,
+   "end": 6974,
+   "text": "On January 28th Robinhood disabled all transactions except for position-closing (selling) for a small set of stocks including Gamestop (GME). This…",
+   "ents": []
+  },
+  {
+   "id": "blog.p.15",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 7236,
+   "end": 7390,
+   "text": "Trying to get information on the potential coronavirus vaccines has been frustrating. The information I want is never in one place, it’s often vague…",
+   "ents": [
+    "&#x27;"
+   ]
+  },
+  {
+   "id": "blog.p.16",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 7652,
+   "end": 7798,
+   "text": "I thought it would be interesting to predict what will happen under the Biden presidency. I think making falsifiable predictions is important for…",
+   "ents": []
+  },
+  {
+   "id": "blog.p.17",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 8098,
+   "end": 8243,
+   "text": "I want to discuss the strategy and logic behind the decision to vote third party or sit out of an election. Below are some of the common reasons…",
+   "ents": []
+  },
+  {
+   "id": "blog.p.18",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 8551,
+   "end": 8698,
+   "text": "Biden will be announcing his pick for vice president soon, and I think one aspect of the VP selection has been overlooked in the discussions about…",
+   "ents": []
+  },
+  {
+   "id": "blog.p.19",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 8918,
+   "end": 9065,
+   "text": "When I wrote the drones in SEER this was kind of what I had in mind for how quickly they move and attack. Being controlled by computers means they…",
+   "ents": []
+  },
+  {
+   "id": "blog.p.20",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 9355,
+   "end": 9500,
+   "text": "Citizens United v. FEC was decided ten years ago and remains one of the first things that comes to mind when people think about campaign finance…",
+   "ents": []
+  },
+  {
+   "id": "blog.p.21",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 9732,
+   "end": 9881,
+   "text": "I just finished the book Why Nations Fail and really enjoyed it, and I highly recommend it to everyone. Its theory is that institutions are the most…",
+   "ents": []
+  },
+  {
+   "id": "blog.p.22",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 10119,
+   "end": 10268,
+   "text": "People have been afraid of technology taking jobs for a long time. Apparently in the 1500s William Lee invented a knitting machine and went to Queen…",
+   "ents": []
+  },
+  {
+   "id": "blog.p.23",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 10523,
+   "end": 10675,
+   "text": "This is some really cool stuff. A group called Open AI has used machine learning to teach a robotic hand to solve a Rubik’s cube. They trained the…",
+   "ents": [
+    "&#x27;"
+   ]
+  },
+  {
+   "id": "blog.p.24",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 10925,
+   "end": 11072,
+   "text": "Hey Democrats, do you want to cut carbon emissions in half in just ten years? Do you want to increase benefits to the least fortunate among us? Do…",
+   "ents": []
+  },
+  {
+   "id": "blog.p.25",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 11310,
+   "end": 11452,
+   "text": "I posted a poll on Facebook and Twitter yesterday asked how long everyone thought it would take for us to be able to copy the human mind to a…",
+   "ents": []
+  },
+  {
+   "id": "blog.p.26",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 11702,
+   "end": 11855,
+   "text": "I’ve always been a sucker for those videos that go layer by layer and show all the CGI that went into movie scenes, so I thought it would be fun to…",
+   "ents": [
+    "&#x27;"
+   ]
+  },
+  {
+   "id": "blog.p.27",
+   "file": "public/blog.html",
+   "label": "Earlier writing — post excerpt",
+   "shape": "plain",
+   "start": 12097,
+   "end": 12255,
+   "text": "Welcome to my website! I’ve been working on this a while and I’m excited to finally share everything I’ve been working on. Head on over to the…",
+   "ents": [
+    "&#x27;"
+   ]
+  },
+  {
+   "id": "home.meta.title",
+   "file": "public/index.html",
+   "label": "Browser tab / search result title",
+   "shape": "plain",
+   "start": 143,
+   "end": 152,
+   "text": "Ryan Beck",
+   "ents": []
+  },
+  {
+   "id": "home.meta.description",
+   "file": "public/index.html",
+   "label": "Search + social description",
+   "shape": "plain",
+   "start": 278,
+   "end": 345,
+   "text": "Writer, forecaster, serial hobbyist. Projects, fiction, and essays.",
+   "ents": []
+  },
+  {
+   "id": "home.art.alt",
+   "file": "public/index.html",
+   "label": "Artwork alt text",
+   "shape": "plain",
+   "start": 5230,
+   "end": 5314,
+   "text": "A wizard sits before three carved stone doorways labeled Projects, Fiction and Blog.",
+   "ents": []
+  },
+  {
+   "id": "parkguides.meta.title",
+   "file": "public/park-guides.html",
+   "label": "Browser tab / search result title",
+   "shape": "plain",
+   "start": 143,
+   "end": 175,
+   "text": "National Park Guides · Ryan Beck",
+   "ents": []
+  },
+  {
+   "id": "parkguides.meta.description",
+   "file": "public/park-guides.html",
+   "label": "Search + social description",
+   "shape": "plain",
+   "start": 219,
+   "end": 285,
+   "text": "Printable family activity guides for national parks, by Ryan Beck.",
+   "ents": []
+  },
+  {
+   "id": "parkguides.h1",
+   "file": "public/park-guides.html",
+   "label": "Page heading",
+   "shape": "plain",
+   "start": 1841,
+   "end": 1861,
+   "text": "National park guides",
+   "ents": []
+  },
+  {
+   "id": "parkguides.p.1",
+   "file": "public/park-guides.html",
+   "label": "National park guides — intro paragraph",
+   "shape": "plain",
+   "start": 1888,
+   "end": 2413,
+   "text": "Planning a park trip with small kids means knowing, before you are standing\r at a full trailhead at 9 AM, which hikes are short enough, where to park, and what to do\r instead when the first plan falls through. These are the one-sheet guides I made for our own\r trips — every activity picked for families with young children, every hike under about\r four miles, with parking notes, drive times, and links straight to the maps. Print them or\r keep them on your phone; the links inside work either way.",
+   "ents": [
+    "&mdash;"
+   ]
+  },
+  {
+   "id": "parkguides.p.2",
+   "file": "public/park-guides.html",
+   "label": "National park guides — intro paragraph",
+   "shape": "plain",
+   "start": 2463,
+   "end": 2510,
+   "text": "<a href=\"projects.html\">← All projects</a>",
+   "ents": [
+    "&larr;"
+   ]
+  },
+  {
+   "id": "parkguides.h2.1",
+   "file": "public/park-guides.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 2768,
+   "end": 2813,
+   "text": "Rocky Mountain National Park & Estes Park",
+   "ents": [
+    "&amp;"
+   ]
+  },
+  {
+   "id": "parkguides.p.3",
+   "file": "public/park-guides.html",
+   "label": "Rocky Mountain National Park & Estes Park — small caption",
+   "shape": "plain",
+   "start": 2844,
+   "end": 2884,
+   "text": "Two pages · Last edited June 2023",
+   "ents": [
+    "&middot;"
+   ]
+  },
+  {
+   "id": "parkguides.p.4",
+   "file": "public/park-guides.html",
+   "label": "Rocky Mountain National Park & Estes Park — body paragraph",
+   "shape": "plain",
+   "start": 2901,
+   "end": 3359,
+   "text": "Built around RMNP’s timed-entry passes: activities are grouped by which pass gets\r you there — the Bear Lake corridor, the rest of the park, and Estes Park for the\r days you have no pass at all — with a strategy for which entry slots to try for.\r Bear Lake to Emerald Lake, Alberta Falls, the Trail Ridge Road drive with every overlook\r called out, Chasm Falls, Gem Lake, and where to feed the ducks downtown.",
+   "ents": [
+    "&mdash;",
+    "&#x27;"
+   ]
+  },
+  {
+   "id": "parkguides.h2.2",
+   "file": "public/park-guides.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 3912,
+   "end": 3941,
+   "text": "Grand Teton & Yellowstone",
+   "ents": [
+    "&amp;"
+   ]
+  },
+  {
+   "id": "parkguides.p.5",
+   "file": "public/park-guides.html",
+   "label": "Grand Teton & Yellowstone — small caption",
+   "shape": "plain",
+   "start": 3972,
+   "end": 4012,
+   "text": "Two pages · Last edited July 2025",
+   "ents": [
+    "&middot;"
+   ]
+  },
+  {
+   "id": "parkguides.p.6",
+   "file": "public/park-guides.html",
+   "label": "Grand Teton & Yellowstone — body paragraph",
+   "shape": "plain",
+   "start": 4029,
+   "end": 4481,
+   "text": "No timed entry here — the enemy is trailhead parking, so every hike comes with\r parking notes and drive times from Colter Bay. Swan Lake and Heron Pond, String Lake to\r Leigh Lake, the boat across Jenny Lake to Hidden Falls, Signal Mountain, and a full\r Yellowstone day-loop — Old Faithful, Grand Prismatic, the Lower Falls —\r ordered clockwise with realistic times. Junior Ranger notes for both parks.",
+   "ents": [
+    "&mdash;"
+   ]
+  },
+  {
+   "id": "projects.meta.title",
+   "file": "public/projects.html",
+   "label": "Browser tab / search result title",
+   "shape": "plain",
+   "start": 143,
+   "end": 163,
+   "text": "Projects · Ryan Beck",
+   "ents": []
+  },
+  {
+   "id": "projects.meta.description",
+   "file": "public/projects.html",
+   "label": "Search + social description",
+   "shape": "plain",
+   "start": 207,
+   "end": 259,
+   "text": "Tools, data sets and experiments built by Ryan Beck.",
+   "ents": []
+  },
+  {
+   "id": "projects.h1",
+   "file": "public/projects.html",
+   "label": "Page heading",
+   "shape": "plain",
+   "start": 1783,
+   "end": 1791,
+   "text": "Projects",
+   "ents": []
+  },
+  {
+   "id": "projects.p.1",
+   "file": "public/projects.html",
+   "label": "Projects — intro paragraph",
+   "shape": "plain",
+   "start": 1818,
+   "end": 2011,
+   "text": "Things I have built because I wanted them to exist — forecasting\r infrastructure, small apps for real problems in my own life, and the occasional experiment\r that got out of hand.",
+   "ents": [
+    "&mdash;"
+   ]
+  },
+  {
+   "id": "projects.p.2",
+   "file": "public/projects.html",
+   "label": "Projects — intro paragraph",
+   "shape": "plain",
+   "start": 2061,
+   "end": 2162,
+   "text": "<em>Draft — more projects are being pulled in\r and the presentation is still settling.</em>",
+   "ents": [
+    "&mdash;"
+   ]
+  },
+  {
+   "id": "projects.h3.1",
+   "file": "public/projects.html",
+   "label": "Sub-heading",
+   "shape": "plain",
+   "start": 2456,
+   "end": 2471,
+   "text": "Data Dashboards",
+   "ents": []
+  },
+  {
+   "id": "projects.p.3",
+   "file": "public/projects.html",
+   "label": "Data Dashboards — body paragraph",
+   "shape": "plain",
+   "start": 2491,
+   "end": 2843,
+   "text": "The numbers I kept reaching for while forecasting — the debt limit, refugee admissions, big-tech revenue, flu admissions, semiconductor trade, the bird-flu cull — on one page, with charts you can read values off. Each series refreshes on its own schedule and states the date its data actually ends, which is not always the date it last ran.",
+   "ents": [
+    "&mdash;"
+   ]
+  },
+  {
+   "id": "projects.tag.1",
+   "file": "public/projects.html",
+   "label": "Data Dashboards — card tag",
+   "shape": "plain",
+   "start": 2896,
+   "end": 2905,
+   "text": "Live data",
+   "ents": []
+  },
+  {
+   "id": "projects.tag.2",
+   "file": "public/projects.html",
+   "label": "Data Dashboards — card tag",
+   "shape": "plain",
+   "start": 2930,
+   "end": 2936,
+   "text": "Python",
+   "ents": []
+  },
+  {
+   "id": "projects.tag.3",
+   "file": "public/projects.html",
+   "label": "Data Dashboards — card tag",
+   "shape": "plain",
+   "start": 2961,
+   "end": 2975,
+   "text": "GitHub Actions",
+   "ents": []
+  },
+  {
+   "id": "projects.h3.2",
+   "file": "public/projects.html",
+   "label": "Sub-heading",
+   "shape": "plain",
+   "start": 3239,
+   "end": 3245,
+   "text": "Herder",
+   "ents": []
+  },
+  {
+   "id": "projects.p.4",
+   "file": "public/projects.html",
+   "label": "Herder — body paragraph",
+   "shape": "plain",
+   "start": 3265,
+   "end": 3470,
+   "text": "An app for herding a group toward a plan: propose activities, vote on them — ranked-choice if you like — and schedule around everyone’s availability. Share a link; nobody needs an account.",
+   "ents": [
+    "&mdash;",
+    "&#x27;"
+   ]
+  },
+  {
+   "id": "projects.tag.4",
+   "file": "public/projects.html",
+   "label": "Herder — card tag",
+   "shape": "plain",
+   "start": 3523,
+   "end": 3530,
+   "text": "Web app",
+   "ents": []
+  },
+  {
+   "id": "projects.tag.5",
+   "file": "public/projects.html",
+   "label": "Herder — card tag",
+   "shape": "plain",
+   "start": 3555,
+   "end": 3568,
+   "text": "useherder.com",
+   "ents": []
+  },
+  {
+   "id": "projects.h3.3",
+   "file": "public/projects.html",
+   "label": "Sub-heading",
+   "shape": "plain",
+   "start": 3875,
+   "end": 3893,
+   "text": "March Madness 2026",
+   "ents": []
+  },
+  {
+   "id": "projects.p.5",
+   "file": "public/projects.html",
+   "label": "March Madness 2026 — body paragraph",
+   "shape": "plain",
+   "start": 3913,
+   "end": 4108,
+   "text": "An analytics dashboard for the NCAA tournament field: custom power scores, injury tracking, strength of schedule, a 68×68 head-to-head grid, and a bracket builder that remembers your picks.",
+   "ents": [
+    "&times;"
+   ]
+  },
+  {
+   "id": "projects.tag.6",
+   "file": "public/projects.html",
+   "label": "March Madness 2026 — card tag",
+   "shape": "plain",
+   "start": 4161,
+   "end": 4168,
+   "text": "Web app",
+   "ents": []
+  },
+  {
+   "id": "projects.tag.7",
+   "file": "public/projects.html",
+   "label": "March Madness 2026 — card tag",
+   "shape": "plain",
+   "start": 4193,
+   "end": 4198,
+   "text": "React",
+   "ents": []
+  },
+  {
+   "id": "projects.tag.8",
+   "file": "public/projects.html",
+   "label": "March Madness 2026 — card tag",
+   "shape": "plain",
+   "start": 4223,
+   "end": 4231,
+   "text": "Seasonal",
+   "ents": []
+  },
+  {
+   "id": "projects.h3.4",
+   "file": "public/projects.html",
+   "label": "Sub-heading",
+   "shape": "plain",
+   "start": 4492,
+   "end": 4512,
+   "text": "National Park Guides",
+   "ents": []
+  },
+  {
+   "id": "projects.p.6",
+   "file": "public/projects.html",
+   "label": "National Park Guides — body paragraph",
+   "shape": "plain",
+   "start": 4532,
+   "end": 4732,
+   "text": "Printable one-sheet activity guides for park trips with small kids — short hikes, parking strategy, drive times, and what to do when the trailhead is full. Rocky Mountain and Grand Teton so far.",
+   "ents": [
+    "&mdash;"
+   ]
+  },
+  {
+   "id": "projects.tag.9",
+   "file": "public/projects.html",
+   "label": "National Park Guides — card tag",
+   "shape": "plain",
+   "start": 4785,
+   "end": 4791,
+   "text": "Guides",
+   "ents": []
+  },
+  {
+   "id": "projects.tag.10",
+   "file": "public/projects.html",
+   "label": "National Park Guides — card tag",
+   "shape": "plain",
+   "start": 4816,
+   "end": 4819,
+   "text": "PDF",
+   "ents": []
+  },
+  {
+   "id": "projects.tag.11",
+   "file": "public/projects.html",
+   "label": "National Park Guides — card tag",
+   "shape": "plain",
+   "start": 4844,
+   "end": 4848,
+   "text": "Free",
+   "ents": []
+  },
+  {
+   "id": "projects.h2.1",
+   "file": "public/projects.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 4972,
+   "end": 4988,
+   "text": "Want the source?",
+   "ents": []
+  },
+  {
+   "id": "projects.p.7",
+   "file": "public/projects.html",
+   "label": "Want the source? — intro paragraph",
+   "shape": "plain",
+   "start": 5015,
+   "end": 5096,
+   "text": "Nearly everything here is public. Poke around, fork it, tell me what I got wrong.",
+   "ents": []
+  },
+  {
+   "id": "writing.meta.title",
+   "file": "public/writing.html",
+   "label": "Browser tab / search result title",
+   "shape": "plain",
+   "start": 143,
+   "end": 162,
+   "text": "Fiction · Ryan Beck",
+   "ents": []
+  },
+  {
+   "id": "writing.meta.description",
+   "file": "public/writing.html",
+   "label": "Search + social description",
+   "shape": "plain",
+   "start": 206,
+   "end": 263,
+   "text": "Science fiction by Ryan Beck — SEER, Not Human, and more.",
+   "ents": []
+  },
+  {
+   "id": "writing.h1",
+   "file": "public/writing.html",
+   "label": "Page heading",
+   "shape": "plain",
+   "start": 1790,
+   "end": 1797,
+   "text": "Fiction",
+   "ents": []
+  },
+  {
+   "id": "writing.p.1",
+   "file": "public/writing.html",
+   "label": "Fiction — intro paragraph",
+   "shape": "plain",
+   "start": 1824,
+   "end": 2085,
+   "text": "Science fiction about the machinery we build to know ourselves, and what it\r costs when the machinery turns out to know us better than we do. A novel, a short story, and\r a standing interest in the gap between a model and the thing it claims to predict.",
+   "ents": []
+  },
+  {
+   "id": "writing.p.2",
+   "file": "public/writing.html",
+   "label": "Fiction — small caption",
+   "shape": "plain",
+   "start": 2309,
+   "end": 2332,
+   "text": "Novel · Science fiction",
+   "ents": []
+  },
+  {
+   "id": "writing.h2.1",
+   "file": "public/writing.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 2350,
+   "end": 2354,
+   "text": "SEER",
+   "ents": []
+  },
+  {
+   "id": "writing.p.3",
+   "file": "public/writing.html",
+   "label": "SEER — body paragraph",
+   "shape": "plain",
+   "start": 2372,
+   "end": 2735,
+   "text": "The future is data. All Maria has to do is think about a simple task, like turning on\r the lights, and it happens. It's not magic, it's SEER, the government-operated algorithm\r that makes life in the 22nd century so idyllic. By harvesting massive amounts of personal\r data, SEER can predict what a person will want the moment they want it.",
+   "ents": []
+  },
+  {
+   "id": "writing.p.4",
+   "file": "public/writing.html",
+   "label": "SEER — body paragraph",
+   "shape": "plain",
+   "start": 2752,
+   "end": 3115,
+   "text": "It's only when she's kidnapped by a group of anti-SEER rebels that Maria learns there's\r more to the algorithm than she knew. SEER is not just making people's lives easier; it's\r being used by those in power to control the public and stamp out potential opposition. At\r least, that's what Vincent, the leader of the rebel group, tells her.",
+   "ents": []
+  },
+  {
+   "id": "writing.p.5",
+   "file": "public/writing.html",
+   "label": "SEER — body paragraph",
+   "shape": "plain",
+   "start": 3132,
+   "end": 3617,
+   "text": "Vincent needs Maria's cybersecurity expertise to take SEER down. But can she trust him?\r Bringing down SEER could free the country from its oppressive control — or it could be an\r act of horrific domestic terrorism, plunging the country into chaos. Either way,\r associating with the rebels has already made her the target of an army of autonomous\r combat drones. An army that can predict what she'll do before the thought even crosses\r her mind.",
+   "ents": []
+  },
+  {
+   "id": "writing.p.6",
+   "file": "public/writing.html",
+   "label": "SEER — small caption",
+   "shape": "plain",
+   "start": 4083,
+   "end": 4101,
+   "text": "Short story · Free",
+   "ents": []
+  },
+  {
+   "id": "writing.h2.2",
+   "file": "public/writing.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 4119,
+   "end": 4128,
+   "text": "Not Human",
+   "ents": []
+  },
+  {
+   "id": "writing.p.7",
+   "file": "public/writing.html",
+   "label": "Not Human — body paragraph",
+   "shape": "plain",
+   "start": 4146,
+   "end": 4488,
+   "text": "What makes you human? As the first person in the world to have her mind copied to a\r machine, Lisa may soon learn the answer. Her copy's mechanical body is stronger and more\r durable than bone, flesh, and blood could ever be. But the dream of roboticists and\r neuroscientists everywhere may turn out to be a nightmare.",
+   "ents": []
+  },
+  {
+   "id": "writing.p.8",
+   "file": "public/writing.html",
+   "label": "Not Human — body paragraph",
+   "shape": "plain",
+   "start": 4505,
+   "end": 4640,
+   "text": "Read it online, or join the list to get it in ebook and PDF — along with a preview of\r the first two chapters of <em>SEER</em>.",
+   "ents": []
+  },
+  {
+   "id": "writing.h2.3",
+   "file": "public/writing.html",
+   "label": "Section heading",
+   "shape": "plain",
+   "start": 5010,
+   "end": 5045,
+   "text": "One email, only when there's a book",
+   "ents": []
+  },
+  {
+   "id": "writing.p.9",
+   "file": "public/writing.html",
+   "label": "One email, only when there's a book — body paragraph",
+   "shape": "plain",
+   "start": 5061,
+   "end": 5251,
+   "text": "Join and I'll send you <em>Not Human</em> in ebook and PDF, plus the first two chapters of\r <em>SEER</em>. No schedule, no filler — you'll hear from me when there's something finished.",
+   "ents": []
+  },
+  {
+   "id": "dash.chart.debt-limit.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart title",
+   "shape": "plain",
+   "start": 1708,
+   "end": 1723,
+   "text": "US debt limit",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.debt-limit.note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart explanation",
+   "shape": "br-list",
+   "start": 2518,
+   "end": 3450,
+   "text": "Shaded bands are the eight suspensions. The ceiling line breaks inside each one because there is no ceiling to plot; hovering a suspended date reads “no data” rather than zero.\n\nThe <strong>trend</strong> is a least-squares fit to the run since the most recent change in the ceiling — a raise, or a suspension starting or ending — projected to the date that pace would reach the current ceiling. It is solid over the stretch it was fitted to and dashed beyond the last observation. During a suspension there is nothing to reach, so it runs a year out instead. It disappears when debt is already at the ceiling, as through the first half of 2025, when a projection would imply room that does not exist. Turn it off to fit the chart back to the data.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.refugee-admissions.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart title",
+   "shape": "plain",
+   "start": 3708,
+   "end": 3740,
+   "text": "US refugee admissions by month",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.refugee-admissions.note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart explanation",
+   "shape": "br-list",
+   "start": 4062,
+   "end": 4350,
+   "text": "People admitted to the United States as refugees each month, from the State Department's Refugee Processing Center. Fiscal years run October to September; the annual ceiling is set by presidential determination and is a cap, not a target.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.refugee-admissions-annual.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart title",
+   "shape": "plain",
+   "start": 4628,
+   "end": 4663,
+   "text": "Refugee admissions by fiscal year",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.refugee-admissions-annual.note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart explanation",
+   "shape": "br-list",
+   "start": 5140,
+   "end": 5280,
+   "text": "The same arrivals totaled by fiscal year. The dashed line is the annual ceiling, which is only published for recent years.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.faamg-revenues.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart title",
+   "shape": "plain",
+   "start": 5492,
+   "end": 5525,
+   "text": "Big-tech revenue by fiscal year",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.faamg-revenues.note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart explanation",
+   "shape": "br-list",
+   "start": 6191,
+   "end": 6364,
+   "text": "Each company's full fiscal year, and the five added together. The combined line is blank for a year any of them has not finished reporting.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.faamg-revenues-quarterly.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart title",
+   "shape": "plain",
+   "start": 6564,
+   "end": 6593,
+   "text": "Big-tech revenue by quarter",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.faamg-revenues-quarterly.note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart explanation",
+   "shape": "br-list",
+   "start": 7197,
+   "end": 7861,
+   "text": "The same five by quarter, which is where the seasonality lives — Amazon and Apple both spike every December.\n\nTwo notes on the derivation. Quarters are selected by the length of the reporting period rather than by filing type, because a 10-K carries both the twelve-month total and three-month figures, and mixing them puts an annual number in the quarterly line. The fourth quarter is calculated as the annual total minus the three reported quarters, since a 10-K frequently reports the year without ever stating Q4 on its own.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.covid-weekly-admissions.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart title",
+   "shape": "plain",
+   "start": 8060,
+   "end": 8104,
+   "text": "US respiratory hospital admissions, weekly",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.covid-weekly-admissions.note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart explanation",
+   "shape": "br-list",
+   "start": 8702,
+   "end": 9816,
+   "text": "New hospital admissions each week with a laboratory-confirmed diagnosis. Influenza and RSV are reported in the same returns.\n\n<strong>The shaded stretch is not a drop in admissions.</strong> Reporting to NHSN was mandatory under the public health emergency, became voluntary on 1 May 2024, and was made mandatory again by CMS on 1 November 2024. Hospital participation followed exactly: about 93% either side, and a low of 31% in October 2024. Counts inside that window are drawn from roughly a third of the hospitals, so they are not comparable with the rest of the line. The share reporting each week is in the download.\n\nA different series for the same measure, from the archived reichlab forecast hub, was widely used up to April 2024 and runs about 4% lower at the median. Figures read off older charts will not match these; that series is in the download for comparison.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.flu-hospitalizations.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart title",
+   "shape": "plain",
+   "start": 10078,
+   "end": 10109,
+   "text": "US influenza hospitalizations",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.flu-hospitalizations.note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart explanation",
+   "shape": "br-list",
+   "start": 10407,
+   "end": 10591,
+   "text": "Weekly hospital admissions with a confirmed influenza diagnosis, from the CDC's FluSight forecasting hub. Per-state figures are in the companion file.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.flu-hospitalizations-states.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart title",
+   "shape": "plain",
+   "start": 10854,
+   "end": 10892,
+   "text": "Influenza admissions, state by state",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.flu-hospitalizations-states.note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart explanation",
+   "shape": "br-list",
+   "start": 11344,
+   "end": 12375,
+   "text": "Influenza admissions state by state, laid out roughly as the map is, so a bad week across one region reads as a block of color. It opens on percentage change against four weeks earlier, which is what makes a small state climbing fast as visible as a large one; the buttons switch to admissions per 100,000 over a window.\n\nEvery panel shares one vertical scale. Per head rather than raw counts is what makes that readable — on raw admissions the spread between the largest and smallest states is more than fiftyfold, and most of the grid flattens into slivers.\n\nThese come from the CDC’s FluSight hub, which republishes NHSN’s figures. They will not match the influenza line above to the digit: FluSight snapshots NHSN and does not always carry its later revisions, so recent weeks can differ by a few percent.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.semiconductors-us-exports-china.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart title",
+   "shape": "plain",
+   "start": 12635,
+   "end": 12670,
+   "text": "US semiconductor exports to China",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.semiconductors-us-exports-china.note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart explanation",
+   "shape": "br-list",
+   "start": 13652,
+   "end": 13844,
+   "text": "Six-month rolling averages. The monthly lines behind them are in the legend, switched off to start with. The download also carries a twelve-month rolling sum.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.semiconductors-china-imports.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart title",
+   "shape": "plain",
+   "start": 14018,
+   "end": 14049,
+   "text": "China's semiconductor imports",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.semiconductors-china-imports.note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart explanation",
+   "shape": "br-list",
+   "start": 14474,
+   "end": 14713,
+   "text": "Annual, and reported by China rather than by its trading partners, so this is the whole of what China buys from the world in the same two categories the chart above tracks for the US alone.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.hpai-depopulations.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart title",
+   "shape": "plain",
+   "start": 14877,
+   "end": 14916,
+   "text": "Birds killed in the bird-flu outbreak",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.hpai-depopulations.note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart explanation",
+   "shape": "br-list",
+   "start": 15379,
+   "end": 15760,
+   "text": "Weekly count on the right-hand axis, running total on the left. They differ by two orders of magnitude, so on a shared scale the weeks would be a flat line along the bottom. The download splits each week into commercial and backyard birds, and carries the state, county and production type of every confirmed flock.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.covid-hospitalizations.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart title",
+   "shape": "plain",
+   "start": 16037,
+   "end": 16077,
+   "text": "COVID and flu patients in the hospital",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.covid-hospitalizations.note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart explanation",
+   "shape": "br-list",
+   "start": 16552,
+   "end": 17051,
+   "text": "Patients in the hospital on a given day, summed across reporting states, from the HHS hospital-capacity dataset. This is a census rather than a count of admissions — everyone in a bed that day, however long they have been there — so it runs far higher than the admissions series above and should not be read against it. HHS ended the reporting requirement behind it, so the series stops in April 2024.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.va-vaccinations.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart title",
+   "shape": "plain",
+   "start": 17298,
+   "end": 17327,
+   "text": "Virginia COVID vaccinations",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.chart.va-vaccinations.note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Chart explanation",
+   "shape": "br-list",
+   "start": 17717,
+   "end": 17883,
+   "text": "Counts rather than percentages, from the state’s open-data platform. The companion file carries the same figures split by age group.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.respiratory.nav",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Sidebar label",
+   "shape": "plain",
+   "start": 18573,
+   "end": 18594,
+   "text": "Respiratory illness",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.respiratory.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page heading",
+   "shape": "plain",
+   "start": 18614,
+   "end": 18635,
+   "text": "Respiratory illness",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.respiratory.kicker",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page kicker",
+   "shape": "plain",
+   "start": 18656,
+   "end": 18682,
+   "text": "COVID, influenza and RSV",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.respiratory.blurb",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page introduction",
+   "shape": "p-list",
+   "start": 18717,
+   "end": 19701,
+   "text": "Weekly hospital admissions for COVID-19, influenza and RSV, nationally and state by state.\n\nNational figures come from the CDC’s National Healthcare Safety Network. This is meant to be a census rather than a sample — CMS requires every acute care and critical access hospital to report weekly — but the requirement has lapsed once, and participation moves with it. Around 93% of hospitals report in a normal week, and the share behind each week is in the download. State-level influenza comes from the CDC’s FluSight forecasting hub.\n\nAll of these count <em>laboratory-confirmed</em> admissions rather than everyone admitted with the illness, so they undercount by a margin that moves with how much testing is being done. They read more reliably as a trend than as a total.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.debt-limit.nav",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Sidebar label",
+   "shape": "plain",
+   "start": 20435,
+   "end": 20451,
+   "text": "The debt limit",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.debt-limit.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page heading",
+   "shape": "plain",
+   "start": 20471,
+   "end": 20490,
+   "text": "The US debt limit",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.debt-limit.kicker",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page kicker",
+   "shape": "plain",
+   "start": 20511,
+   "end": 20528,
+   "text": "Treasury, daily",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.debt-limit.blurb",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page introduction",
+   "shape": "p-list",
+   "start": 20563,
+   "end": 21236,
+   "text": "Federal debt subject to the statutory ceiling, against the ceiling itself, from Treasury’s Daily Treasury Statement. Millions of dollars, updated each business day.\n\nThe shaded stretches are the eight occasions Congress has suspended the limit rather than raised it. There is no ceiling during a suspension, so the line stops rather than running flat — Treasury publishes a zero in that field, and plotting it would send the ceiling to the floor. When a suspension ends, the limit is reset to whatever the debt has reached by then.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.big-tech-revenue.nav",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Sidebar label",
+   "shape": "plain",
+   "start": 21344,
+   "end": 21362,
+   "text": "Big-tech revenue",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.big-tech-revenue.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page heading",
+   "shape": "plain",
+   "start": 21382,
+   "end": 21400,
+   "text": "Big-tech revenue",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.big-tech-revenue.kicker",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page kicker",
+   "shape": "plain",
+   "start": 21421,
+   "end": 21434,
+   "text": "SEC filings",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.big-tech-revenue.blurb",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page introduction",
+   "shape": "p-list",
+   "start": 21469,
+   "end": 22141,
+   "text": "Revenue for Alphabet, Amazon, Apple, Meta and Microsoft, read out of their SEC filings, annually and by quarter. Billions of US dollars.\n\nThe five do not share a fiscal calendar — Apple’s year ends in September and Microsoft’s in June — so the combined line is blank for any period where they have not all filed yet. Quarters are placed in the calendar quarter they <em>end</em> in, which is what lets the five line up; the consequence is that adding four calendar quarters for Apple or Microsoft will not equal their fiscal year.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.refugee-admissions.nav",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Sidebar label",
+   "shape": "plain",
+   "start": 22283,
+   "end": 22303,
+   "text": "Refugee admissions",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.refugee-admissions.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page heading",
+   "shape": "plain",
+   "start": 22323,
+   "end": 22346,
+   "text": "US refugee admissions",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.refugee-admissions.kicker",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page kicker",
+   "shape": "plain",
+   "start": 22367,
+   "end": 22394,
+   "text": "State Department, monthly",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.refugee-admissions.blurb",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page introduction",
+   "shape": "p-list",
+   "start": 22429,
+   "end": 23156,
+   "text": "People admitted to the United States as refugees, from the State Department’s Refugee Processing Center. Fiscal years run October to September, so the monthly series maps October through December onto the previous calendar year.\n\nThe annual ceiling is set by presidential determination and is a cap rather than a target: admissions have come in well under it far more often than they have approached it. The long view reaches back to 1975 — the two peaks are the Indochinese resettlement after the fall of Saigon and the Soviet and Southeast Asian programs around 1990.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.semiconductors.nav",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Sidebar label",
+   "shape": "plain",
+   "start": 23299,
+   "end": 23320,
+   "text": "Semiconductor trade",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.semiconductors.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page heading",
+   "shape": "plain",
+   "start": 23340,
+   "end": 23361,
+   "text": "Semiconductor trade",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.semiconductors.kicker",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page kicker",
+   "shape": "plain",
+   "start": 23382,
+   "end": 23395,
+   "text": "UN Comtrade",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.semiconductors.blurb",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page introduction",
+   "shape": "p-list",
+   "start": 23430,
+   "end": 24277,
+   "text": "US exports of chips and chipmaking equipment to China, and what China buys from the whole world, from UN Comtrade. Values are US dollars.\n\nChips are HS 8542. Equipment is HS 8486, 903082, 903141, 854311 and 901041, summed. Monthly trade is noisy enough that the raw line is hard to read a trend off, so a six-month rolling average is carried alongside it.\n\nThe two charts are measured independently and will not reconcile. US exports are monthly and reported by the United States; China’s imports are annual and reported by China. Trading partners routinely disagree about the same shipments, since they classify goods differently and record them at different moments.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.bird-flu.nav",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Sidebar label",
+   "shape": "plain",
+   "start": 24452,
+   "end": 24462,
+   "text": "Bird flu",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.bird-flu.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page heading",
+   "shape": "plain",
+   "start": 24482,
+   "end": 24492,
+   "text": "Bird flu",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.bird-flu.kicker",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page kicker",
+   "shape": "plain",
+   "start": 24513,
+   "end": 24525,
+   "text": "USDA APHIS",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.bird-flu.blurb",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page introduction",
+   "shape": "p-list",
+   "start": 24560,
+   "end": 25189,
+   "text": "Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak, from USDA APHIS detection records.\n\nA flock is counted on the date its infection was confirmed, and confirmation means the entire flock is depopulated — so a single commercial layer operation can add several million birds in one week. That makes the weekly figure extremely spiky and the running total the more readable line.\n\nBackyard flocks are a large share of the detections and a very small share of the birds.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.virginia-covid.nav",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Sidebar label",
+   "shape": "plain",
+   "start": 25303,
+   "end": 25319,
+   "text": "Virginia COVID",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.virginia-covid.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page heading",
+   "shape": "plain",
+   "start": 25339,
+   "end": 25355,
+   "text": "Virginia COVID",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.virginia-covid.kicker",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page kicker",
+   "shape": "plain",
+   "start": 25376,
+   "end": 25390,
+   "text": "VDH, retired",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.virginia-covid.blurb",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page introduction",
+   "shape": "p-list",
+   "start": 25425,
+   "end": 26418,
+   "text": "People in Virginia by vaccination status, from the Virginia Department of Health. March 2021 to September 2023, when VDH stopped publishing; the history is complete for that window — nearly ten million rows, by locality, age group and vaccination status.\n\nTwo days are wrong at the source. On 21 February 2023 VDH published every row two and three times over, which is collapsed here by taking one value per locality, age band and status. On 24 July 2021 the values themselves are exactly doubled with no duplicate rows to collapse, so that day is left blank and the line breaks there.\n\nFor an age-stratified Virginia series, the HHS hospitalization panel on the <a href=\"/forecasting/respiratory\">respiratory page</a> carries admissions broken down by age band from 2020 to 2023.",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  }
+ ]
+}

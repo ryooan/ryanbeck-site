@@ -8,7 +8,9 @@
     "deploy": "wrangler deploy",
     "tail": "wrangler tail",
     "test": "node tools/check-links.mjs && node tools/check-docs.mjs && node tools/site-url.mjs",
-    "site-url": "node tools/site-url.mjs --write"
+    "site-url": "node tools/site-url.mjs --write",
+    "copy": "node tools/copy.mjs extract",
+    "copy-apply": "node tools/copy.mjs apply"
   },
   "devDependencies": {
     "wrangler": "^4"
