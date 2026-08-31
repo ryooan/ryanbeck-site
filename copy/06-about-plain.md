@@ -39,22 +39,22 @@ About
 ## About — intro paragraph
 <!-- id: aboutplain.p.2 -->
 
-I write science fiction, I think about forecasting for a living, and I have never once managed to have only one hobby at a time.
+I write science fiction, I think about forecasting for a living, and I have never once managed to have only one hobby at a time.
 
 ## About — body paragraph
 <!-- id: aboutplain.p.3 -->
 
-I live in Iowa with my wife and daughters. For a decade I designed bridges, which is a job that teaches you to respect load paths, tolerances, and the difference between a model and the thing the model is about. These days I coordinate forecasting programs at Metaculus, where the same instinct shows up in a different form: how confident should anyone be, and what would it take to find out?
+I live in Iowa with my wife and daughters. For a decade I designed bridges, which is a job that teaches you to respect load paths, tolerances, and the difference between a model and the thing the model is about. These days I coordinate forecasting programs at Metaculus, where the same instinct shows up in a different form: how confident should anyone be, and what would it take to find out?
 
 ## About — body paragraph
 <!-- id: aboutplain.p.4 -->
 
-The fiction came first. <em>SEER</em> started as a question I couldn't put down — if a system could reliably predict what you wanted, would you still call it wanting? — and grew into a novel about Maria, who is kidnapped by the people trying to bring the algorithm down and has to work out which of them is telling the truth. <em>Not Human</em> is a shorter, colder cousin of the same question. <a href="writing.html">Both are here.</a>
+The fiction came first. <em>SEER</em> started as a question I couldn't put down — if a system could reliably predict what you wanted, would you still call it wanting? — and grew into a novel about Maria, who is kidnapped by the people trying to bring the algorithm down and has to work out which of them is telling the truth. <em>Not Human</em> is a shorter, colder cousin of the same question. <a href="writing.html">Both are here.</a>
 
 ## About — body paragraph
 <!-- id: aboutplain.p.5 -->
 
-Everything else lands in <em>The Missing Nuance</em>, a newsletter about the parts of an argument that get sanded off in the retelling.
+Everything else lands in <em>The Missing Nuance</em>, a newsletter about the parts of an argument that get sanded off in the retelling.
 
 ## Section heading
 <!-- id: aboutplain.h2.1 -->

@@ -20,7 +20,7 @@
 
 US debt limit
 
-## Chart explanation
+## US debt limit — chart explanation
 <!-- id: dash.chart.debt-limit.note -->
 
 Shaded bands are the eight suspensions. The ceiling line breaks inside each one because there is no ceiling to plot; hovering a suspended date reads “no data” rather than zero.
@@ -32,7 +32,7 @@ The <strong>trend</strong> is a least-squares fit to the run since the most rece
 
 US refugee admissions by month
 
-## Chart explanation
+## US refugee admissions by month — chart explanation
 <!-- id: dash.chart.refugee-admissions.note -->
 
 People admitted to the United States as refugees each month, from the State Department's Refugee Processing Center. Fiscal years run October to September; the annual ceiling is set by presidential determination and is a cap, not a target.
@@ -42,7 +42,7 @@ People admitted to the United States as refugees each month, from the State Depa
 
 Refugee admissions by fiscal year
 
-## Chart explanation
+## Refugee admissions by fiscal year — chart explanation
 <!-- id: dash.chart.refugee-admissions-annual.note -->
 
 The same arrivals totaled by fiscal year. The dashed line is the annual ceiling, which is only published for recent years.
@@ -52,7 +52,7 @@ The same arrivals totaled by fiscal year. The dashed line is the annual ceiling,
 
 Big-tech revenue by fiscal year
 
-## Chart explanation
+## Big-tech revenue by fiscal year — chart explanation
 <!-- id: dash.chart.faamg-revenues.note -->
 
 Each company's full fiscal year, and the five added together. The combined line is blank for a year any of them has not finished reporting.
@@ -62,7 +62,7 @@ Each company's full fiscal year, and the five added together. The combined line 
 
 Big-tech revenue by quarter
 
-## Chart explanation
+## Big-tech revenue by quarter — chart explanation
 <!-- id: dash.chart.faamg-revenues-quarterly.note -->
 
 The same five by quarter, which is where the seasonality lives — Amazon and Apple both spike every December.
@@ -74,7 +74,7 @@ Two notes on the derivation. Quarters are selected by the length of the reportin
 
 US respiratory hospital admissions, weekly
 
-## Chart explanation
+## US respiratory hospital admissions, weekly — chart explanation
 <!-- id: dash.chart.covid-weekly-admissions.note -->
 
 New hospital admissions each week with a laboratory-confirmed diagnosis. Influenza and RSV are reported in the same returns.
@@ -88,7 +88,7 @@ A different series for the same measure, from the archived reichlab forecast hub
 
 US influenza hospitalizations
 
-## Chart explanation
+## US influenza hospitalizations — chart explanation
 <!-- id: dash.chart.flu-hospitalizations.note -->
 
 Weekly hospital admissions with a confirmed influenza diagnosis, from the CDC's FluSight forecasting hub. Per-state figures are in the companion file.
@@ -98,7 +98,7 @@ Weekly hospital admissions with a confirmed influenza diagnosis, from the CDC's 
 
 Influenza admissions, state by state
 
-## Chart explanation
+## Influenza admissions, state by state — chart explanation
 <!-- id: dash.chart.flu-hospitalizations-states.note -->
 
 Influenza admissions state by state, laid out roughly as the map is, so a bad week across one region reads as a block of color. It opens on percentage change against four weeks earlier, which is what makes a small state climbing fast as visible as a large one; the buttons switch to admissions per 100,000 over a window.
@@ -112,7 +112,7 @@ These come from the CDC’s FluSight hub, which republishes NHSN’s figures. Th
 
 US semiconductor exports to China
 
-## Chart explanation
+## US semiconductor exports to China — chart explanation
 <!-- id: dash.chart.semiconductors-us-exports-china.note -->
 
 Six-month rolling averages. The monthly lines behind them are in the legend, switched off to start with. The download also carries a twelve-month rolling sum.
@@ -122,7 +122,7 @@ Six-month rolling averages. The monthly lines behind them are in the legend, swi
 
 China's semiconductor imports
 
-## Chart explanation
+## China's semiconductor imports — chart explanation
 <!-- id: dash.chart.semiconductors-china-imports.note -->
 
 Annual, and reported by China rather than by its trading partners, so this is the whole of what China buys from the world in the same two categories the chart above tracks for the US alone.
@@ -132,7 +132,7 @@ Annual, and reported by China rather than by its trading partners, so this is th
 
 Birds killed in the bird-flu outbreak
 
-## Chart explanation
+## Birds killed in the bird-flu outbreak — chart explanation
 <!-- id: dash.chart.hpai-depopulations.note -->
 
 Weekly count on the right-hand axis, running total on the left. They differ by two orders of magnitude, so on a shared scale the weeks would be a flat line along the bottom. The download splits each week into commercial and backyard birds, and carries the state, county and production type of every confirmed flock.
@@ -142,7 +142,7 @@ Weekly count on the right-hand axis, running total on the left. They differ by t
 
 COVID and flu patients in the hospital
 
-## Chart explanation
+## COVID and flu patients in the hospital — chart explanation
 <!-- id: dash.chart.covid-hospitalizations.note -->
 
 Patients in the hospital on a given day, summed across reporting states, from the HHS hospital-capacity dataset. This is a census rather than a count of admissions — everyone in a bed that day, however long they have been there — so it runs far higher than the admissions series above and should not be read against it. HHS ended the reporting requirement behind it, so the series stops in April 2024.
@@ -152,7 +152,7 @@ Patients in the hospital on a given day, summed across reporting states, from th
 
 Virginia COVID vaccinations
 
-## Chart explanation
+## Virginia COVID vaccinations — chart explanation
 <!-- id: dash.chart.va-vaccinations.note -->
 
 Counts rather than percentages, from the state’s open-data platform. The companion file carries the same figures split by age group.

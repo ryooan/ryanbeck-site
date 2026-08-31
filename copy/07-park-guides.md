@@ -29,7 +29,7 @@ National park guides
 ## National park guides — intro paragraph
 <!-- id: parkguides.p.1 -->
 
-Planning a park trip with small kids means knowing, before you are standing at a full trailhead at 9 AM, which hikes are short enough, where to park, and what to do instead when the first plan falls through. These are the one-sheet guides I made for our own trips — every activity picked for families with young children, every hike under about four miles, with parking notes, drive times, and links straight to the maps. Print them or keep them on your phone; the links inside work either way.
+Planning a park trip with small kids means knowing, before you are standing at a full trailhead at 9 AM, which hikes are short enough, where to park, and what to do instead when the first plan falls through. These are the one-sheet guides I made for our own trips — every activity picked for families with young children, every hike under about four miles, with parking notes, drive times, and links straight to the maps. Print them or keep them on your phone; the links inside work either way.
 
 ## National park guides — intro paragraph
 <!-- id: parkguides.p.2 -->
@@ -49,7 +49,7 @@ Two pages · Last edited June 2023
 ## Rocky Mountain National Park & Estes Park — body paragraph
 <!-- id: parkguides.p.4 -->
 
-Built around RMNP’s timed-entry passes: activities are grouped by which pass gets you there — the Bear Lake corridor, the rest of the park, and Estes Park for the days you have no pass at all — with a strategy for which entry slots to try for. Bear Lake to Emerald Lake, Alberta Falls, the Trail Ridge Road drive with every overlook called out, Chasm Falls, Gem Lake, and where to feed the ducks downtown.
+Built around RMNP’s timed-entry passes: activities are grouped by which pass gets you there — the Bear Lake corridor, the rest of the park, and Estes Park for the days you have no pass at all — with a strategy for which entry slots to try for. Bear Lake to Emerald Lake, Alberta Falls, the Trail Ridge Road drive with every overlook called out, Chasm Falls, Gem Lake, and where to feed the ducks downtown.
 
 ## Section heading
 <!-- id: parkguides.h2.2 -->
@@ -64,5 +64,5 @@ Two pages · Last edited July 2025
 ## Grand Teton & Yellowstone — body paragraph
 <!-- id: parkguides.p.6 -->
 
-No timed entry here — the enemy is trailhead parking, so every hike comes with parking notes and drive times from Colter Bay. Swan Lake and Heron Pond, String Lake to Leigh Lake, the boat across Jenny Lake to Hidden Falls, Signal Mountain, and a full Yellowstone day-loop — Old Faithful, Grand Prismatic, the Lower Falls — ordered clockwise with realistic times. Junior Ranger notes for both parks.
+No timed entry here — the enemy is trailhead parking, so every hike comes with parking notes and drive times from Colter Bay. Swan Lake and Heron Pond, String Lake to Leigh Lake, the boat across Jenny Lake to Hidden Falls, Signal Mountain, and a full Yellowstone day-loop — Old Faithful, Grand Prismatic, the Lower Falls — ordered clockwise with realistic times. Junior Ranger notes for both parks.
 

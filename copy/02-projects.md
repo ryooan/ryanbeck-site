@@ -29,12 +29,12 @@ Projects
 ## Projects — intro paragraph
 <!-- id: projects.p.1 -->
 
-Things I have built because I wanted them to exist — forecasting infrastructure, small apps for real problems in my own life, and the occasional experiment that got out of hand.
+Things I have built because I wanted them to exist — forecasting infrastructure, small apps for real problems in my own life, and the occasional experiment that got out of hand.
 
 ## Projects — intro paragraph
 <!-- id: projects.p.2 -->
 
-<em>Draft — more projects are being pulled in and the presentation is still settling.</em>
+<em>Draft — more projects are being pulled in and the presentation is still settling.</em>
 
 ## Sub-heading
 <!-- id: projects.h3.1 -->

@@ -34,7 +34,7 @@ Blog
 ## Blog — intro paragraph
 <!-- id: blog.p.1 -->
 
-Essays on forecasting, uncertainty, and the parts of technology that don't fit in a headline. Most new writing goes out through <em>The Missing Nuance</em>.
+Essays on forecasting, uncertainty, and the parts of technology that don't fit in a headline. Most new writing goes out through <em>The Missing Nuance</em>.
 
 ## Section heading
 <!-- id: blog.h2.1 -->
@@ -79,7 +79,7 @@ Earlier writing
 ## Earlier writing — intro paragraph
 <!-- id: blog.p.8 -->
 
-Nineteen posts from 2019–2023, written before the newsletter and still living at <a href="https://www.ryanbeckauthor.com">ryanbeckauthor.com</a>. Books, forecasting, elections, vaccines, and one argument with a moose.
+Nineteen posts from 2019–2023, written before the newsletter and still living at <a href="https://www.ryanbeckauthor.com">ryanbeckauthor.com</a>. Books, forecasting, elections, vaccines, and one argument with a moose.
 
 ## Earlier writing — post excerpt
 <!-- id: blog.p.9 -->

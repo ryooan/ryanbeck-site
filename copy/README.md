@@ -3,7 +3,22 @@
 Every word on the site is in the numbered files next to this one. Edit them,
 then one command puts your edits back where they came from.
 
-## How to use it
+## The easy way: edit in the browser
+
+```bash
+npm run edit
+```
+
+Then open **http://localhost:8788** and use the tab on the right edge of any
+page. You get that page's copy as text boxes, on the page it appears on. Save
+and it is written into these files, applied to the site, and the page reloads
+with your words on it. Escape closes the panel, ctrl/cmd-S saves, and clicking
+into a box outlines the words on the page behind it.
+
+That is the whole loop — you never need to touch the files below by hand
+unless you want to.
+
+## The other way: edit these files
 
 1. **Edit the text** under each `##` heading in `01-*.md` through `10-*.md`.
 2. **Leave the `<!-- id: ... -->` comments alone.** They are how each block

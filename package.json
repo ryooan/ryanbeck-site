@@ -10,7 +10,8 @@
     "test": "node tools/check-links.mjs && node tools/check-docs.mjs && node tools/site-url.mjs",
     "site-url": "node tools/site-url.mjs --write",
     "copy": "node tools/copy.mjs extract",
-    "copy-apply": "node tools/copy.mjs apply"
+    "copy-apply": "node tools/copy.mjs apply",
+    "edit": "node tools/copy-server.mjs"
   },
   "devDependencies": {
     "wrangler": "^4"

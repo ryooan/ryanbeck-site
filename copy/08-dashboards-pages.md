@@ -11,7 +11,7 @@
 
 *Source: `tools/forecasting/build_page.py`*
 
-## Sidebar label
+## Respiratory illness — sidebar label
 <!-- id: dash.page.respiratory.nav -->
 
 Respiratory illness
@@ -21,12 +21,12 @@ Respiratory illness
 
 Respiratory illness
 
-## Page kicker
+## Respiratory illness — page kicker
 <!-- id: dash.page.respiratory.kicker -->
 
 COVID, influenza and RSV
 
-## Page introduction
+## Respiratory illness — page introduction
 <!-- id: dash.page.respiratory.blurb -->
 
 Weekly hospital admissions for COVID-19, influenza and RSV, nationally and state by state.
@@ -35,7 +35,7 @@ National figures come from the CDC’s National Healthcare Safety Network. This 
 
 All of these count <em>laboratory-confirmed</em> admissions rather than everyone admitted with the illness, so they undercount by a margin that moves with how much testing is being done. They read more reliably as a trend than as a total.
 
-## Sidebar label
+## The US debt limit — sidebar label
 <!-- id: dash.page.debt-limit.nav -->
 
 The debt limit
@@ -45,19 +45,19 @@ The debt limit
 
 The US debt limit
 
-## Page kicker
+## The US debt limit — page kicker
 <!-- id: dash.page.debt-limit.kicker -->
 
 Treasury, daily
 
-## Page introduction
+## The US debt limit — page introduction
 <!-- id: dash.page.debt-limit.blurb -->
 
 Federal debt subject to the statutory ceiling, against the ceiling itself, from Treasury’s Daily Treasury Statement. Millions of dollars, updated each business day.
 
 The shaded stretches are the eight occasions Congress has suspended the limit rather than raised it. There is no ceiling during a suspension, so the line stops rather than running flat — Treasury publishes a zero in that field, and plotting it would send the ceiling to the floor. When a suspension ends, the limit is reset to whatever the debt has reached by then.
 
-## Sidebar label
+## Big-tech revenue — sidebar label
 <!-- id: dash.page.big-tech-revenue.nav -->
 
 Big-tech revenue
@@ -67,19 +67,19 @@ Big-tech revenue
 
 Big-tech revenue
 
-## Page kicker
+## Big-tech revenue — page kicker
 <!-- id: dash.page.big-tech-revenue.kicker -->
 
 SEC filings
 
-## Page introduction
+## Big-tech revenue — page introduction
 <!-- id: dash.page.big-tech-revenue.blurb -->
 
 Revenue for Alphabet, Amazon, Apple, Meta and Microsoft, read out of their SEC filings, annually and by quarter. Billions of US dollars.
 
 The five do not share a fiscal calendar — Apple’s year ends in September and Microsoft’s in June — so the combined line is blank for any period where they have not all filed yet. Quarters are placed in the calendar quarter they <em>end</em> in, which is what lets the five line up; the consequence is that adding four calendar quarters for Apple or Microsoft will not equal their fiscal year.
 
-## Sidebar label
+## US refugee admissions — sidebar label
 <!-- id: dash.page.refugee-admissions.nav -->
 
 Refugee admissions
@@ -89,19 +89,19 @@ Refugee admissions
 
 US refugee admissions
 
-## Page kicker
+## US refugee admissions — page kicker
 <!-- id: dash.page.refugee-admissions.kicker -->
 
 State Department, monthly
 
-## Page introduction
+## US refugee admissions — page introduction
 <!-- id: dash.page.refugee-admissions.blurb -->
 
 People admitted to the United States as refugees, from the State Department’s Refugee Processing Center. Fiscal years run October to September, so the monthly series maps October through December onto the previous calendar year.
 
 The annual ceiling is set by presidential determination and is a cap rather than a target: admissions have come in well under it far more often than they have approached it. The long view reaches back to 1975 — the two peaks are the Indochinese resettlement after the fall of Saigon and the Soviet and Southeast Asian programs around 1990.
 
-## Sidebar label
+## Semiconductor trade — sidebar label
 <!-- id: dash.page.semiconductors.nav -->
 
 Semiconductor trade
@@ -111,12 +111,12 @@ Semiconductor trade
 
 Semiconductor trade
 
-## Page kicker
+## Semiconductor trade — page kicker
 <!-- id: dash.page.semiconductors.kicker -->
 
 UN Comtrade
 
-## Page introduction
+## Semiconductor trade — page introduction
 <!-- id: dash.page.semiconductors.blurb -->
 
 US exports of chips and chipmaking equipment to China, and what China buys from the whole world, from UN Comtrade. Values are US dollars.
@@ -125,7 +125,7 @@ Chips are HS 8542. Equipment is HS 8486, 903082, 903141, 854311 and 901041, summ
 
 The two charts are measured independently and will not reconcile. US exports are monthly and reported by the United States; China’s imports are annual and reported by China. Trading partners routinely disagree about the same shipments, since they classify goods differently and record them at different moments.
 
-## Sidebar label
+## Bird flu — sidebar label
 <!-- id: dash.page.bird-flu.nav -->
 
 Bird flu
@@ -135,12 +135,12 @@ Bird flu
 
 Bird flu
 
-## Page kicker
+## Bird flu — page kicker
 <!-- id: dash.page.bird-flu.kicker -->
 
 USDA APHIS
 
-## Page introduction
+## Bird flu — page introduction
 <!-- id: dash.page.bird-flu.blurb -->
 
 Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak, from USDA APHIS detection records.
@@ -149,7 +149,7 @@ A flock is counted on the date its infection was confirmed, and confirmation mea
 
 Backyard flocks are a large share of the detections and a very small share of the birds.
 
-## Sidebar label
+## Virginia COVID — sidebar label
 <!-- id: dash.page.virginia-covid.nav -->
 
 Virginia COVID
@@ -159,12 +159,12 @@ Virginia COVID
 
 Virginia COVID
 
-## Page kicker
+## Virginia COVID — page kicker
 <!-- id: dash.page.virginia-covid.kicker -->
 
 VDH, retired
 
-## Page introduction
+## Virginia COVID — page introduction
 <!-- id: dash.page.virginia-covid.blurb -->
 
 People in Virginia by vaccination status, from the Virginia Department of Health. March 2021 to September 2023, when VDH stopped publishing; the history is complete for that window — nearly ten million rows, by locality, age group and vaccination status.

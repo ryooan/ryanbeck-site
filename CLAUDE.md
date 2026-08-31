@@ -72,6 +72,7 @@ npm run dev       # wrangler on :8787 — the real thing, use this
 npm run serve     # python http.server on :8000 — quick, but see below
 npm run deploy    # pushes to Cloudflare
 npm run site-url  # propagate site.config.json's domain into every file
+npm run edit      # copy editor in the browser, on :8788 (see below)
 npm run copy      # site -> copy/*.md, for a prose review
 npm run copy-apply  # copy/*.md -> site
 npm test          # check-links + check-docs + site-url drift, as CI runs them
@@ -1227,6 +1228,42 @@ npm run copy-apply  # copy/*.md -> site
 node tools/copy.mjs check   # do these files still match the site?
 ```
 
+### Editing copy in the browser
+
+`npm run edit` puts a tab on the right edge of every page. Open it and you get
+that page's copy as text areas; save and the words are written into
+`copy/*.md`, applied to the source, the dashboards rebuilt, and the page
+reloaded. Escape closes it, ctrl/cmd-S saves, and focusing a box outlines the
+words on the page behind it.
+
+**It is a PROXY in front of `wrangler dev`, not a script on the site**, and
+that is the load-bearing decision. The obvious build is a `<script>` on every
+page that disables itself off localhost — which ships a dev tool to production
+and costs every real visitor a request for something they cannot use.
+`tools/copy-server.mjs` listens on 8788, proxies to 8787 and injects the
+editor into HTML on the way past, so **nothing under `public/` knows the
+editor exists** and there is nothing to strip before deploying. Routing,
+`_redirects` and `/api/*` stay wrangler's job, exactly as in production. The
+proof is that `:8787` serves zero references to it and `:8788` serves one.
+
+`tools/copy-editor.js` lives under `tools/`, never `public/`, and renders into
+a shadow root — the site's ~19 KB of CSS has generic selectors (`.panel`,
+`.wrap`, `.card`) and the editor must not touch them, or be touched.
+
+It writes to the repo, so it binds to 127.0.0.1 and rejects any request whose
+socket is not loopback.
+
+Two things that are easy to get wrong here:
+
+- **`extract` must run again after every save.** `apply` refuses to splice
+  into a file whose hash has moved, so without the re-extract the *second*
+  save of a session fails. `save()` runs apply → build → extract, in that
+  order.
+- **Which blocks belong to a dashboard page** is not derivable from the URL
+  alone — all eight come out of one Python file. The page reports the
+  `.series[id]` sections it is actually showing and the server picks the
+  matching `dash.chart.*` blocks, so no extra coupling to `GROUPS` is needed.
+
 **The lock file is the whole design.** Extraction has to read HTML and Python;
 putting text back must not. So extraction records each block's exact file,
 byte range and original text, and `apply` never parses anything — it splices
@@ -1244,6 +1281,13 @@ Three rules that make it safe, each of which was a bug first:
   silently fell back to converting everything.
 - **A block with no words in it is not extracted.** `<h1><img></h1>` has no
   copy; extracting it handed back markup to edit and re-escaped it on return.
+- **CRLF is stripped when reading.** These files check out with `
+` on
+  Windows, and the unwrap left a stray `` sitting inside the paragraph —
+  invisible in the markdown, but a `<textarea>` strips it, so every such block
+  came back from the browser editor looking edited when nobody had touched
+  it. Byte offsets are still taken from the raw file, so splicing is
+  unaffected.
 
 The proof is `extract` then `apply` with no edits leaving a clean git diff,
 which is what `check` runs — do that after touching this tool.

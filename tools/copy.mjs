@@ -84,7 +84,12 @@ const ENT = [
  * tags (<a>, <em>, <strong>) stay, because rewriting them as markdown and
  * back loses attributes and is not worth the risk on forty blocks. */
 function toMd(html) {
-  let s = html;
+  /* These files are checked out with CRLF on Windows. Left in, a
+     carriage return survives the unwrap below and sits inside the
+     paragraph -- invisible in the markdown, but a <textarea> strips it,
+     so every such block came back from the browser editor looking edited
+     when nobody had touched it. */
+  let s = html.replace(/\r\n/g, '\n').replace(/\r/g, '');
   s = s.replace(/<\/p>\s*<p[^>]*>/gi, '\n\n');
   s = s.replace(/^\s*<p[^>]*>/i, '').replace(/<\/p>\s*$/i, '');
   s = s.replace(/<br\s*\/?>\s*<br\s*\/?>/gi, '\n\n');
@@ -284,6 +289,22 @@ function extractDashboards() {
   }
 }
 
+/* Three blocks all labeled "Chart explanation" on one page tells a reviewer
+ * nothing. Name each after its chart, and each page block after its page. */
+function nameDashboards() {
+  const titleOf = {};
+  for (const b of blocks) {
+    const m = /^dash\.(chart|page)\.(.+)\.title$/.exec(b.id);
+    if (m) titleOf[m[1] + ':' + m[2]] = b.text.replace(/<[^>]*>/g, '').trim();
+  }
+  for (const b of blocks) {
+    const m = /^dash\.(chart|page)\.(.+)\.(note|blurb|kicker|nav)$/.exec(b.id);
+    if (!m) continue;
+    const t = titleOf[m[1] + ':' + m[2]];
+    if (t) b.label = t + ' — ' + b.label.toLowerCase();
+  }
+}
+
 /* ------------------------------------------------------------- grouping */
 
 /* Warnings that belong at the top of one particular file. */
@@ -448,6 +469,7 @@ const cmd = process.argv[2] || 'extract';
 if (cmd === 'extract') {
   for (const [name, key] of Object.entries(PAGES)) extractHtml(name, key);
   extractDashboards();
+  nameDashboards();
   blocks.sort((a, b) => a.file.localeCompare(b.file) || a.start - b.start);
   write();
   const perFile = {};
