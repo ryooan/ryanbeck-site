@@ -194,7 +194,18 @@ function extractHtml(name, key) {
        `${key}.meta.description`, 'Search + social description');
 
   const main = findAll(src, 'main')[0];
-  const inMain = (r) => !main || (r.start >= main.start && r.end <= main.end);
+
+  /* A post list is not site copy. The Substack half is replaced at runtime
+     from the feed, so editing it changes nothing a reader will ever see; the
+     "Earlier writing" half is the titles and opening lines of Ryan's own
+     posts, which belong to the posts, not to this page. Both are `ul.posts`,
+     so both come out. */
+  const feeds = findAll(src, 'ul', /class="(?:[^"]*\s)?posts(?:\s[^"]*)?"/);
+  const inFeed = (r) =>
+    feeds.some((f) => r.start >= f.start && r.end <= f.end);
+
+  const inMain = (r) =>
+    (!main || (r.start >= main.start && r.end <= main.end)) && !inFeed(r);
 
   findAll(src, 'h1').filter(inMain).forEach((r, i) =>
     push(file, src, r, `${key}.h1${i ? '.' + i : ''}`, 'Page heading'));

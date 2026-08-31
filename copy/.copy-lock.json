@@ -2,8 +2,8 @@
  "files": {
   "public/404.html": "9fe3ae5bb30ea2ab",
   "public/about-plain.html": "a5604b7f5c556ea1",
-  "public/about.html": "e257a131ce225078",
-  "public/blog.html": "fa537526c0624d0c",
+  "public/about.html": "ffb491b9fc0f1e05",
+  "public/blog.html": "6dfdd3b637384398",
   "public/index.html": "e0caf8636f7375c4",
   "public/park-guides.html": "3f9515f9ccf79ddf",
   "public/projects.html": "b9b5d72be292ab31",
@@ -263,8 +263,8 @@
    "label": "Search + social description",
    "shape": "plain",
    "start": 204,
-   "end": 269,
-   "text": "About Ryan Beck — writer, forecaster, recovering bridge engineer.",
+   "end": 281,
+   "text": "About Ryan Beck — forecaster, sometimes writer, former bridge engineer.",
    "ents": [
     "&mdash;"
    ]
@@ -274,8 +274,8 @@
    "file": "public/about.html",
    "label": "Page heading",
    "shape": "plain",
-   "start": 1923,
-   "end": 1928,
+   "start": 1935,
+   "end": 1940,
    "text": "About",
    "ents": [
     "&mdash;"
@@ -286,8 +286,8 @@
    "file": "public/about.html",
    "label": "About — body paragraph",
    "shape": "plain",
-   "start": 2722,
-   "end": 2734,
+   "start": 2734,
+   "end": 2746,
    "text": "Frontispiece",
    "ents": [
     "&mdash;"
@@ -298,8 +298,8 @@
    "file": "public/about.html",
    "label": "About — chapter label",
    "shape": "plain",
-   "start": 2837,
-   "end": 2854,
+   "start": 2849,
+   "end": 2866,
    "text": "Chapter the first",
    "ents": [
     "&mdash;"
@@ -310,8 +310,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 2872,
-   "end": 2889,
+   "start": 2884,
+   "end": 2901,
    "text": "The short version",
    "ents": [
     "&mdash;"
@@ -322,9 +322,9 @@
    "file": "public/about.html",
    "label": "The short version — body paragraph",
    "shape": "plain",
-   "start": 2920,
-   "end": 3048,
-   "text": "I write science fiction, I think about forecasting for a living, and I have never once managed to have only one hobby at a time.",
+   "start": 2932,
+   "end": 3093,
+   "text": "I think about forecasting for a living, I've previously written some science fiction, and I have a history of getting sucked into all kinds of different hobbies.",
    "ents": [
     "&mdash;"
    ]
@@ -334,9 +334,9 @@
    "file": "public/about.html",
    "label": "The short version — body paragraph",
    "shape": "plain",
-   "start": 3065,
-   "end": 3267,
-   "text": "I'm the author of a novel, <em>SEER</em>, and a short story, <em>Not Human</em>. I like exciting and thought-provoking fiction of a lot of different kinds, and I live in Iowa with my wife and daughters.",
+   "start": 3110,
+   "end": 3416,
+   "text": "I'm Director of Forecasting at <a href=\"https://www.metaculus.com/home/\">Metaculus</a>, where I wound up after becoming obsessed with forecasting and doing pretty good at it. Before that I worked as a bridge engineer for six years, and got a master's degree in civil engineering from Iowa State University.",
    "ents": [
     "&mdash;"
    ]
@@ -346,9 +346,9 @@
    "file": "public/about.html",
    "label": "The short version — body paragraph",
    "shape": "plain",
-   "start": 3284,
-   "end": 3560,
-   "text": "The through-line, if there is one, is a stubborn interest in the gap between a model and the thing the model is about. Bridges taught me that gap has consequences. Forecasting taught me how to put a number on it. Fiction is where I get to ask what happens when nobody bothers.",
+   "start": 3433,
+   "end": 3640,
+   "text": "I love sci-fi and fantasy, and wrote my own sci-fi novel, <em>SEER</em>, when I had an idea I was really excited about and wanted to try my hand at writing a book. I live in Iowa with my wife and three kids.",
    "ents": [
     "&mdash;"
    ]
@@ -358,8 +358,8 @@
    "file": "public/about.html",
    "label": "The short version — body paragraph",
    "shape": "plain",
-   "start": 3591,
-   "end": 3597,
+   "start": 3671,
+   "end": 3677,
    "text": "Page 1",
    "ents": [
     "&mdash;"
@@ -370,8 +370,8 @@
    "file": "public/about.html",
    "label": "The short version — chapter label",
    "shape": "plain",
-   "start": 3700,
-   "end": 3718,
+   "start": 3780,
+   "end": 3798,
    "text": "Chapter the second",
    "ents": [
     "&mdash;"
@@ -382,8 +382,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 3736,
-   "end": 3747,
+   "start": 3816,
+   "end": 3827,
    "text": "Before this",
    "ents": [
     "&mdash;"
@@ -394,8 +394,8 @@
    "file": "public/about.html",
    "label": "Before this — body paragraph",
    "shape": "plain",
-   "start": 3778,
-   "end": 3842,
+   "start": 3858,
+   "end": 3922,
    "text": "For about a decade I designed and inspected bridges across Iowa.",
    "ents": [
     "&mdash;"
@@ -406,8 +406,8 @@
    "file": "public/about.html",
    "label": "Before this — body paragraph",
    "shape": "plain",
-   "start": 3859,
-   "end": 4132,
+   "start": 3939,
+   "end": 4212,
    "text": "It is a profession that makes you honest. A load path either exists or it doesn't. A tolerance is not a matter of opinion. You learn to ask what you would have to believe for your own analysis to be wrong, and then you go and check, because the alternative is unacceptable.",
    "ents": [
     "&mdash;"
@@ -418,8 +418,8 @@
    "file": "public/about.html",
    "label": "Before this — body paragraph",
    "shape": "plain",
-   "start": 4149,
-   "end": 4222,
+   "start": 4229,
+   "end": 4302,
    "text": "I think about that habit constantly in work that has far softer feedback.",
    "ents": [
     "&mdash;"
@@ -430,8 +430,8 @@
    "file": "public/about.html",
    "label": "Before this — body paragraph",
    "shape": "plain",
-   "start": 4253,
-   "end": 4259,
+   "start": 4333,
+   "end": 4339,
    "text": "Page 2",
    "ents": [
     "&mdash;"
@@ -442,8 +442,8 @@
    "file": "public/about.html",
    "label": "Before this — chapter label",
    "shape": "plain",
-   "start": 4362,
-   "end": 4379,
+   "start": 4442,
+   "end": 4459,
    "text": "Chapter the third",
    "ents": [
     "&mdash;"
@@ -454,8 +454,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 4397,
-   "end": 4400,
+   "start": 4477,
+   "end": 4480,
    "text": "Now",
    "ents": [
     "&mdash;"
@@ -466,8 +466,8 @@
    "file": "public/about.html",
    "label": "Now — body paragraph",
    "shape": "plain",
-   "start": 4431,
-   "end": 4489,
+   "start": 4511,
+   "end": 4569,
    "text": "These days I coordinate forecasting programs at Metaculus.",
    "ents": [
     "&mdash;"
@@ -478,8 +478,8 @@
    "file": "public/about.html",
    "label": "Now — body paragraph",
    "shape": "plain",
-   "start": 4506,
-   "end": 4837,
+   "start": 4586,
+   "end": 4917,
    "text": "Most of the job is not prediction. It is writing questions that can actually resolve, arguing about wording until the ambiguity is gone, and then finding out in public whether the crowd was right. It turns out that \"what exactly would count as this happening?\" is one of the more useful questions you can ask about almost anything.",
    "ents": [
     "&mdash;"
@@ -490,8 +490,8 @@
    "file": "public/about.html",
    "label": "Now — body paragraph",
    "shape": "plain",
-   "start": 4871,
-   "end": 4908,
+   "start": 4951,
+   "end": 4988,
    "text": "Calibration is a habit, not a talent.",
    "ents": [
     "&mdash;"
@@ -502,8 +502,8 @@
    "file": "public/about.html",
    "label": "Now — body paragraph",
    "shape": "plain",
-   "start": 4939,
-   "end": 4945,
+   "start": 5019,
+   "end": 5025,
    "text": "Page 3",
    "ents": [
     "&mdash;"
@@ -514,8 +514,8 @@
    "file": "public/about.html",
    "label": "Now — chapter label",
    "shape": "plain",
-   "start": 5048,
-   "end": 5066,
+   "start": 5128,
+   "end": 5146,
    "text": "Chapter the fourth",
    "ents": [
     "&mdash;"
@@ -526,8 +526,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 5084,
-   "end": 5095,
+   "start": 5164,
+   "end": 5175,
    "text": "The fiction",
    "ents": [
     "&mdash;"
@@ -538,8 +538,8 @@
    "file": "public/about.html",
    "label": "The fiction — body paragraph",
    "shape": "plain",
-   "start": 5126,
-   "end": 5171,
+   "start": 5206,
+   "end": 5251,
    "text": "SEER began as a question I couldn't put down.",
    "ents": [
     "&mdash;"
@@ -550,8 +550,8 @@
    "file": "public/about.html",
    "label": "The fiction — body paragraph",
    "shape": "plain",
-   "start": 5188,
-   "end": 5550,
+   "start": 5268,
+   "end": 5630,
    "text": "If a system could reliably predict what you wanted — not guess, not nudge, but <em>know</em> — would you still call it wanting? In the 22nd century the algorithm does exactly that, and almost nobody minds. The novel follows Maria, who is kidnapped by the people trying to bring it down and then has to work out which of them is telling her the truth.",
    "ents": [
     "&mdash;"
@@ -562,8 +562,8 @@
    "file": "public/about.html",
    "label": "The fiction — body paragraph",
    "shape": "plain",
-   "start": 5567,
-   "end": 5743,
+   "start": 5647,
+   "end": 5823,
    "text": "<em>Not Human</em> is a shorter, colder cousin of the same question: Lisa is the first person in the world to have her mind copied to a machine, and the copy insists it is her.",
    "ents": [
     "&mdash;"
@@ -574,8 +574,8 @@
    "file": "public/about.html",
    "label": "The fiction — body paragraph",
    "shape": "plain",
-   "start": 5760,
-   "end": 5816,
+   "start": 5840,
+   "end": 5896,
    "text": "<a href=\"writing.html\">Both are on the fiction page.</a>",
    "ents": [
     "&mdash;"
@@ -586,8 +586,8 @@
    "file": "public/about.html",
    "label": "The fiction — body paragraph",
    "shape": "plain",
-   "start": 5847,
-   "end": 5853,
+   "start": 5927,
+   "end": 5933,
    "text": "Page 4",
    "ents": [
     "&mdash;"
@@ -598,8 +598,8 @@
    "file": "public/about.html",
    "label": "The fiction — chapter label",
    "shape": "plain",
-   "start": 5956,
-   "end": 5973,
+   "start": 6036,
+   "end": 6053,
    "text": "Chapter the fifth",
    "ents": [
     "&mdash;"
@@ -610,8 +610,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 5991,
-   "end": 6009,
+   "start": 6071,
+   "end": 6089,
    "text": "The Missing Nuance",
    "ents": [
     "&mdash;"
@@ -622,8 +622,8 @@
    "file": "public/about.html",
    "label": "The Missing Nuance — body paragraph",
    "shape": "plain",
-   "start": 6040,
-   "end": 6081,
+   "start": 6120,
+   "end": 6161,
    "text": "The newsletter is where the arguments go.",
    "ents": [
     "&mdash;"
@@ -634,8 +634,8 @@
    "file": "public/about.html",
    "label": "The Missing Nuance — body paragraph",
    "shape": "plain",
-   "start": 6098,
-   "end": 6340,
+   "start": 6178,
+   "end": 6420,
    "text": "It's named for the thing that gets sanded off when a position is repeated enough times — the caveat that made it true in the first place. Mostly forecasting, occasionally technology, occasionally an essay I couldn't place anywhere else.",
    "ents": [
     "&mdash;"
@@ -646,8 +646,8 @@
    "file": "public/about.html",
    "label": "The Missing Nuance — body paragraph",
    "shape": "plain",
-   "start": 6357,
-   "end": 6438,
+   "start": 6437,
+   "end": 6518,
    "text": "<a href=\"https://themissingnuance.substack.com\">themissingnuance.substack.com</a>",
    "ents": [
     "&mdash;"
@@ -658,8 +658,8 @@
    "file": "public/about.html",
    "label": "The Missing Nuance — body paragraph",
    "shape": "plain",
-   "start": 6469,
-   "end": 6475,
+   "start": 6549,
+   "end": 6555,
    "text": "Page 5",
    "ents": [
     "&mdash;"
@@ -670,8 +670,8 @@
    "file": "public/about.html",
    "label": "The Missing Nuance — chapter label",
    "shape": "plain",
-   "start": 6578,
-   "end": 6595,
+   "start": 6658,
+   "end": 6675,
    "text": "Chapter the sixth",
    "ents": [
     "&mdash;"
@@ -682,8 +682,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 6613,
-   "end": 6626,
+   "start": 6693,
+   "end": 6706,
    "text": "Off the clock",
    "ents": [
     "&mdash;"
@@ -694,8 +694,8 @@
    "file": "public/about.html",
    "label": "Off the clock — body paragraph",
    "shape": "plain",
-   "start": 6657,
-   "end": 6690,
+   "start": 6737,
+   "end": 6770,
    "text": "Married, with daughters, in Iowa.",
    "ents": [
     "&mdash;"
@@ -706,8 +706,8 @@
    "file": "public/about.html",
    "label": "Off the clock — body paragraph",
    "shape": "plain",
-   "start": 6707,
-   "end": 6976,
+   "start": 6787,
+   "end": 7056,
    "text": "The serial-hobbyist thing is not a bit. There is always some half-learned skill in progress and a shelf of evidence from the last one. Reading, mostly; building things that didn't need to exist; and a persistent belief that this is the year I finish everything I start.",
    "ents": [
     "&mdash;"
@@ -718,8 +718,8 @@
    "file": "public/about.html",
    "label": "Off the clock — body paragraph",
    "shape": "plain",
-   "start": 7007,
-   "end": 7013,
+   "start": 7087,
+   "end": 7093,
    "text": "Page 6",
    "ents": [
     "&mdash;"
@@ -730,8 +730,8 @@
    "file": "public/about.html",
    "label": "Off the clock — chapter label",
    "shape": "plain",
-   "start": 7116,
-   "end": 7135,
+   "start": 7196,
+   "end": 7215,
    "text": "Chapter the seventh",
    "ents": [
     "&mdash;"
@@ -742,8 +742,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 7153,
-   "end": 7162,
+   "start": 7233,
+   "end": 7242,
    "text": "Elsewhere",
    "ents": [
     "&mdash;"
@@ -754,8 +754,8 @@
    "file": "public/about.html",
    "label": "Elsewhere — body paragraph",
    "shape": "plain",
-   "start": 7633,
-   "end": 7710,
+   "start": 7713,
+   "end": 7790,
    "text": "The fastest way to reach me is email. I read all of it and answer most of it.",
    "ents": [
     "&mdash;"
@@ -766,8 +766,8 @@
    "file": "public/about.html",
    "label": "Elsewhere — body paragraph",
    "shape": "plain",
-   "start": 7741,
-   "end": 7747,
+   "start": 7821,
+   "end": 7827,
    "text": "Page 7",
    "ents": [
     "&mdash;"
@@ -778,8 +778,8 @@
    "file": "public/about.html",
    "label": "Elsewhere — chapter label",
    "shape": "plain",
-   "start": 7850,
-   "end": 7858,
+   "start": 7930,
+   "end": 7938,
    "text": "Colophon",
    "ents": [
     "&mdash;"
@@ -790,8 +790,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 7876,
-   "end": 7891,
+   "start": 7956,
+   "end": 7971,
    "text": "About this book",
    "ents": [
     "&mdash;"
@@ -802,8 +802,8 @@
    "file": "public/about.html",
    "label": "About this book — body paragraph",
    "shape": "plain",
-   "start": 7909,
-   "end": 8062,
+   "start": 7989,
+   "end": 8142,
    "text": "Set in the same hand as the doors. The lettering was drawn rather than typeset; the leather, the page stock and the dust are generated, not photographed.",
    "ents": [
     "&mdash;"
@@ -814,8 +814,8 @@
    "file": "public/about.html",
    "label": "About this book — body paragraph",
    "shape": "plain",
-   "start": 8079,
-   "end": 8136,
+   "start": 8159,
+   "end": 8216,
    "text": "<a href=\"about-plain.html\">Prefer it as a plain page?</a>",
    "ents": [
     "&mdash;"
@@ -826,8 +826,8 @@
    "file": "public/about.html",
    "label": "About this book — body paragraph",
    "shape": "plain",
-   "start": 8167,
-   "end": 8170,
+   "start": 8247,
+   "end": 8250,
    "text": "Fin",
    "ents": [
     "&mdash;"
@@ -838,8 +838,8 @@
    "file": "public/about.html",
    "label": "About this book — body paragraph",
    "shape": "plain",
-   "start": 8311,
-   "end": 8353,
+   "start": 8391,
+   "end": 8433,
    "text": "Click a page to turn it — or drag a corner",
    "ents": [
     "&mdash;"
@@ -850,8 +850,8 @@
    "file": "public/blog.html",
    "label": "Browser tab / search result title",
    "shape": "plain",
-   "start": 143,
-   "end": 159,
+   "start": 138,
+   "end": 154,
    "text": "Blog · Ryan Beck",
    "ents": [
     "&ndash;",
@@ -864,9 +864,9 @@
    "file": "public/blog.html",
    "label": "Search + social description",
    "shape": "plain",
-   "start": 203,
-   "end": 266,
-   "text": "Essays on forecasting, uncertainty and technology by Ryan Beck.",
+   "start": 197,
+   "end": 329,
+   "text": "Infrequent updates on what's on my mind, and especially digging into the details when I think the conversation is missing something.",
    "ents": [
     "&ndash;",
     "&#x27;",
@@ -878,8 +878,8 @@
    "file": "public/blog.html",
    "label": "Page heading",
    "shape": "plain",
-   "start": 1789,
-   "end": 1793,
+   "start": 1816,
+   "end": 1820,
    "text": "Blog",
    "ents": [
     "&ndash;",
@@ -892,9 +892,9 @@
    "file": "public/blog.html",
    "label": "Blog — intro paragraph",
    "shape": "plain",
-   "start": 1820,
-   "end": 1981,
-   "text": "Essays on forecasting, uncertainty, and the parts of technology that don't fit in a headline. Most new writing goes out through <em>The Missing Nuance</em>.",
+   "start": 1846,
+   "end": 2026,
+   "text": "Writing about what's interesting to me, especially when I think there are details being missed in the public conversation. New writing goes out through <em>The Missing Nuance</em>.",
    "ents": [
     "&ndash;",
     "&#x27;",
@@ -906,9 +906,9 @@
    "file": "public/blog.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 2265,
-   "end": 2283,
-   "text": "The Missing Nuance",
+   "start": 2302,
+   "end": 2386,
+   "text": "<a class=\"quiet\" href=\"https://themissingnuance.substack.com\">The Missing Nuance</a>",
    "ents": [
     "&ndash;",
     "&#x27;",
@@ -920,9 +920,9 @@
    "file": "public/blog.html",
    "label": "The Missing Nuance — intro paragraph",
    "shape": "plain",
-   "start": 2336,
-   "end": 2362,
-   "text": "Pulled live from Substack.",
+   "start": 2438,
+   "end": 2530,
+   "text": "Pulled live from <a class=\"quiet\" href=\"https://themissingnuance.substack.com\">Substack</a>.",
    "ents": [
     "&ndash;",
     "&#x27;",
@@ -932,66 +932,10 @@
   {
    "id": "blog.p.3",
    "file": "public/blog.html",
-   "label": "The Missing Nuance — post excerpt",
-   "shape": "plain",
-   "start": 2721,
-   "end": 2778,
-   "text": "What if \"attack\" wasn't our first instinct",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.4",
-   "file": "public/blog.html",
-   "label": "The Missing Nuance — post excerpt",
-   "shape": "plain",
-   "start": 3102,
-   "end": 3190,
-   "text": "How much does a good result tell you about the quality of the decision-making behind it?",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.5",
-   "file": "public/blog.html",
-   "label": "The Missing Nuance — post excerpt",
-   "shape": "plain",
-   "start": 3485,
-   "end": 3525,
-   "text": "A short explanation of what persuaded me",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.6",
-   "file": "public/blog.html",
-   "label": "The Missing Nuance — post excerpt",
-   "shape": "plain",
-   "start": 3860,
-   "end": 3922,
-   "text": "Lightly edited from a Facebook post I shared in February 2017.",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.7",
-   "file": "public/blog.html",
    "label": "The Missing Nuance — body paragraph",
    "shape": "plain",
-   "start": 3989,
-   "end": 4071,
+   "start": 4134,
+   "end": 4216,
    "text": "<a href=\"https://themissingnuance.substack.com/archive\">See the full archive →</a>",
    "ents": [
     "&ndash;",
@@ -1004,8 +948,8 @@
    "file": "public/blog.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 4112,
-   "end": 4127,
+   "start": 4253,
+   "end": 4268,
    "text": "Earlier writing",
    "ents": [
     "&ndash;",
@@ -1014,279 +958,13 @@
    ]
   },
   {
-   "id": "blog.p.8",
+   "id": "blog.p.4",
    "file": "public/blog.html",
    "label": "Earlier writing — intro paragraph",
    "shape": "plain",
-   "start": 4180,
-   "end": 4413,
-   "text": "Nineteen posts from 2019–2023, written before the newsletter and still living at <a href=\"https://www.ryanbeckauthor.com\">ryanbeckauthor.com</a>. Books, forecasting, elections, vaccines, and one argument with a moose.",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.9",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 4734,
-   "end": 4893,
-   "text": "I've been reading Empire of Liberty: A history of the Early Republic, 1780-1815 by Gordon S. Wood and while it's full of fascinating information one…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.10",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 5164,
-   "end": 5313,
-   "text": "I have a few Rmarkdown scripts that I’ve created to visualize data for forecasting. I host them on Github so they appear as html pages on my website…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.11",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 5559,
-   "end": 5713,
-   "text": "I've been increasingly frustrated with the public conversation around Afghanistan. The whole situation is a tragedy, and instead of sober reflection…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.12",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 5985,
-   "end": 6129,
-   "text": "The Europeans who pass into America degenerate, as do the animals; a proof that the climate is unfavourable to the improvement of either man or…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.13",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 6361,
-   "end": 6505,
-   "text": "I forgot to post here about it, but a few weeks ago I turned my vaccine spreadsheet into a webpage on my site. You can check it out at the link…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.14",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 6827,
-   "end": 6974,
-   "text": "On January 28th Robinhood disabled all transactions except for position-closing (selling) for a small set of stocks including Gamestop (GME). This…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.15",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 7236,
-   "end": 7390,
-   "text": "Trying to get information on the potential coronavirus vaccines has been frustrating. The information I want is never in one place, it's often vague…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.16",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 7652,
-   "end": 7798,
-   "text": "I thought it would be interesting to predict what will happen under the Biden presidency. I think making falsifiable predictions is important for…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.17",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 8098,
-   "end": 8243,
-   "text": "I want to discuss the strategy and logic behind the decision to vote third party or sit out of an election. Below are some of the common reasons…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.18",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 8551,
-   "end": 8698,
-   "text": "Biden will be announcing his pick for vice president soon, and I think one aspect of the VP selection has been overlooked in the discussions about…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.19",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 8918,
-   "end": 9065,
-   "text": "When I wrote the drones in SEER this was kind of what I had in mind for how quickly they move and attack. Being controlled by computers means they…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.20",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 9355,
-   "end": 9500,
-   "text": "Citizens United v. FEC was decided ten years ago and remains one of the first things that comes to mind when people think about campaign finance…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.21",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 9732,
-   "end": 9881,
-   "text": "I just finished the book Why Nations Fail and really enjoyed it, and I highly recommend it to everyone. Its theory is that institutions are the most…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.22",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 10119,
-   "end": 10268,
-   "text": "People have been afraid of technology taking jobs for a long time. Apparently in the 1500s William Lee invented a knitting machine and went to Queen…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.23",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 10523,
-   "end": 10675,
-   "text": "This is some really cool stuff. A group called Open AI has used machine learning to teach a robotic hand to solve a Rubik's cube. They trained the…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.24",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 10925,
-   "end": 11072,
-   "text": "Hey Democrats, do you want to cut carbon emissions in half in just ten years? Do you want to increase benefits to the least fortunate among us? Do…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.25",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 11310,
-   "end": 11452,
-   "text": "I posted a poll on Facebook and Twitter yesterday asked how long everyone thought it would take for us to be able to copy the human mind to a…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.26",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 11702,
-   "end": 11855,
-   "text": "I've always been a sucker for those videos that go layer by layer and show all the CGI that went into movie scenes, so I thought it would be fun to…",
-   "ents": [
-    "&ndash;",
-    "&#x27;",
-    "&quot;"
-   ]
-  },
-  {
-   "id": "blog.p.27",
-   "file": "public/blog.html",
-   "label": "Earlier writing — post excerpt",
-   "shape": "plain",
-   "start": 12097,
-   "end": 12255,
-   "text": "Welcome to my website! I've been working on this a while and I'm excited to finally share everything I've been working on. Head on over to the…",
+   "start": 4320,
+   "end": 4400,
+   "text": "Posts from 2019–2023, written before the newsletter shared on my old site.",
    "ents": [
     "&ndash;",
     "&#x27;",

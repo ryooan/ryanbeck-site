@@ -19,7 +19,7 @@ About · Ryan Beck
 ## Search + social description
 <!-- id: about.meta.description -->
 
-About Ryan Beck — writer, forecaster, recovering bridge engineer.
+About Ryan Beck — forecaster, sometimes writer, former bridge engineer.
 
 ## Page heading
 <!-- id: about.h1 -->
@@ -44,17 +44,17 @@ The short version
 ## The short version — body paragraph
 <!-- id: about.p.3 -->
 
-I write science fiction, I think about forecasting for a living, and I have never once managed to have only one hobby at a time.
+I think about forecasting for a living, I've previously written some science fiction, and I have a history of getting sucked into all kinds of different hobbies.
 
 ## The short version — body paragraph
 <!-- id: about.p.4 -->
 
-I'm the author of a novel, <em>SEER</em>, and a short story, <em>Not Human</em>. I like exciting and thought-provoking fiction of a lot of different kinds, and I live in Iowa with my wife and daughters.
+I'm Director of Forecasting at <a href="https://www.metaculus.com/home/">Metaculus</a>, where I wound up after becoming obsessed with forecasting and doing pretty good at it. Before that I worked as a bridge engineer for six years, and got a master's degree in civil engineering from Iowa State University.
 
 ## The short version — body paragraph
 <!-- id: about.p.5 -->
 
-The through-line, if there is one, is a stubborn interest in the gap between a model and the thing the model is about. Bridges taught me that gap has consequences. Forecasting taught me how to put a number on it. Fiction is where I get to ask what happens when nobody bothers.
+I love sci-fi and fantasy, and wrote my own sci-fi novel, <em>SEER</em>, when I had an idea I was really excited about and wanted to try my hand at writing a book. I live in Iowa with my wife and three kids.
 
 ## The short version — body paragraph
 <!-- id: about.p.6 -->

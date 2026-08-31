@@ -514,3 +514,21 @@ p:empty, .lede:empty, .meta:empty, .kicker:empty, .runic:empty,
    real content in it. If an entire section should go, delete it from the
    HTML rather than blanking its words. */
 .tags:not(:has(.tag:not(:empty))){display:none}
+
+/* ---------- quiet links ----------
+   A link that should not announce itself as one. Used where the text is a
+   heading or ordinary prose that happens to be clickable -- styling it like a
+   normal link would make a section heading read as navigation. It takes the
+   surrounding color and weight and only marks itself on hover and focus. */
+a.quiet{
+  color:inherit;
+  text-decoration:none;
+  border-bottom:1px solid transparent;
+  transition:border-color .14s ease,color .14s ease;
+}
+a.quiet:hover{border-bottom-color:currentColor}
+a.quiet:focus-visible{
+  outline:2px solid var(--ember);
+  outline-offset:2px;
+  border-bottom-color:transparent;
+}
