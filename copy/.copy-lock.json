@@ -7,7 +7,7 @@
   "public/index.html": "e0caf8636f7375c4",
   "public/park-guides.html": "3f9515f9ccf79ddf",
   "public/projects.html": "b9b5d72be292ab31",
-  "public/writing.html": "17bfd3b444d4ac60",
+  "public/writing.html": "cb1e960e89d02bd4",
   "tools/forecasting/build_page.py": "c8972ad20838e25e"
  },
  "blocks": [
@@ -1770,8 +1770,8 @@
    "file": "public/writing.html",
    "label": "Browser tab / search result title",
    "shape": "plain",
-   "start": 143,
-   "end": 162,
+   "start": 138,
+   "end": 157,
    "text": "Fiction · Ryan Beck",
    "ents": []
   },
@@ -1780,9 +1780,9 @@
    "file": "public/writing.html",
    "label": "Search + social description",
    "shape": "plain",
-   "start": 206,
-   "end": 263,
-   "text": "Science fiction by Ryan Beck — SEER, Not Human, and more.",
+   "start": 200,
+   "end": 250,
+   "text": "Science fiction by Ryan Beck — SEER and Not Human.",
    "ents": []
   },
   {
@@ -1790,8 +1790,8 @@
    "file": "public/writing.html",
    "label": "Page heading",
    "shape": "plain",
-   "start": 1790,
-   "end": 1797,
+   "start": 1741,
+   "end": 1748,
    "text": "Fiction",
    "ents": []
   },
@@ -1800,9 +1800,9 @@
    "file": "public/writing.html",
    "label": "Fiction — intro paragraph",
    "shape": "plain",
-   "start": 1824,
-   "end": 2085,
-   "text": "Science fiction about the machinery we build to know ourselves, and what it costs when the machinery turns out to know us better than we do. A novel, a short story, and a standing interest in the gap between a model and the thing it claims to predict.",
+   "start": 1774,
+   "end": 1952,
+   "text": "I haven't written fiction for a while, but for a few years was very motivated by writing SEER and my short story Not Human. Learn more about them and how to check them out below.",
    "ents": []
   },
   {
@@ -1810,8 +1810,8 @@
    "file": "public/writing.html",
    "label": "Fiction — small caption",
    "shape": "plain",
-   "start": 2309,
-   "end": 2332,
+   "start": 2169,
+   "end": 2192,
    "text": "Novel · Science fiction",
    "ents": []
   },
@@ -1820,8 +1820,8 @@
    "file": "public/writing.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 2350,
-   "end": 2354,
+   "start": 2209,
+   "end": 2213,
    "text": "SEER",
    "ents": []
   },
@@ -1830,8 +1830,8 @@
    "file": "public/writing.html",
    "label": "SEER — body paragraph",
    "shape": "plain",
-   "start": 2372,
-   "end": 2735,
+   "start": 2230,
+   "end": 2590,
    "text": "The future is data. All Maria has to do is think about a simple task, like turning on the lights, and it happens. It's not magic, it's SEER, the government-operated algorithm that makes life in the 22nd century so idyllic. By harvesting massive amounts of personal data, SEER can predict what a person will want the moment they want it.",
    "ents": []
   },
@@ -1840,8 +1840,8 @@
    "file": "public/writing.html",
    "label": "SEER — body paragraph",
    "shape": "plain",
-   "start": 2752,
-   "end": 3115,
+   "start": 2606,
+   "end": 2966,
    "text": "It's only when she's kidnapped by a group of anti-SEER rebels that Maria learns there's more to the algorithm than she knew. SEER is not just making people's lives easier; it's being used by those in power to control the public and stamp out potential opposition. At least, that's what Vincent, the leader of the rebel group, tells her.",
    "ents": []
   },
@@ -1850,8 +1850,8 @@
    "file": "public/writing.html",
    "label": "SEER — body paragraph",
    "shape": "plain",
-   "start": 3132,
-   "end": 3617,
+   "start": 2982,
+   "end": 3462,
    "text": "Vincent needs Maria's cybersecurity expertise to take SEER down. But can she trust him? Bringing down SEER could free the country from its oppressive control — or it could be an act of horrific domestic terrorism, plunging the country into chaos. Either way, associating with the rebels has already made her the target of an army of autonomous combat drones. An army that can predict what she'll do before the thought even crosses her mind.",
    "ents": []
   },
@@ -1860,8 +1860,8 @@
    "file": "public/writing.html",
    "label": "SEER — small caption",
    "shape": "plain",
-   "start": 4083,
-   "end": 4101,
+   "start": 3833,
+   "end": 3851,
    "text": "Short story · Free",
    "ents": []
   },
@@ -1870,8 +1870,8 @@
    "file": "public/writing.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 4119,
-   "end": 4128,
+   "start": 3868,
+   "end": 3877,
    "text": "Not Human",
    "ents": []
   },
@@ -1880,8 +1880,8 @@
    "file": "public/writing.html",
    "label": "Not Human — body paragraph",
    "shape": "plain",
-   "start": 4146,
-   "end": 4488,
+   "start": 3894,
+   "end": 4233,
    "text": "What makes you human? As the first person in the world to have her mind copied to a machine, Lisa may soon learn the answer. Her copy's mechanical body is stronger and more durable than bone, flesh, and blood could ever be. But the dream of roboticists and neuroscientists everywhere may turn out to be a nightmare.",
    "ents": []
   },
@@ -1890,29 +1890,9 @@
    "file": "public/writing.html",
    "label": "Not Human — body paragraph",
    "shape": "plain",
-   "start": 4505,
-   "end": 4640,
-   "text": "Read it online, or join the list to get it in ebook and PDF — along with a preview of the first two chapters of <em>SEER</em>.",
-   "ents": []
-  },
-  {
-   "id": "writing.h2.3",
-   "file": "public/writing.html",
-   "label": "Section heading",
-   "shape": "plain",
-   "start": 5010,
-   "end": 5045,
-   "text": "One email, only when there's a book",
-   "ents": []
-  },
-  {
-   "id": "writing.p.9",
-   "file": "public/writing.html",
-   "label": "One email, only when there's a book — body paragraph",
-   "shape": "plain",
-   "start": 5061,
-   "end": 5251,
-   "text": "Join and I'll send you <em>Not Human</em> in ebook and PDF, plus the first two chapters of <em>SEER</em>. No schedule, no filler — you'll hear from me when there's something finished.",
+   "start": 4249,
+   "end": 4249,
+   "text": "",
    "ents": []
   },
   {

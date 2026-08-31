@@ -1468,10 +1468,12 @@ is left:
   project card's title, copy and link. These are Ryan's real images and text —
   a `tools/` regeneration run must not overwrite the covers, the portrait,
   or any of the three door scenes.
-- **The newsletter form** posts to `/api/subscribe`, which validates the
-  address and returns `{ok: true}` without storing it. See the TODO in
-  `worker/index.js`: it needs a Buttondown token or to be repointed at
-  Substack's own subscribe page.
+- **The mailing-list block is gone** (2026-08-31, Ryan's call), along with the
+  two buttons that pointed at it — SEER's "Read the first two chapters" and
+  *Not Human*'s "Get the ebook", both of which were `href="#newsletter"` and
+  would have been dead anchors. `/subscribe` came out of `_redirects` for the
+  same reason. `/api/subscribe` still exists in `worker/index.js` with nothing
+  calling it; see task 3.
 - **The blog page's post lists** are hand-written. The Substack half is
   replaced at runtime once `/api/substack` is live.
 - ⛔ **THE DOMAIN IS NOT CHOSEN, AND IT WILL NOT BE `ryanbeck.com`.** That one
@@ -1540,13 +1542,22 @@ Roughly in the order they unblock things.
    `npm run deploy` — but it publishes under Ryan's name, so wait for him to
    ask. Then point the domain. HOSTING.md covers why Cloudflare and what the
    free tier gives you.
-2. **Wire `/api/subscribe`** to a real list, or delete the route and point the
-   form at Substack's own subscribe page.
-3. **Fork the fourteen dashboards** out of the old `ryooan.github.io` repo
+2. **Put *Not Human* somewhere better than the old site.** Ryan's ask,
+   2026-08-31. Its only link on the fiction page is "Read it online", which
+   goes to `ryanbeckauthor.com/writing/NotHuman` — the site this one replaces,
+   so the new site currently sends readers to the old one for its own free
+   story. **Substack is the leading candidate** (he already runs *The Missing
+   Nuance* there); a page on this site would work too. Whatever it becomes,
+   change the `href` and the button text on `public/writing.html`.
+3. **Decide what happens to `/api/subscribe`.** The form that posted to it is
+   gone (removed 2026-08-31 with the mailing-list block), so the route is now
+   live but unreferenced. Either wire it to a real list if the list comes
+   back, or delete it from `worker/index.js`.
+4. **Fork the fourteen dashboards** out of the old `ryooan.github.io` repo
    into the current personal-projects repo, fix what has drifted, and polish
    the presentation — Ryan's ask, 2026-08-20. **Done**: the dashboard
    lives at `public/forecasting/`. Until then they stay linked where they live.
-3a. **March Madness is behind Vercel deployment protection.** Its card
+4a. **March Madness is behind Vercel deployment protection.** Its card
    links the stable alias
    (`march-madness-2026-ryan-8339s-projects.vercel.app`), but every URL on
    the project currently serves Vercel's SSO login page. Ryan has to turn
@@ -1555,11 +1566,11 @@ Roughly in the order they unblock things.
    Wordle Analysis, Ballot Research 2026, Desktop Build 2026. Real captures
    for app-type projects still need a compositing browser; Herder's card
    uses its actual wordmark re-inked gilt, March Madness a drawn bracket.
-4. **Prune the projects lede**, which still marks itself a draft. (The last
+5. **Prune the projects lede**, which still marks itself a draft. (The last
    generated door scene is done — the anvil landed 2026-08-23.)
-5. **Have Ryan pass over the about-page copy.** It is drafted for him, not by
+6. **Have Ryan pass over the about-page copy.** It is drafted for him, not by
    him. Each page is one `<article class="page-src">` in `about.html`; adding
    or reordering pages needs nothing else changed.
-6. **Decide on Astro** before the site grows past ~8 pages. The header is
+7. **Decide on Astro** before the site grows past ~8 pages. The header is
    duplicated across six files, which is fine at six and annoying at ten.
    HOSTING.md has the argument, including the case against.

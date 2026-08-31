@@ -19,7 +19,7 @@ Fiction · Ryan Beck
 ## Search + social description
 <!-- id: writing.meta.description -->
 
-Science fiction by Ryan Beck — SEER, Not Human, and more.
+Science fiction by Ryan Beck — SEER and Not Human.
 
 ## Page heading
 <!-- id: writing.h1 -->
@@ -29,7 +29,7 @@ Fiction
 ## Fiction — intro paragraph
 <!-- id: writing.p.1 -->
 
-Science fiction about the machinery we build to know ourselves, and what it costs when the machinery turns out to know us better than we do. A novel, a short story, and a standing interest in the gap between a model and the thing it claims to predict.
+I haven't written fiction for a while, but for a few years was very motivated by writing SEER and my short story Not Human. Learn more about them and how to check them out below.
 
 ## Fiction — small caption
 <!-- id: writing.p.2 -->
@@ -74,15 +74,5 @@ What makes you human? As the first person in the world to have her mind copied t
 ## Not Human — body paragraph
 <!-- id: writing.p.8 -->
 
-Read it online, or join the list to get it in ebook and PDF — along with a preview of the first two chapters of <em>SEER</em>.
 
-## Section heading
-<!-- id: writing.h2.3 -->
-
-One email, only when there's a book
-
-## One email, only when there's a book — body paragraph
-<!-- id: writing.p.9 -->
-
-Join and I'll send you <em>Not Human</em> in ebook and PDF, plus the first two chapters of <em>SEER</em>. No schedule, no filler — you'll hear from me when there's something finished.
 
