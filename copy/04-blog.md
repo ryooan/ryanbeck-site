@@ -49,7 +49,7 @@ Pulled live from Substack.
 ## The Missing Nuance — post excerpt
 <!-- id: blog.p.3 -->
 
-What if "attack" wasn’t our first instinct
+What if "attack" wasn't our first instinct
 
 ## The Missing Nuance — post excerpt
 <!-- id: blog.p.4 -->
@@ -84,7 +84,7 @@ Nineteen posts from 2019–2023, written before the newsletter and still living 
 ## Earlier writing — post excerpt
 <!-- id: blog.p.9 -->
 
-I’ve been reading Empire of Liberty: A history of the Early Republic, 1780-1815 by Gordon S. Wood and while it’s full of fascinating information one…
+I've been reading Empire of Liberty: A history of the Early Republic, 1780-1815 by Gordon S. Wood and while it's full of fascinating information one…
 
 ## Earlier writing — post excerpt
 <!-- id: blog.p.10 -->
@@ -94,7 +94,7 @@ I have a few Rmarkdown scripts that I’ve created to visualize data for forecas
 ## Earlier writing — post excerpt
 <!-- id: blog.p.11 -->
 
-I’ve been increasingly frustrated with the public conversation around Afghanistan. The whole situation is a tragedy, and instead of sober reflection…
+I've been increasingly frustrated with the public conversation around Afghanistan. The whole situation is a tragedy, and instead of sober reflection…
 
 ## Earlier writing — post excerpt
 <!-- id: blog.p.12 -->
@@ -114,7 +114,7 @@ On January 28th Robinhood disabled all transactions except for position-closing 
 ## Earlier writing — post excerpt
 <!-- id: blog.p.15 -->
 
-Trying to get information on the potential coronavirus vaccines has been frustrating. The information I want is never in one place, it’s often vague…
+Trying to get information on the potential coronavirus vaccines has been frustrating. The information I want is never in one place, it's often vague…
 
 ## Earlier writing — post excerpt
 <!-- id: blog.p.16 -->
@@ -154,7 +154,7 @@ People have been afraid of technology taking jobs for a long time. Apparently in
 ## Earlier writing — post excerpt
 <!-- id: blog.p.23 -->
 
-This is some really cool stuff. A group called Open AI has used machine learning to teach a robotic hand to solve a Rubik’s cube. They trained the…
+This is some really cool stuff. A group called Open AI has used machine learning to teach a robotic hand to solve a Rubik's cube. They trained the…
 
 ## Earlier writing — post excerpt
 <!-- id: blog.p.24 -->
@@ -169,10 +169,10 @@ I posted a poll on Facebook and Twitter yesterday asked how long everyone though
 ## Earlier writing — post excerpt
 <!-- id: blog.p.26 -->
 
-I’ve always been a sucker for those videos that go layer by layer and show all the CGI that went into movie scenes, so I thought it would be fun to…
+I've always been a sucker for those videos that go layer by layer and show all the CGI that went into movie scenes, so I thought it would be fun to…
 
 ## Earlier writing — post excerpt
 <!-- id: blog.p.27 -->
 
-Welcome to my website! I’ve been working on this a while and I’m excited to finally share everything I’ve been working on. Head on over to the…
+Welcome to my website! I've been working on this a while and I'm excited to finally share everything I've been working on. Head on over to the…
 

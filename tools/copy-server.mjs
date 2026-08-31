@@ -39,7 +39,14 @@ const UPSTREAM = Number(process.env.SITE_PORT || 8787);
  * come out of one Python file, so those are narrowed further by the section
  * ids the page itself reports -- see /__copy/blocks. */
 function fileForPath(path) {
-  const p = path.replace(/\/+$/, '') || '/';
+  /* Both spellings of every URL have to work. _redirects gives each page a
+     pretty URL, but every link INSIDE the site is written the short way --
+     href="projects.html" -- so browsing from the nav lands on
+     /projects.html and matching only the pretty form found nothing. */
+  let p = String(path || '/').split('?')[0].split('#')[0];
+  p = p.replace(/\.html$/i, '').replace(/\/index$/i, '/');
+  p = p.replace(/(.)\/+$/, '$1') || '/';
+
   if (p.startsWith('/forecasting')) return 'tools/forecasting/build_page.py';
   const map = {
     '/': 'public/index.html',
@@ -49,16 +56,26 @@ function fileForPath(path) {
     '/about': 'public/about.html',
     '/about-plain': 'public/about-plain.html',
     '/park-guides': 'public/park-guides.html',
+    '/404': 'public/404.html',
   };
   return map[p] || null;
 }
+
+const KNOWN_FILES = new Set([
+  'public/index.html', 'public/projects.html', 'public/writing.html',
+  'public/blog.html', 'public/about.html', 'public/about-plain.html',
+  'public/park-guides.html', 'public/404.html',
+  'tools/forecasting/build_page.py',
+]);
 
 function lock() {
   return JSON.parse(readFileSync(join(COPY, '.copy-lock.json'), 'utf8'));
 }
 
-function blocksFor(path, sections) {
-  const file = fileForPath(path);
+function blocksFor(path, sections, known) {
+  /* The proxy knows exactly which file it served, including when the answer
+     was the 404 page. Trust that over re-deriving it from the URL. */
+  const file = KNOWN_FILES.has(known) ? known : fileForPath(path);
   const all = lock().blocks;
   if (!file) return [];
   if (file !== 'tools/forecasting/build_page.py') {
@@ -66,7 +83,8 @@ function blocksFor(path, sections) {
   }
   /* The dashboard pages share one source file. Keep this page's own
      introduction plus the note under each chart actually on it. */
-  const slug = (path.replace(/\/+$/, '').split('/')[2] || '');
+  const slug = (String(path).split('?')[0].replace(/\.html$/i, '')
+                  .replace(/\/+$/, '').split('/')[2] || '');
   const want = sections || [];
   const pick = (id) => all.filter((b) => b.id === id);
   /* Page furniture first, then each chart in the order it appears. The lock
@@ -128,7 +146,9 @@ async function save(edits) {
 /* --------------------------------------------------------------- server */
 
 const EDITOR = readFileSync(join(ROOT, 'tools', 'copy-editor.js'), 'utf8');
-const TAG = '<script src="/__copy/editor.js" defer></script>';
+const tagFor = (file) =>
+  `<script src="/__copy/editor.js" data-copy-src="${file || ''}" ` +
+  'defer></script>';
 
 function body(req) {
   return new Promise((res, rej) => {
@@ -155,12 +175,16 @@ const server = createServer(async (req, res) => {
 
   if (req.url === '/__copy/blocks' && req.method === 'POST') {
     try {
-      const { path, sections } = await body(req);
-      const blocks = blocksFor(path, sections).map((b) => ({
+      const { path, sections, file } = await body(req);
+      const list = blocksFor(path, sections, file);
+      const blocks = list.map((b) => ({
         id: b.id, label: b.label, text: b.text, shape: b.shape,
       }));
       res.writeHead(200, { 'content-type': 'application/json' });
-      res.end(JSON.stringify({ blocks, file: fileForPath(path) }));
+      res.end(JSON.stringify({
+        blocks,
+        file: KNOWN_FILES.has(file) ? file : fileForPath(path),
+      }));
     } catch (e) {
       res.writeHead(500).end(JSON.stringify({ error: String(e.message) }));
     }
@@ -197,6 +221,11 @@ const server = createServer(async (req, res) => {
     r.setEncoding('utf8');
     r.on('data', (c) => { html += c; });
     r.on('end', () => {
+      /* A 404 really is the 404 page's copy, whatever the URL said. */
+      const file = r.statusCode === 404
+        ? 'public/404.html'
+        : fileForPath(new URL(req.url, 'http://x').pathname);
+      const TAG = tagFor(file);
       html = html.includes('</body>')
         ? html.replace('</body>', TAG + '\n</body>')
         : html + TAG;

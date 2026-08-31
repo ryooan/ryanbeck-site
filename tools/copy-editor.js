@@ -14,6 +14,12 @@
   if (window.__copyEditor) return;
   window.__copyEditor = true;
 
+  /* The proxy stamps the source file it served onto this tag. Reading it
+     beats re-deriving it from the URL, which has two spellings per page and
+     no spelling at all for the 404. */
+  var SRC = (document.currentScript
+             && document.currentScript.getAttribute('data-copy-src')) || '';
+
   var host = document.createElement('div');
   host.id = '__copy-editor';
   var root = host.attachShadow({ mode: 'open' });
@@ -141,7 +147,9 @@
     if (loaded) return Promise.resolve();
     return fetch('/__copy/blocks', {
       method: 'POST', headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ path: location.pathname, sections: sectionIds() }),
+      body: JSON.stringify({
+        path: location.pathname, sections: sectionIds(), file: SRC,
+      }),
     }).then(function (r) { return r.json(); }).then(function (d) {
       loaded = true;
       bodyEl.innerHTML = '';
@@ -150,10 +158,16 @@
         ? d.blocks.length + ' blocks &middot; <code>' + d.file + '</code>'
         : '';
       if (!d.blocks.length) {
-        bodyEl.innerHTML = '<p class="empty">No editable copy is mapped to '
-          + '<code>' + location.pathname + '</code>.<br><br>Chart titles, '
-          + '&ldquo;data to&rdquo; dates and status words are read from the '
-          + 'data every build, so they are deliberately not editable here.</p>';
+        bodyEl.innerHTML = '<p class="empty">Nothing editable is mapped to '
+          + '<code>' + location.pathname + '</code>'
+          + (d.file ? ' (<code>' + d.file + '</code>)' : '')
+          + '.<br><br>'
+          + (/forecasting/.test(location.pathname)
+              ? 'On the dashboards, chart titles, &ldquo;data to&rdquo; dates, '
+                + 'status words and row counts are read from the data on every '
+                + 'build, so they are deliberately not editable here.'
+              : 'If you can see copy on this page, that is a bug \u2014 say so.')
+          + '</p>';
         return;
       }
       d.blocks.forEach(function (b) {

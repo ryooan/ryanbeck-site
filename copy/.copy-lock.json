@@ -49,7 +49,9 @@
    "start": 143,
    "end": 168,
    "text": "About (plain) · Ryan Beck",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.meta.description",
@@ -59,7 +61,9 @@
    "start": 212,
    "end": 259,
    "text": "Writer, forecaster, recovering bridge engineer.",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.h1",
@@ -69,7 +73,9 @@
    "start": 1769,
    "end": 1774,
    "text": "About",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.p.1",
@@ -79,7 +85,9 @@
    "start": 1857,
    "end": 1911,
    "text": "<a href=\"about.html\">Read it as the book instead →</a>",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.p.2",
@@ -89,7 +97,9 @@
    "start": 2612,
    "end": 2749,
    "text": "I write science fiction, I think about forecasting for a living, and I have never once managed to have only one hobby at a time.",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.p.3",
@@ -99,7 +109,9 @@
    "start": 2768,
    "end": 3196,
    "text": "I live in Iowa with my wife and daughters. For a decade I designed bridges, which is a job that teaches you to respect load paths, tolerances, and the difference between a model and the thing the model is about. These days I coordinate forecasting programs at Metaculus, where the same instinct shows up in a different form: how confident should anyone be, and what would it take to find out?",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.p.4",
@@ -109,7 +121,9 @@
    "start": 3215,
    "end": 3687,
    "text": "The fiction came first. <em>SEER</em> started as a question I couldn't put down — if a system could reliably predict what you wanted, would you still call it wanting? — and grew into a novel about Maria, who is kidnapped by the people trying to bring the algorithm down and has to work out which of them is telling the truth. <em>Not Human</em> is a shorter, colder cousin of the same question. <a href=\"writing.html\">Both are here.</a>",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.p.5",
@@ -119,7 +133,9 @@
    "start": 3706,
    "end": 3850,
    "text": "Everything else lands in <em>The Missing Nuance</em>, a newsletter about the parts of an argument that get sanded off in the retelling.",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.h2.1",
@@ -129,7 +145,9 @@
    "start": 3899,
    "end": 3921,
    "text": "Roughly how I got here",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.h3.1",
@@ -139,7 +157,9 @@
    "start": 4004,
    "end": 4013,
    "text": "Metaculus",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.p.6",
@@ -149,7 +169,9 @@
    "start": 4021,
    "end": 4128,
    "text": "Forecasting Program Coordinator. Questions, resolution criteria, and a great deal of arguing about wording.",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.h3.2",
@@ -159,7 +181,9 @@
    "start": 4185,
    "end": 4189,
    "text": "SEER",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.p.7",
@@ -169,7 +193,9 @@
    "start": 4197,
    "end": 4233,
    "text": "First novel published, October 2019.",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.h3.3",
@@ -179,7 +205,9 @@
    "start": 4290,
    "end": 4307,
    "text": "Writing in public",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.p.8",
@@ -189,7 +217,9 @@
    "start": 4315,
    "end": 4383,
    "text": "Started the blog, and later <em>The Missing Nuance</em> on Substack.",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.h3.4",
@@ -199,7 +229,9 @@
    "start": 4442,
    "end": 4460,
    "text": "Bridge engineering",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "aboutplain.p.9",
@@ -209,7 +241,9 @@
    "start": 4468,
    "end": 4526,
    "text": "Ten years of structural design and inspection across Iowa.",
-   "ents": []
+   "ents": [
+    "&amp;"
+   ]
   },
   {
    "id": "about.meta.title",
@@ -219,7 +253,9 @@
    "start": 143,
    "end": 160,
    "text": "About · Ryan Beck",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.meta.description",
@@ -229,7 +265,9 @@
    "start": 204,
    "end": 269,
    "text": "About Ryan Beck — writer, forecaster, recovering bridge engineer.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.h1",
@@ -239,7 +277,9 @@
    "start": 1923,
    "end": 1928,
    "text": "About",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.1",
@@ -249,7 +289,9 @@
    "start": 2722,
    "end": 2734,
    "text": "Frontispiece",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.2",
@@ -259,7 +301,9 @@
    "start": 2837,
    "end": 2854,
    "text": "Chapter the first",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.h2.1",
@@ -269,7 +313,9 @@
    "start": 2872,
    "end": 2889,
    "text": "The short version",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.3",
@@ -279,7 +325,9 @@
    "start": 2920,
    "end": 3048,
    "text": "I write science fiction, I think about forecasting for a living, and I have never once managed to have only one hobby at a time.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.4",
@@ -289,7 +337,9 @@
    "start": 3065,
    "end": 3267,
    "text": "I'm the author of a novel, <em>SEER</em>, and a short story, <em>Not Human</em>. I like exciting and thought-provoking fiction of a lot of different kinds, and I live in Iowa with my wife and daughters.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.5",
@@ -299,7 +349,9 @@
    "start": 3284,
    "end": 3560,
    "text": "The through-line, if there is one, is a stubborn interest in the gap between a model and the thing the model is about. Bridges taught me that gap has consequences. Forecasting taught me how to put a number on it. Fiction is where I get to ask what happens when nobody bothers.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.6",
@@ -309,7 +361,9 @@
    "start": 3591,
    "end": 3597,
    "text": "Page 1",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.7",
@@ -319,7 +373,9 @@
    "start": 3700,
    "end": 3718,
    "text": "Chapter the second",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.h2.2",
@@ -329,7 +385,9 @@
    "start": 3736,
    "end": 3747,
    "text": "Before this",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.8",
@@ -339,7 +397,9 @@
    "start": 3778,
    "end": 3842,
    "text": "For about a decade I designed and inspected bridges across Iowa.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.9",
@@ -349,7 +409,9 @@
    "start": 3859,
    "end": 4132,
    "text": "It is a profession that makes you honest. A load path either exists or it doesn't. A tolerance is not a matter of opinion. You learn to ask what you would have to believe for your own analysis to be wrong, and then you go and check, because the alternative is unacceptable.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.10",
@@ -359,7 +421,9 @@
    "start": 4149,
    "end": 4222,
    "text": "I think about that habit constantly in work that has far softer feedback.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.11",
@@ -369,7 +433,9 @@
    "start": 4253,
    "end": 4259,
    "text": "Page 2",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.12",
@@ -379,7 +445,9 @@
    "start": 4362,
    "end": 4379,
    "text": "Chapter the third",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.h2.3",
@@ -389,7 +457,9 @@
    "start": 4397,
    "end": 4400,
    "text": "Now",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.13",
@@ -399,7 +469,9 @@
    "start": 4431,
    "end": 4489,
    "text": "These days I coordinate forecasting programs at Metaculus.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.14",
@@ -409,7 +481,9 @@
    "start": 4506,
    "end": 4837,
    "text": "Most of the job is not prediction. It is writing questions that can actually resolve, arguing about wording until the ambiguity is gone, and then finding out in public whether the crowd was right. It turns out that \"what exactly would count as this happening?\" is one of the more useful questions you can ask about almost anything.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.15",
@@ -419,7 +493,9 @@
    "start": 4871,
    "end": 4908,
    "text": "Calibration is a habit, not a talent.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.16",
@@ -429,7 +505,9 @@
    "start": 4939,
    "end": 4945,
    "text": "Page 3",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.17",
@@ -439,7 +517,9 @@
    "start": 5048,
    "end": 5066,
    "text": "Chapter the fourth",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.h2.4",
@@ -449,7 +529,9 @@
    "start": 5084,
    "end": 5095,
    "text": "The fiction",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.18",
@@ -459,7 +541,9 @@
    "start": 5126,
    "end": 5171,
    "text": "SEER began as a question I couldn't put down.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.19",
@@ -481,7 +565,9 @@
    "start": 5567,
    "end": 5743,
    "text": "<em>Not Human</em> is a shorter, colder cousin of the same question: Lisa is the first person in the world to have her mind copied to a machine, and the copy insists it is her.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.21",
@@ -491,7 +577,9 @@
    "start": 5760,
    "end": 5816,
    "text": "<a href=\"writing.html\">Both are on the fiction page.</a>",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.22",
@@ -501,7 +589,9 @@
    "start": 5847,
    "end": 5853,
    "text": "Page 4",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.23",
@@ -511,7 +601,9 @@
    "start": 5956,
    "end": 5973,
    "text": "Chapter the fifth",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.h2.5",
@@ -521,7 +613,9 @@
    "start": 5991,
    "end": 6009,
    "text": "The Missing Nuance",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.24",
@@ -531,7 +625,9 @@
    "start": 6040,
    "end": 6081,
    "text": "The newsletter is where the arguments go.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.25",
@@ -553,7 +649,9 @@
    "start": 6357,
    "end": 6438,
    "text": "<a href=\"https://themissingnuance.substack.com\">themissingnuance.substack.com</a>",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.27",
@@ -563,7 +661,9 @@
    "start": 6469,
    "end": 6475,
    "text": "Page 5",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.28",
@@ -573,7 +673,9 @@
    "start": 6578,
    "end": 6595,
    "text": "Chapter the sixth",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.h2.6",
@@ -583,7 +685,9 @@
    "start": 6613,
    "end": 6626,
    "text": "Off the clock",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.29",
@@ -593,7 +697,9 @@
    "start": 6657,
    "end": 6690,
    "text": "Married, with daughters, in Iowa.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.30",
@@ -603,7 +709,9 @@
    "start": 6707,
    "end": 6976,
    "text": "The serial-hobbyist thing is not a bit. There is always some half-learned skill in progress and a shelf of evidence from the last one. Reading, mostly; building things that didn't need to exist; and a persistent belief that this is the year I finish everything I start.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.31",
@@ -613,7 +721,9 @@
    "start": 7007,
    "end": 7013,
    "text": "Page 6",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.32",
@@ -623,7 +733,9 @@
    "start": 7116,
    "end": 7135,
    "text": "Chapter the seventh",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.h2.7",
@@ -633,7 +745,9 @@
    "start": 7153,
    "end": 7162,
    "text": "Elsewhere",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.33",
@@ -643,7 +757,9 @@
    "start": 7633,
    "end": 7710,
    "text": "The fastest way to reach me is email. I read all of it and answer most of it.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.34",
@@ -653,7 +769,9 @@
    "start": 7741,
    "end": 7747,
    "text": "Page 7",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.35",
@@ -663,7 +781,9 @@
    "start": 7850,
    "end": 7858,
    "text": "Colophon",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.h2.8",
@@ -673,7 +793,9 @@
    "start": 7876,
    "end": 7891,
    "text": "About this book",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.36",
@@ -683,7 +805,9 @@
    "start": 7909,
    "end": 8062,
    "text": "Set in the same hand as the doors. The lettering was drawn rather than typeset; the leather, the page stock and the dust are generated, not photographed.",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.37",
@@ -693,7 +817,9 @@
    "start": 8079,
    "end": 8136,
    "text": "<a href=\"about-plain.html\">Prefer it as a plain page?</a>",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.38",
@@ -703,7 +829,9 @@
    "start": 8167,
    "end": 8170,
    "text": "Fin",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "about.p.39",
@@ -713,7 +841,9 @@
    "start": 8311,
    "end": 8353,
    "text": "Click a page to turn it — or drag a corner",
-   "ents": []
+   "ents": [
+    "&mdash;"
+   ]
   },
   {
    "id": "blog.meta.title",
@@ -723,7 +853,11 @@
    "start": 143,
    "end": 159,
    "text": "Blog · Ryan Beck",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.meta.description",
@@ -733,7 +867,11 @@
    "start": 203,
    "end": 266,
    "text": "Essays on forecasting, uncertainty and technology by Ryan Beck.",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.h1",
@@ -743,7 +881,11 @@
    "start": 1789,
    "end": 1793,
    "text": "Blog",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.1",
@@ -753,7 +895,11 @@
    "start": 1820,
    "end": 1981,
    "text": "Essays on forecasting, uncertainty, and the parts of technology that don't fit in a headline. Most new writing goes out through <em>The Missing Nuance</em>.",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.h2.1",
@@ -763,7 +909,11 @@
    "start": 2265,
    "end": 2283,
    "text": "The Missing Nuance",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.2",
@@ -773,7 +923,11 @@
    "start": 2336,
    "end": 2362,
    "text": "Pulled live from Substack.",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.3",
@@ -782,8 +936,9 @@
    "shape": "plain",
    "start": 2721,
    "end": 2778,
-   "text": "What if \"attack\" wasn’t our first instinct",
+   "text": "What if \"attack\" wasn't our first instinct",
    "ents": [
+    "&ndash;",
     "&#x27;",
     "&quot;"
    ]
@@ -796,7 +951,11 @@
    "start": 3102,
    "end": 3190,
    "text": "How much does a good result tell you about the quality of the decision-making behind it?",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.5",
@@ -806,7 +965,11 @@
    "start": 3485,
    "end": 3525,
    "text": "A short explanation of what persuaded me",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.6",
@@ -816,7 +979,11 @@
    "start": 3860,
    "end": 3922,
    "text": "Lightly edited from a Facebook post I shared in February 2017.",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.7",
@@ -826,7 +993,11 @@
    "start": 3989,
    "end": 4071,
    "text": "<a href=\"https://themissingnuance.substack.com/archive\">See the full archive →</a>",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.h2.2",
@@ -836,7 +1007,11 @@
    "start": 4112,
    "end": 4127,
    "text": "Earlier writing",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.8",
@@ -847,7 +1022,9 @@
    "end": 4413,
    "text": "Nineteen posts from 2019–2023, written before the newsletter and still living at <a href=\"https://www.ryanbeckauthor.com\">ryanbeckauthor.com</a>. Books, forecasting, elections, vaccines, and one argument with a moose.",
    "ents": [
-    "&ndash;"
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
    ]
   },
   {
@@ -857,9 +1034,11 @@
    "shape": "plain",
    "start": 4734,
    "end": 4893,
-   "text": "I’ve been reading Empire of Liberty: A history of the Early Republic, 1780-1815 by Gordon S. Wood and while it’s full of fascinating information one…",
+   "text": "I've been reading Empire of Liberty: A history of the Early Republic, 1780-1815 by Gordon S. Wood and while it's full of fascinating information one…",
    "ents": [
-    "&#x27;"
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
    ]
   },
   {
@@ -870,7 +1049,11 @@
    "start": 5164,
    "end": 5313,
    "text": "I have a few Rmarkdown scripts that I’ve created to visualize data for forecasting. I host them on Github so they appear as html pages on my website…",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.11",
@@ -879,9 +1062,11 @@
    "shape": "plain",
    "start": 5559,
    "end": 5713,
-   "text": "I’ve been increasingly frustrated with the public conversation around Afghanistan. The whole situation is a tragedy, and instead of sober reflection…",
+   "text": "I've been increasingly frustrated with the public conversation around Afghanistan. The whole situation is a tragedy, and instead of sober reflection…",
    "ents": [
-    "&#x27;"
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
    ]
   },
   {
@@ -892,7 +1077,11 @@
    "start": 5985,
    "end": 6129,
    "text": "The Europeans who pass into America degenerate, as do the animals; a proof that the climate is unfavourable to the improvement of either man or…",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.13",
@@ -902,7 +1091,11 @@
    "start": 6361,
    "end": 6505,
    "text": "I forgot to post here about it, but a few weeks ago I turned my vaccine spreadsheet into a webpage on my site. You can check it out at the link…",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.14",
@@ -912,7 +1105,11 @@
    "start": 6827,
    "end": 6974,
    "text": "On January 28th Robinhood disabled all transactions except for position-closing (selling) for a small set of stocks including Gamestop (GME). This…",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.15",
@@ -921,9 +1118,11 @@
    "shape": "plain",
    "start": 7236,
    "end": 7390,
-   "text": "Trying to get information on the potential coronavirus vaccines has been frustrating. The information I want is never in one place, it’s often vague…",
+   "text": "Trying to get information on the potential coronavirus vaccines has been frustrating. The information I want is never in one place, it's often vague…",
    "ents": [
-    "&#x27;"
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
    ]
   },
   {
@@ -934,7 +1133,11 @@
    "start": 7652,
    "end": 7798,
    "text": "I thought it would be interesting to predict what will happen under the Biden presidency. I think making falsifiable predictions is important for…",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.17",
@@ -944,7 +1147,11 @@
    "start": 8098,
    "end": 8243,
    "text": "I want to discuss the strategy and logic behind the decision to vote third party or sit out of an election. Below are some of the common reasons…",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.18",
@@ -954,7 +1161,11 @@
    "start": 8551,
    "end": 8698,
    "text": "Biden will be announcing his pick for vice president soon, and I think one aspect of the VP selection has been overlooked in the discussions about…",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.19",
@@ -964,7 +1175,11 @@
    "start": 8918,
    "end": 9065,
    "text": "When I wrote the drones in SEER this was kind of what I had in mind for how quickly they move and attack. Being controlled by computers means they…",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.20",
@@ -974,7 +1189,11 @@
    "start": 9355,
    "end": 9500,
    "text": "Citizens United v. FEC was decided ten years ago and remains one of the first things that comes to mind when people think about campaign finance…",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.21",
@@ -984,7 +1203,11 @@
    "start": 9732,
    "end": 9881,
    "text": "I just finished the book Why Nations Fail and really enjoyed it, and I highly recommend it to everyone. Its theory is that institutions are the most…",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.22",
@@ -994,7 +1217,11 @@
    "start": 10119,
    "end": 10268,
    "text": "People have been afraid of technology taking jobs for a long time. Apparently in the 1500s William Lee invented a knitting machine and went to Queen…",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.23",
@@ -1003,9 +1230,11 @@
    "shape": "plain",
    "start": 10523,
    "end": 10675,
-   "text": "This is some really cool stuff. A group called Open AI has used machine learning to teach a robotic hand to solve a Rubik’s cube. They trained the…",
+   "text": "This is some really cool stuff. A group called Open AI has used machine learning to teach a robotic hand to solve a Rubik's cube. They trained the…",
    "ents": [
-    "&#x27;"
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
    ]
   },
   {
@@ -1016,7 +1245,11 @@
    "start": 10925,
    "end": 11072,
    "text": "Hey Democrats, do you want to cut carbon emissions in half in just ten years? Do you want to increase benefits to the least fortunate among us? Do…",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.25",
@@ -1026,7 +1259,11 @@
    "start": 11310,
    "end": 11452,
    "text": "I posted a poll on Facebook and Twitter yesterday asked how long everyone thought it would take for us to be able to copy the human mind to a…",
-   "ents": []
+   "ents": [
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
+   ]
   },
   {
    "id": "blog.p.26",
@@ -1035,9 +1272,11 @@
    "shape": "plain",
    "start": 11702,
    "end": 11855,
-   "text": "I’ve always been a sucker for those videos that go layer by layer and show all the CGI that went into movie scenes, so I thought it would be fun to…",
+   "text": "I've always been a sucker for those videos that go layer by layer and show all the CGI that went into movie scenes, so I thought it would be fun to…",
    "ents": [
-    "&#x27;"
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
    ]
   },
   {
@@ -1047,9 +1286,11 @@
    "shape": "plain",
    "start": 12097,
    "end": 12255,
-   "text": "Welcome to my website! I’ve been working on this a while and I’m excited to finally share everything I’ve been working on. Head on over to the…",
+   "text": "Welcome to my website! I've been working on this a while and I'm excited to finally share everything I've been working on. Head on over to the…",
    "ents": [
-    "&#x27;"
+    "&ndash;",
+    "&#x27;",
+    "&quot;"
    ]
   },
   {
@@ -1060,7 +1301,9 @@
    "start": 143,
    "end": 152,
    "text": "Ryan Beck",
-   "ents": []
+   "ents": [
+    "&quot;"
+   ]
   },
   {
    "id": "home.meta.description",
@@ -1070,7 +1313,9 @@
    "start": 278,
    "end": 345,
    "text": "Writer, forecaster, serial hobbyist. Projects, fiction, and essays.",
-   "ents": []
+   "ents": [
+    "&quot;"
+   ]
   },
   {
    "id": "home.art.alt",
@@ -1080,7 +1325,9 @@
    "start": 5230,
    "end": 5314,
    "text": "A wizard sits before three carved stone doorways labeled Projects, Fiction and Blog.",
-   "ents": []
+   "ents": [
+    "&quot;"
+   ]
   },
   {
    "id": "parkguides.meta.title",
@@ -1090,7 +1337,13 @@
    "start": 143,
    "end": 175,
    "text": "National Park Guides · Ryan Beck",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;",
+    "&#x27;",
+    "&amp;"
+   ]
   },
   {
    "id": "parkguides.meta.description",
@@ -1100,7 +1353,13 @@
    "start": 219,
    "end": 285,
    "text": "Printable family activity guides for national parks, by Ryan Beck.",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;",
+    "&#x27;",
+    "&amp;"
+   ]
   },
   {
    "id": "parkguides.h1",
@@ -1110,7 +1369,13 @@
    "start": 1841,
    "end": 1861,
    "text": "National park guides",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;",
+    "&#x27;",
+    "&amp;"
+   ]
   },
   {
    "id": "parkguides.p.1",
@@ -1121,7 +1386,11 @@
    "end": 2413,
    "text": "Planning a park trip with small kids means knowing, before you are standing at a full trailhead at 9 AM, which hikes are short enough, where to park, and what to do instead when the first plan falls through. These are the one-sheet guides I made for our own trips — every activity picked for families with young children, every hike under about four miles, with parking notes, drive times, and links straight to the maps. Print them or keep them on your phone; the links inside work either way.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&middot;",
+    "&larr;",
+    "&#x27;",
+    "&amp;"
    ]
   },
   {
@@ -1133,7 +1402,11 @@
    "end": 2510,
    "text": "<a href=\"projects.html\">← All projects</a>",
    "ents": [
-    "&larr;"
+    "&mdash;",
+    "&middot;",
+    "&larr;",
+    "&#x27;",
+    "&amp;"
    ]
   },
   {
@@ -1145,6 +1418,10 @@
    "end": 2813,
    "text": "Rocky Mountain National Park & Estes Park",
    "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;",
+    "&#x27;",
     "&amp;"
    ]
   },
@@ -1157,7 +1434,11 @@
    "end": 2884,
    "text": "Two pages · Last edited June 2023",
    "ents": [
-    "&middot;"
+    "&mdash;",
+    "&middot;",
+    "&larr;",
+    "&#x27;",
+    "&amp;"
    ]
   },
   {
@@ -1167,10 +1448,13 @@
    "shape": "plain",
    "start": 2901,
    "end": 3359,
-   "text": "Built around RMNP’s timed-entry passes: activities are grouped by which pass gets you there — the Bear Lake corridor, the rest of the park, and Estes Park for the days you have no pass at all — with a strategy for which entry slots to try for. Bear Lake to Emerald Lake, Alberta Falls, the Trail Ridge Road drive with every overlook called out, Chasm Falls, Gem Lake, and where to feed the ducks downtown.",
+   "text": "Built around RMNP's timed-entry passes: activities are grouped by which pass gets you there — the Bear Lake corridor, the rest of the park, and Estes Park for the days you have no pass at all — with a strategy for which entry slots to try for. Bear Lake to Emerald Lake, Alberta Falls, the Trail Ridge Road drive with every overlook called out, Chasm Falls, Gem Lake, and where to feed the ducks downtown.",
    "ents": [
     "&mdash;",
-    "&#x27;"
+    "&middot;",
+    "&larr;",
+    "&#x27;",
+    "&amp;"
    ]
   },
   {
@@ -1182,6 +1466,10 @@
    "end": 3941,
    "text": "Grand Teton & Yellowstone",
    "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;",
+    "&#x27;",
     "&amp;"
    ]
   },
@@ -1194,7 +1482,11 @@
    "end": 4012,
    "text": "Two pages · Last edited July 2025",
    "ents": [
-    "&middot;"
+    "&mdash;",
+    "&middot;",
+    "&larr;",
+    "&#x27;",
+    "&amp;"
    ]
   },
   {
@@ -1206,7 +1498,11 @@
    "end": 4481,
    "text": "No timed entry here — the enemy is trailhead parking, so every hike comes with parking notes and drive times from Colter Bay. Swan Lake and Heron Pond, String Lake to Leigh Lake, the boat across Jenny Lake to Hidden Falls, Signal Mountain, and a full Yellowstone day-loop — Old Faithful, Grand Prismatic, the Lower Falls — ordered clockwise with realistic times. Junior Ranger notes for both parks.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&middot;",
+    "&larr;",
+    "&#x27;",
+    "&amp;"
    ]
   },
   {
@@ -1217,7 +1513,11 @@
    "start": 143,
    "end": 163,
    "text": "Projects · Ryan Beck",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.meta.description",
@@ -1227,7 +1527,11 @@
    "start": 207,
    "end": 259,
    "text": "Tools, data sets and experiments built by Ryan Beck.",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.h1",
@@ -1237,7 +1541,11 @@
    "start": 1783,
    "end": 1791,
    "text": "Projects",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.p.1",
@@ -1248,7 +1556,9 @@
    "end": 2011,
    "text": "Things I have built because I wanted them to exist — forecasting infrastructure, small apps for real problems in my own life, and the occasional experiment that got out of hand.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&times;",
+    "&#x27;"
    ]
   },
   {
@@ -1260,7 +1570,9 @@
    "end": 2162,
    "text": "<em>Draft — more projects are being pulled in and the presentation is still settling.</em>",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&times;",
+    "&#x27;"
    ]
   },
   {
@@ -1271,7 +1583,11 @@
    "start": 2456,
    "end": 2471,
    "text": "Data Dashboards",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.p.3",
@@ -1282,7 +1598,9 @@
    "end": 2843,
    "text": "The numbers I kept reaching for while forecasting — the debt limit, refugee admissions, big-tech revenue, flu admissions, semiconductor trade, the bird-flu cull — on one page, with charts you can read values off. Each series refreshes on its own schedule and states the date its data actually ends, which is not always the date it last ran.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&times;",
+    "&#x27;"
    ]
   },
   {
@@ -1293,7 +1611,11 @@
    "start": 2896,
    "end": 2905,
    "text": "Live data",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.tag.2",
@@ -1303,7 +1625,11 @@
    "start": 2930,
    "end": 2936,
    "text": "Python",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.tag.3",
@@ -1313,7 +1639,11 @@
    "start": 2961,
    "end": 2975,
    "text": "GitHub Actions",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.h3.2",
@@ -1323,7 +1653,11 @@
    "start": 3239,
    "end": 3245,
    "text": "Herder",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.p.4",
@@ -1332,9 +1666,10 @@
    "shape": "plain",
    "start": 3265,
    "end": 3470,
-   "text": "An app for herding a group toward a plan: propose activities, vote on them — ranked-choice if you like — and schedule around everyone’s availability. Share a link; nobody needs an account.",
+   "text": "An app for herding a group toward a plan: propose activities, vote on them — ranked-choice if you like — and schedule around everyone's availability. Share a link; nobody needs an account.",
    "ents": [
     "&mdash;",
+    "&times;",
     "&#x27;"
    ]
   },
@@ -1346,7 +1681,11 @@
    "start": 3523,
    "end": 3530,
    "text": "Web app",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.tag.5",
@@ -1356,7 +1695,11 @@
    "start": 3555,
    "end": 3568,
    "text": "useherder.com",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.h3.3",
@@ -1366,7 +1709,11 @@
    "start": 3875,
    "end": 3893,
    "text": "March Madness 2026",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.p.5",
@@ -1377,7 +1724,9 @@
    "end": 4108,
    "text": "An analytics dashboard for the NCAA tournament field: custom power scores, injury tracking, strength of schedule, a 68×68 head-to-head grid, and a bracket builder that remembers your picks.",
    "ents": [
-    "&times;"
+    "&mdash;",
+    "&times;",
+    "&#x27;"
    ]
   },
   {
@@ -1388,7 +1737,11 @@
    "start": 4161,
    "end": 4168,
    "text": "Web app",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.tag.7",
@@ -1398,7 +1751,11 @@
    "start": 4193,
    "end": 4198,
    "text": "React",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.tag.8",
@@ -1408,7 +1765,11 @@
    "start": 4223,
    "end": 4231,
    "text": "Seasonal",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.h3.4",
@@ -1418,7 +1779,11 @@
    "start": 4492,
    "end": 4512,
    "text": "National Park Guides",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.p.6",
@@ -1429,7 +1794,9 @@
    "end": 4732,
    "text": "Printable one-sheet activity guides for park trips with small kids — short hikes, parking strategy, drive times, and what to do when the trailhead is full. Rocky Mountain and Grand Teton so far.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&times;",
+    "&#x27;"
    ]
   },
   {
@@ -1440,7 +1807,11 @@
    "start": 4785,
    "end": 4791,
    "text": "Guides",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.tag.10",
@@ -1450,7 +1821,11 @@
    "start": 4816,
    "end": 4819,
    "text": "PDF",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.tag.11",
@@ -1460,7 +1835,11 @@
    "start": 4844,
    "end": 4848,
    "text": "Free",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.h2.1",
@@ -1470,7 +1849,11 @@
    "start": 4972,
    "end": 4988,
    "text": "Want the source?",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "projects.p.7",
@@ -1480,7 +1863,11 @@
    "start": 5015,
    "end": 5096,
    "text": "Nearly everything here is public. Poke around, fork it, tell me what I got wrong.",
-   "ents": []
+   "ents": [
+    "&mdash;",
+    "&times;",
+    "&#x27;"
+   ]
   },
   {
    "id": "writing.meta.title",
@@ -1640,7 +2027,11 @@
    "start": 1708,
    "end": 1723,
    "text": "US debt limit",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1652,7 +2043,11 @@
    "start": 2518,
    "end": 3450,
    "text": "Shaded bands are the eight suspensions. The ceiling line breaks inside each one because there is no ceiling to plot; hovering a suspended date reads “no data” rather than zero.\n\nThe <strong>trend</strong> is a least-squares fit to the run since the most recent change in the ceiling — a raise, or a suspension starting or ending — projected to the date that pace would reach the current ceiling. It is solid over the stretch it was fitted to and dashed beyond the last observation. During a suspension there is nothing to reach, so it runs a year out instead. It disappears when debt is already at the ceiling, as through the first half of 2025, when a projection would imply room that does not exist. Turn it off to fit the chart back to the data.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1664,7 +2059,11 @@
    "start": 3708,
    "end": 3740,
    "text": "US refugee admissions by month",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1676,7 +2075,11 @@
    "start": 4062,
    "end": 4350,
    "text": "People admitted to the United States as refugees each month, from the State Department's Refugee Processing Center. Fiscal years run October to September; the annual ceiling is set by presidential determination and is a cap, not a target.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1688,7 +2091,11 @@
    "start": 4628,
    "end": 4663,
    "text": "Refugee admissions by fiscal year",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1700,7 +2107,11 @@
    "start": 5140,
    "end": 5280,
    "text": "The same arrivals totaled by fiscal year. The dashed line is the annual ceiling, which is only published for recent years.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1712,7 +2123,11 @@
    "start": 5492,
    "end": 5525,
    "text": "Big-tech revenue by fiscal year",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1724,7 +2139,11 @@
    "start": 6191,
    "end": 6364,
    "text": "Each company's full fiscal year, and the five added together. The combined line is blank for a year any of them has not finished reporting.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1736,7 +2155,11 @@
    "start": 6564,
    "end": 6593,
    "text": "Big-tech revenue by quarter",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1748,7 +2171,11 @@
    "start": 7197,
    "end": 7861,
    "text": "The same five by quarter, which is where the seasonality lives — Amazon and Apple both spike every December.\n\nTwo notes on the derivation. Quarters are selected by the length of the reporting period rather than by filing type, because a 10-K carries both the twelve-month total and three-month figures, and mixing them puts an annual number in the quarterly line. The fourth quarter is calculated as the annual total minus the three reported quarters, since a 10-K frequently reports the year without ever stating Q4 on its own.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1760,7 +2187,11 @@
    "start": 8060,
    "end": 8104,
    "text": "US respiratory hospital admissions, weekly",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1772,7 +2203,11 @@
    "start": 8702,
    "end": 9816,
    "text": "New hospital admissions each week with a laboratory-confirmed diagnosis. Influenza and RSV are reported in the same returns.\n\n<strong>The shaded stretch is not a drop in admissions.</strong> Reporting to NHSN was mandatory under the public health emergency, became voluntary on 1 May 2024, and was made mandatory again by CMS on 1 November 2024. Hospital participation followed exactly: about 93% either side, and a low of 31% in October 2024. Counts inside that window are drawn from roughly a third of the hospitals, so they are not comparable with the rest of the line. The share reporting each week is in the download.\n\nA different series for the same measure, from the archived reichlab forecast hub, was widely used up to April 2024 and runs about 4% lower at the median. Figures read off older charts will not match these; that series is in the download for comparison.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1784,7 +2219,11 @@
    "start": 10078,
    "end": 10109,
    "text": "US influenza hospitalizations",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1796,7 +2235,11 @@
    "start": 10407,
    "end": 10591,
    "text": "Weekly hospital admissions with a confirmed influenza diagnosis, from the CDC's FluSight forecasting hub. Per-state figures are in the companion file.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1808,7 +2251,11 @@
    "start": 10854,
    "end": 10892,
    "text": "Influenza admissions, state by state",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1820,7 +2267,11 @@
    "start": 11344,
    "end": 12375,
    "text": "Influenza admissions state by state, laid out roughly as the map is, so a bad week across one region reads as a block of color. It opens on percentage change against four weeks earlier, which is what makes a small state climbing fast as visible as a large one; the buttons switch to admissions per 100,000 over a window.\n\nEvery panel shares one vertical scale. Per head rather than raw counts is what makes that readable — on raw admissions the spread between the largest and smallest states is more than fiftyfold, and most of the grid flattens into slivers.\n\nThese come from the CDC’s FluSight hub, which republishes NHSN’s figures. They will not match the influenza line above to the digit: FluSight snapshots NHSN and does not always carry its later revisions, so recent weeks can differ by a few percent.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1832,7 +2283,11 @@
    "start": 12635,
    "end": 12670,
    "text": "US semiconductor exports to China",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1844,7 +2299,11 @@
    "start": 13652,
    "end": 13844,
    "text": "Six-month rolling averages. The monthly lines behind them are in the legend, switched off to start with. The download also carries a twelve-month rolling sum.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1856,7 +2315,11 @@
    "start": 14018,
    "end": 14049,
    "text": "China's semiconductor imports",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1868,7 +2331,11 @@
    "start": 14474,
    "end": 14713,
    "text": "Annual, and reported by China rather than by its trading partners, so this is the whole of what China buys from the world in the same two categories the chart above tracks for the US alone.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1880,7 +2347,11 @@
    "start": 14877,
    "end": 14916,
    "text": "Birds killed in the bird-flu outbreak",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1892,7 +2363,11 @@
    "start": 15379,
    "end": 15760,
    "text": "Weekly count on the right-hand axis, running total on the left. They differ by two orders of magnitude, so on a shared scale the weeks would be a flat line along the bottom. The download splits each week into commercial and backyard birds, and carries the state, county and production type of every confirmed flock.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1904,7 +2379,11 @@
    "start": 16037,
    "end": 16077,
    "text": "COVID and flu patients in the hospital",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1916,7 +2395,11 @@
    "start": 16552,
    "end": 17051,
    "text": "Patients in the hospital on a given day, summed across reporting states, from the HHS hospital-capacity dataset. This is a census rather than a count of admissions — everyone in a bed that day, however long they have been there — so it runs far higher than the admissions series above and should not be read against it. HHS ended the reporting requirement behind it, so the series stops in April 2024.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1928,7 +2411,11 @@
    "start": 17298,
    "end": 17327,
    "text": "Virginia COVID vaccinations",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1940,7 +2427,11 @@
    "start": 17717,
    "end": 17883,
    "text": "Counts rather than percentages, from the state’s open-data platform. The companion file carries the same figures split by age group.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1952,7 +2443,11 @@
    "start": 18573,
    "end": 18594,
    "text": "Respiratory illness",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1964,7 +2459,11 @@
    "start": 18614,
    "end": 18635,
    "text": "Respiratory illness",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1976,7 +2475,11 @@
    "start": 18656,
    "end": 18682,
    "text": "COVID, influenza and RSV",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -1988,7 +2491,11 @@
    "start": 18717,
    "end": 19701,
    "text": "Weekly hospital admissions for COVID-19, influenza and RSV, nationally and state by state.\n\nNational figures come from the CDC’s National Healthcare Safety Network. This is meant to be a census rather than a sample — CMS requires every acute care and critical access hospital to report weekly — but the requirement has lapsed once, and participation moves with it. Around 93% of hospitals report in a normal week, and the share behind each week is in the download. State-level influenza comes from the CDC’s FluSight forecasting hub.\n\nAll of these count <em>laboratory-confirmed</em> admissions rather than everyone admitted with the illness, so they undercount by a margin that moves with how much testing is being done. They read more reliably as a trend than as a total.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2000,7 +2507,11 @@
    "start": 20435,
    "end": 20451,
    "text": "The debt limit",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2012,7 +2523,11 @@
    "start": 20471,
    "end": 20490,
    "text": "The US debt limit",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2024,7 +2539,11 @@
    "start": 20511,
    "end": 20528,
    "text": "Treasury, daily",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2036,7 +2555,11 @@
    "start": 20563,
    "end": 21236,
    "text": "Federal debt subject to the statutory ceiling, against the ceiling itself, from Treasury’s Daily Treasury Statement. Millions of dollars, updated each business day.\n\nThe shaded stretches are the eight occasions Congress has suspended the limit rather than raised it. There is no ceiling during a suspension, so the line stops rather than running flat — Treasury publishes a zero in that field, and plotting it would send the ceiling to the floor. When a suspension ends, the limit is reset to whatever the debt has reached by then.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2048,7 +2571,11 @@
    "start": 21344,
    "end": 21362,
    "text": "Big-tech revenue",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2060,7 +2587,11 @@
    "start": 21382,
    "end": 21400,
    "text": "Big-tech revenue",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2072,7 +2603,11 @@
    "start": 21421,
    "end": 21434,
    "text": "SEC filings",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2084,7 +2619,11 @@
    "start": 21469,
    "end": 22141,
    "text": "Revenue for Alphabet, Amazon, Apple, Meta and Microsoft, read out of their SEC filings, annually and by quarter. Billions of US dollars.\n\nThe five do not share a fiscal calendar — Apple’s year ends in September and Microsoft’s in June — so the combined line is blank for any period where they have not all filed yet. Quarters are placed in the calendar quarter they <em>end</em> in, which is what lets the five line up; the consequence is that adding four calendar quarters for Apple or Microsoft will not equal their fiscal year.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2096,7 +2635,11 @@
    "start": 22283,
    "end": 22303,
    "text": "Refugee admissions",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2108,7 +2651,11 @@
    "start": 22323,
    "end": 22346,
    "text": "US refugee admissions",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2120,7 +2667,11 @@
    "start": 22367,
    "end": 22394,
    "text": "State Department, monthly",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2132,7 +2683,11 @@
    "start": 22429,
    "end": 23156,
    "text": "People admitted to the United States as refugees, from the State Department’s Refugee Processing Center. Fiscal years run October to September, so the monthly series maps October through December onto the previous calendar year.\n\nThe annual ceiling is set by presidential determination and is a cap rather than a target: admissions have come in well under it far more often than they have approached it. The long view reaches back to 1975 — the two peaks are the Indochinese resettlement after the fall of Saigon and the Soviet and Southeast Asian programs around 1990.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2144,7 +2699,11 @@
    "start": 23299,
    "end": 23320,
    "text": "Semiconductor trade",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2156,7 +2715,11 @@
    "start": 23340,
    "end": 23361,
    "text": "Semiconductor trade",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2168,7 +2731,11 @@
    "start": 23382,
    "end": 23395,
    "text": "UN Comtrade",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2180,7 +2747,11 @@
    "start": 23430,
    "end": 24277,
    "text": "US exports of chips and chipmaking equipment to China, and what China buys from the whole world, from UN Comtrade. Values are US dollars.\n\nChips are HS 8542. Equipment is HS 8486, 903082, 903141, 854311 and 901041, summed. Monthly trade is noisy enough that the raw line is hard to read a trend off, so a six-month rolling average is carried alongside it.\n\nThe two charts are measured independently and will not reconcile. US exports are monthly and reported by the United States; China’s imports are annual and reported by China. Trading partners routinely disagree about the same shipments, since they classify goods differently and record them at different moments.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2192,7 +2763,11 @@
    "start": 24452,
    "end": 24462,
    "text": "Bird flu",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2204,7 +2779,11 @@
    "start": 24482,
    "end": 24492,
    "text": "Bird flu",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2216,7 +2795,11 @@
    "start": 24513,
    "end": 24525,
    "text": "USDA APHIS",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2228,7 +2811,11 @@
    "start": 24560,
    "end": 25189,
    "text": "Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak, from USDA APHIS detection records.\n\nA flock is counted on the date its infection was confirmed, and confirmation means the entire flock is depopulated — so a single commercial layer operation can add several million birds in one week. That makes the weekly figure extremely spiky and the running total the more readable line.\n\nBackyard flocks are a large share of the detections and a very small share of the birds.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2240,7 +2827,11 @@
    "start": 25303,
    "end": 25319,
    "text": "Virginia COVID",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2252,7 +2843,11 @@
    "start": 25339,
    "end": 25355,
    "text": "Virginia COVID",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2264,7 +2859,11 @@
    "start": 25376,
    "end": 25390,
    "text": "VDH, retired",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   },
@@ -2276,7 +2875,11 @@
    "start": 25425,
    "end": 26418,
    "text": "People in Virginia by vaccination status, from the Virginia Department of Health. March 2021 to September 2023, when VDH stopped publishing; the history is complete for that window — nearly ten million rows, by locality, age group and vaccination status.\n\nTwo days are wrong at the source. On 21 February 2023 VDH published every row two and three times over, which is collapsed here by taking one value per locality, age band and status. On 24 July 2021 the values themselves are exactly doubled with no duplicate rows to collapse, so that day is left blank and the line breaks there.\n\nFor an age-stratified Virginia series, the HHS hospitalization panel on the <a href=\"/forecasting/respiratory\">respiratory page</a> carries admissions broken down by age band from 2020 to 2023.",
-   "ents": [],
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
    "py": true,
    "indent": 12
   }

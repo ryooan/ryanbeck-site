@@ -49,7 +49,7 @@ Two pages · Last edited June 2023
 ## Rocky Mountain National Park & Estes Park — body paragraph
 <!-- id: parkguides.p.4 -->
 
-Built around RMNP’s timed-entry passes: activities are grouped by which pass gets you there — the Bear Lake corridor, the rest of the park, and Estes Park for the days you have no pass at all — with a strategy for which entry slots to try for. Bear Lake to Emerald Lake, Alberta Falls, the Trail Ridge Road drive with every overlook called out, Chasm Falls, Gem Lake, and where to feed the ducks downtown.
+Built around RMNP's timed-entry passes: activities are grouped by which pass gets you there — the Bear Lake corridor, the rest of the park, and Estes Park for the days you have no pass at all — with a strategy for which entry slots to try for. Bear Lake to Emerald Lake, Alberta Falls, the Trail Ridge Road drive with every overlook called out, Chasm Falls, Gem Lake, and where to feed the ducks downtown.
 
 ## Section heading
 <!-- id: parkguides.h2.2 -->

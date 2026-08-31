@@ -1259,6 +1259,14 @@ Two things that are easy to get wrong here:
   into a file whose hash has moved, so without the re-extract the *second*
   save of a session fails. `save()` runs apply → build → extract, in that
   order.
+- **Both URL spellings must work, and the server should say which file it
+  served.** Every internal link on the site is written `href="projects.html"`,
+  so browsing from the nav lands on `/projects.html` while `_redirects` also
+  serves `/projects` — matching only the pretty form found nothing, and the
+  panel came up empty on every page reached by clicking. `fileForPath`
+  normalizes both, but the real fix is that the proxy stamps the file it
+  resolved onto the injected tag as `data-copy-src`; that also gets the 404
+  page right, which no URL can identify.
 - **Which blocks belong to a dashboard page** is not derivable from the URL
   alone — all eight come out of one Python file. The page reports the
   `.series[id]` sections it is actually showing and the server picks the
@@ -1274,16 +1282,22 @@ Three rules that make it safe, each of which was a bug first:
 - **An unedited block is written back byte for byte.** Re-rendering one would
   reflow its line wraps and re-spell its entities, so every run churned files
   nobody had edited and `check` could never come back clean.
-- **Entities are restored per block, from what that block originally used.**
-  Converting globally turned a literal `·` in a `<title>` into `&middot;`, and
-  turned an `<a href="...">` inside a Python string into `&quot;`. The Python
-  branch needs this too — it was pushing blocks without the entity list and
-  silently fell back to converting everything.
+- **Entities are restored from the set the SOURCE FILE uses, and never for
+  quotes.** Three separate bugs here. Converting globally turned a literal `·`
+  in a `<title>` into `&middot;` and turned an `<a href="...">` inside a Python
+  string into `&quot;` — so quotes are now marked un-restorable in `ENT` (a
+  literal quote in text is valid; these files declare UTF-8). Reading the set
+  *per block* then broke differently: edit a block until it has no entities
+  left, and every later edit to it drifts to the other style, so the set is
+  computed per file, which is where the convention actually lives. And
+  `&#x27;` was mapped to a **curly** apostrophe when it is U+0027 — the editor
+  showed `everyone’s` for a page that renders `everyone's`.
 - **A block with no words in it is not extracted.** `<h1><img></h1>` has no
   copy; extracting it handed back markup to edit and re-escaped it on return.
 - **CRLF is stripped when reading.** These files check out with `
 ` on
-  Windows, and the unwrap left a stray `` sitting inside the paragraph —
+  Windows, and the unwrap left a stray `
+` sitting inside the paragraph —
   invisible in the markdown, but a `<textarea>` strips it, so every such block
   came back from the browser editor looking edited when nobody had touched
   it. Byte offsets are still taken from the raw file, so splicing is

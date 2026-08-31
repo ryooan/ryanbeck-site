@@ -69,7 +69,7 @@ Herder
 ## Herder — body paragraph
 <!-- id: projects.p.4 -->
 
-An app for herding a group toward a plan: propose activities, vote on them — ranked-choice if you like — and schedule around everyone’s availability. Share a link; nobody needs an account.
+An app for herding a group toward a plan: propose activities, vote on them — ranked-choice if you like — and schedule around everyone's availability. Share a link; nobody needs an account.
 
 ## Herder — card tag
 <!-- id: projects.tag.4 -->

@@ -70,14 +70,28 @@ function attrRange(src, re) {
 
 /* ---------------------------------------------------------- presentation */
 
+/* Entity <-> character. Two rules, both learned the hard way:
+ *
+ * `&#x27;` is U+0027, a STRAIGHT apostrophe -- it was mapped to a curly
+ * one here, so "everyone&#x27;s" was shown in the editor with a curly
+ * apostrophe when the page actually renders a straight one. A reviewer
+ * would have been reading punctuation the site does not have.
+ *
+ * The third column is whether a character may be re-spelled as this
+ * entity when a block is EDITED. Quotes are false: `"` closes an HTML
+ * attribute and delimits a Python string, and turning one into `&quot;`
+ * broke an <a href> the one time it was tried. A literal quote in text is
+ * valid anyway -- these files declare UTF-8. */
 const ENT = [
-  ['&mdash;', '—'], ['&ndash;', '–'], ['&middot;', '·'],
-  ['&larr;', '←'], ['&rarr;', '→'], ['&times;', '×'],
-  ['&plusmn;', '±'], ['&hellip;', '…'],
-  ['&rsquo;', '’'], ['&lsquo;', '‘'],
-  ['&ldquo;', '“'], ['&rdquo;', '”'],
-  ['&#x27;', '’'], ['&quot;', '"'], ['&nbsp;', ' '],
-  ['&amp;', '&'],                       /* last out, first back in */
+  ['&mdash;', '\u2014', true], ['&ndash;', '\u2013', true],
+  ['&middot;', '\u00b7', true], ['&larr;', '\u2190', true],
+  ['&rarr;', '\u2192', true], ['&times;', '\u00d7', true],
+  ['&plusmn;', '\u00b1', true], ['&hellip;', '\u2026', true],
+  ['&rsquo;', '\u2019', true], ['&lsquo;', '\u2018', true],
+  ['&ldquo;', '\u201c', true], ['&rdquo;', '\u201d', true],
+  ['&nbsp;', ' ', true],
+  ['&#x27;', "'", false], ['&quot;', '"', false],
+  ['&amp;', '&', true],               /* last out, first back in */
 ];
 
 /* HTML -> what a person edits. Paragraph tags become blank lines; inline
@@ -108,7 +122,11 @@ function toMd(html) {
  * one returns bare text. */
 function fromMd(md, shape, ents) {
   let s = md.trim();
-  const use = ents ? ENT.filter(([e]) => ents.includes(e)) : ENT;
+  /* `ents` is the set the SOURCE FILE uses, not the block. A file either
+     writes `&mdash;` or writes the character; that is a whole-file habit, and
+     reading it per block meant an edit that stripped the last entity out of a
+     block made every later edit to that block drift to the other style. */
+  const use = ENT.filter(([e, , back]) => back && (!ents || ents.includes(e)));
   if (!ents || ents.includes('&amp;')) s = s.split('&').join('&amp;');
   for (const [e, c] of use) if (e !== '&amp;') s = s.split(c).join(e);
   const paras = s.split(/\n{2,}/).map((p) => p.replace(/\n/g, ' ').trim())
@@ -122,6 +140,16 @@ function fromMd(md, shape, ents) {
 
 const blocks = [];           /* {id, file, start, end, label, shape, text} */
 
+/* Which entity spellings a source file uses, cached per file. Whole-file,
+   because it is a whole-file convention -- see fromMd(). */
+const entCache = {};
+function fileEnts(file, src) {
+  if (!entCache[file]) {
+    entCache[file] = ENT.filter(([e]) => src.includes(e)).map(([e]) => e);
+  }
+  return entCache[file];
+}
+
 function push(file, src, range, id, label, shape) {
   if (!range) return;
   const raw = src.slice(range.start, range.end);
@@ -132,9 +160,7 @@ function push(file, src, range, id, label, shape) {
     id, file, label, shape: shape || 'plain',
     start: range.start, end: range.end,
     text: shape === 'raw' ? raw : toMd(raw),
-    /* Which entities this block actually spelled out. Only these get turned
-       back into entities, so a file that writes a literal "·" keeps one. */
-    ents: ENT.filter(([e]) => raw.includes(e)).map(([e]) => e),
+    ents: fileEnts(file, src),
   });
 }
 
@@ -282,7 +308,7 @@ function extractDashboards() {
         /* Must be set here too. Without it fromMd() falls back to converting
            every character it knows, which escaped the quotes of an <a href>
            into &quot; and broke the link. */
-        ents: ENT.filter(([e]) => decoded.includes(e)).map(([e]) => e),
+        ents: fileEnts(file, src),
         py: true, indent: 12,
       });
     }
