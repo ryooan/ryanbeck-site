@@ -1217,6 +1217,63 @@ directly. `assets/js/substack.js` calls `/api/substack` on your own origin and
 silently falls back to the hand-written list if that route is missing. The
 Worker implements it: fetch, parse, decode entities, cache 30 minutes.
 
+## The ryanbeckauthor.com archive
+
+`public/ryanbeckauthor/` is the whole old site, captured live and served at
+the same paths under a prefix. Regenerate with:
+
+```bash
+node tools/mirror-old-site.mjs         # crawl and write
+node tools/mirror-old-site.mjs --dry   # report, write nothing
+```
+
+**Why it exists.** Ryan is pointing ryanbeckauthor.com at this site. The
+moment that DNS changes the old site stops answering, and every inbound link
+to nineteen posts breaks. So it is captured here first, and `_redirects` sends
+the paths that only ever existed on the old site into the archive — a request
+for `/2021/08/27/Afghanistan-Uncertainty.html` arriving on the repointed
+domain 301s to `/ryanbeckauthor/2021/08/27/…`. **`/about`, `/blog` and
+`/writing` are deliberately NOT redirected**: they exist on both sites, and a
+visitor is better served by the current one.
+
+**It crawls rather than builds.** The Jekyll source is in
+`projects/personal/forecasting-source` — misleadingly named; it is the whole
+old website, of which the forecasting dashboards were one part. Building it
+would be exact, but Ruby and Jekyll are not installed here and its `_site` is
+a stale partial build (twelve pages, none of the posts). Crawling captures
+what is actually being served, which is the thing that has to keep working.
+
+**Seeding from the source is what makes it complete.** A link crawl from the
+homepage found 36 pages and stopped: nothing on the old site links to
+`/works`, `/all-posts.json`, or thirteen of the fourteen forecasting
+dashboards — it never had an index for them. Candidate URLs are derived from
+the source tree and probed, and whatever answers 200 is archived. That took it
+from 36 pages to 70.
+
+⚠️ **It is 50 MB, and 42 MB of that is the fourteen old forecasting
+dashboards** — the ones `public/forecasting/` replaced. They are kept because
+"the entirety of the site" was the ask, but if the repo weight ever matters
+that is the one place to cut, and the redirects for them are individually
+listed in `_redirects` so removing them is a contained change.
+
+Two things about the tooling:
+
+- **`check-links.mjs` does not walk the archive.** A dead link inside a mirror
+  is a historical fact about the site being mirrored — `works.html` has
+  pointed at a missing `/works/SEER.html` for years. Fixing them would make
+  the archive a fiction. Links *into* the archive from live pages are still
+  checked, because those are ours.
+- **`check-links.mjs` decodes percent-encoding.** Posts named
+  `Robots-and-Rubik's-Cubes.html` are linked as `%27`, and a literal filename
+  comparison called every one of them broken. The server 307s the encoded form
+  to the decoded one and serves it.
+
+The link rewriter's **order is load-bearing**: root-relative first, absolute
+URLs second. Doing it the other way turns
+`href="https://www.ryanbeckauthor.com/subscribe"` into
+`href="/ryanbeckauthor/subscribe"`, which the root-relative rule then matches
+and prefixes again — `/ryanbeckauthor/ryanbeckauthor/subscribe`, on every page.
+
 ## Reviewing the copy
 
 `copy/` holds every word on the site as editable markdown, so a prose pass

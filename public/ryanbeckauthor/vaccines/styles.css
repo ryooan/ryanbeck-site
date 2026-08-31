@@ -1,0 +1,351 @@
+/* NEED TO DESIGN FOR MOBILE FIRST */
+/* SET UP FOR MOBILE AND ADD MEDIA QUERIES TO */
+/* FIX PROBLEMS OR REARRANGE AS SCREEN GETS LARGER */
+/* FIX MIN-WIDTH BASED ON SCREEN SIZE SO NO */
+/* HORIZONTAL SCROLL HAPPENS EXCEPT WHEN ZOOMING */
+
+
+html {
+	/* gray color that goes with SEER background #CBCECF */
+	background: #000000
+	height: 100vh;
+	max-width: 1500px;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+body {
+	/* background-color: lavender;
+	background-image: url("/ryanbeckauthor/images/Cover.PNG");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	background-position: center center;
+	-webkit-background-size: cover;
+    	-moz-background-size: cover;
+    	-o-background-size: cover;
+	height: 100vh;
+	*/
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	box-sizing: border-box;
+	max-width: 100%;
+	overflow-x: hidden;
+	font-family: 'Roboto', sans-serif;
+}
+
+/*below html and body styles to prevent extra horizontal scroll*/
+html, body {
+  overflow-x: hidden;
+}
+
+body {
+  position: relative
+}
+
+.maindiv {
+	margin: auto;
+	width: 100%;
+	max-width: 900px;
+	/*text-align: center;*/
+}
+
+@media screen and (min-width: 850px) {
+	.maindiv {
+		margin: auto;
+		width: 75%;
+		max-width: 900px;
+		/*text-align: center;*/
+	}
+}
+
+.tablediv {
+	overflow-x: auto;
+	margin: 25px 0 0 0;
+	overflow-y: hidden;
+}
+
+.tablediv2 {
+	overflow-x: auto;
+	margin: 15px 0;
+	overflow-y: hidden;
+}
+
+.outsidediv {
+	width: 100%;
+	padding: 0;
+	margin: 25px 0 0 0;
+}
+
+@media screen and (min-width: 850px) {
+	.outsidediv {
+		width: 87.5%;
+		padding: 0;
+		margin: 25px 0 0 0;
+	}
+}
+
+table, th, td {
+	word-wrap: break-word;
+	border-collapse: collapse;
+	margin: 0 0;
+    font-size: 1em;
+    font-family: sans-serif;
+    /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);*/
+	text-align: center;
+	padding: 5px 5px;
+	overflow: hidden;
+	margin-top: 0;
+}
+
+#vaccines {
+	table-layout: fixed;
+	/*width: 100%;*/
+	/*min-width: 788px;
+	max-width: 788px;*/
+	width: 785px;
+	margin: 0;
+}
+
+#vaccines th td {
+	/*width: 12.5%;*/
+}
+
+#doses {
+	table-layout: fixed;
+	width: 100%;
+	/*min-width: 900px;
+	max-width: 900px;*/
+	width: 900px;
+}
+
+#doses th td {
+	width: 12.5%;
+}
+
+tr:nth-child(odd) {
+	background: White;
+}
+
+tr:nth-child(even) {
+	background: AliceBlue;
+}
+
+th {
+	background: #759fd9;
+	color: white;
+}
+
+td {
+	height: 50px;
+}
+
+#notes {
+	table-layout: initial;
+	width: 100%;
+	background: white;
+	box-shadow: none;
+}
+
+#notes tr td {
+	padding: 5px 5px;
+	box-shadow: none;
+	height: 0;
+	background: white;
+}
+
+#notes tr td:nth-child(1) {
+	width: 1%;
+	color: LimeGreen;
+}
+
+#notes tr td:nth-child(2) {
+	text-align: left;
+}
+
+#sources {
+	table-layout: initial;
+	width: 100%;
+	background: white;
+	box-shadow: none;
+}
+
+#sources tr td {
+	padding: 5px 10px;
+	box-shadow: none;
+	background: white;
+	height: 0;
+	width: 0;
+}
+
+#sources tr td:nth-child(1) {
+	width: 1%;
+	padding: 5px 5px;
+	text-align: left;
+	color: orange;
+}
+
+#sources tr td:nth-child(4) {
+	text-align: left;
+}
+
+#sources2 {
+	table-layout: initial;
+	width: 100%;
+	background: white;
+	box-shadow: none;
+}
+
+#sources2 tr td {
+	padding: 5px 10px;
+	box-shadow: initial;
+	background: white;
+	height: 0;
+	width: 0;
+}
+
+#sources2 tr td:nth-child(1) {
+	width: 1%;
+	padding: 5px 5px;
+}
+
+#sources2 tr td:nth-child(3) {
+	text-align: left;
+}
+
+.tooltip {
+  border-bottom: 1px dotted DarkGrey;
+}
+.tooltipwrapper {
+  position: absolute;
+  visibility: hidden;
+  /*display: none;*/
+}
+.tooltip:hover .tooltipwrapper,
+.tooltipwrapper:hover {
+  visibility: visible;
+  opacity: 1.0;
+  /*display: block;*/
+}
+
+.tooltiptext {
+  display: block;
+  width: 300px;
+  color: black;
+  background: white;
+  text-align: left;
+  border-radius: 8px;
+  box-shadow: 4px 3px 10px #800000;
+  z-index: 1;
+   padding: 5px;     
+  top: -999px;  
+  left: -999px;       
+  position: absolute;
+}
+
+#tooltipletter {
+	color: LimeGreen;
+	border-bottom: none;
+}
+
+#tooltipnumber {
+	color: orange;
+	border-bottom: none;
+}
+
+h1 {
+	text-align: center;
+	margin: 5px;
+}
+
+#updated {
+	text-align: center;
+	font-style: italic;
+	margin: 5px;
+}
+
+#centered-buttons { display: flex; justify-content: center; margin-top: 10px;}
+
+
+.description {
+		width: 80%;
+		margin: 35px 0 15px 0;
+		font-size: 1.1em;
+}
+
+@media screen and (min-width: 850px) {
+	.description {
+		width: 60%;
+		margin: 35px 0 15px 0;
+		font-size: 1.1em;
+	}
+}
+
+.collapsible {
+  background-color: #759fd9;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 9px 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 1em;
+  margin-top: 25px;
+}
+
+.collapsible::after {
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased; 
+	font-style: normal;
+	font-variant: normal;
+	text-rendering: auto;
+	line-height: 1;
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	content: "\f078";
+	float: right;
+}
+
+.active {
+  background-color: #8a9fbd;
+}
+
+.active::after {
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	font-style: normal;
+	font-variant: normal;
+	text-rendering: auto;
+	line-height: 1;
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	content: "\f077";
+	float: right;
+}
+
+.collapsibleContent {
+  padding: 0;
+  display: none;
+  margin: 0;
+}
+
+.collapsibleTablediv {
+	overflow-x: auto;
+	margin: 0;
+	overflow-y: hidden;
+}
+
+/*
+* {
+  border: 1px solid #f00 !important;
+  visibility: visible !important;
+}
+*/

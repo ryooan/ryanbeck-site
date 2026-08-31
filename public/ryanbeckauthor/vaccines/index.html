@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-147962076-1"></script>
+		<script>
+ 			window.dataLayer = window.dataLayer || [];
+  			function gtag(){dataLayer.push(arguments);}
+  			gtag('js', new Date());
+
+  			gtag('config', 'UA-147962076-1');
+		</script>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Coronavirus Vaccine Information</title>
+		<meta name="description" content="A summary of information about vaccines the US has purchased">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="theme-color" content="#ffffff">
+		<meta name="og:title" content="Coronavirus Vaccine Information">
+		<meta name="og:description" content="A summary of information about vaccines the US has purchased">
+		<meta name="twitter:card" content="summary" />
+		<meta name="og:image" content="images/coronavirus123454321.jpg">
+		<meta name="twitter:image:src" content="images/coronavirus123454321.jpg" />
+		
+		<link rel="stylesheet" href="styles.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+		
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="maindiv" id="maindiv">
+
+<h1>US COVID Vaccine Information</h1>
+
+<p id="updated"></p>
+
+<!-- AddToAny BEGIN -->
+<div class="a2a_kit a2a_kit_size_32 a2a_default_style" id="centered-buttons">
+<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+<a class="a2a_button_facebook"></a>
+<a class="a2a_button_twitter"></a>
+<a class="a2a_button_copy_link"></a>
+</div>
+<script async src="https://static.addtoany.com/menu/page.js"></script>
+<!-- AddToAny END -->
+
+<div class="description">
+<p>The tables below contain information about each of the vaccines the US has procured doses of. Sources are included for each entry.</p>
+</div>
+
+<div class="description" id="additionalSources">
+<p>Below are additional sources that are useful for general information and updates.</p>
+</div>
+
+<div class="description" id="contactMe">
+<p>You can follow me on social media here. If you notice any errors or have any questions feel free to message or email.</p>
+</div>
+
+<button class="collapsible" id="notesButton">Notes</button>
+<div class="collapsibleContent" id="notesContent">
+</div>
+
+<button class="collapsible" id="sourcesButton">Sources</button>
+<div class="collapsibleContent" id="sourcesContent">
+</div>
+
+<div class="description" id="socialFollow">
+<!-- AddToAny start -->
+<div class="a2a_kit a2a_kit_size_32 a2a_default_style a2a_follow" style="margin:15px 0;">
+    <a class="a2a_button_twitter" data-a2a-follow="BeckRyooan" style="margin:0 0 0 10px;"></a>
+    <a class="a2a_button_facebook" data-a2a-follow="RyanBeckAuthor"></a>
+	<a href="mailto:RyanBeckAuthor@gmail.com" style="margin:0 0 0 10px;top:50%;-ms-transform: translateY(50%);transform: translateY(50%);">RyanBeckAuthor@gmail.com</a>
+	<!-- Image source for email <img src="https://static.addtoany.com/buttons/email.svg" width="32" height="32" style="background-color:royalblue"> -->
+</div>
+
+<script async src="https://static.addtoany.com/menu/page.js"></script>
+<!-- AddToAny end -->
+
+</div>
+
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+	
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+
+// Sheets API v3 is no V4: https://developers.google.com/sheets/api/guides/migration
+// Need to fix this, try here: https://stackoverflow.com/questions/66472824/google-sheets-v4-update-effect-json-endpoint-data-shut-down-on-june-8-2021
+// I don't think the below does anything, goes to commented out section, see script line at very bottom with other google sheet address.
+var spreadsheetUrl = 'https://sheets.googleapis.com/v4/spreadsheets/1HUY4b7Q-eoJgCBa9dKe466Pl_Q_kQO4hk3PuoI_mC4E/values?alt=json-in-script&callback=doData';
+	  
+// The callback function the JSONP request will execute to load data from API
+function doData(data) {
+    // Final results will be stored here	
+    var results = new Array();
+	var tempTable = [];
+	var latestRow = [];
+	var resultsIndex = 0;
+
+    // Get all entries from spreadsheet
+    var entries = data.feed.entry;
+	console.log(entries);
+
+    // Set initial previous row, so we can check if the data in the current cell is from a new row
+    var previousRow = entries[0].gs$cell.row;
+	var previousColumn = entries[0].gs$cell.col;
+	
+	//define what a blank will be
+	var blankCell = "blank";
+
+    // Iterate all entries in the spreadsheet
+    for (var i = 0; i < entries.length; i++) {
+
+        // get current cell
+        var cell = entries[i];
+
+        // get text from current cell
+        var text = cell.content.$t;
+
+        // get the current row and column
+        var row = cell.gs$cell.row;
+		var column = cell.gs$cell.col;
+		
+		//check to see if there were blank cells between this cell and previous
+		if (column > previousColumn + 1) {
+		
+			var numBlanks = column - previousColumn - 1;
+			
+			for (var j = 0; j < numBlanks; j++) {
+				latestRow.push(blankCell);
+			}
+		
+		}
+		
+		var addedRow = parseInt(previousRow) + 1;
+		//console.log("Prev is" + previousRow + ", +1 is " + test);
+		//console.log(row + " is row, " + previousRow + " is previous");
+
+		// Determine if the current cell is in the last Row or is a new row
+		if (parseInt(row) === addedRow) {
+			//console.log("Row previous + 1");
+			//store last row
+			tempTable.push(latestRow);
+			
+			// this is a new row, create new array for this row
+			latestRow = [];
+
+			// add the cell text to this new row array  
+			latestRow.push(text);
+
+			// Increment the previous row, since we added a new row to the final results array. Also increment column.
+			previousRow++;
+		} else if (row == previousRow) {
+			// This cell is in an existing row we already added to the results array, add text to this existing row
+			//console.log("row = previousRow");
+			latestRow.push(text);
+		} else {
+			// If it skips more than one row we want to make it into a new table array
+			//console.log("Row skipped");
+			
+			//store last row to tempTable and push tempTable to results
+			tempTable.push(latestRow);
+			results[resultsIndex] = tempTable;
+			
+			tempTable = [];
+			
+			resultsIndex++;
+			
+			latestRow = [];
+			
+			latestRow.push(text);
+			
+			//tempTable.push(latestRow);
+			
+			previousRow = row;
+		}
+		
+		previousColumn = entries[i].gs$cell.col;
+
+    }
+	
+	results[resultsIndex] = tempTable;
+
+    $(document).ready(handleResults(results));
+}
+
+// Do what ever you please with the final array
+function handleResults(spreadsheetArray) {
+    console.log(spreadsheetArray);
+	
+	var tableColumns = [7, 8, 2, 4, 4, 2];
+	var numTables = 5;
+	var tableRows = [spreadsheetArray[0].length - 2, 11, spreadsheetArray[1].length, spreadsheetArray[2].length, spreadsheetArray[3].length, spreadsheetArray[4].length, spreadsheetArray[5].length];
+	var tableIdentifier = ['vaccines', 'doses', 'notes', 'sources', 'sources2']
+	var spreadsheetReference = [0, 0, 1, 2, 3, 4];
+	var addTable2 = 5;
+	
+	for (var h = 0; h < numTables; h++) {
+	
+		var body = document.getElementsByTagName('body')[0];
+	
+		var currentTable = document.createElement('table');
+		//console.log(tableIdentifier[h]);
+		currentTable.id = tableIdentifier[h];
+		var thead = document.createElement('thead');
+		var tbody = document.createElement('tbody');
+
+		for (var i = 0; i < tableRows[h]; i++) {
+		
+			var trhead = document.createElement('tr');
+			var tr = document.createElement('tr');
+
+			for (var j = 0; j < tableColumns[h]; j++) {
+			
+				var tableDirection1 = [j, j, i, i, i, i];
+				var tableDirection2 = [i, i, j, j, j, j];
+			
+				if (i == 0) {
+					
+					var th = document.createElement('th');
+					
+					th.appendChild(document.createTextNode(spreadsheetArray[spreadsheetReference[h]][tableDirection1[h]][tableDirection2[h]]));
+					trhead.appendChild(th);
+						
+				} else {
+				
+					var td = document.createElement('td');
+					var indexReference = i + addTable2;
+					
+					var searchForLink = 'http';
+			
+					if (typeof spreadsheetArray[spreadsheetReference[h]][tableDirection1[h]][tableDirection2[h]] == 'undefined') {
+						var linkSearch = -1;
+					} else {
+						var linkSearch = spreadsheetArray[spreadsheetReference[h]][tableDirection1[h]][tableDirection2[h]].indexOf(searchForLink);
+						//console.log("linkSearch is " + linkSearch + "and text was " + spreadsheetArray[spreadsheetReference[h]][tableDirection1[h]][tableDirection2[h]]);
+					}
+					
+					if (linkSearch != -1) {
+						var linkContent = "<a href=\"" + spreadsheetArray[spreadsheetReference[h]][tableDirection1[h]][tableDirection2[h]] + "\">" + spreadsheetArray[spreadsheetReference[h]][tableDirection1[h]][tableDirection2[h]] + "</a>";
+						td.innerHTML = linkContent;
+						//td.appendChild(document.createTextNode(linkContent));
+						tr.appendChild(td);
+					
+					} else {
+				
+						if (h == 1) {
+							td.appendChild(document.createTextNode(spreadsheetArray[spreadsheetReference[h]][tableDirection1[h]][indexReference]));
+							tr.appendChild(td);
+						} else {
+						
+							td.appendChild(document.createTextNode(spreadsheetArray[spreadsheetReference[h]][tableDirection1[h]][tableDirection2[h]]));
+							tr.appendChild(td);
+				
+						}
+					}
+				}
+			}
+			
+			if (i == 0) {
+				thead.appendChild(trhead);
+			} else {
+				tbody.appendChild(tr);
+			}
+
+		}
+		
+		//console.log(tbody);
+		currentTable.appendChild(thead);
+		currentTable.appendChild(tbody);
+		body.appendChild(currentTable);
+	
+	}	
+
+	document.getElementById("updated").innerHTML = spreadsheetArray[0][tableRows[0]+1][0];
+	customizeTables(tableIdentifier);
+	//document.getElementById('test').innerHTML = spreadsheetArray[1][2];
+}
+
+function customizeTables(tableID) {
+	addToolTips(tableID[0],tableID);
+	addToolTips(tableID[1],tableID);
+	
+	document.getElementById(tableID[1]).rows[0].cells[7].innerHTML = "Estimated Vaccine Totals";
+	document.getElementById(tableID[0]).rows[0].cells[0].innerHTML = "";
+	document.getElementById(tableID[1]).rows[0].cells[0].innerHTML = "";
+	document.getElementById(tableID[1]).rows[2].cells[0].innerHTML = "<span class = \"tooltip\">Potential Vaccinations (Millions)<span class=\"tooltipwrapper\"><span class = \"tooltiptext\">Number of potential complete vaccinations in US</span></span></span>";
+	document.getElementById(tableID[1]).rows[3].cells[0].innerHTML = "<span class = \"tooltip\">Estimated Doses by End of December<span class=\"tooltipwrapper\"><span class = \"tooltiptext\">Estimated doses manufactured and available for use in US</span></span></span>";
+	document.getElementById(tableID[1]).rows[4].cells[0].innerHTML = "<span class = \"tooltip\">Estimated Doses by End of January<span class=\"tooltipwrapper\"><span class = \"tooltiptext\">Estimated doses manufactured and available for use in US</span></span></span>";
+	document.getElementById(tableID[1]).rows[5].cells[0].innerHTML = "<span class = \"tooltip\">Estimated Doses by End of February<span class=\"tooltipwrapper\"><span class = \"tooltiptext\">Estimated doses manufactured and available for use in US</span></span></span>";
+	document.getElementById(tableID[1]).rows[6].cells[0].innerHTML = "<span class = \"tooltip\">Estimated Doses by End of March<span class=\"tooltipwrapper\"><span class = \"tooltiptext\">Estimated doses manufactured and available for use in US</span></span></span>";
+	document.getElementById(tableID[1]).rows[7].cells[0].innerHTML = "<span class = \"tooltip\">Estimated Doses by End of April<span class=\"tooltipwrapper\"><span class = \"tooltiptext\">Estimated doses manufactured and available for use in US</span></span></span>";
+	document.getElementById(tableID[1]).rows[8].cells[0].innerHTML = "<span class = \"tooltip\">Estimated Doses by End of May<span class=\"tooltipwrapper\"><span class = \"tooltiptext\">Estimated doses manufactured and available for use in US</span></span></span>";
+	document.getElementById(tableID[1]).rows[9].cells[0].innerHTML = "<span class = \"tooltip\">Estimated Doses by End of June<span class=\"tooltipwrapper\"><span class = \"tooltiptext\">Estimated doses manufactured and available for use in US</span></span></span>";
+	document.getElementById(tableID[1]).rows[10].cells[0].innerHTML = "<span class=\"tooltip\">Estimated Doses by End of July<span class=\"tooltipwrapper\"><span class=\"tooltiptext\">Estimated doses manufactured and available for use in US</span></span></span>";
+	document.getElementById(tableID[2]).rows[0].cells[1].innerHTML = "";
+	document.getElementById(tableID[0]).rows[0].cells[6].innerHTML = "Sanofi / Glaxo&shy;Smith&shy;Kline";
+	document.getElementById(tableID[1]).rows[0].cells[6].innerHTML = "Sanofi / Glaxo&shy;Smith&shy;Kline";
+	
+	document.getElementById(tableID[2]).deleteRow(0);
+	document.getElementById(tableID[3]).deleteRow(0);
+	document.getElementById(tableID[4]).deleteRow(0);
+	document.getElementById(tableID[4]).rows[0].deleteCell(3);
+	document.getElementById(tableID[4]).rows[1].deleteCell(3);
+	document.getElementById(tableID[4]).rows[2].deleteCell(3);
+	document.getElementById(tableID[4]).rows[3].deleteCell(3);
+	
+	maindiv.appendChild(document.getElementById(tableID[0]));
+	maindiv.appendChild(document.getElementById(tableID[1]));
+	notesContent.appendChild(document.getElementById(tableID[2]));
+	sourcesContent.appendChild(document.getElementById(tableID[3]));
+	maindiv.appendChild(document.getElementById(tableID[4]));
+	
+	var tableWrapperClass = "tablediv";
+	var tableWrapperClass2 = "tablediv";
+	var tableWrapperClass3 = "collapsibleTablediv";
+	var tableWrapperClass4 = "tablediv2"
+	var divWrapperClass = "outsidediv";
+	wrapDiv(tableID[0], tableWrapperClass2);
+	wrapDiv(tableID[1], tableWrapperClass);
+	wrapDiv(tableID[2], tableWrapperClass3);
+	wrapDiv(tableID[3], tableWrapperClass3);
+	wrapDiv(tableID[4], tableWrapperClass4);
+	wrapDiv(tableWrapperClass2, divWrapperClass);
+	
+	maindiv.appendChild(document.getElementById("notesButton"));
+	maindiv.appendChild(document.getElementById("notesContent"));
+	maindiv.appendChild(document.getElementById("sourcesButton"));
+	maindiv.appendChild(document.getElementById("sourcesContent"));
+	maindiv.appendChild(document.getElementById("additionalSources"));
+	maindiv.appendChild(document.getElementById("tablediv2"));
+	maindiv.appendChild(document.getElementById("contactMe"));
+	maindiv.appendChild(document.getElementById("socialFollow"));
+	
+	var ktooltips = document.querySelectorAll(".tooltip");
+	ktooltips.forEach(function(ktooltip, index){                // For each ktooltip
+	  ktooltip.addEventListener("mouseover", position_tooltip); // On hover, launch the function below
+	  console.log("Event listener added");
+	})
+	
+	/*
+	var ktooltiptext = document.querySelectorAll(".tooltiptext");
+	ktooltips.forEach(function(ktooltiptext, index){                // For each ktooltip
+	  ktooltiptext.addEventListener("mouseover", position_tooltip); // On hover, launch the function below
+	  console.log("Event listener added");
+	})
+	
+	*/
+}
+
+function wrapDiv(wrapTable, tableClass){
+    var theTable = document.getElementById(wrapTable);
+    
+    var newDiv = document.createElement('div');
+    newDiv.innerHTML = theTable.outerHTML;
+    newDiv.setAttribute('class', tableClass);
+	newDiv.setAttribute('id', tableClass);
+    
+    theTable.parentNode.insertBefore(newDiv, theTable);
+    theTable.remove();
+}
+
+function addToolTips(targetTable, allTables) {
+	var rows = document.getElementById(targetTable).rows;
+	var firstRow = rows[0];
+	var numRows = rows.length;
+	var numColumns = firstRow.cells.length;
+	
+	for (var i = 0; i < numRows; i++) {
+		
+		for (var j = 0; j < numColumns; j++) {
+			var tableCell = rows[i].cells[j];
+			var cellValue = tableCell.innerHTML;
+			
+			var searchLeftBrace = '[';
+			var searchRightBrace = ']';
+			
+			var searchIndex = cellValue.indexOf(searchLeftBrace);
+			var searchIndexRight = cellValue.indexOf(searchRightBrace);
+			var searchArrayLeft = [];
+			var searchArrayRight = [];
+			var searchCounter = 0;
+			
+			while (searchIndex != -1) {
+				
+				searchArrayLeft[searchCounter] = searchIndex;
+				searchArrayRight[searchCounter] = searchIndexRight;
+				
+				searchCounter++;
+				searchIndex = cellValue.indexOf(searchLeftBrace, searchIndex + 1);
+				searchIndexRight = cellValue.indexOf(searchRightBrace, searchIndexRight + 1);
+				
+			}
+			
+			var finalCellValue = cellValue;
+			
+			if (searchArrayLeft != null) {
+				for (var k = 0; k < searchArrayLeft.length; k++) {
+					var bracketContents = cellValue.substring(searchArrayLeft[k] + 1, searchArrayRight[k]);
+					var withBrackets = cellValue.substring(searchArrayLeft[k], searchArrayRight[k] + 1);
+					
+					if (finalCellValue != cellValue) {
+						
+						searchIndex = finalCellValue.indexOf(searchLeftBrace);
+						searchIndexRight = finalCellValue.indexOf(searchRightBrace);
+						searchCounter = 0;
+						
+						while (searchIndex != -1) {
+							
+							searchArrayLeft[searchCounter] = searchIndex;
+							searchArrayRight[searchCounter] = searchIndexRight;
+							
+							searchCounter++;
+							searchIndex = finalCellValue.indexOf(searchLeftBrace, searchIndex + 1);
+							searchIndexRight = finalCellValue.indexOf(searchRightBrace, searchIndexRight + 1);
+							//console.log(searchIndex);
+							
+						}
+						bracketContents = finalCellValue.substring(searchArrayLeft[k] + 1, searchArrayRight[k]);
+						withBrackets = finalCellValue.substring(searchArrayLeft[k], searchArrayRight[k] + 1);
+					}
+					
+					var toolTipText = "";
+					
+					if (hasNumber(bracketContents)) {
+						var sourceRows = document.getElementById(allTables[3]).rows;
+						
+						for (var l = 0; l < sourceRows.length; l++) {
+							if (sourceRows[l].cells[0].innerHTML == withBrackets) {
+								var sourceUpdated = sourceRows[l].cells[1].innerHTML;
+								var sourceName = sourceRows[l].cells[2].innerHTML;
+								
+								var sourceLink = sourceRows[l].cells[3].innerHTML.match(/https?:\/\/[^">]*/);
+							}
+						}
+					
+						var tooltipTextShown = "Date Logged: " + sourceUpdated + "<br/>Source: " + sourceName + "<br/>Link: <a href=\"" + sourceLink + "\" class=\"tooltiplink\">" + sourceLink + "</a>";
+						toolTipText = "<span class=\"tooltip\" id=\"tooltipnumber\">" + withBrackets + "<span class=\"tooltipwrapper\"><span class=\"tooltiptext\">" + tooltipTextShown + "</span>" + "</span></span>";
+						
+						finalCellValue = finalCellValue.substr(0, searchArrayLeft[k]) + toolTipText + finalCellValue.substr(searchArrayRight[k] + 1);
+					} else {
+						var notesRows = document.getElementById(allTables[2]).rows;
+						
+						for (var l = 0; l < notesRows.length; l++) {
+							if (notesRows[l].cells[0].innerHTML == withBrackets) {
+								var noteTooltip = notesRows[l].cells[1].innerHTML;
+							}
+						}
+					
+						var noteTextShown = noteTooltip;
+						toolTipText = "<span class=\"tooltip\" id=\"tooltipletter\">" + withBrackets + "<span class=\"tooltipwrapper\"><span class = \"tooltiptext\">" + noteTextShown + "</span>" + "</span></span>";
+						
+						finalCellValue = finalCellValue.substr(0, searchArrayLeft[k]) + toolTipText + finalCellValue.substr(searchArrayRight[k] + 1);
+					}
+				
+				}
+			}
+			
+			rows[i].cells[j].innerHTML = finalCellValue;
+		}
+		
+	}
+	
+};
+
+function hasNumber(myString) {
+  return /\d/.test(myString);
+}
+
+function position_tooltip(){
+  // Get .ktooltiptext sibling
+  var ktooltip = this.querySelector(".tooltiptext");
+  var tooltipBase = this.closest(".tooltip");
+  //MAKE IT SO TOOLTIP DOESN'T EXTEND BEYOND BOTTOM EITHER 
+  
+  // Get calculated ktooltip coordinates and size
+  //var tooltip_rect = this.getBoundingClientRect();
+
+  //var tipX = tooltip_rect.width - 20 - this.closest(".tablediv").scrollLeft; // 5px on the right of the ktooltip
+  var tipX = 0 - this.closest(".tablediv").scrollLeft;
+  var tipY = 0;                     // 0px on the top of the ktooltip
+  // Position tooltip
+  ktooltip.style.top = tipY + 'px';
+  ktooltip.style.left = tipX + 'px';
+
+  // Get calculated tooltip coordinates and size
+  var tooltip_rect = ktooltip.getBoundingClientRect();
+  var tooltipBase_rect = tooltipBase.getBoundingClientRect();
+  // Corrections if out of window
+  if ((tooltip_rect.x + tooltip_rect.width) > document.documentElement.clientWidth) { // Out on the right
+    tipX = -tooltip_rect.width - tooltipBase_rect.width - this.closest(".tablediv").scrollLeft;  // Simulate a "right: tipX" position
+	
+	if (tipX < -tooltip_rect.x) {
+		tipX = -tooltip_rect.x + 5 - this.closest(".tablediv").scrollLeft;
+		tipY = tipY + tooltipBase_rect.height;
+		var maximumWidth = document.documentElement.clientWidth - 20;
+		ktooltip.style.width = maximumWidth + 'px';
+		ktooltip.style.maxWidth = 400 + 'px';
+		
+		if ((tooltip_rect.bottom + tooltipBase_rect.height) > window.innerHeight) {
+			tipY = tipY - tooltipBase_rect.height*2;
+		}
+	}
+  }
+  if (tooltip_rect.y < 0)            // Out on the top
+    tipY = tipY - tooltip_rect.y;    // Align on the top
+  if (tooltip_rect.bottom > window.innerHeight)  // Out on bottom
+	tipY = tipY - tooltip_rect.height + tooltipBase_rect.height;
+	
+  // Apply corrected position
+  ktooltip.style.top = tipY + 'px';
+  ktooltip.style.left = tipX + 'px';
+  
+  /*console.log("Rect y = " + tooltip_rect.y + " and window.innerHeight = " + window.innerHeight);
+  console.log("tipY = " + tipY + " and tipX = " + tipX + " window scroll x = " + this.closest(".tablediv").scrollLeft);
+  console.log("tooltip rectX " + tooltip_rect.x + " and width is " + tooltip_rect.width);*/
+}
+
+/*
+function position_tooltip(){
+  // Get .ktooltiptext sibling
+  var ktooltip = this.querySelector(".tooltiptext");
+  //MAKE IT SO TOOLTIP DOESN'T EXTEND BEYOND BOTTOM EITHER 
+  
+  // Get calculated ktooltip coordinates and size
+  //var tooltip_rect = this.getBoundingClientRect();
+
+  //var tipX = tooltip_rect.width - 20 - this.closest(".tablediv").scrollLeft; // 5px on the right of the ktooltip
+  var tipX = 0 - this.closest(".tablediv").scrollLeft;
+  var tipY = 0;                     // 0px on the top of the ktooltip
+  // Position tooltip
+  ktooltip.style.top = tipY + 'px';
+  ktooltip.style.left = tipX + 'px';
+
+  // Get calculated tooltip coordinates and size
+  var tooltip_rect = ktooltip.getBoundingClientRect();
+  // Corrections if out of window
+  if ((tooltip_rect.x + tooltip_rect.width) > document.documentElement.clientWidth) { // Out on the right
+    tipX = -tooltip_rect.width - 30 - this.closest(".tablediv").scrollLeft;  // Simulate a "right: tipX" position
+	
+	if (tipX < -tooltip_rect.x) {
+		tipX = -tooltip_rect.x + 5 - this.closest(".tablediv").scrollLeft;
+		tipY = tipY + 20;
+		var maximumWidth = document.documentElement.clientWidth - 20;
+		ktooltip.style.width = maximumWidth + 'px';
+	}
+  }
+  if (tooltip_rect.y < 0)            // Out on the top
+    tipY = tipY - tooltip_rect.y;    // Align on the top
+  if (tooltip_rect.bottom > window.innerHeight)  // Out on bottom
+	tipY = tipY - tooltip_rect.height + 10;
+	
+  // Apply corrected position
+  ktooltip.style.top = tipY + 'px';
+  ktooltip.style.left = tipX + 'px';
+}
+*/
+
+/*function createTables() {
+
+	var tableWidth = [6, 10, 2, 4, 4, 2];
+	var numTables = 5;
+	var tableDepth = [spreadsheetArray[0].length - 1, spreadsheetArray[0].length, spreadsheetArray[1].length, spreadsheetArray[2].length, spreadsheetArray[3].length, spreadsheetArray[4].length, spreadsheetArray[5].length, spreadsheetArray[6].length];
+	var tableIdentifier = ['vaccines', 'doses', 'notes', 'sources', 'sources2']
+	var vaccineTable = document.getElementById('vaccines');
+	var vaccineHeader = document.getElementById('vaccines_head');
+	var vaccineBody = document.getElementById('vaccines_body');
+	
+	for (var h = 0; h < numTables; h++) {
+	
+		var body = document.getElementsByTagName('body')[0];
+	
+		var currentTable = document.createElement('table');
+		currentTable.id = tableIdentifier[h];
+		var thead = document.createElement('thead');
+		var tbody = document.createElement('tbody');
+
+		for (var i = 0; i < tableWidth; i++) {
+		
+			var trhead = document.createElement('tr');
+			var tr = document.createElement('tr');
+
+			for (var j = 0; j < tableDepth; j++) {
+			
+				if (i == 0) {
+					
+					var th = document.createElement('th');
+					
+					th.appendChild(document.createTextNode(spreadsheetArray[0][j][i]));
+					trhead.appendChild(th);
+						
+				} else {
+				
+					var td = document.createElement('td');
+				
+					td.appendChild(document.createTextNode(spreadsheetArray[0][j][i]));
+					tr.appendChild(td);
+						
+				}
+			}
+			
+			thead.appendChild(trhead);
+			tbody.appendChild(tr);
+
+		}
+		
+		currentTable.appendChild(thead);
+		currentTable.appendChild(tbody);
+		body.appendChild(currentTable);
+	
+	}
+
+}*/
+	  
+/*	  
+// Create JSONP Request to Google Docs API, then execute the callback function doData
+$.ajax({
+    url: spreadsheetUrl,
+    jsonp: 'doData',
+    dataType: 'json'
+});
+*/
+</script>
+<script src="https://sheets.googleapis.com/v4/spreadsheets/1HUY4b7Q-eoJgCBa9dKe466Pl_Q_kQO4hk3PuoI_mC4E/values?alt=json-in-script&callback=doData"></script>
+
+		</div>
+	</body>
+</html>
