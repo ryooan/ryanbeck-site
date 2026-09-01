@@ -1623,11 +1623,23 @@ Roughly in the order they unblock things.
    Wordle Analysis, Ballot Research 2026, Desktop Build 2026. Real captures
    for app-type projects still need a compositing browser; Herder's card
    uses its actual wordmark re-inked gilt, March Madness a drawn bracket.
-5. **Prune the projects lede**, which still marks itself a draft. (The last
-   generated door scene is done — the anvil landed 2026-08-23.)
-6. **Have Ryan pass over the about-page copy.** It is drafted for him, not by
-   him. Each page is one `<article class="page-src">` in `about.html`; adding
-   or reordering pages needs nothing else changed.
+5. ~~**Prune the projects lede.**~~ **Done** 2026-08-31 — Ryan rewrote it in
+   the browser editor and blanked the draft notice.
+6. ⚠️ **`about-plain.html` has drifted from `about.html`, and it is live.**
+   Ryan rewrote the about copy in the book (2026-08-31) — Director of
+   Forecasting at Metaculus, the fiction reframed as something he used to do
+   — and the plain page still carries the old draft. **13 paragraphs are in
+   the book and not the plain page; 5 are in the plain page and not the
+   book**, including a bio line that is now wrong. The colophon links to it,
+   so a reader can reach the stale version.
+
+   Nothing syncs them, by design — they are two files with the same words.
+   Two ways out: copy the changes across by hand, or **generate
+   `about-plain.html` from `about.html`'s `<article class="page-src">`
+   blocks**, which removes the whole class of problem. The second is a small
+   script and worth doing before launch.
+6a. **The about-page copy itself is now Ryan's**, not a draft written for him.
+   That was the old item 6 and it is done for the book version.
 7. **Decide on Astro** before the site grows past ~8 pages. The header is
    duplicated across six files, which is fine at six and annoying at ten.
    HOSTING.md has the argument, including the case against.
