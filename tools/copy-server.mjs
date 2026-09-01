@@ -54,7 +54,8 @@ function fileForPath(path) {
     '/writing': 'public/writing.html',
     '/blog': 'public/blog.html',
     '/about': 'public/about.html',
-    '/about-plain': 'public/about-plain.html',
+    /* Generated from about.html; nothing here is editable. The panel says
+       so rather than offering boxes whose contents get overwritten. */
     '/park-guides': 'public/park-guides.html',
     '/404': 'public/404.html',
   };
@@ -63,7 +64,7 @@ function fileForPath(path) {
 
 const KNOWN_FILES = new Set([
   'public/index.html', 'public/projects.html', 'public/writing.html',
-  'public/blog.html', 'public/about.html', 'public/about-plain.html',
+  'public/blog.html', 'public/about.html',
   'public/park-guides.html', 'public/404.html',
   'tools/forecasting/build_page.py',
 ]);
@@ -139,6 +140,10 @@ async function save(edits) {
      what the files now say, ready for the next save. */
   await sh('node', ['tools/copy.mjs', 'apply']);
   await sh('python', ['tools/forecasting/build_page.py']);
+  /* The plain about page is a view of the book, so an edit to the book has
+     to be pushed through it -- otherwise the two drift apart again, which is
+     the exact failure this generator was written to end. */
+  await sh('node', ['tools/build-about-plain.mjs']);
   await sh('node', ['tools/copy.mjs', 'extract']);
   return { ok: true, files: touched, log: steps.filter(Boolean) };
 }
@@ -248,13 +253,20 @@ const server = createServer(async (req, res) => {
 /* ----------------------------------------------------------------- boot */
 
 function portOpen(port) {
+  /* GET with a timeout, not HEAD. A bare HEAD hangs forever against a
+     wrangler that does not answer it -- no response, no error, so the promise
+     never settles and the whole server sits in its boot probe printing
+     nothing. Anything that answers at all counts as open, including a 404. */
   return new Promise((resolve) => {
-    const r = httpRequest({ host: '127.0.0.1', port, path: '/', method: 'HEAD' },
-      () => resolve(true));
-    r.on('error', () => resolve(false));
-    r.end();
+    const q = httpRequest(
+      { host: '127.0.0.1', port, path: '/', method: 'GET', timeout: 2000 },
+      (res) => { res.resume(); resolve(true); });
+    q.on('timeout', () => { q.destroy(); resolve(false); });
+    q.on('error', () => resolve(false));
+    q.end();
   });
 }
+
 
 const already = await portOpen(UPSTREAM);
 let child = null;
@@ -262,7 +274,11 @@ if (!already) {
   console.log(`Starting wrangler dev on :${UPSTREAM} …`);
   child = spawn('npx', ['wrangler', 'dev', '--port', String(UPSTREAM)],
     { cwd: ROOT, stdio: 'ignore', shell: process.platform === 'win32' });
-  for (let i = 0; i < 60 && !(await portOpen(UPSTREAM)); i++) {
+  /* 90s, not 30. _redirects grew by forty rules when the ryanbeckauthor
+     archive landed, and wrangler parses every one of them at boot --
+     it now takes well over half a minute to answer, and the shorter
+     wait gave up on a server that was starting normally. */
+  for (let i = 0; i < 180 && !(await portOpen(UPSTREAM)); i++) {
     await new Promise((r) => setTimeout(r, 500));
   }
   if (!(await portOpen(UPSTREAM))) {

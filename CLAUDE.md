@@ -24,7 +24,8 @@ public/            everything served to a browser
   park-guides.html        family park guides: overview + open/download PDFs
   guides/                 the two guide PDFs themselves (RMNP, Grand Teton)
   about.html       the tome — a book you click through
-  about-plain.html the same content as an ordinary page
+  about-plain.html GENERATED from about.html by tools/build-about-plain.mjs
+                   — the book's words as an ordinary page; never hand-edit
   compare.html  dust-lab.html   experiments, noindex, unlinked (see the end)
   _headers  _redirects  robots.txt  sitemap.xml  site.webmanifest
   assets/
@@ -73,6 +74,7 @@ npm run serve     # python http.server on :8000 — quick, but see below
 npm run deploy    # pushes to Cloudflare
 npm run site-url  # propagate site.config.json's domain into every file
 npm run edit      # copy editor in the browser, on :8788 (see below)
+npm run about-plain # regenerate about-plain.html from about.html
 npm run copy      # site -> copy/*.md, for a prose review
 npm run copy-apply  # copy/*.md -> site
 npm test          # check-links + check-docs + site-url drift, as CI runs them
@@ -732,8 +734,37 @@ Regenerate with `python3 tools/make-wordmark.py > public/assets/wordmark.svg`.
 ## The tome (about page)
 
 `about.html` is the about content as a book you click through.
-`about-plain.html` is the plain version, linked from the colophon; swapping
-those two filenames is the whole rollback.
+`about-plain.html` is the plain version, **generated from it** by
+`tools/build-about-plain.mjs`; swapping those two filenames is the whole
+rollback.
+
+**The book is the source. Never hand-edit the plain page** — the next build
+overwrites it, and it is rebuilt automatically after every save in the browser
+copy editor. It is also deliberately absent from the copy extractor, so the
+editor offers no boxes whose contents would be thrown away.
+
+It became generated on 2026-08-31, after exactly the failure the arrangement
+invited: Ryan rewrote the about copy in the book, the plain page kept the
+draft he had replaced, and thirteen paragraphs diverged — including a job
+title that was no longer right — with the colophon pointing readers straight
+at the stale one.
+
+Three things the generator has to do, all because the plain page does not load
+`tome.css`:
+
+- **Translate the book's classes.** `.drop`, `.marginal`, `.plate` and
+  `.folio` live in `tome.css`; left alone they render as unstyled text. They
+  become `.lede`, `.meta`, a plain `.portrait` figure, and nothing.
+- **Drop the colophon.** It describes the book's lettering, leather and
+  generated dust — things a reader of the plain page cannot see.
+- **Replace only `<main>`.** The head, topbar and footer are kept byte for
+  byte, because they carry the canonical tag, the OG tags and the nav, and
+  `tools/site-url.mjs` rewrites the domain in them. Rebuilding those here
+  would mean two places to keep the domain right.
+
+The link out of the book sits **under** the book (`.tome-alt`), not on the
+colophon page: finding it there meant turning to the end of the thing you had
+already decided not to read.
 
 **The book is StPageFlip** (`page-flip`), chosen over a hand-built CSS 3D
 version after a side-by-side — its fold geometry and drag-a-corner beat what
@@ -1399,8 +1430,8 @@ which is what `check` runs — do that after touching this tool.
 
 Not extracted, deliberately: anything computed from the data (chart subtitles,
 status words, row counts), since the whole subsystem exists to keep those out
-of hand-written prose. `about.html` and `about-plain.html` are extracted
-separately and **nothing syncs them** — the generated file says so at the top.
+of hand-written prose — and `about-plain.html`, which is generated from
+`about.html` and would have its edits overwritten.
 
 ## Conventions
 
@@ -1625,21 +1656,15 @@ Roughly in the order they unblock things.
    uses its actual wordmark re-inked gilt, March Madness a drawn bracket.
 5. ~~**Prune the projects lede.**~~ **Done** 2026-08-31 — Ryan rewrote it in
    the browser editor and blanked the draft notice.
-6. ⚠️ **`about-plain.html` has drifted from `about.html`, and it is live.**
-   Ryan rewrote the about copy in the book (2026-08-31) — Director of
-   Forecasting at Metaculus, the fiction reframed as something he used to do
-   — and the plain page still carries the old draft. **13 paragraphs are in
-   the book and not the plain page; 5 are in the plain page and not the
-   book**, including a bio line that is now wrong. The colophon links to it,
-   so a reader can reach the stale version.
+6. ~~**`about-plain.html` has drifted from `about.html`.**~~ **Done**
+   2026-08-31 — it is generated from the book now, so it cannot drift. The
+   about copy is Ryan's own words, which was the older form of this item.
 
-   Nothing syncs them, by design — they are two files with the same words.
-   Two ways out: copy the changes across by hand, or **generate
-   `about-plain.html` from `about.html`'s `<article class="page-src">`
-   blocks**, which removes the whole class of problem. The second is a small
-   script and worth doing before launch.
-6a. **The about-page copy itself is now Ryan's**, not a draft written for him.
-   That was the old item 6 and it is done for the book version.
+   One consequence worth a look: the plain page no longer carries the facts
+   list (Lives / Day job / Before / Writes) or the "Roughly how I got here"
+   timeline. Those only ever existed on the plain page, were not in the book,
+   and were stale — the day job read "Forecasting Program Coordinator". If
+   they are wanted back they belong in the book, as a chapter.
 7. **Decide on Astro** before the site grows past ~8 pages. The header is
    duplicated across six files, which is fine at six and annoying at ten.
    HOSTING.md has the argument, including the case against.

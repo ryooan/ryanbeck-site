@@ -241,15 +241,18 @@ async function main() {
     .map((p) => (p.path.match(/^\/(20\d\d)\//) || [])[1])
     .filter(Boolean))].sort();
   const pad = (a, b) => a.padEnd(56) + ' ' + b;
+  /* Exact paths first, splats after: wrangler warns that a literal rule
+     below a splat is matched less efficiently, and it prints that warning
+     once per rule at boot -- forty lines of it. */
   const incoming = [
-    ...years.map((y) => pad(`/${y}/*`, `${PREFIX}/${y}/:splat   301`)),
-    pad('/tags/*', `${PREFIX}/tags/:splat   301`),
-    pad('/vaccines/*', `${PREFIX}/vaccines/:splat   301`),
     pad('/works', `${PREFIX}/works.html   301`),
     ...pages
       .filter((p) => p.path.startsWith('/forecasting/')
                   && p.path.endsWith('.html'))
       .map((p) => pad(p.path, `${PREFIX}${p.path}   301`)),
+    ...years.map((y) => pad(`/${y}/*`, `${PREFIX}/${y}/:splat   301`)),
+    pad('/tags/*', `${PREFIX}/tags/:splat   301`),
+    pad('/vaccines/*', `${PREFIX}/vaccines/:splat   301`),
   ];
 
   if (!DRY) writeRedirects([...new Set(rewrites)], incoming);

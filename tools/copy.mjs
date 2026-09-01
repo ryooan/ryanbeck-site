@@ -178,7 +178,9 @@ const PAGES = {
   'writing.html': 'writing',
   'blog.html': 'blog',
   'about.html': 'about',
-  'about-plain.html': 'aboutplain',
+  /* about-plain.html is GENERATED from about.html by
+     tools/build-about-plain.mjs, so it is deliberately absent: an edit made
+     here would be silently overwritten on the next build. Edit the book. */
   'park-guides.html': 'parkguides',
   '404.html': 'notfound',
 };

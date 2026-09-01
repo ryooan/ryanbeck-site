@@ -73,13 +73,6 @@
 # path, so the paths unique to the old site are sent into the archive.
 # /about, /blog and /writing are deliberately absent: they exist on both
 # sites, and a visitor is better served by the current one.
-/2019/*                                                  /ryanbeckauthor/2019/:splat   301
-/2020/*                                                  /ryanbeckauthor/2020/:splat   301
-/2021/*                                                  /ryanbeckauthor/2021/:splat   301
-/2022/*                                                  /ryanbeckauthor/2022/:splat   301
-/2023/*                                                  /ryanbeckauthor/2023/:splat   301
-/tags/*                                                  /ryanbeckauthor/tags/:splat   301
-/vaccines/*                                              /ryanbeckauthor/vaccines/:splat   301
 /works                                                   /ryanbeckauthor/works.html   301
 /forecasting/COVIDHospitalizations.html                  /ryanbeckauthor/forecasting/COVIDHospitalizations.html   301
 /forecasting/COVIDWeekly.html                            /ryanbeckauthor/forecasting/COVIDWeekly.html   301
@@ -98,4 +91,11 @@
 /forecasting/VDH_Age_Data.html                           /ryanbeckauthor/forecasting/VDH_Age_Data.html   301
 /forecasting/Virginia_Vaccinations.html                  /ryanbeckauthor/forecasting/Virginia_Vaccinations.html   301
 /forecasting/Weekly-Hospitalizations.html                /ryanbeckauthor/forecasting/Weekly-Hospitalizations.html   301
+/2019/*                                                  /ryanbeckauthor/2019/:splat   301
+/2020/*                                                  /ryanbeckauthor/2020/:splat   301
+/2021/*                                                  /ryanbeckauthor/2021/:splat   301
+/2022/*                                                  /ryanbeckauthor/2022/:splat   301
+/2023/*                                                  /ryanbeckauthor/2023/:splat   301
+/tags/*                                                  /ryanbeckauthor/tags/:splat   301
+/vaccines/*                                              /ryanbeckauthor/vaccines/:splat   301
 # <<< ryanbeckauthor archive

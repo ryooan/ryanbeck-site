@@ -249,15 +249,15 @@ Set in the same hand as the doors. The lettering was drawn rather than typeset; 
 ## About this book — body paragraph
 <!-- id: about.p.37 -->
 
-<a href="about-plain.html">Prefer it as a plain page?</a>
+Fin
 
 ## About this book — body paragraph
 <!-- id: about.p.38 -->
 
-Fin
+Click a page to turn it — or drag a corner
 
 ## About this book — body paragraph
 <!-- id: about.p.39 -->
 
-Click a page to turn it — or drag a corner
+<a href="about-plain.html">Read it as a plain page instead</a>
 

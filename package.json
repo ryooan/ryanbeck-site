@@ -11,7 +11,8 @@
     "site-url": "node tools/site-url.mjs --write",
     "copy": "node tools/copy.mjs extract",
     "copy-apply": "node tools/copy.mjs apply",
-    "edit": "node tools/copy-server.mjs"
+    "edit": "node tools/copy-server.mjs",
+    "about-plain": "node tools/build-about-plain.mjs"
   },
   "devDependencies": {
     "wrangler": "^4"

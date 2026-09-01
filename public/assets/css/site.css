@@ -532,3 +532,34 @@ a.quiet:focus-visible{
   outline-offset:2px;
   border-bottom-color:transparent;
 }
+
+/* The way out of the book, under it rather than on its last page. It used to
+   sit in the colophon, which meant finding it required turning to the end of
+   the thing you had already decided not to read. Quieter than .tome-hint,
+   because it is a fallback and not an instruction. */
+.tome-alt{
+  margin:6px 0 0;
+  text-align:center;
+  font:400 .74rem/1.5 var(--sans);
+  letter-spacing:.08em;
+}
+.tome-alt a{
+  color:var(--ink-faint);
+  text-decoration:none;
+  border-bottom:1px solid transparent;
+  transition:color .14s ease,border-color .14s ease;
+}
+.tome-alt a:hover{color:var(--ink-soft);border-bottom-color:currentColor}
+
+/* The portrait on the generated plain about page. `.portrait` was written for
+   the old two-column layout, where the grid set its width; standing alone in
+   a .wrap it would run the full column and print Ryan's face a foot tall. */
+.wrap > .portrait{width:min(240px,100%);margin:0}
+.wrap > .portrait img{display:block;width:100%;height:auto}
+.wrap > .portrait figcaption{
+  padding:8px 10px;
+  font:400 .74rem/1.4 var(--sans);
+  letter-spacing:.06em;
+  color:var(--ink-faint);
+  background:var(--parchment);
+}

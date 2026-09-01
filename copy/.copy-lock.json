@@ -1,8 +1,7 @@
 {
  "files": {
   "public/404.html": "9fe3ae5bb30ea2ab",
-  "public/about-plain.html": "a5604b7f5c556ea1",
-  "public/about.html": "ffb491b9fc0f1e05",
+  "public/about.html": "eebabb8d1279de11",
   "public/blog.html": "19db6a11bcc2bae9",
   "public/index.html": "e0caf8636f7375c4",
   "public/park-guides.html": "3f9515f9ccf79ddf",
@@ -42,216 +41,12 @@
    "ents": []
   },
   {
-   "id": "aboutplain.meta.title",
-   "file": "public/about-plain.html",
-   "label": "Browser tab / search result title",
-   "shape": "plain",
-   "start": 143,
-   "end": 168,
-   "text": "About (plain) · Ryan Beck",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.meta.description",
-   "file": "public/about-plain.html",
-   "label": "Search + social description",
-   "shape": "plain",
-   "start": 212,
-   "end": 259,
-   "text": "Writer, forecaster, recovering bridge engineer.",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.h1",
-   "file": "public/about-plain.html",
-   "label": "Page heading",
-   "shape": "plain",
-   "start": 1769,
-   "end": 1774,
-   "text": "About",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.p.1",
-   "file": "public/about-plain.html",
-   "label": "About — body paragraph",
-   "shape": "plain",
-   "start": 1857,
-   "end": 1911,
-   "text": "<a href=\"about.html\">Read it as the book instead →</a>",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.p.2",
-   "file": "public/about-plain.html",
-   "label": "About — intro paragraph",
-   "shape": "plain",
-   "start": 2612,
-   "end": 2749,
-   "text": "I write science fiction, I think about forecasting for a living, and I have never once managed to have only one hobby at a time.",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.p.3",
-   "file": "public/about-plain.html",
-   "label": "About — body paragraph",
-   "shape": "plain",
-   "start": 2768,
-   "end": 3196,
-   "text": "I live in Iowa with my wife and daughters. For a decade I designed bridges, which is a job that teaches you to respect load paths, tolerances, and the difference between a model and the thing the model is about. These days I coordinate forecasting programs at Metaculus, where the same instinct shows up in a different form: how confident should anyone be, and what would it take to find out?",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.p.4",
-   "file": "public/about-plain.html",
-   "label": "About — body paragraph",
-   "shape": "plain",
-   "start": 3215,
-   "end": 3687,
-   "text": "The fiction came first. <em>SEER</em> started as a question I couldn't put down — if a system could reliably predict what you wanted, would you still call it wanting? — and grew into a novel about Maria, who is kidnapped by the people trying to bring the algorithm down and has to work out which of them is telling the truth. <em>Not Human</em> is a shorter, colder cousin of the same question. <a href=\"writing.html\">Both are here.</a>",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.p.5",
-   "file": "public/about-plain.html",
-   "label": "About — body paragraph",
-   "shape": "plain",
-   "start": 3706,
-   "end": 3850,
-   "text": "Everything else lands in <em>The Missing Nuance</em>, a newsletter about the parts of an argument that get sanded off in the retelling.",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.h2.1",
-   "file": "public/about-plain.html",
-   "label": "Section heading",
-   "shape": "plain",
-   "start": 3899,
-   "end": 3921,
-   "text": "Roughly how I got here",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.h3.1",
-   "file": "public/about-plain.html",
-   "label": "Sub-heading",
-   "shape": "plain",
-   "start": 4004,
-   "end": 4013,
-   "text": "Metaculus",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.p.6",
-   "file": "public/about-plain.html",
-   "label": "Metaculus — body paragraph",
-   "shape": "plain",
-   "start": 4021,
-   "end": 4128,
-   "text": "Forecasting Program Coordinator. Questions, resolution criteria, and a great deal of arguing about wording.",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.h3.2",
-   "file": "public/about-plain.html",
-   "label": "Sub-heading",
-   "shape": "plain",
-   "start": 4185,
-   "end": 4189,
-   "text": "SEER",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.p.7",
-   "file": "public/about-plain.html",
-   "label": "SEER — body paragraph",
-   "shape": "plain",
-   "start": 4197,
-   "end": 4233,
-   "text": "First novel published, October 2019.",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.h3.3",
-   "file": "public/about-plain.html",
-   "label": "Sub-heading",
-   "shape": "plain",
-   "start": 4290,
-   "end": 4307,
-   "text": "Writing in public",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.p.8",
-   "file": "public/about-plain.html",
-   "label": "Writing in public — body paragraph",
-   "shape": "plain",
-   "start": 4315,
-   "end": 4383,
-   "text": "Started the blog, and later <em>The Missing Nuance</em> on Substack.",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.h3.4",
-   "file": "public/about-plain.html",
-   "label": "Sub-heading",
-   "shape": "plain",
-   "start": 4442,
-   "end": 4460,
-   "text": "Bridge engineering",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
-   "id": "aboutplain.p.9",
-   "file": "public/about-plain.html",
-   "label": "Bridge engineering — body paragraph",
-   "shape": "plain",
-   "start": 4468,
-   "end": 4526,
-   "text": "Ten years of structural design and inspection across Iowa.",
-   "ents": [
-    "&amp;"
-   ]
-  },
-  {
    "id": "about.meta.title",
    "file": "public/about.html",
    "label": "Browser tab / search result title",
    "shape": "plain",
-   "start": 143,
-   "end": 160,
+   "start": 138,
+   "end": 155,
    "text": "About · Ryan Beck",
    "ents": [
     "&mdash;"
@@ -262,8 +57,8 @@
    "file": "public/about.html",
    "label": "Search + social description",
    "shape": "plain",
-   "start": 204,
-   "end": 281,
+   "start": 198,
+   "end": 275,
    "text": "About Ryan Beck — forecaster, sometimes writer, former bridge engineer.",
    "ents": [
     "&mdash;"
@@ -274,8 +69,8 @@
    "file": "public/about.html",
    "label": "Page heading",
    "shape": "plain",
-   "start": 1935,
-   "end": 1940,
+   "start": 1889,
+   "end": 1894,
    "text": "About",
    "ents": [
     "&mdash;"
@@ -286,8 +81,8 @@
    "file": "public/about.html",
    "label": "About — body paragraph",
    "shape": "plain",
-   "start": 2734,
-   "end": 2746,
+   "start": 2671,
+   "end": 2683,
    "text": "Frontispiece",
    "ents": [
     "&mdash;"
@@ -298,8 +93,8 @@
    "file": "public/about.html",
    "label": "About — chapter label",
    "shape": "plain",
-   "start": 2849,
-   "end": 2866,
+   "start": 2782,
+   "end": 2799,
    "text": "Chapter the first",
    "ents": [
     "&mdash;"
@@ -310,8 +105,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 2884,
-   "end": 2901,
+   "start": 2816,
+   "end": 2833,
    "text": "The short version",
    "ents": [
     "&mdash;"
@@ -322,8 +117,8 @@
    "file": "public/about.html",
    "label": "The short version — body paragraph",
    "shape": "plain",
-   "start": 2932,
-   "end": 3093,
+   "start": 2863,
+   "end": 3024,
    "text": "I think about forecasting for a living, I've previously written some science fiction, and I have a history of getting sucked into all kinds of different hobbies.",
    "ents": [
     "&mdash;"
@@ -334,8 +129,8 @@
    "file": "public/about.html",
    "label": "The short version — body paragraph",
    "shape": "plain",
-   "start": 3110,
-   "end": 3416,
+   "start": 3040,
+   "end": 3346,
    "text": "I'm Director of Forecasting at <a href=\"https://www.metaculus.com/home/\">Metaculus</a>, where I wound up after becoming obsessed with forecasting and doing pretty good at it. Before that I worked as a bridge engineer for six years, and got a master's degree in civil engineering from Iowa State University.",
    "ents": [
     "&mdash;"
@@ -346,8 +141,8 @@
    "file": "public/about.html",
    "label": "The short version — body paragraph",
    "shape": "plain",
-   "start": 3433,
-   "end": 3640,
+   "start": 3362,
+   "end": 3569,
    "text": "I love sci-fi and fantasy, and wrote my own sci-fi novel, <em>SEER</em>, when I had an idea I was really excited about and wanted to try my hand at writing a book. I live in Iowa with my wife and three kids.",
    "ents": [
     "&mdash;"
@@ -358,8 +153,8 @@
    "file": "public/about.html",
    "label": "The short version — body paragraph",
    "shape": "plain",
-   "start": 3671,
-   "end": 3677,
+   "start": 3599,
+   "end": 3605,
    "text": "Page 1",
    "ents": [
     "&mdash;"
@@ -370,8 +165,8 @@
    "file": "public/about.html",
    "label": "The short version — chapter label",
    "shape": "plain",
-   "start": 3780,
-   "end": 3798,
+   "start": 3704,
+   "end": 3722,
    "text": "Chapter the second",
    "ents": [
     "&mdash;"
@@ -382,8 +177,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 3816,
-   "end": 3827,
+   "start": 3739,
+   "end": 3750,
    "text": "Before this",
    "ents": [
     "&mdash;"
@@ -394,8 +189,8 @@
    "file": "public/about.html",
    "label": "Before this — body paragraph",
    "shape": "plain",
-   "start": 3858,
-   "end": 3922,
+   "start": 3780,
+   "end": 3844,
    "text": "For about a decade I designed and inspected bridges across Iowa.",
    "ents": [
     "&mdash;"
@@ -406,8 +201,8 @@
    "file": "public/about.html",
    "label": "Before this — body paragraph",
    "shape": "plain",
-   "start": 3939,
-   "end": 4212,
+   "start": 3860,
+   "end": 4133,
    "text": "It is a profession that makes you honest. A load path either exists or it doesn't. A tolerance is not a matter of opinion. You learn to ask what you would have to believe for your own analysis to be wrong, and then you go and check, because the alternative is unacceptable.",
    "ents": [
     "&mdash;"
@@ -418,8 +213,8 @@
    "file": "public/about.html",
    "label": "Before this — body paragraph",
    "shape": "plain",
-   "start": 4229,
-   "end": 4302,
+   "start": 4149,
+   "end": 4222,
    "text": "I think about that habit constantly in work that has far softer feedback.",
    "ents": [
     "&mdash;"
@@ -430,8 +225,8 @@
    "file": "public/about.html",
    "label": "Before this — body paragraph",
    "shape": "plain",
-   "start": 4333,
-   "end": 4339,
+   "start": 4252,
+   "end": 4258,
    "text": "Page 2",
    "ents": [
     "&mdash;"
@@ -442,8 +237,8 @@
    "file": "public/about.html",
    "label": "Before this — chapter label",
    "shape": "plain",
-   "start": 4442,
-   "end": 4459,
+   "start": 4357,
+   "end": 4374,
    "text": "Chapter the third",
    "ents": [
     "&mdash;"
@@ -454,8 +249,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 4477,
-   "end": 4480,
+   "start": 4391,
+   "end": 4394,
    "text": "Now",
    "ents": [
     "&mdash;"
@@ -466,8 +261,8 @@
    "file": "public/about.html",
    "label": "Now — body paragraph",
    "shape": "plain",
-   "start": 4511,
-   "end": 4569,
+   "start": 4424,
+   "end": 4482,
    "text": "These days I coordinate forecasting programs at Metaculus.",
    "ents": [
     "&mdash;"
@@ -478,8 +273,8 @@
    "file": "public/about.html",
    "label": "Now — body paragraph",
    "shape": "plain",
-   "start": 4586,
-   "end": 4917,
+   "start": 4498,
+   "end": 4829,
    "text": "Most of the job is not prediction. It is writing questions that can actually resolve, arguing about wording until the ambiguity is gone, and then finding out in public whether the crowd was right. It turns out that \"what exactly would count as this happening?\" is one of the more useful questions you can ask about almost anything.",
    "ents": [
     "&mdash;"
@@ -490,8 +285,8 @@
    "file": "public/about.html",
    "label": "Now — body paragraph",
    "shape": "plain",
-   "start": 4951,
-   "end": 4988,
+   "start": 4862,
+   "end": 4899,
    "text": "Calibration is a habit, not a talent.",
    "ents": [
     "&mdash;"
@@ -502,8 +297,8 @@
    "file": "public/about.html",
    "label": "Now — body paragraph",
    "shape": "plain",
-   "start": 5019,
-   "end": 5025,
+   "start": 4929,
+   "end": 4935,
    "text": "Page 3",
    "ents": [
     "&mdash;"
@@ -514,8 +309,8 @@
    "file": "public/about.html",
    "label": "Now — chapter label",
    "shape": "plain",
-   "start": 5128,
-   "end": 5146,
+   "start": 5034,
+   "end": 5052,
    "text": "Chapter the fourth",
    "ents": [
     "&mdash;"
@@ -526,8 +321,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 5164,
-   "end": 5175,
+   "start": 5069,
+   "end": 5080,
    "text": "The fiction",
    "ents": [
     "&mdash;"
@@ -538,8 +333,8 @@
    "file": "public/about.html",
    "label": "The fiction — body paragraph",
    "shape": "plain",
-   "start": 5206,
-   "end": 5251,
+   "start": 5110,
+   "end": 5155,
    "text": "SEER began as a question I couldn't put down.",
    "ents": [
     "&mdash;"
@@ -550,8 +345,8 @@
    "file": "public/about.html",
    "label": "The fiction — body paragraph",
    "shape": "plain",
-   "start": 5268,
-   "end": 5630,
+   "start": 5171,
+   "end": 5533,
    "text": "If a system could reliably predict what you wanted — not guess, not nudge, but <em>know</em> — would you still call it wanting? In the 22nd century the algorithm does exactly that, and almost nobody minds. The novel follows Maria, who is kidnapped by the people trying to bring it down and then has to work out which of them is telling her the truth.",
    "ents": [
     "&mdash;"
@@ -562,8 +357,8 @@
    "file": "public/about.html",
    "label": "The fiction — body paragraph",
    "shape": "plain",
-   "start": 5647,
-   "end": 5823,
+   "start": 5549,
+   "end": 5725,
    "text": "<em>Not Human</em> is a shorter, colder cousin of the same question: Lisa is the first person in the world to have her mind copied to a machine, and the copy insists it is her.",
    "ents": [
     "&mdash;"
@@ -574,8 +369,8 @@
    "file": "public/about.html",
    "label": "The fiction — body paragraph",
    "shape": "plain",
-   "start": 5840,
-   "end": 5896,
+   "start": 5741,
+   "end": 5797,
    "text": "<a href=\"writing.html\">Both are on the fiction page.</a>",
    "ents": [
     "&mdash;"
@@ -586,8 +381,8 @@
    "file": "public/about.html",
    "label": "The fiction — body paragraph",
    "shape": "plain",
-   "start": 5927,
-   "end": 5933,
+   "start": 5827,
+   "end": 5833,
    "text": "Page 4",
    "ents": [
     "&mdash;"
@@ -598,8 +393,8 @@
    "file": "public/about.html",
    "label": "The fiction — chapter label",
    "shape": "plain",
-   "start": 6036,
-   "end": 6053,
+   "start": 5932,
+   "end": 5949,
    "text": "Chapter the fifth",
    "ents": [
     "&mdash;"
@@ -610,8 +405,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 6071,
-   "end": 6089,
+   "start": 5966,
+   "end": 5984,
    "text": "The Missing Nuance",
    "ents": [
     "&mdash;"
@@ -622,8 +417,8 @@
    "file": "public/about.html",
    "label": "The Missing Nuance — body paragraph",
    "shape": "plain",
-   "start": 6120,
-   "end": 6161,
+   "start": 6014,
+   "end": 6055,
    "text": "The newsletter is where the arguments go.",
    "ents": [
     "&mdash;"
@@ -634,8 +429,8 @@
    "file": "public/about.html",
    "label": "The Missing Nuance — body paragraph",
    "shape": "plain",
-   "start": 6178,
-   "end": 6420,
+   "start": 6071,
+   "end": 6313,
    "text": "It's named for the thing that gets sanded off when a position is repeated enough times — the caveat that made it true in the first place. Mostly forecasting, occasionally technology, occasionally an essay I couldn't place anywhere else.",
    "ents": [
     "&mdash;"
@@ -646,8 +441,8 @@
    "file": "public/about.html",
    "label": "The Missing Nuance — body paragraph",
    "shape": "plain",
-   "start": 6437,
-   "end": 6518,
+   "start": 6329,
+   "end": 6410,
    "text": "<a href=\"https://themissingnuance.substack.com\">themissingnuance.substack.com</a>",
    "ents": [
     "&mdash;"
@@ -658,8 +453,8 @@
    "file": "public/about.html",
    "label": "The Missing Nuance — body paragraph",
    "shape": "plain",
-   "start": 6549,
-   "end": 6555,
+   "start": 6440,
+   "end": 6446,
    "text": "Page 5",
    "ents": [
     "&mdash;"
@@ -670,8 +465,8 @@
    "file": "public/about.html",
    "label": "The Missing Nuance — chapter label",
    "shape": "plain",
-   "start": 6658,
-   "end": 6675,
+   "start": 6545,
+   "end": 6562,
    "text": "Chapter the sixth",
    "ents": [
     "&mdash;"
@@ -682,8 +477,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 6693,
-   "end": 6706,
+   "start": 6579,
+   "end": 6592,
    "text": "Off the clock",
    "ents": [
     "&mdash;"
@@ -694,8 +489,8 @@
    "file": "public/about.html",
    "label": "Off the clock — body paragraph",
    "shape": "plain",
-   "start": 6737,
-   "end": 6770,
+   "start": 6622,
+   "end": 6655,
    "text": "Married, with daughters, in Iowa.",
    "ents": [
     "&mdash;"
@@ -706,8 +501,8 @@
    "file": "public/about.html",
    "label": "Off the clock — body paragraph",
    "shape": "plain",
-   "start": 6787,
-   "end": 7056,
+   "start": 6671,
+   "end": 6940,
    "text": "The serial-hobbyist thing is not a bit. There is always some half-learned skill in progress and a shelf of evidence from the last one. Reading, mostly; building things that didn't need to exist; and a persistent belief that this is the year I finish everything I start.",
    "ents": [
     "&mdash;"
@@ -718,8 +513,8 @@
    "file": "public/about.html",
    "label": "Off the clock — body paragraph",
    "shape": "plain",
-   "start": 7087,
-   "end": 7093,
+   "start": 6970,
+   "end": 6976,
    "text": "Page 6",
    "ents": [
     "&mdash;"
@@ -730,8 +525,8 @@
    "file": "public/about.html",
    "label": "Off the clock — chapter label",
    "shape": "plain",
-   "start": 7196,
-   "end": 7215,
+   "start": 7075,
+   "end": 7094,
    "text": "Chapter the seventh",
    "ents": [
     "&mdash;"
@@ -742,8 +537,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 7233,
-   "end": 7242,
+   "start": 7111,
+   "end": 7120,
    "text": "Elsewhere",
    "ents": [
     "&mdash;"
@@ -754,8 +549,8 @@
    "file": "public/about.html",
    "label": "Elsewhere — body paragraph",
    "shape": "plain",
-   "start": 7713,
-   "end": 7790,
+   "start": 7583,
+   "end": 7660,
    "text": "The fastest way to reach me is email. I read all of it and answer most of it.",
    "ents": [
     "&mdash;"
@@ -766,8 +561,8 @@
    "file": "public/about.html",
    "label": "Elsewhere — body paragraph",
    "shape": "plain",
-   "start": 7821,
-   "end": 7827,
+   "start": 7690,
+   "end": 7696,
    "text": "Page 7",
    "ents": [
     "&mdash;"
@@ -778,8 +573,8 @@
    "file": "public/about.html",
    "label": "Elsewhere — chapter label",
    "shape": "plain",
-   "start": 7930,
-   "end": 7938,
+   "start": 7795,
+   "end": 7803,
    "text": "Colophon",
    "ents": [
     "&mdash;"
@@ -790,8 +585,8 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 7956,
-   "end": 7971,
+   "start": 7820,
+   "end": 7835,
    "text": "About this book",
    "ents": [
     "&mdash;"
@@ -802,8 +597,8 @@
    "file": "public/about.html",
    "label": "About this book — body paragraph",
    "shape": "plain",
-   "start": 7989,
-   "end": 8142,
+   "start": 7852,
+   "end": 8005,
    "text": "Set in the same hand as the doors. The lettering was drawn rather than typeset; the leather, the page stock and the dust are generated, not photographed.",
    "ents": [
     "&mdash;"
@@ -814,9 +609,9 @@
    "file": "public/about.html",
    "label": "About this book — body paragraph",
    "shape": "plain",
-   "start": 8159,
-   "end": 8216,
-   "text": "<a href=\"about-plain.html\">Prefer it as a plain page?</a>",
+   "start": 8035,
+   "end": 8038,
+   "text": "Fin",
    "ents": [
     "&mdash;"
    ]
@@ -826,9 +621,9 @@
    "file": "public/about.html",
    "label": "About this book — body paragraph",
    "shape": "plain",
-   "start": 8247,
-   "end": 8250,
-   "text": "Fin",
+   "start": 8171,
+   "end": 8213,
+   "text": "Click a page to turn it — or drag a corner",
    "ents": [
     "&mdash;"
    ]
@@ -838,9 +633,9 @@
    "file": "public/about.html",
    "label": "About this book — body paragraph",
    "shape": "plain",
-   "start": 8391,
-   "end": 8433,
-   "text": "Click a page to turn it — or drag a corner",
+   "start": 8240,
+   "end": 8302,
+   "text": "<a href=\"about-plain.html\">Read it as a plain page instead</a>",
    "ents": [
     "&mdash;"
    ]
