@@ -74,6 +74,11 @@ function plate(html) {
   return `<figure class="portrait">${fig[1].trim()}</figure>`;
 }
 
+function figures(html) {
+  /* Pictures keep their <picture>/<img> markup; only the folio goes. */
+  return html.replace(/\s*<p class="folio">[\s\S]*?<\/p>/g, '').trim();
+}
+
 /* ---- build <main> ----------------------------------------------------- */
 
 const head = /<div class="wrap tome-head">([\s\S]*?)<\/div>/.exec(book);
@@ -88,14 +93,40 @@ parts.push('    <p class="lede" style="margin-top:14px">'
   + '<a href="about.html">Read it as the book instead &rarr;</a></p>');
 parts.push('  </section>');
 
+/* A chapter can span several book pages now, and the Education spread's
+   right-hand page is pictures. On a scrolling page none of that is a page
+   break, so a `continued` or `figures` page joins the section before it
+   instead of opening a new one -- and a paragraph the book split across a
+   page turn (its second half marked <p class="cont">) is stitched back into
+   one paragraph. */
+const sections = [];
 for (const a of articles) {
   if (a.type === 'cover' || a.type === 'backcover') continue;
   /* The colophon is about the BOOK -- its lettering, its leather, its
      generated page stock and dust. On a page with no book it describes
      something the reader cannot see. */
   if (/<p class="kicker">\s*Colophon\s*<\/p>/i.test(a.html)) continue;
-  const body = a.type === 'plate' ? plate(a.html) : chapter(a.html);
-  if (!body.replace(/<[^>]*>/g, '').trim() && a.type !== 'plate') continue;
+
+  let body = a.type === 'plate' ? plate(a.html)
+           : a.type === 'figures' ? figures(a.html)
+           : chapter(a.html);
+  const hasWords = body.replace(/<[^>]*>/g, '').trim();
+  if (!hasWords && a.type !== 'plate' && a.type !== 'figures') continue;
+
+  const joins = (a.type === 'continued' || a.type === 'figures')
+                && sections.length;
+  if (!joins) { sections.push(body); continue; }
+
+  let prev = sections[sections.length - 1];
+  const cont = /^<p class="cont">([\s\S]*?)<\/p>/.exec(body);
+  if (cont && /<\/p>\s*$/.test(prev)) {
+    prev = prev.replace(/<\/p>\s*$/, ' ' + cont[1].trim() + '</p>');
+    body = body.slice(cont[0].length).trim();
+  }
+  sections[sections.length - 1] = prev + (body ? '\n' + body : '');
+}
+
+for (const body of sections) {
   parts.push('');
   parts.push('  <section class="wrap">');
   parts.push(body.split('\n').map((l) => '    ' + l.trim()).join('\n'));
@@ -116,5 +147,4 @@ if (a < 0 || b < a) {
 const out = plain.slice(0, a) + main + plain.slice(b);
 writeFileSync(OUT, out);
 
-const kept = articles.filter((x) => x.type !== 'cover' && x.type !== 'backcover');
-console.log(`about-plain.html rebuilt from about.html — ${kept.length} sections`);
+console.log(`about-plain.html rebuilt from about.html — ${sections.length} sections`);

@@ -185,3 +185,28 @@
    -- one small shape floating in the middle of an otherwise empty endpaper
    looks like something went wrong, not like a decision. A real paste-down
    endpaper is blank. */
+
+/* ---- a page of pictures -------------------------------------------------
+   The Education spread's right-hand page: two figures stacked, each taking
+   the height it can get. min-height:0 on every flex level is what lets an
+   image shrink to its box instead of pushing the folio off the page. */
+.libtome .page[data-type="figures"] .sheet{ justify-content:center; gap:.8em }
+.sheet .fig{
+  margin:0; flex:1 1 0; min-height:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+.sheet .fig picture{
+  flex:1 1 auto; min-height:0; max-width:100%;
+  display:flex; align-items:center; justify-content:center;
+}
+.sheet .fig img{
+  max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain;
+  padding:4px; background:#fffdf6; border:1px solid rgba(90,66,36,.35);
+  box-shadow:0 6px 14px -9px rgba(40,28,14,.5);
+}
+.sheet .fig-cap{
+  margin:.4em 0 0; max-width:none; text-align:center;
+  font-family:var(--sans); font-size:.6rem; letter-spacing:.08em; color:#8a7457;
+}
+.tome-fallback .fig{ margin:1em 0 }
+.tome-fallback .fig img{ max-width:100%; height:auto }

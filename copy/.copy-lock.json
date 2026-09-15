@@ -1,7 +1,7 @@
 {
  "files": {
   "public/404.html": "9fe3ae5bb30ea2ab",
-  "public/about.html": "a9304760ab9fb059",
+  "public/about.html": "64ea443bbb528d13",
   "public/blog.html": "19db6a11bcc2bae9",
   "public/index.html": "e0caf8636f7375c4",
   "public/park-guides.html": "3f9515f9ccf79ddf",
@@ -49,7 +49,8 @@
    "end": 155,
    "text": "About · Ryan Beck",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -61,7 +62,8 @@
    "end": 275,
    "text": "About Ryan Beck — forecaster, sometimes writer, former bridge engineer.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -73,7 +75,8 @@
    "end": 1894,
    "text": "About",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -85,7 +88,8 @@
    "end": 2683,
    "text": "Frontispiece",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -97,7 +101,8 @@
    "end": 2799,
    "text": "Chapter the first",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -109,7 +114,8 @@
    "end": 2833,
    "text": "The short version",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -121,7 +127,8 @@
    "end": 3024,
    "text": "I think about forecasting for a living, I've previously written some science fiction, and I have a history of getting sucked into all kinds of different hobbies.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -133,7 +140,8 @@
    "end": 3346,
    "text": "I'm Director of Forecasting at <a href=\"https://www.metaculus.com/home/\">Metaculus</a>, where I wound up after becoming obsessed with forecasting and doing pretty good at it. Before that I worked as a bridge engineer for six years, and got a master's degree in civil engineering from Iowa State University.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -145,7 +153,8 @@
    "end": 3569,
    "text": "I love sci-fi and fantasy, and wrote my own sci-fi novel, <em>SEER</em>, when I had an idea I was really excited about and wanted to try my hand at writing a book. I live in Iowa with my wife and three kids.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -157,7 +166,8 @@
    "end": 3605,
    "text": "Page 1",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -169,7 +179,8 @@
    "end": 3722,
    "text": "Chapter the second",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -181,7 +192,8 @@
    "end": 3748,
    "text": "Education",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -193,7 +205,8 @@
    "end": 4130,
    "text": "I majored in civil engineering at Iowa State University, and got a master's degree in it as well. My master's thesis focused on the seismic behavior of hollow concrete columns. This involved designing a testing apparatus and scaled down hollow concrete columns and applying bending force until they broke, and measuring the strain in the reinforcement.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -205,7 +218,8 @@
    "end": 4381,
    "text": "It was an interesting project, I learned a ton, and I got to do a lot of design, coding, and analysis, which as you'll see are recurring projects I'm drawn to. But overall it was pretty grueling and I was glad to be finished with that.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -213,11 +227,12 @@
    "file": "public/about.html",
    "label": "Education — body paragraph",
    "shape": "plain",
-   "start": 4397,
-   "end": 4397,
-   "text": "",
+   "start": 4411,
+   "end": 4417,
+   "text": "Page 2",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -225,23 +240,51 @@
    "file": "public/about.html",
    "label": "Education — body paragraph",
    "shape": "plain",
-   "start": 4427,
-   "end": 4433,
-   "text": "Page 2",
+   "start": 4861,
+   "end": 4888,
+   "text": "The test frame, as designed",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
    "id": "about.p.12",
    "file": "public/about.html",
+   "label": "Education — body paragraph",
+   "shape": "plain",
+   "start": 5271,
+   "end": 5302,
+   "text": "…and as built in the lab",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.13",
+   "file": "public/about.html",
+   "label": "Education — body paragraph",
+   "shape": "plain",
+   "start": 5350,
+   "end": 5356,
+   "text": "Page 3",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.14",
+   "file": "public/about.html",
    "label": "Education — chapter label",
    "shape": "plain",
-   "start": 4532,
-   "end": 4549,
+   "start": 5455,
+   "end": 5472,
    "text": "Chapter the third",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -249,35 +292,12 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 4566,
-   "end": 4570,
+   "start": 5489,
+   "end": 5493,
    "text": "Work",
    "ents": [
-    "&mdash;"
-   ]
-  },
-  {
-   "id": "about.p.13",
-   "file": "public/about.html",
-   "label": "Work — body paragraph",
-   "shape": "plain",
-   "start": 4600,
-   "end": 5112,
-   "text": "Currently I'm Director of Forecasting at Metaculus. Prior to getting into the forecasting world I did actually use my degree, spending a year working at LeMar Industries designing agricultural towers and catwalks, and then 6 years at HDR designing highway bridges. However, over time I became pretty bored with bridge engineering. It was hard to feel satisfied when you spend weeks documenting calculations on prespecified bridge geometry only to show that it works and maybe tweak a few rebar sizes up and down.",
-   "ents": [
-    "&mdash;"
-   ]
-  },
-  {
-   "id": "about.p.14",
-   "file": "public/about.html",
-   "label": "Work — body paragraph",
-   "shape": "plain",
-   "start": 5128,
-   "end": 5785,
-   "text": "During that time I found forecasting. I stumbled across an article about Superforecasters predicting the 2020 election, and that struck me as extremely satisfying. I'd always been interested in facts and evidence, and the idea of reducing bias in your opinions, sharing them as numeric probabilities, and seeing how accurate they wind up being sounded like an obvious extension of that that everyone should be doing. I made a few predictions on the 2020 election, and then forgot about them for a while until I got emails saying they'd been scored. I did pretty badly, but that motivated me to spend more time thinking about it, and I became a bit obsessed.",
-   "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -285,11 +305,12 @@
    "file": "public/about.html",
    "label": "Work — body paragraph",
    "shape": "plain",
-   "start": 5818,
-   "end": 6294,
-   "text": "That obsession led me to Metaculus where I began climbing the leaderboards, and briefly became a Pro Forecaster before I made the (frightening) leap of joining the Metaculus team full time in 2022, first as Forecasting Program Coordinator and in 2026 as Director of Forecasting. Since joining I spend less time making forecasts and more time designing forecasting projects, identifying the best forecasting questions to support decision-making, and managing the Programs team.",
+   "start": 5523,
+   "end": 6035,
+   "text": "Currently I'm Director of Forecasting at Metaculus. Prior to getting into the forecasting world I did actually use my degree, spending a year working at LeMar Industries designing agricultural towers and catwalks, and then 6 years at HDR designing highway bridges. However, over time I became pretty bored with bridge engineering. It was hard to feel satisfied when you spend weeks documenting calculations on prespecified bridge geometry only to show that it works and maybe tweak a few rebar sizes up and down.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -297,23 +318,77 @@
    "file": "public/about.html",
    "label": "Work — body paragraph",
    "shape": "plain",
-   "start": 6324,
-   "end": 6330,
-   "text": "Page 3",
+   "start": 6051,
+   "end": 6214,
+   "text": "During that time I found forecasting. I stumbled across an article about Superforecasters predicting the 2020 election, and that struck me as extremely satisfying.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
    "id": "about.p.17",
    "file": "public/about.html",
+   "label": "Work — body paragraph",
+   "shape": "plain",
+   "start": 6244,
+   "end": 6250,
+   "text": "Page 4",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.18",
+   "file": "public/about.html",
+   "label": "Work — body paragraph",
+   "shape": "plain",
+   "start": 6352,
+   "end": 6845,
+   "text": "I'd always been interested in facts and evidence, and the idea of reducing bias in your opinions, sharing them as numeric probabilities, and seeing how accurate they wind up being sounded like an obvious extension of that that everyone should be doing. I made a few predictions on the 2020 election, and then forgot about them for a while until I got emails saying they'd been scored. I did pretty badly, but that motivated me to spend more time thinking about it, and I became a bit obsessed.",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.19",
+   "file": "public/about.html",
+   "label": "Work — body paragraph",
+   "shape": "plain",
+   "start": 6861,
+   "end": 7337,
+   "text": "That obsession led me to Metaculus where I began climbing the leaderboards, and briefly became a Pro Forecaster before I made the (frightening) leap of joining the Metaculus team full time in 2022, first as Forecasting Program Coordinator and in 2026 as Director of Forecasting. Since joining I spend less time making forecasts and more time designing forecasting projects, identifying the best forecasting questions to support decision-making, and managing the Programs team.",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.20",
+   "file": "public/about.html",
+   "label": "Work — body paragraph",
+   "shape": "plain",
+   "start": 7367,
+   "end": 7373,
+   "text": "Page 5",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.21",
+   "file": "public/about.html",
    "label": "Work — chapter label",
    "shape": "plain",
-   "start": 6429,
-   "end": 6447,
+   "start": 7472,
+   "end": 7490,
    "text": "Chapter the fourth",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -321,59 +396,12 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 6464,
-   "end": 6471,
+   "start": 7507,
+   "end": 7514,
    "text": "Hobbies",
    "ents": [
-    "&mdash;"
-   ]
-  },
-  {
-   "id": "about.p.18",
-   "file": "public/about.html",
-   "label": "Hobbies — body paragraph",
-   "shape": "plain",
-   "start": 6501,
-   "end": 7049,
-   "text": "I have a bunch of hobbies that vary in intensity over time. Some are more persistent and have stuck around forever, such as reading (sci-fi, fantasy, and thrillers especially), board games, forecasting, visiting national parks, hiking, camping, video games, Magic the Gathering, and 3D printing. Others come in waves where I'm obsessed with them for a while until either the idea works its way out of my head or I burn out. These are some of the things you'll see on this site, like writing and coding projects, and other things like video editing.",
-   "ents": [
-    "&mdash;"
-   ]
-  },
-  {
-   "id": "about.p.19",
-   "file": "public/about.html",
-   "label": "Hobbies — body paragraph",
-   "shape": "plain",
-   "start": 7065,
-   "end": 7766,
-   "text": "Most of the second category of things are what you'll see on the projects page. Part of the motivation to revamp my website was making a place to share and document these things. Originally most of my coding projects were manual efforts that were partly for the end product and partly to learn to code, but these days I've transitioned more to <strike>yelling</strike> gently guiding AIs into producing what I want. So AI has taken a pass through my old coding projects and patched up the broken and outdated ones and given them some nicer polish, and has also lowered the barrier and time requirement for me to get ideas I think could be interesting or useful out of my head and into a tangible form.",
-   "ents": [
-    "&mdash;"
-   ]
-  },
-  {
-   "id": "about.p.20",
-   "file": "public/about.html",
-   "label": "Hobbies — body paragraph",
-   "shape": "plain",
-   "start": 7782,
-   "end": 7782,
-   "text": "",
-   "ents": [
-    "&mdash;"
-   ]
-  },
-  {
-   "id": "about.p.21",
-   "file": "public/about.html",
-   "label": "Hobbies — body paragraph",
-   "shape": "plain",
-   "start": 7798,
-   "end": 7798,
-   "text": "",
-   "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -381,23 +409,64 @@
    "file": "public/about.html",
    "label": "Hobbies — body paragraph",
    "shape": "plain",
-   "start": 7828,
-   "end": 7834,
-   "text": "Page 4",
+   "start": 7544,
+   "end": 8092,
+   "text": "I have a bunch of hobbies that vary in intensity over time. Some are more persistent and have stuck around forever, such as reading (sci-fi, fantasy, and thrillers especially), board games, forecasting, visiting national parks, hiking, camping, video games, Magic the Gathering, and 3D printing. Others come in waves where I'm obsessed with them for a while until either the idea works its way out of my head or I burn out. These are some of the things you'll see on this site, like writing and coding projects, and other things like video editing.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
    "id": "about.p.23",
    "file": "public/about.html",
+   "label": "Hobbies — body paragraph",
+   "shape": "plain",
+   "start": 8122,
+   "end": 8128,
+   "text": "Page 6",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.24",
+   "file": "public/about.html",
+   "label": "Hobbies — body paragraph",
+   "shape": "plain",
+   "start": 8217,
+   "end": 8918,
+   "text": "Most of the second category of things are what you'll see on the projects page. Part of the motivation to revamp my website was making a place to share and document these things. Originally most of my coding projects were manual efforts that were partly for the end product and partly to learn to code, but these days I've transitioned more to <strike>yelling</strike> gently guiding AIs into producing what I want. So AI has taken a pass through my old coding projects and patched up the broken and outdated ones and given them some nicer polish, and has also lowered the barrier and time requirement for me to get ideas I think could be interesting or useful out of my head and into a tangible form.",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.25",
+   "file": "public/about.html",
+   "label": "Hobbies — body paragraph",
+   "shape": "plain",
+   "start": 8948,
+   "end": 8954,
+   "text": "Page 7",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.26",
+   "file": "public/about.html",
    "label": "Hobbies — chapter label",
    "shape": "plain",
-   "start": 7933,
-   "end": 7950,
+   "start": 9053,
+   "end": 9070,
    "text": "Chapter the fifth",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -405,47 +474,12 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 7967,
-   "end": 7974,
+   "start": 9087,
+   "end": 9094,
    "text": "Writing",
    "ents": [
-    "&mdash;"
-   ]
-  },
-  {
-   "id": "about.p.24",
-   "file": "public/about.html",
-   "label": "Writing — body paragraph",
-   "shape": "plain",
-   "start": 8004,
-   "end": 8169,
-   "text": "Writing is a hobby that I've spent a big chunk of my life on, for fiction as a roughly two-year burst, while non-fiction / blogging has been a more persistent thing.",
-   "ents": [
-    "&mdash;"
-   ]
-  },
-  {
-   "id": "about.p.25",
-   "file": "public/about.html",
-   "label": "Writing — body paragraph",
-   "shape": "plain",
-   "start": 8185,
-   "end": 9130,
-   "text": "With blogging I've typically been drawn toward explainers, usually motivated by frustration over a perceived lack of depth in the conversation or me trying to get a better grasp on a topic. I love to write these kinds of things to clarify my own thinking, share what I've spent so much time getting up to speed on with others so it's easier for them and isn't all wasted on just me only, and to persuade and lay things out in what I consider to be a logical form. I tend to write mostly about politics, science, economics, and random things I've learned about. Formerly these things were in the form of posts on Facebook and Google Plus that no one would read, then I made a home for them with my old website so no one could read them in a more organized fashion, and now infrequently on Substack at The Missing Nuance, so that no one can read them at a place made for hosting tons of things no one reads and a few things that lots of people do.",
-   "ents": [
-    "&mdash;"
-   ]
-  },
-  {
-   "id": "about.p.26",
-   "file": "public/about.html",
-   "label": "Writing — body paragraph",
-   "shape": "plain",
-   "start": 9146,
-   "end": 9819,
-   "text": "My fiction writing consisted mainly of two ideas that I had become very attached to and frantically needed to get out of my head. My short story, Not Human, was written as I was thinking about what humans are made up of and how much we could lose before we'd be noticeably different. And SEER is a novel that was motivated by thinking about free will, the age of data collection, artificial intelligence, autonomous drones, and predicting the behavior of individuals. I published it back in 2019 after working on it for a few years, and it's interesting (to me at least) to see what seemed prescient and not so prescient about it now that we're in the era of advanced LLMs.",
-   "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -453,23 +487,90 @@
    "file": "public/about.html",
    "label": "Writing — body paragraph",
    "shape": "plain",
-   "start": 9849,
-   "end": 9855,
-   "text": "Page 5",
+   "start": 9124,
+   "end": 9289,
+   "text": "Writing is a hobby that I've spent a big chunk of my life on, for fiction as a roughly two-year burst, while non-fiction / blogging has been a more persistent thing.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
    "id": "about.p.28",
    "file": "public/about.html",
+   "label": "Writing — body paragraph",
+   "shape": "plain",
+   "start": 9305,
+   "end": 9865,
+   "text": "With blogging I've typically been drawn toward explainers, usually motivated by frustration over a perceived lack of depth in the conversation or me trying to get a better grasp on a topic. I love to write these kinds of things to clarify my own thinking, share what I've spent so much time getting up to speed on with others so it's easier for them and isn't all wasted on just me only, and to persuade and lay things out in what I consider to be a logical form. I tend to write mostly about politics, science, economics, and random things I've learned about.",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.29",
+   "file": "public/about.html",
+   "label": "Writing — body paragraph",
+   "shape": "plain",
+   "start": 9895,
+   "end": 9901,
+   "text": "Page 8",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.30",
+   "file": "public/about.html",
+   "label": "Writing — body paragraph",
+   "shape": "plain",
+   "start": 10003,
+   "end": 10387,
+   "text": "Formerly these things were in the form of posts on Facebook and Google Plus that no one would read, then I made a home for them with my old website so no one could read them in a more organized fashion, and now infrequently on Substack at The Missing Nuance, so that no one can read them at a place made for hosting tons of things no one reads and a few things that lots of people do.",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.31",
+   "file": "public/about.html",
+   "label": "Writing — body paragraph",
+   "shape": "plain",
+   "start": 10403,
+   "end": 11076,
+   "text": "My fiction writing consisted mainly of two ideas that I had become very attached to and frantically needed to get out of my head. My short story, Not Human, was written as I was thinking about what humans are made up of and how much we could lose before we'd be noticeably different. And SEER is a novel that was motivated by thinking about free will, the age of data collection, artificial intelligence, autonomous drones, and predicting the behavior of individuals. I published it back in 2019 after working on it for a few years, and it's interesting (to me at least) to see what seemed prescient and not so prescient about it now that we're in the era of advanced LLMs.",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.32",
+   "file": "public/about.html",
+   "label": "Writing — body paragraph",
+   "shape": "plain",
+   "start": 11106,
+   "end": 11112,
+   "text": "Page 9",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.33",
+   "file": "public/about.html",
    "label": "Writing — chapter label",
    "shape": "plain",
-   "start": 9954,
-   "end": 9971,
+   "start": 11211,
+   "end": 11228,
    "text": "Chapter the sixth",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -477,59 +578,64 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 9988,
-   "end": 9994,
+   "start": 11245,
+   "end": 11251,
    "text": "Family",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
-   "id": "about.p.29",
+   "id": "about.p.34",
    "file": "public/about.html",
    "label": "Family — body paragraph",
    "shape": "plain",
-   "start": 10024,
-   "end": 10369,
+   "start": 11281,
+   "end": 11626,
    "text": "I live in Council Bluffs, Iowa, with my wife and three kids. Most of my free time is spent playing with them, taking walks, going on bike rides, hiking, going to sports and activities, camping, visiting national parks every year or two (mainly Grand Teton National park and sometimes Rocky Mountain National park), and all kinds of other things.",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
-   "id": "about.p.30",
+   "id": "about.p.35",
    "file": "public/about.html",
    "label": "Family — body paragraph",
    "shape": "plain",
-   "start": 10385,
-   "end": 10385,
+   "start": 11642,
+   "end": 11642,
    "text": "",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
-   "id": "about.p.31",
+   "id": "about.p.36",
    "file": "public/about.html",
    "label": "Family — body paragraph",
    "shape": "plain",
-   "start": 10415,
-   "end": 10421,
-   "text": "Page 6",
+   "start": 11672,
+   "end": 11679,
+   "text": "Page 10",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
-   "id": "about.p.32",
+   "id": "about.p.37",
    "file": "public/about.html",
    "label": "Family — chapter label",
    "shape": "plain",
-   "start": 10520,
-   "end": 10539,
+   "start": 11778,
+   "end": 11797,
    "text": "Chapter the seventh",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
@@ -537,107 +643,64 @@
    "file": "public/about.html",
    "label": "Section heading",
    "shape": "plain",
-   "start": 10556,
-   "end": 10565,
+   "start": 11814,
+   "end": 11823,
    "text": "Elsewhere",
    "ents": [
-    "&mdash;"
-   ]
-  },
-  {
-   "id": "about.p.33",
-   "file": "public/about.html",
-   "label": "Elsewhere — body paragraph",
-   "shape": "plain",
-   "start": 11028,
-   "end": 11028,
-   "text": "",
-   "ents": [
-    "&mdash;"
-   ]
-  },
-  {
-   "id": "about.p.34",
-   "file": "public/about.html",
-   "label": "Elsewhere — body paragraph",
-   "shape": "plain",
-   "start": 11058,
-   "end": 11064,
-   "text": "Page 7",
-   "ents": [
-    "&mdash;"
-   ]
-  },
-  {
-   "id": "about.p.35",
-   "file": "public/about.html",
-   "label": "Elsewhere — chapter label",
-   "shape": "plain",
-   "start": 11163,
-   "end": 11163,
-   "text": "",
-   "ents": [
-    "&mdash;"
-   ]
-  },
-  {
-   "id": "about.h2.8",
-   "file": "public/about.html",
-   "label": "Section heading",
-   "shape": "plain",
-   "start": 11180,
-   "end": 11180,
-   "text": "",
-   "ents": [
-    "&mdash;"
-   ]
-  },
-  {
-   "id": "about.p.36",
-   "file": "public/about.html",
-   "label": "Body paragraph",
-   "shape": "plain",
-   "start": 11197,
-   "end": 11197,
-   "text": "",
-   "ents": [
-    "&mdash;"
-   ]
-  },
-  {
-   "id": "about.p.37",
-   "file": "public/about.html",
-   "label": "Body paragraph",
-   "shape": "plain",
-   "start": 11227,
-   "end": 11230,
-   "text": "Fin",
-   "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
    "id": "about.p.38",
    "file": "public/about.html",
-   "label": "Body paragraph",
+   "label": "Elsewhere — body paragraph",
    "shape": "plain",
-   "start": 11363,
-   "end": 11405,
-   "text": "Click a page to turn it — or drag a corner",
+   "start": 12286,
+   "end": 12286,
+   "text": "",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {
    "id": "about.p.39",
    "file": "public/about.html",
-   "label": "Body paragraph",
+   "label": "Elsewhere — body paragraph",
    "shape": "plain",
-   "start": 11432,
-   "end": 11494,
+   "start": 12316,
+   "end": 12323,
+   "text": "Page 11",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.40",
+   "file": "public/about.html",
+   "label": "Elsewhere — body paragraph",
+   "shape": "plain",
+   "start": 12456,
+   "end": 12498,
+   "text": "Click a page to turn it — or drag a corner",
+   "ents": [
+    "&mdash;",
+    "&hellip;"
+   ]
+  },
+  {
+   "id": "about.p.41",
+   "file": "public/about.html",
+   "label": "Elsewhere — body paragraph",
+   "shape": "plain",
+   "start": 12525,
+   "end": 12587,
    "text": "<a href=\"about-plain.html\">Read it as a plain page instead</a>",
    "ents": [
-    "&mdash;"
+    "&mdash;",
+    "&hellip;"
    ]
   },
   {

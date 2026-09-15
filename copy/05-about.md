@@ -84,15 +84,25 @@ It was an interesting project, I learned a ton, and I got to do a lot of design,
 ## Education — body paragraph
 <!-- id: about.p.10 -->
 
-
+Page 2
 
 ## Education — body paragraph
 <!-- id: about.p.11 -->
 
-Page 2
+The test frame, as designed
+
+## Education — body paragraph
+<!-- id: about.p.12 -->
+
+…and as built in the lab
+
+## Education — body paragraph
+<!-- id: about.p.13 -->
+
+Page 3
 
 ## Education — chapter label
-<!-- id: about.p.12 -->
+<!-- id: about.p.14 -->
 
 Chapter the third
 
@@ -102,27 +112,37 @@ Chapter the third
 Work
 
 ## Work — body paragraph
-<!-- id: about.p.13 -->
+<!-- id: about.p.15 -->
 
 Currently I'm Director of Forecasting at Metaculus. Prior to getting into the forecasting world I did actually use my degree, spending a year working at LeMar Industries designing agricultural towers and catwalks, and then 6 years at HDR designing highway bridges. However, over time I became pretty bored with bridge engineering. It was hard to feel satisfied when you spend weeks documenting calculations on prespecified bridge geometry only to show that it works and maybe tweak a few rebar sizes up and down.
 
 ## Work — body paragraph
-<!-- id: about.p.14 -->
+<!-- id: about.p.16 -->
 
-During that time I found forecasting. I stumbled across an article about Superforecasters predicting the 2020 election, and that struck me as extremely satisfying. I'd always been interested in facts and evidence, and the idea of reducing bias in your opinions, sharing them as numeric probabilities, and seeing how accurate they wind up being sounded like an obvious extension of that that everyone should be doing. I made a few predictions on the 2020 election, and then forgot about them for a while until I got emails saying they'd been scored. I did pretty badly, but that motivated me to spend more time thinking about it, and I became a bit obsessed.
+During that time I found forecasting. I stumbled across an article about Superforecasters predicting the 2020 election, and that struck me as extremely satisfying.
 
 ## Work — body paragraph
-<!-- id: about.p.15 -->
+<!-- id: about.p.17 -->
+
+Page 4
+
+## Work — body paragraph
+<!-- id: about.p.18 -->
+
+I'd always been interested in facts and evidence, and the idea of reducing bias in your opinions, sharing them as numeric probabilities, and seeing how accurate they wind up being sounded like an obvious extension of that that everyone should be doing. I made a few predictions on the 2020 election, and then forgot about them for a while until I got emails saying they'd been scored. I did pretty badly, but that motivated me to spend more time thinking about it, and I became a bit obsessed.
+
+## Work — body paragraph
+<!-- id: about.p.19 -->
 
 That obsession led me to Metaculus where I began climbing the leaderboards, and briefly became a Pro Forecaster before I made the (frightening) leap of joining the Metaculus team full time in 2022, first as Forecasting Program Coordinator and in 2026 as Director of Forecasting. Since joining I spend less time making forecasts and more time designing forecasting projects, identifying the best forecasting questions to support decision-making, and managing the Programs team.
 
 ## Work — body paragraph
-<!-- id: about.p.16 -->
+<!-- id: about.p.20 -->
 
-Page 3
+Page 5
 
 ## Work — chapter label
-<!-- id: about.p.17 -->
+<!-- id: about.p.21 -->
 
 Chapter the fourth
 
@@ -132,32 +152,27 @@ Chapter the fourth
 Hobbies
 
 ## Hobbies — body paragraph
-<!-- id: about.p.18 -->
+<!-- id: about.p.22 -->
 
 I have a bunch of hobbies that vary in intensity over time. Some are more persistent and have stuck around forever, such as reading (sci-fi, fantasy, and thrillers especially), board games, forecasting, visiting national parks, hiking, camping, video games, Magic the Gathering, and 3D printing. Others come in waves where I'm obsessed with them for a while until either the idea works its way out of my head or I burn out. These are some of the things you'll see on this site, like writing and coding projects, and other things like video editing.
 
 ## Hobbies — body paragraph
-<!-- id: about.p.19 -->
+<!-- id: about.p.23 -->
+
+Page 6
+
+## Hobbies — body paragraph
+<!-- id: about.p.24 -->
 
 Most of the second category of things are what you'll see on the projects page. Part of the motivation to revamp my website was making a place to share and document these things. Originally most of my coding projects were manual efforts that were partly for the end product and partly to learn to code, but these days I've transitioned more to <strike>yelling</strike> gently guiding AIs into producing what I want. So AI has taken a pass through my old coding projects and patched up the broken and outdated ones and given them some nicer polish, and has also lowered the barrier and time requirement for me to get ideas I think could be interesting or useful out of my head and into a tangible form.
 
 ## Hobbies — body paragraph
-<!-- id: about.p.20 -->
+<!-- id: about.p.25 -->
 
-
-
-## Hobbies — body paragraph
-<!-- id: about.p.21 -->
-
-
-
-## Hobbies — body paragraph
-<!-- id: about.p.22 -->
-
-Page 4
+Page 7
 
 ## Hobbies — chapter label
-<!-- id: about.p.23 -->
+<!-- id: about.p.26 -->
 
 Chapter the fifth
 
@@ -167,27 +182,37 @@ Chapter the fifth
 Writing
 
 ## Writing — body paragraph
-<!-- id: about.p.24 -->
+<!-- id: about.p.27 -->
 
 Writing is a hobby that I've spent a big chunk of my life on, for fiction as a roughly two-year burst, while non-fiction / blogging has been a more persistent thing.
 
 ## Writing — body paragraph
-<!-- id: about.p.25 -->
+<!-- id: about.p.28 -->
 
-With blogging I've typically been drawn toward explainers, usually motivated by frustration over a perceived lack of depth in the conversation or me trying to get a better grasp on a topic. I love to write these kinds of things to clarify my own thinking, share what I've spent so much time getting up to speed on with others so it's easier for them and isn't all wasted on just me only, and to persuade and lay things out in what I consider to be a logical form. I tend to write mostly about politics, science, economics, and random things I've learned about. Formerly these things were in the form of posts on Facebook and Google Plus that no one would read, then I made a home for them with my old website so no one could read them in a more organized fashion, and now infrequently on Substack at The Missing Nuance, so that no one can read them at a place made for hosting tons of things no one reads and a few things that lots of people do.
+With blogging I've typically been drawn toward explainers, usually motivated by frustration over a perceived lack of depth in the conversation or me trying to get a better grasp on a topic. I love to write these kinds of things to clarify my own thinking, share what I've spent so much time getting up to speed on with others so it's easier for them and isn't all wasted on just me only, and to persuade and lay things out in what I consider to be a logical form. I tend to write mostly about politics, science, economics, and random things I've learned about.
 
 ## Writing — body paragraph
-<!-- id: about.p.26 -->
+<!-- id: about.p.29 -->
+
+Page 8
+
+## Writing — body paragraph
+<!-- id: about.p.30 -->
+
+Formerly these things were in the form of posts on Facebook and Google Plus that no one would read, then I made a home for them with my old website so no one could read them in a more organized fashion, and now infrequently on Substack at The Missing Nuance, so that no one can read them at a place made for hosting tons of things no one reads and a few things that lots of people do.
+
+## Writing — body paragraph
+<!-- id: about.p.31 -->
 
 My fiction writing consisted mainly of two ideas that I had become very attached to and frantically needed to get out of my head. My short story, Not Human, was written as I was thinking about what humans are made up of and how much we could lose before we'd be noticeably different. And SEER is a novel that was motivated by thinking about free will, the age of data collection, artificial intelligence, autonomous drones, and predicting the behavior of individuals. I published it back in 2019 after working on it for a few years, and it's interesting (to me at least) to see what seemed prescient and not so prescient about it now that we're in the era of advanced LLMs.
 
 ## Writing — body paragraph
-<!-- id: about.p.27 -->
+<!-- id: about.p.32 -->
 
-Page 5
+Page 9
 
 ## Writing — chapter label
-<!-- id: about.p.28 -->
+<!-- id: about.p.33 -->
 
 Chapter the sixth
 
@@ -197,22 +222,22 @@ Chapter the sixth
 Family
 
 ## Family — body paragraph
-<!-- id: about.p.29 -->
+<!-- id: about.p.34 -->
 
 I live in Council Bluffs, Iowa, with my wife and three kids. Most of my free time is spent playing with them, taking walks, going on bike rides, hiking, going to sports and activities, camping, visiting national parks every year or two (mainly Grand Teton National park and sometimes Rocky Mountain National park), and all kinds of other things.
 
 ## Family — body paragraph
-<!-- id: about.p.30 -->
+<!-- id: about.p.35 -->
 
 
 
 ## Family — body paragraph
-<!-- id: about.p.31 -->
+<!-- id: about.p.36 -->
 
-Page 6
+Page 10
 
 ## Family — chapter label
-<!-- id: about.p.32 -->
+<!-- id: about.p.37 -->
 
 Chapter the seventh
 
@@ -222,42 +247,22 @@ Chapter the seventh
 Elsewhere
 
 ## Elsewhere — body paragraph
-<!-- id: about.p.33 -->
+<!-- id: about.p.38 -->
 
 
 
 ## Elsewhere — body paragraph
-<!-- id: about.p.34 -->
+<!-- id: about.p.39 -->
 
-Page 7
+Page 11
 
-## Elsewhere — chapter label
-<!-- id: about.p.35 -->
-
-
-
-## Section heading
-<!-- id: about.h2.8 -->
-
-
-
-## Body paragraph
-<!-- id: about.p.36 -->
-
-
-
-## Body paragraph
-<!-- id: about.p.37 -->
-
-Fin
-
-## Body paragraph
-<!-- id: about.p.38 -->
+## Elsewhere — body paragraph
+<!-- id: about.p.40 -->
 
 Click a page to turn it — or drag a corner
 
-## Body paragraph
-<!-- id: about.p.39 -->
+## Elsewhere — body paragraph
+<!-- id: about.p.41 -->
 
 <a href="about-plain.html">Read it as a plain page instead</a>
 

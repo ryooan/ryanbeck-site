@@ -563,3 +563,9 @@ a.quiet:focus-visible{
   color:var(--ink-faint);
   background:var(--parchment);
 }
+
+/* Figures on the generated plain about page -- the thesis pictures that sit
+   on their own page in the book, joined into the Education section here. */
+.wrap > .fig{ margin:22px 0 0; max-width:min(520px,100%) }
+.wrap > .fig img{ display:block; width:100%; height:auto; border:1px solid var(--parchment-edge) }
+.wrap > .fig .fig-cap{ margin:6px 0 0; font:400 .76rem/1.4 var(--sans); color:var(--ink-faint) }

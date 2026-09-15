@@ -794,6 +794,35 @@ never runs — no JS, or `prefers-reduced-motion` — the articles stay put and
 you read a perfectly ordinary document. Add or reorder a page by editing the
 articles; nothing else needs to change.
 
+**Chapters span spreads, so page parity matters.** In landscape StPageFlip
+shows the cover alone, then pairs pages (1,2), (3,4)... — an odd index on the
+left, even on the right. Since 2026-09-15 each long chapter is laid out as one
+spread: plate | short version, Education | a page of pictures, Work, Hobbies
+and Writing each across two pages, Family | Elsewhere, then the back cover at
+index 13. **Adding or removing a single page shifts every later chapter onto
+the wrong side of the spine**, so pages go in or come out in pairs.
+
+Two article types exist for this, and both are understood by `tome-lib.js`
+(as ordinary sheets, styled by `data-type`) and by `build-about-plain.mjs`:
+
+- `data-type="continued"` — the second page of a chapter: no kicker, no h2.
+  If the chapter was broken mid-paragraph, its first paragraph is
+  `<p class="cont">`, and the plain page stitches it back into the previous
+  paragraph instead of starting a new one.
+- `data-type="figures"` — a page of `<figure class="fig">` pictures with
+  `<p class="fig-cap">` captions (a `<p>`, not `<figcaption>`, so the copy
+  editor can reach the captions). On the plain page they join the section
+  before them. The images are `public/assets/about/thesis-*.{webp,jpg}`;
+  originals are in `art-source/about-thesis-*.png`.
+
+The page breaks are baked into the HTML, not computed. `fitSheets` still
+shrinks an overfull page, so moderate edits keep fitting, but at 1440x900 the
+Writing spread already sits at 91% / 83% — a much longer edit there wants the
+break moved by hand (move a paragraph between the two articles), not more
+shrinking. Measure a page that is not on screen by cloning its `.sheet` into
+a VISIBLE box sized like a page and running the same shrink loop: a clone
+left inside a hidden page measures zero and reports that everything fits.
+
 On a phone StPageFlip switches to a single page, which on its own reads as a
 floating leaf rather than an open book. `.libtome-verso` is a **blank** page-textured panel
 positioned immediately left of the recto, and the boards are stretched to span
