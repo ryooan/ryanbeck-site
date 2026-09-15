@@ -451,6 +451,22 @@
      book opens, and if that is driven off the 'flip' event it happens after
      the cover has finished swinging — the book lurches. Knowing the target up
      front lets the slide run alongside the cover. */
+  /* Never turn forward past lastIndex(). Guarding the button (and shielding
+     the page) is not enough: a flip requested while a turn is still in the
+     air makes StPageFlip finish that turn instantly and start the next one
+     from where it landed, so a fast second click on the way to the last
+     spread sailed on to the back board. Every flip -- button, page click,
+     swipe, corner drag -- asks checkDirection() in start(), after that
+     finish, so the index it sees here is already current. */
+  var fc = flip.flipController;
+  if (fc && fc.checkDirection) {
+    var _cd = fc.checkDirection.bind(fc);
+    fc.checkDirection = function (dir) {
+      if (dir === 0 && flip.getCurrentPageIndex() >= lastIndex()) return false;
+      return _cd(dir);
+    };
+  }
+
   var navIntent = 0;
   var _fn = flip.flipNext.bind(flip), _fp = flip.flipPrev.bind(flip);
   flip.flipNext = function (c) { navIntent = 1;  return _fn(c); };

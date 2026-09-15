@@ -810,6 +810,14 @@ in landscape (11, showing Family | Elsewhere: "11 / 11", "The end"), and the
 last content page in portrait. `placeShield()` uses the same index to block
 clicks and drags on the forward half there.
 
+The button guard and the shield are not what enforces it: a flip requested
+while a turn is still in the air makes StPageFlip finish that turn instantly
+and start the next from where it landed, so fast clicks got past both and
+reached the back board. The hard stop is a wrap of
+`flip.flipController.checkDirection`, which every flip (button, page click,
+swipe, drag) consults in `start()` after that finish; it refuses forward at
+`lastIndex()`.
+
 Two article types exist for this, and both are understood by `tome-lib.js`
 (as ordinary sheets, styled by `data-type`) and by `build-about-plain.mjs`:
 
