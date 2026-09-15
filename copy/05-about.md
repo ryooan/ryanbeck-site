@@ -69,29 +69,29 @@ Chapter the second
 ## Section heading
 <!-- id: about.h2.2 -->
 
-Before this
+Education
 
-## Before this — body paragraph
+## Education — body paragraph
 <!-- id: about.p.8 -->
 
-For about a decade I designed and inspected bridges across Iowa.
+I majored in civil engineering at Iowa State University, and got a master's degree in it as well. My master's thesis focused on the seismic behavior of hollow concrete columns. This involved designing a testing apparatus and scaled down hollow concrete columns and applying bending force until they broke, and measuring the strain in the reinforcement.
 
-## Before this — body paragraph
+## Education — body paragraph
 <!-- id: about.p.9 -->
 
-It is a profession that makes you honest. A load path either exists or it doesn't. A tolerance is not a matter of opinion. You learn to ask what you would have to believe for your own analysis to be wrong, and then you go and check, because the alternative is unacceptable.
+It was an interesting project, I learned a ton, and I got to do a lot of design, coding, and analysis, which as you'll see are recurring projects I'm drawn to. But overall it was pretty grueling and I was glad to be finished with that.
 
-## Before this — body paragraph
+## Education — body paragraph
 <!-- id: about.p.10 -->
 
-I think about that habit constantly in work that has far softer feedback.
 
-## Before this — body paragraph
+
+## Education — body paragraph
 <!-- id: about.p.11 -->
 
 Page 2
 
-## Before this — chapter label
+## Education — chapter label
 <!-- id: about.p.12 -->
 
 Chapter the third
@@ -99,29 +99,29 @@ Chapter the third
 ## Section heading
 <!-- id: about.h2.3 -->
 
-Now
+Work
 
-## Now — body paragraph
+## Work — body paragraph
 <!-- id: about.p.13 -->
 
-These days I coordinate forecasting programs at Metaculus.
+Currently I'm Director of Forecasting at Metaculus. Prior to getting into the forecasting world I did actually use my degree, spending a year working at LeMar Industries designing agricultural towers and catwalks, and then 6 years at HDR designing highway bridges. However, over time I became pretty bored with bridge engineering. It was hard to feel satisfied when you spend weeks documenting calculations on prespecified bridge geometry only to show that it works and maybe tweak a few rebar sizes up and down.
 
-## Now — body paragraph
+## Work — body paragraph
 <!-- id: about.p.14 -->
 
-Most of the job is not prediction. It is writing questions that can actually resolve, arguing about wording until the ambiguity is gone, and then finding out in public whether the crowd was right. It turns out that "what exactly would count as this happening?" is one of the more useful questions you can ask about almost anything.
+During that time I found forecasting. I stumbled across an article about Superforecasters predicting the 2020 election, and that struck me as extremely satisfying. I'd always been interested in facts and evidence, and the idea of reducing bias in your opinions, sharing them as numeric probabilities, and seeing how accurate they wind up being sounded like an obvious extension of that that everyone should be doing. I made a few predictions on the 2020 election, and then forgot about them for a while until I got emails saying they'd been scored. I did pretty badly, but that motivated me to spend more time thinking about it, and I became a bit obsessed.
 
-## Now — body paragraph
+## Work — body paragraph
 <!-- id: about.p.15 -->
 
-Calibration is a habit, not a talent.
+That obsession led me to Metaculus where I began climbing the leaderboards, and briefly became a Pro Forecaster before I made the (frightening) leap of joining the Metaculus team full time in 2022, first as Forecasting Program Coordinator and in 2026 as Director of Forecasting. Since joining I spend less time making forecasts and more time designing forecasting projects, identifying the best forecasting questions to support decision-making, and managing the Programs team.
 
-## Now — body paragraph
+## Work — body paragraph
 <!-- id: about.p.16 -->
 
 Page 3
 
-## Now — chapter label
+## Work — chapter label
 <!-- id: about.p.17 -->
 
 Chapter the fourth
@@ -129,34 +129,34 @@ Chapter the fourth
 ## Section heading
 <!-- id: about.h2.4 -->
 
-The fiction
+Hobbies
 
-## The fiction — body paragraph
+## Hobbies — body paragraph
 <!-- id: about.p.18 -->
 
-SEER began as a question I couldn't put down.
+I have a bunch of hobbies that vary in intensity over time. Some are more persistent and have stuck around forever, such as reading (sci-fi, fantasy, and thrillers especially), board games, forecasting, visiting national parks, hiking, camping, video games, Magic the Gathering, and 3D printing. Others come in waves where I'm obsessed with them for a while until either the idea works its way out of my head or I burn out. These are some of the things you'll see on this site, like writing and coding projects, and other things like video editing.
 
-## The fiction — body paragraph
+## Hobbies — body paragraph
 <!-- id: about.p.19 -->
 
-If a system could reliably predict what you wanted — not guess, not nudge, but <em>know</em> — would you still call it wanting? In the 22nd century the algorithm does exactly that, and almost nobody minds. The novel follows Maria, who is kidnapped by the people trying to bring it down and then has to work out which of them is telling her the truth.
+Most of the second category of things are what you'll see on the projects page. Part of the motivation to revamp my website was making a place to share and document these things. Originally most of my coding projects were manual efforts that were partly for the end product and partly to learn to code, but these days I've transitioned more to <strike>yelling</strike> gently guiding AIs into producing what I want. So AI has taken a pass through my old coding projects and patched up the broken and outdated ones and given them some nicer polish, and has also lowered the barrier and time requirement for me to get ideas I think could be interesting or useful out of my head and into a tangible form.
 
-## The fiction — body paragraph
+## Hobbies — body paragraph
 <!-- id: about.p.20 -->
 
-<em>Not Human</em> is a shorter, colder cousin of the same question: Lisa is the first person in the world to have her mind copied to a machine, and the copy insists it is her.
 
-## The fiction — body paragraph
+
+## Hobbies — body paragraph
 <!-- id: about.p.21 -->
 
-<a href="writing.html">Both are on the fiction page.</a>
 
-## The fiction — body paragraph
+
+## Hobbies — body paragraph
 <!-- id: about.p.22 -->
 
 Page 4
 
-## The fiction — chapter label
+## Hobbies — chapter label
 <!-- id: about.p.23 -->
 
 Chapter the fifth
@@ -164,29 +164,29 @@ Chapter the fifth
 ## Section heading
 <!-- id: about.h2.5 -->
 
-The Missing Nuance
+Writing
 
-## The Missing Nuance — body paragraph
+## Writing — body paragraph
 <!-- id: about.p.24 -->
 
-The newsletter is where the arguments go.
+Writing is a hobby that I've spent a big chunk of my life on, for fiction as a roughly two-year burst, while non-fiction / blogging has been a more persistent thing.
 
-## The Missing Nuance — body paragraph
+## Writing — body paragraph
 <!-- id: about.p.25 -->
 
-It's named for the thing that gets sanded off when a position is repeated enough times — the caveat that made it true in the first place. Mostly forecasting, occasionally technology, occasionally an essay I couldn't place anywhere else.
+With blogging I've typically been drawn toward explainers, usually motivated by frustration over a perceived lack of depth in the conversation or me trying to get a better grasp on a topic. I love to write these kinds of things to clarify my own thinking, share what I've spent so much time getting up to speed on with others so it's easier for them and isn't all wasted on just me only, and to persuade and lay things out in what I consider to be a logical form. I tend to write mostly about politics, science, economics, and random things I've learned about. Formerly these things were in the form of posts on Facebook and Google Plus that no one would read, then I made a home for them with my old website so no one could read them in a more organized fashion, and now infrequently on Substack at The Missing Nuance, so that no one can read them at a place made for hosting tons of things no one reads and a few things that lots of people do.
 
-## The Missing Nuance — body paragraph
+## Writing — body paragraph
 <!-- id: about.p.26 -->
 
-<a href="https://themissingnuance.substack.com">themissingnuance.substack.com</a>
+My fiction writing consisted mainly of two ideas that I had become very attached to and frantically needed to get out of my head. My short story, Not Human, was written as I was thinking about what humans are made up of and how much we could lose before we'd be noticeably different. And SEER is a novel that was motivated by thinking about free will, the age of data collection, artificial intelligence, autonomous drones, and predicting the behavior of individuals. I published it back in 2019 after working on it for a few years, and it's interesting (to me at least) to see what seemed prescient and not so prescient about it now that we're in the era of advanced LLMs.
 
-## The Missing Nuance — body paragraph
+## Writing — body paragraph
 <!-- id: about.p.27 -->
 
 Page 5
 
-## The Missing Nuance — chapter label
+## Writing — chapter label
 <!-- id: about.p.28 -->
 
 Chapter the sixth
@@ -194,24 +194,24 @@ Chapter the sixth
 ## Section heading
 <!-- id: about.h2.6 -->
 
-Off the clock
+Family
 
-## Off the clock — body paragraph
+## Family — body paragraph
 <!-- id: about.p.29 -->
 
-Married, with daughters, in Iowa.
+I live in Council Bluffs, Iowa, with my wife and three kids. Most of my free time is spent playing with them, taking walks, going on bike rides, hiking, going to sports and activities, camping, visiting national parks every year or two (mainly Grand Teton National park and sometimes Rocky Mountain National park), and all kinds of other things.
 
-## Off the clock — body paragraph
+## Family — body paragraph
 <!-- id: about.p.30 -->
 
-The serial-hobbyist thing is not a bit. There is always some half-learned skill in progress and a shelf of evidence from the last one. Reading, mostly; building things that didn't need to exist; and a persistent belief that this is the year I finish everything I start.
 
-## Off the clock — body paragraph
+
+## Family — body paragraph
 <!-- id: about.p.31 -->
 
 Page 6
 
-## Off the clock — chapter label
+## Family — chapter label
 <!-- id: about.p.32 -->
 
 Chapter the seventh
@@ -224,7 +224,7 @@ Elsewhere
 ## Elsewhere — body paragraph
 <!-- id: about.p.33 -->
 
-The fastest way to reach me is email. I read all of it and answer most of it.
+
 
 ## Elsewhere — body paragraph
 <!-- id: about.p.34 -->
@@ -234,29 +234,29 @@ Page 7
 ## Elsewhere — chapter label
 <!-- id: about.p.35 -->
 
-Colophon
+
 
 ## Section heading
 <!-- id: about.h2.8 -->
 
-About this book
 
-## About this book — body paragraph
+
+## Body paragraph
 <!-- id: about.p.36 -->
 
-Set in the same hand as the doors. The lettering was drawn rather than typeset; the leather, the page stock and the dust are generated, not photographed.
 
-## About this book — body paragraph
+
+## Body paragraph
 <!-- id: about.p.37 -->
 
 Fin
 
-## About this book — body paragraph
+## Body paragraph
 <!-- id: about.p.38 -->
 
 Click a page to turn it — or drag a corner
 
-## About this book — body paragraph
+## Body paragraph
 <!-- id: about.p.39 -->
 
 <a href="about-plain.html">Read it as a plain page instead</a>
