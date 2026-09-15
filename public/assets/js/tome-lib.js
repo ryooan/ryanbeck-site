@@ -225,19 +225,188 @@
   controls.appendChild(prevBtn); controls.appendChild(progress); controls.appendChild(nextBtn);
   root.appendChild(controls);
 
+  /* ---------------------------------------------------- chapters across a spread
+     A chapter too long for one page is authored as a `text` article followed
+     by a `continued` one. Fitting each page on its own shrank them to
+     different sizes -- Writing sat at 91% on the left and 83% on the right,
+     facing each other -- and left the break wherever it was typed.
+
+     So a pair is treated as ONE stream of text: the break is chosen here, at
+     any word, and both pages get the same type size. The rule is the largest
+     size at which both pages fit, and at that size the break where the two
+     pages are most evenly filled. The HTML keeps its authored break, so the
+     plain page, the copy editor and the no-JS fallback never see this. */
+  var VOID_TAG = /^(br|img|wbr|hr|source|input)$/i;
+
+  /* Where a paragraph may break: whitespace outside any tag AND outside any
+     inline element, so a link or an <em> is never split across the turn. */
+  function wordBreaks(html) {
+    var out = [], depth = 0, i = 0, n = html.length;
+    while (i < n) {
+      if (html[i] === '<') {
+        var j = html.indexOf('>', i);
+        if (j < 0) break;
+        var tag = html.slice(i + 1, j), m = /^\/?\s*([a-z0-9]+)/i.exec(tag);
+        if (m && !VOID_TAG.test(m[1]) && !/\/\s*$/.test(tag)) depth += tag[0] === '/' ? -1 : 1;
+        i = j + 1;
+        continue;
+      }
+      if (/\s/.test(html[i]) && depth === 0) {
+        var k = i;
+        while (k < n && /\s/.test(html[k])) k++;
+        if (i > 0 && k < n) out.push(i);
+        i = k;
+        continue;
+      }
+      i++;
+    }
+    return out;
+  }
+
+  var pairs = [];
+  articles.forEach(function (a, i) {
+    var b = articles[i + 1];
+    if (a.dataset.type !== 'text' || !b || b.dataset.type !== 'continued') return;
+    var head = '', folioA = '', folioB = '', els = [];
+    [].slice.call(a.children).forEach(function (el) {
+      if (el.matches('p.kicker, h2')) head += el.outerHTML;
+      else if (el.matches('p.folio')) folioA = el.outerHTML;
+      else els.push(el);
+    });
+    [].slice.call(b.children).forEach(function (el) {
+      if (el.matches('p.folio')) { folioB = el.outerHTML; return; }
+      /* the authored half-paragraph rejoins the paragraph it was cut from */
+      if (el.matches('p.cont') && els.length && els[els.length - 1].tagName === 'P') {
+        var last = els[els.length - 1].cloneNode(true);
+        last.innerHTML = last.innerHTML.replace(/\s+$/, '') + ' ' + el.innerHTML.replace(/^\s+/, '');
+        els[els.length - 1] = last;
+        return;
+      }
+      els.push(el);
+    });
+    var blocks = els.map(function (el) {
+      var html = el.innerHTML.trim();
+      return { tag: el.tagName.toLowerCase(), cls: el.getAttribute('class') || '', html: html,
+               breaks: el.tagName === 'P' ? wordBreaks(html) : [] };
+    }).filter(function (bl) { return bl.html.replace(/<[^>]*>/g, '').trim(); });
+    /* candidate breaks, in reading order: every word gap, then the block end */
+    var cands = [];
+    blocks.forEach(function (bl, bi) {
+      bl.breaks.forEach(function (c) { cands.push({ b: bi, c: c }); });
+      if (bi < blocks.length - 1) cands.push({ b: bi, c: -1 });
+    });
+    if (!cands.length) return;
+    pairs.push({ A: bookEl.children[i].querySelector('.sheet'),
+                 B: bookEl.children[i + 1].querySelector('.sheet'),
+                 head: head, folioA: folioA, folioB: folioB,
+                 blocks: blocks, cands: cands });
+  });
+
+  function tagged(bl, cls, inner) {
+    return '<' + bl.tag + (cls ? ' class="' + cls + '"' : '') + '>' + inner + '</' + bl.tag + '>';
+  }
+
+  function splitAt(p, k) {
+    var cand = p.cands[k], A = [], B = [];
+    p.blocks.forEach(function (bl, bi) {
+      if (bi < cand.b || (bi === cand.b && cand.c === -1)) A.push(tagged(bl, bl.cls, bl.html));
+      else if (bi > cand.b) B.push(tagged(bl, bl.cls, bl.html));
+      else {
+        A.push(tagged(bl, bl.cls, bl.html.slice(0, cand.c)));
+        B.push(tagged(bl, 'cont', bl.html.slice(cand.c).replace(/^\s+/, '')));
+      }
+    });
+    return { a: p.head + A.join('') + p.folioA, b: B.join('') + p.folioB };
+  }
+
+  /* Measuring must happen in a box that is laid out: a page StPageFlip is not
+     showing is display:none and measures zero, which reads as "fits". */
+  var probe = null;
+  function fill(html, px, pw, ph, type) {
+    if (!probe) {
+      probe = document.createElement('div');
+      probe.className = 'page';
+      probe.setAttribute('aria-hidden', 'true');
+      probe.appendChild(document.createElement('div')).className = 'sheet';
+      root.appendChild(probe);
+    }
+    probe.setAttribute('data-type', type);
+    probe.style.cssText = 'position:fixed;left:-9999px;top:0;display:block;visibility:hidden;' +
+      'pointer-events:none;overflow:hidden;width:' + pw + 'px;height:' + ph + 'px';
+    var sh = probe.firstChild;
+    sh.style.cssText = 'bottom:auto;height:auto;font-size:' + px + 'px';
+    sh.innerHTML = html;
+    return sh.offsetHeight / ph;
+  }
+
+  function balance(p, pw, ph, base) {
+    var n = p.cands.length, memo = {};
+    function fills(k, px) {
+      var key = k + '@' + px.toFixed(3);
+      if (!memo[key]) {
+        var s = splitAt(p, k);
+        memo[key] = [fill(s.a, px, pw, ph, 'text'), fill(s.b, px, pw, ph, 'continued')];
+      }
+      return memo[key];
+    }
+    /* more on the left fills the left and empties the right, so the evenest
+       break is where the two fills cross: a binary search, not a scan */
+    function evenest(px) {
+      var lo = 0, hi = n - 1;
+      while (lo < hi) {
+        var mid = (lo + hi) >> 1, f = fills(mid, px);
+        if (f[0] < f[1]) lo = mid + 1; else hi = mid;
+      }
+      var pick = lo, worst = Math.max.apply(null, fills(lo, px));
+      if (lo > 0) {
+        var w = Math.max.apply(null, fills(lo - 1, px));
+        if (w < worst) { worst = w; pick = lo - 1; }
+      }
+      return { k: pick, worst: worst };
+    }
+    var FULL = 0.985, px = base, r = evenest(base);
+    if (r.worst > FULL) {
+      var lo = base * 0.5, hi = base, found = evenest(lo);
+      for (var it = 0; it < 9; it++) {
+        var mid = (lo + hi) / 2, m = evenest(mid);
+        if (m.worst <= FULL) { lo = mid; found = m; } else hi = mid;
+      }
+      px = lo; r = found;
+    }
+    var s = splitAt(p, r.k);
+    p.A.innerHTML = s.a;
+    p.B.innerHTML = s.b;
+    [p.A, p.B].forEach(function (sh) {
+      sh.style.fontSize = px < base ? px.toFixed(2) + 'px' : '';
+      sh.setAttribute('data-balanced', '');
+    });
+    p.size = px / base;
+  }
+
   /* same trick as the hand-built version: the content is fixed and the page
      size isn't, so shrink type until it fits */
+  var balancedFor = '';
   function fitSheets() {
     var blk = bookEl.querySelector('.stf__block');
     if (!blk) return;
     var r = blk.getBoundingClientRect();
     if (!r.width) return;
     var pw = flip.getOrientation() === 'landscape' ? r.width / 2 : r.width;
+    var base = +(pw * 0.0385).toFixed(2);
     // hidden pages measure as zero, so the base size comes from geometry
-    root.style.setProperty('--sheet-fs', (pw * 0.0385).toFixed(2) + 'px');
+    root.style.setProperty('--sheet-fs', base + 'px');
+    /* Paired chapters are balanced once per page size. fitSheets runs on
+       every turn, and re-measuring a few hundred layouts each time would be
+       felt; nothing about the answer changes until the page does. */
+    var key = Math.round(pw) + 'x' + Math.round(r.height);
+    if (pairs.length && key !== balancedFor) {
+      balancedFor = key;
+      pairs.forEach(function (p) { balance(p, pw, r.height, base); });
+      if (probe) { probe.remove(); probe = null; }
+    }
     // then anything on screen that still overruns gets nudged down
     root.querySelectorAll('.sheet').forEach(function (sh) {
-      if (!sh.clientHeight) return;
+      if (!sh.clientHeight || sh.hasAttribute('data-balanced')) return;
       sh.style.fontSize = '';
       var size = parseFloat(getComputedStyle(sh).fontSize), guard = 0;
       while (sh.scrollHeight > sh.clientHeight + 1 && guard++ < 14) {
@@ -245,6 +414,7 @@
       }
     });
   }
+  window.__tomePairs = pairs;   // debug handle, like __tomeFlip
 
   function btn(label) {
     var b = document.createElement('button');
@@ -379,10 +549,19 @@
     boards.style.height = hgt + 'px';
   }
 
-  var LAST = 0;   // the last page of content; the page after it is the board
+  /* The last page you can turn to. In portrait that is the last page of
+     content. In landscape the spreads are (1,2),(3,4)..., so when the content
+     ends on an even (right-hand) page, the back board would sit alone on the
+     left of one more spread, with nothing under it -- so the book stops at
+     the spread that holds the last content page. */
+  var LAST = 0;
+  function lastIndex() {
+    var n = flip.getPageCount(), last = n - 2;
+    return flip.getOrientation() === 'landscape' && last % 2 === 0 ? last - 1 : last;
+  }
   function status() {
-    var i = flip.getCurrentPageIndex(), n = flip.getPageCount();
-    LAST = n - 2;
+    var i = flip.getCurrentPageIndex();
+    LAST = lastIndex();
     progress.textContent = i === 0 ? 'closed' : i + ' / ' + LAST;
     nextBtn.textContent = i === 0 ? 'Open it' : (i >= LAST ? 'The end' : 'Turn the page');
     prevBtn.disabled = i === 0;
@@ -541,8 +720,8 @@
 
   function placeShield() {
     var blk = bookEl.querySelector('.stf__block');
-    var i = flip.getCurrentPageIndex(), n = flip.getPageCount();
-    if (!blk || i < n - 2) { shield.style.display = 'none'; return; }
+    var i = flip.getCurrentPageIndex();
+    if (!blk || i < lastIndex()) { shield.style.display = 'none'; return; }
     var b = blk.getBoundingClientRect(), s2 = stage.getBoundingClientRect();
     var landscape = flip.getOrientation() === 'landscape';
     var w = landscape ? b.width / 2 : b.width * 0.62;

@@ -802,6 +802,14 @@ and Writing each across two pages, Family | Elsewhere, then the back cover at
 index 13. **Adding or removing a single page shifts every later chapter onto
 the wrong side of the spine**, so pages go in or come out in pairs.
 
+**The book stops at the last content spread.** With the content ending on an
+even (right-hand) page, one more turn would leave the back board alone on the
+left of an empty spread, with no cover drawn beneath it. So `lastIndex()` in
+`tome-lib.js` makes the last turnable index the left page of the final spread
+in landscape (11, showing Family | Elsewhere: "11 / 11", "The end"), and the
+last content page in portrait. `placeShield()` uses the same index to block
+clicks and drags on the forward half there.
+
 Two article types exist for this, and both are understood by `tome-lib.js`
 (as ordinary sheets, styled by `data-type`) and by `build-about-plain.mjs`:
 
@@ -815,13 +823,26 @@ Two article types exist for this, and both are understood by `tome-lib.js`
   before them. The images are `public/assets/about/thesis-*.{webp,jpg}`;
   originals are in `art-source/about-thesis-*.png`.
 
-The page breaks are baked into the HTML, not computed. `fitSheets` still
-shrinks an overfull page, so moderate edits keep fitting, but at 1440x900 the
-Writing spread already sits at 91% / 83% — a much longer edit there wants the
-break moved by hand (move a paragraph between the two articles), not more
-shrinking. Measure a page that is not on screen by cloning its `.sheet` into
-a VISIBLE box sized like a page and running the same shrink loop: a clone
-left inside a hidden page measures zero and reports that everything fits.
+**The break inside a two-page chapter is computed, not authored.** Fitting
+each page on its own left facing pages at different sizes (Writing was 91%
+beside 83%) and the break wherever it had been typed. `tome-lib.js` now reads
+a `text` + `continued` pair as one stream of text (rejoining any `p.cont`),
+and `balance()` picks the break: the **largest type size at which both pages
+fit, then the word at which the two pages are most evenly filled**, with that
+one size applied to both. Breaks may fall at any word gap, but never inside an
+inline element, so a link or `<em>` is not cut across the turn.
+
+Both searches are binary, not scans: filling the left page more always empties
+the right one, so the evenest break is where the two fills cross. Results are
+cached per page size (`balancedFor`), because `fitSheets` runs on every turn.
+The authored break in the HTML still matters to the plain page, the copy
+editor and the no-JS fallback, but not to the book — so edits no longer need
+the break moved by hand. `window.__tomePairs` exposes the pairs and their
+chosen `size`.
+
+Measure in a box that is laid out. A page StPageFlip is not showing is
+`display:none` and measures zero, which reads as "fits": that fooled one check
+here into reporting every page at full size while two were overflowing.
 
 On a phone StPageFlip switches to a single page, which on its own reads as a
 floating leaf rather than an open book. `.libtome-verso` is a **blank** page-textured panel
