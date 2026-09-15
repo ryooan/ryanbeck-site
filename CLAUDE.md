@@ -17,6 +17,9 @@ doing real work.
 public/            everything served to a browser
   index.html       the hall — the landing page, and the interesting one
   projects.html  writing.html  blog.html  404.html
+  not-human.html   the short story, copied verbatim from the old site's
+                   writing/NotHuman page (story only, no blurb); linked from
+                   writing.html's "Read it online"
   forecasting/            GENERATED "Data Dashboards" — index + one page per
                           subject + embed/<slug>.html per chart, each at its
                           own URL. One card on projects points at it. Rebuild
@@ -807,16 +810,32 @@ even (right-hand) page, one more turn would leave the back board alone on the
 left of an empty spread, with no cover drawn beneath it. So `lastIndex()` in
 `tome-lib.js` makes the last turnable index the left page of the final spread
 in landscape (11, showing Family | Elsewhere: "11 / 11", "The end"), and the
-last content page in portrait. `placeShield()` uses the same index to block
-clicks and drags on the forward half there.
+last content page in portrait.
 
-The button guard and the shield are not what enforces it: a flip requested
-while a turn is still in the air makes StPageFlip finish that turn instantly
-and start the next from where it landed, so fast clicks got past both and
-reached the back board. The hard stop is a wrap of
-`flip.flipController.checkDirection`, which every flip (button, page click,
-swipe, drag) consults in `start()` after that finish; it refuses forward at
-`lastIndex()`.
+The next button's guard is not what enforces it: a flip requested while a turn
+is still in the air makes StPageFlip finish that turn instantly and start the
+next from where it landed, so fast clicks got past it and reached the back
+board. The hard stop is a wrap of `flip.flipController.checkDirection`, which
+every flip (button, page click, swipe, corner drag or hover) consults in
+`start()` after that finish; it refuses forward at `lastIndex()`, so a refused
+turn never begins at all.
+
+There used to be a transparent **shield** over the forward half of the last
+spread for the same purpose. It was removed on 2026-09-15: it also sat on top
+of the Elsewhere page's links and made every one of them unclickable, and the
+`checkDirection` stop made it redundant. Don't bring back an overlay on the
+book for this.
+
+**Links and pictures on pages are clickable.** StPageFlip starts a turn on any
+press inside the book except one whose target is itself an `<a>` or `<button>`
+(`clickEventForward` / `checkTarget`), so a press on an `<em>` inside a link,
+or on the image inside a picture link, turned the page instead. `tome-lib.js`
+overrides `flip.ui.checkTarget` to test `closest('a, button')`. The Education
+spread's pictures are `<a class="fig-zoom">` links to the full-size files
+(`thesis-rendering-full.jpg` is the 1359px original; the lab photo is already
+native size), and `assets/js/lightbox.js` opens any `a.fig-zoom` in a native
+`<dialog>` — click anywhere or Escape to dismiss. It is loaded by `about.html`
+and `about-plain.html`, and works on any page that includes it.
 
 Two article types exist for this, and both are understood by `tome-lib.js`
 (as ordinary sheets, styled by `data-type`) and by `build-about-plain.mjs`:
@@ -1688,13 +1707,15 @@ Roughly in the order they unblock things.
    `npm run deploy` — but it publishes under Ryan's name, so wait for him to
    ask. Then point the domain. HOSTING.md covers why Cloudflare and what the
    free tier gives you.
-2. **Put *Not Human* somewhere better than the old site.** Ryan's ask,
-   2026-08-31. Its only link on the fiction page is "Read it online", which
-   goes to `ryanbeckauthor.com/writing/NotHuman` — the site this one replaces,
-   so the new site currently sends readers to the old one for its own free
-   story. **Substack is the leading candidate** (he already runs *The Missing
-   Nuance* there); a page on this site would work too. Whatever it becomes,
-   change the `href` and the button text on `public/writing.html`.
+2. ~~**Put *Not Human* somewhere better than the old site.**~~ **Done
+   2026-09-15.** It is `public/not-human.html` (`/not-human`), the story
+   copied verbatim from the archived `ryanbeckauthor/writing/NotHuman.html` —
+   Ryan asked for no edits, and for the blurb and subscribe preamble to go, so
+   the page starts at the title. The only markup change is the scene breaks'
+   `<p align="center">` becoming `p.scene-break`. "Read it online" on
+   `writing.html` links straight to it, and `_redirects` 301s the old
+   `/writing/NotHuman` path there (ahead of the `/writing/*` catch-all). It is
+   not in the copy editor.
 3. **Decide what happens to `/api/subscribe`.** The form that posted to it is
    gone (removed 2026-08-31 with the mailing-list block), so the route is now
    live but unreferenced. Either wire it to a real list if the list comes

@@ -53,7 +53,7 @@ const FILES = [
   'public/index.html', 'public/projects.html', 'public/writing.html',
   'public/blog.html', 'public/about.html', 'public/about-plain.html',
   'public/park-guides.html', 'public/404.html', 'public/compare.html',
-  'public/dust-lab.html',
+  'public/dust-lab.html', 'public/not-human.html',
   'public/sitemap.xml', 'public/robots.txt',
   'wrangler.toml',
 ];

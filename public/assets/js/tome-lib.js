@@ -208,13 +208,10 @@
     bookEl.appendChild(page);
   });
 
-  var shield = document.createElement('div'); shield.className = 'libtome-shield';
-
   stage.appendChild(boardsL);
   stage.appendChild(boards);
   stage.appendChild(verso);
   stage.appendChild(bookEl);
-  stage.appendChild(shield);
   stage.appendChild(dustEl);
   root.appendChild(stage);
 
@@ -451,19 +448,31 @@
      book opens, and if that is driven off the 'flip' event it happens after
      the cover has finished swinging — the book lurches. Knowing the target up
      front lets the slide run alongside the cover. */
-  /* Never turn forward past lastIndex(). Guarding the button (and shielding
-     the page) is not enough: a flip requested while a turn is still in the
-     air makes StPageFlip finish that turn instantly and start the next one
-     from where it landed, so a fast second click on the way to the last
-     spread sailed on to the back board. Every flip -- button, page click,
-     swipe, corner drag -- asks checkDirection() in start(), after that
-     finish, so the index it sees here is already current. */
+  /* Never turn forward past lastIndex(). Guarding the button is not enough:
+     a flip requested while a turn is still in the air makes StPageFlip
+     finish that turn instantly and start the next one from where it landed,
+     so a fast second click on the way to the last spread sailed on to the
+     back board. Every flip -- button, page click, swipe, corner drag or
+     hover -- asks checkDirection() in start(), after that finish, so the
+     index it sees here is already current, and a refused turn never starts.
+     (This replaced a transparent shield over the last spread's forward
+     half, which also covered the Elsewhere page's links.) */
   var fc = flip.flipController;
   if (fc && fc.checkDirection) {
     var _cd = fc.checkDirection.bind(fc);
     fc.checkDirection = function (dir) {
       if (dir === 0 && flip.getCurrentPageIndex() >= lastIndex()) return false;
       return _cd(dir);
+    };
+  }
+
+  /* Links on a page must stay links. StPageFlip only lets a press through
+     when its target IS an <a> or <button> (clickEventForward), so pressing
+     the <img> inside a picture link, or an <em> inside a text link, started
+     a page turn instead. Ask whether the target is INSIDE one. */
+  if (flip.ui && flip.ui.checkTarget) {
+    flip.ui.checkTarget = function (el) {
+      return !(el && el.closest && el.closest('a, button'));
     };
   }
 
@@ -481,6 +490,8 @@
   stage.addEventListener('pointerdown', function (e) {
     var blk = bookEl.querySelector('.stf__block');
     if (!blk) return;
+    // a press on a link is not a turn (see checkTarget above)
+    if (e.target.closest && e.target.closest('a, button')) return;
     var b = blk.getBoundingClientRect();
     if (e.clientY < b.top - 24 || e.clientY > b.bottom + 24) return;
     clickIntent = e.clientX >= b.left + b.width / 2 ? 1 : -1;
@@ -584,7 +595,6 @@
     nextBtn.disabled = i >= LAST;
     sizeBoards();
     fitSheets();
-    placeShield();
     maskLeftPage();
     maskShadows();
   }
@@ -725,28 +735,6 @@
     if (busyUntil > Date.now()) maskRaf = requestAnimationFrame(maskLoop);
   }
   var busyUntil = 0;
-
-  /* At the last page, cover the forward half of the book with a shield that
-     swallows pointer events. Letting the flip run and snapping back afterwards
-     plays a whole animation that ends where it started, which just looks
-     broken; this stops it happening at all. */
-  ['pointerdown', 'mousedown', 'touchstart', 'click'].forEach(function (ev) {
-    shield.addEventListener(ev, function (e) { e.preventDefault(); e.stopPropagation(); }, true);
-  });
-
-  function placeShield() {
-    var blk = bookEl.querySelector('.stf__block');
-    var i = flip.getCurrentPageIndex();
-    if (!blk || i < lastIndex()) { shield.style.display = 'none'; return; }
-    var b = blk.getBoundingClientRect(), s2 = stage.getBoundingClientRect();
-    var landscape = flip.getOrientation() === 'landscape';
-    var w = landscape ? b.width / 2 : b.width * 0.62;
-    shield.style.display = 'block';
-    shield.style.left   = (b.right - s2.left - w) + 'px';
-    shield.style.top    = (b.top - s2.top) + 'px';
-    shield.style.width  = w + 'px';
-    shield.style.height = b.height + 'px';
-  }
 
   flip.on('changeState', function (e) {
     root.classList.toggle('is-flipping', e.data !== 'read');

@@ -1,4 +1,6 @@
 # Old ryanbeckauthor.com paths, so nothing that's already linked breaks.
+# The story has its own page now; this has to come before /writing/*.
+/writing/NotHuman  /not-human  301
 /writing/*    /writing.html   301
 /blog/*       /blog.html      301
 /about/*      /about.html     301
@@ -11,6 +13,7 @@
 /projects     /projects.html  200
 /park-guides  /park-guides.html  200
 /writing      /writing.html   200
+/not-human    /not-human.html  200
 /blog         /blog.html      200
 /about        /about.html     200
 /about-plain  /about-plain.html  200
