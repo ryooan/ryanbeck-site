@@ -70,13 +70,15 @@ start there and skip a lot of glue code.
 
 ## What I'd actually do
 
-> **Status, 2026-08-19:** the Cloudflare account exists (OAuth, ryooan@gmail.com),
-> but wrangler's saved token did not survive the move to the new PC, so step 2
-> is `npx wrangler login` and then `npm run deploy`. Step 3 is done — the
+> **Status, 2026-09-22:** the Cloudflare account exists (OAuth, ryooan@gmail.com)
+> and wrangler is authenticated on this PC again (the token lost in the
+> 2026-08-19 move was restored by 2026-08-22), so step 2 is just
+> `npm run deploy` — once Ryan says so. Step 3 is done — the
 > Worker implements `/api/substack` and it serves Ryan's real feed locally.
 > Steps 1 and 2 are the open ones.
 
-1. **Register `ryanbeck.com`** (or whatever's free) and point it at Cloudflare.
+1. **Register a domain** and point it at Cloudflare. Not `ryanbeck.com` — it is
+   taken, and appears in the site only as a placeholder in `site.config.json`.
    Keep `ryanbeckauthor.com` as a redirect to `/writing` — the links out there
    still work, and you stop maintaining two sites. `_redirects` already has the
    old paths mapped; the domain is the missing half.

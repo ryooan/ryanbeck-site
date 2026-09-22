@@ -1543,13 +1543,12 @@ Cloudflare Workers with static assets. Static files are served by the asset
 layer and never invoke the Worker, so they're free and unlimited; only `/api/*`
 costs anything against the 100k/day free tier.
 
-**Wrangler is not authenticated on this machine.** It was on the old PC
-(2026-08-18, OAuth as ryooan@gmail.com, account `0efbd4d4…d990`), but the
-credential lives in `%APPDATA%\xdg.config\.wrangler\config\default.toml` and did not come across in the
-2026-08-19 migration — `npx wrangler whoami` says so. `wrangler dev` needs no
-account, so local work is unaffected; a deploy needs `npx wrangler login`
-first. It has still never been deployed — publishing is Ryan's call, not a
-default.
+**Wrangler is authenticated on this machine** (re-verified 2026-09-22 with
+`npx wrangler whoami`: OAuth as ryooan@gmail.com, account `0efbd4d4…d990`,
+credential in `%APPDATA%\xdg.config\.wrangler\config\default.toml`). The
+2026-08-18 token did not survive the 2026-08-19 migration, but a later login
+restored it by 2026-08-22. So a deploy would succeed immediately. It has still
+never been deployed — publishing is Ryan's call, not a default.
 
 Two things to know before wiring up CI:
 
@@ -1625,9 +1624,8 @@ is left:
   ones — matching a mean built from dark rooms crushes a uniformly lit
   picture into a murky band. Match highlights, keep the subject readable. The
   puzzle sits at paper 163 / piece 63, which is 199 / 77 at hover exposure.
-- **The about-page copy** no longer announces itself as a placeholder, and it
-  is factually grounded, but it was drafted rather than written by Ryan. It
-  wants his voice and his sign-off before launch.
+- ~~**The about-page copy**~~ is Ryan's own words since 2026-09-15 (`aeb51f5`,
+  his rewrite of the book chapters); `about-plain.html` is generated from it.
 - **Not placeholders any more:** both book covers, the about-page portrait, the
   blog archive (nineteen real posts), the Substack fallback list, and every
   project card's title, copy and link. These are Ryan's real images and text —

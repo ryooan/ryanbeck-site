@@ -3,10 +3,10 @@
 Ryan Beck's personal site. Six public pages plus one Cloudflare Worker, one of
 of which is a generated dashboard (`public/forecasting/`, eight pages plus an
 index) built from committed data and never hand-edited.
-It has never been deployed — that is still the first real task. Wrangler was
-logged in on the old PC, but that token did not survive the 2026-08-19 move to
-`RYANDESKTOP`, so deploying now means `npx wrangler login` first — and that is
-Ryan's call, not a default.
+It has never been deployed — that is still the first real task, and it is
+Ryan's call, not a default. Wrangler **is** logged in on this machine again
+(re-verified 2026-09-22; the token lost in the 2026-08-19 move to `RYANDESKTOP`
+was restored by 2026-08-22), so a deploy would succeed immediately.
 
 Since 2026-08-18 this repo lives inside the **AI Wiki and Projects**
 workspace, at `projects/personal/personal-website/`. `AGENTS.md` is the
@@ -118,14 +118,14 @@ has been narrowed to what the list in "What is not done" says.
 
 Everything in "Known placeholders" in CLAUDE.md, but the short version:
 
-- it has never been deployed, and wrangler is no longer logged in on this
-  machine — `npx wrangler login` then `npm run deploy`, but publishing is
-  Ryan's call, never a default
+- it has never been deployed. Wrangler is logged in (re-verified 2026-09-22),
+  so `npm run deploy` would work — publishing is Ryan's call, never a default
 - no git remote, and `.github/workflows/deploy.yml` triggers on `main` while
   the branch here is `master`. This now blocks more than deployment:
   `.github/workflows/forecasting.yml` refreshes the data on a schedule and
   cannot run at all until the repo has a remote
-- no domain: `ryanbeck.com` is assumed in eight files
+- no domain: `ryanbeck.com` is a **placeholder** (it is taken, and will not be
+  the address), defined once in `site.config.json` with `"chosen": false`
 - every project card uses the "light float" treatment Ryan chose from three
   lab rounds (`tools/make-project-thumbs.py`); the dashboard thumbs are real
   captures, Herder's is its real wordmark, and the projects/forecasting-data
