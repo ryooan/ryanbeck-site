@@ -39,27 +39,22 @@ Stuff I've created that I thought would be handy and may be handy for you too.
 ## Sub-heading
 <!-- id: projects.h3.1 -->
 
-Data Dashboards
+MTG Cheat Sheet
 
-## Data Dashboards — body paragraph
+## MTG Cheat Sheet — body paragraph
 <!-- id: projects.p.3 -->
 
-Most of these were initially created to help with forecasting, but they tend to be genuinely interesting and useful data sources that were in need of nice visuals. Up to date (where possible) dashboards on the debt limit, refugee admissions, respiratory disease trends, semiconductor trade, the bird-flu cull, and more.
+Find Magic: The Gathering mechanics for a set, format, or deck and print a compact reference sheet.
 
-## Data Dashboards — card tag
+## MTG Cheat Sheet — card tag
 <!-- id: projects.tag.1 -->
 
-Live data
+Web app
 
-## Data Dashboards — card tag
+## MTG Cheat Sheet — card tag
 <!-- id: projects.tag.2 -->
 
-
-
-## Data Dashboards — card tag
-<!-- id: projects.tag.3 -->
-
-Exportable
+Printable
 
 ## Sub-heading
 <!-- id: projects.h3.2 -->
@@ -72,39 +67,39 @@ Herder
 An app for herding a group toward a plan: propose activities, vote on them (ranked-choice if you like) and schedule around everyone's availability. Share a link; nobody needs an account.
 
 ## Herder — card tag
-<!-- id: projects.tag.4 -->
+<!-- id: projects.tag.3 -->
 
 Web app
 
 ## Herder — card tag
-<!-- id: projects.tag.5 -->
+<!-- id: projects.tag.4 -->
 
 useherder.com
 
 ## Sub-heading
 <!-- id: projects.h3.3 -->
 
-March Madness 2026
+Data Dashboards
 
-## March Madness 2026 — body paragraph
+## Data Dashboards — body paragraph
 <!-- id: projects.p.5 -->
 
-Making a bracket is fun, but if you're like me and know absolutely nothing about the teams involved or their general stats, this is for you. A bracket builder with relevant season stats, head to head histories, and some (shaky at best) power ratings all in one place.
+Most of these were initially created to help with forecasting, but they tend to be genuinely interesting and useful data sources that were in need of nice visuals. Up to date (where possible) dashboards on the debt limit, refugee admissions, respiratory disease trends, semiconductor trade, the bird-flu cull, and more.
 
-## March Madness 2026 — card tag
+## Data Dashboards — card tag
+<!-- id: projects.tag.5 -->
+
+Live data
+
+## Data Dashboards — card tag
 <!-- id: projects.tag.6 -->
 
-Web app
 
-## March Madness 2026 — card tag
+
+## Data Dashboards — card tag
 <!-- id: projects.tag.7 -->
 
-
-
-## March Madness 2026 — card tag
-<!-- id: projects.tag.8 -->
-
-Seasonal
+Exportable
 
 ## Sub-heading
 <!-- id: projects.h3.4 -->
@@ -117,19 +112,44 @@ National Park Guides
 I love visiting Grand Teton National Park and Rocky Mountain national park, and wanted a reusable activity planning aid for families with small kids so I didn't have to recall anew each time what options there are. Short hikes, parking strategy, drive times, and more details.
 
 ## National Park Guides — card tag
-<!-- id: projects.tag.9 -->
+<!-- id: projects.tag.8 -->
 
 Guides
 
 ## National Park Guides — card tag
-<!-- id: projects.tag.10 -->
+<!-- id: projects.tag.9 -->
 
 PDF
 
 ## National Park Guides — card tag
+<!-- id: projects.tag.10 -->
+
+
+
+## Sub-heading
+<!-- id: projects.h3.5 -->
+
+March Madness
+
+## March Madness — body paragraph
+<!-- id: projects.p.7 -->
+
+Making a bracket is fun, but if you're like me and know absolutely nothing about the teams involved or their general stats, this is for you. A bracket builder with relevant season stats, head to head histories, and some (shaky at best) power ratings all in one place.
+
+## March Madness — card tag
 <!-- id: projects.tag.11 -->
 
+Web app
 
+## March Madness — card tag
+<!-- id: projects.tag.12 -->
+
+
+
+## March Madness — card tag
+<!-- id: projects.tag.13 -->
+
+Seasonal
 
 ## Section heading
 <!-- id: projects.h2.1 -->
@@ -137,7 +157,7 @@ PDF
 
 
 ## Intro paragraph
-<!-- id: projects.p.7 -->
+<!-- id: projects.p.8 -->
 
 
 

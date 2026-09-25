@@ -173,3 +173,7 @@ Projects links /mtg-cheat-sheet/ and /march-madness/. npm run dev builds the
 sibling apps, applies local D1 migrations and starts all three Workers. The
 8788 text editor proxies the app APIs too. HOSTING.md and docs/cloudflare-costs.md
 describe the prepared Cloudflare launch. No public deployment was performed.
+
+## September 25, 2026 interface refinements
+
+Projects now appears in this order: MTG Cheat Sheet, Herder, Data Dashboards, National Park Guides, March Madness. MTG has a generated paper-and-cards thumbnail at public/assets/cards/mtg-cheat-sheet.png. Prompt and provenance: docs/mtg-project-artwork.md. Copy-editor mappings were regenerated after reordering.
