@@ -13,6 +13,10 @@ const SUBSTACK_FEED = 'https://themissingnuance.substack.com/feed';
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    if (url.pathname === "/index.html") {
+      url.pathname = "/";
+      return Response.redirect(url.href, 308);
+    }
 
     if (url.pathname === '/mtg-cheat-sheet' || url.pathname.startsWith('/mtg-cheat-sheet/')) return env.MTG.fetch(request);
     if (url.pathname === '/march-madness' || url.pathname.startsWith('/march-madness/')) return env.MARCH_MADNESS.fetch(request);
