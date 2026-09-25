@@ -50,6 +50,12 @@ The git history is a decision log — commit messages say why, not just what.
 
 ## Workspace notes
 
+- Hosting audit and plan (2026-09-25): `docs/march-madness-and-launch-plan.md`.
+  Proposes independent Cloudflare apps at /mtg/ and /march-madness/, preserving
+  MTG feedback storage and adding yearly brackets/accounts. Implementation
+  pending. Private 2026 scoreboard recovery snapshot is outside public/.
+  `HOSTING.md` reflects this recommendation; no framework conversion needed.
+
 - Data publication boundary (2026-09-25): no data archive page. Only CSVs
   linked by actual dashboard pages may be served. Recovered datasets and the
   build manifest belong in `private-data/forecasting/`, never `public/`.
