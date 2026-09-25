@@ -92,3 +92,7 @@ The git history is a decision log — commit messages say why, not just what.
   `hub/wiki/architecture/patterns/cloudflare-workers-static-site.md` — read it
   before starting another Cloudflare project, especially the `html_handling`
   and cache-header traps.
+
+- Launch follow-up requested 2026-09-25: before completing publication, remind
+  Ryan to implement the previously discussed MTG definitions and revise the Help
+  Improve empty-list wording. Track completion in docs/march-madness-and-launch-plan.md.

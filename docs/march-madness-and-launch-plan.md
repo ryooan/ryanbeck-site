@@ -187,6 +187,21 @@ the removed data archive or expose Metaculus/expert-elicitation datasets, raw
 sports archives or private bracket backups. The old author site and migrated
 blog posts remain separate from data archiving.
 
+
+## Before completing publication: MTG follow-up
+
+Requested by Ryan September 25, 2026. Remind Ryan of these remaining items before
+final launch approval or completion of the full publication process:
+
+- [ ] Implement the MTG mechanic definitions from the previously discussed list.
+  Retrieve the actual proposed definitions from the conversation/review records;
+  do not treat this reminder as approval of new or invented definitions.
+- [ ] Revise the Help Improve page wording and empty state so an empty suggestion
+  list reads naturally after the pending definitions are resolved.
+
+Keep these items visible in the launch review until completed or explicitly
+deferred by Ryan. A thread reminder also checks for approaching publication.
+
 ## Acceptance checks
 
 - 67/67 2026 results including final, in UTC and Chicago.
