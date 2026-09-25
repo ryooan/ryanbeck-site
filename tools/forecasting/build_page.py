@@ -540,6 +540,38 @@ GROUPS = [
 ]
 
 
+# Landing-page prose uses the same literal fields as subject-page copy so
+# the local editor can round-trip it without editing generated HTML.
+LANDING = {
+    "slug": "index",
+    "title": "Data Dashboards",
+    "kicker": "Through the first door",
+    "blurb": (
+        "<p>Data I use for forecasting, collected in one place and "
+        "kept current. Pick a subject from the list.</p>"
+        "<p>Each chart shows the last date present in its data, links "
+        "to its source, and can be downloaded as CSV.</p>"),
+    "overview_title": "Every series at a glance",
+    "overview_note": (
+        "<strong>Every date below is the last date present in the data</strong>, "
+        "not the last time it was fetched."),
+    "downloads_title": "Using the data",
+    "downloads_note": (
+        "Every series can be downloaded as CSV from its own section. "
+        "The files are tidy &mdash; one row per period, one column per "
+        "measure, ISO dates &mdash; so they open straight into a spreadsheet "
+        "or load in one line of pandas or readr."),
+    "manifest_note": (
+        "<a href=\"/data/forecasting/manifest.json\">manifest.json</a> "
+        "carries the same information machine-readably: row count, last date "
+        "and source for every series."),
+    "description": (
+        "Live data series maintained for forecasting: the debt limit, "
+        "respiratory illness, refugee admissions, big-tech revenue, "
+        "semiconductor trade and bird flu."),
+}
+
+
 def human(iso):
     d = dt.date.fromisoformat(iso[:10])
     return "%d %s %d" % (d.day, ["January", "February", "March", "April",
@@ -778,35 +810,22 @@ def build():
     live = sum(1 for s in meta.values() if s["status"] == "live")
     idx_body = """
   <section class="series">
-    <h2>Every series at a glance</h2>
+    <h2>%(overview_title)s</h2>
     <p class="series-note">%(live)d of these refresh on a schedule; the rest are
-    frozen at the point their source stopped publishing. <strong>Every date
-    below is the last date present in the data</strong>, not the last time it
-    was fetched.</p>
+    frozen at the point their source stopped publishing. %(overview_note)s</p>
     %(table)s
   </section>
   <section class="series">
-    <h2>Using the data</h2>
-    <p class="series-note">Every series can be downloaded as CSV from its own
-    section. The files are tidy &mdash; one row per period, one column per
-    measure, ISO dates &mdash; so they open straight into a spreadsheet or load
-    in one line of pandas or readr.</p>
-    <p class="series-note" style="margin-top:14px"><a href="/data/forecasting/manifest.json">manifest.json</a>
-    carries the same information machine-readably: row count, last date and
-    source for every series.</p>
+    <h2>%(downloads_title)s</h2>
+    <p class="series-note">%(downloads_note)s</p>
+    <p class="series-note" style="margin-top:14px">%(manifest_note)s</p>
   </section>
-""" % {"live": live, "table": status_table(meta)}
+""" % {**LANDING, "live": live, "table": status_table(meta)}
 
-    idx = page(slug="", title="Data Dashboards", kicker="Through the first door",
-               blurb=(
-                   "<p>Data I use for forecasting, collected in one place and "
-                   "kept current. Pick a subject from the list.</p>"
-                   "<p>Each chart shows the last date present in its data, links "
-                   "to its source, and can be downloaded as CSV.</p>"),
+    idx = page(slug="", title=LANDING["title"], kicker=LANDING["kicker"],
+               blurb=LANDING["blurb"],
                body=idx_body, meta=meta,
-               desc="Live data series maintained for forecasting: the debt "
-                    "limit, respiratory illness, refugee admissions, big-tech "
-                    "revenue, semiconductor trade and bird flu.")
+               desc=LANDING["description"])
     with open(os.path.join(outdir, "index.html"), "w",
               encoding="utf-8", newline="\n") as f:
         f.write(idx)

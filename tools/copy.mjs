@@ -299,6 +299,7 @@ function extractDashboards() {
   const file = 'tools/forecasting/build_page.py';
   const src = readFileSync(join(ROOT, file), 'utf8');
   const G = src.indexOf('GROUPS = [');
+  const L = src.indexOf('LANDING = {');
 
   /* Chart titles and notes (SECTIONS), then page prose (GROUPS). */
   const want = [
@@ -308,6 +309,14 @@ function extractDashboards() {
     { key: 'title', label: 'Page heading', from: G },
     { key: 'kicker', label: 'Page kicker', from: G },
     { key: 'blurb', label: 'Page introduction', from: G, shape: 'p-list' },
+    ...[
+      ['overview_title', 'Overview heading'],
+      ['overview_note', 'Overview explanation'],
+      ['downloads_title', 'Downloads heading'],
+      ['downloads_note', 'Downloads explanation'],
+      ['manifest_note', 'Manifest explanation'],
+      ['description', 'Search + social description'],
+    ].map(([key, label]) => ({ key, label, from: L })),
   ];
 
   for (const w of want) {
@@ -335,7 +344,10 @@ function extractDashboards() {
         /* Must be set here too. Without it fromMd() falls back to converting
            every character it knows, which escaped the quotes of an <a href>
            into &quot; and broke the link. */
-        ents: fileEnts(file, src),
+        // These landing-page values are escaped by page(), unlike its HTML
+        // prose. Keep punctuation and ampersands literal to avoid double escaping.
+        ents: slug === 'index' && ['title', 'kicker', 'description'].includes(w.key)
+          ? [] : fileEnts(file, src),
         py: true, indent: 12,
       });
     }

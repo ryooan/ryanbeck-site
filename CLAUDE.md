@@ -1395,6 +1395,12 @@ node tools/copy.mjs check   # do these files still match the site?
 
 ### Editing copy in the browser
 
+The `/forecasting` landing page exposes nine copy fields from the builder's
+`LANDING` dictionary (2026-09-24), including its introduction, section headings,
+explanations and search description. `/forecasting/` and
+`/forecasting/index.html` map to the same fields. Edit these through the copy
+editor, never the generated HTML. Data-derived counts and dates stay computed.
+
 The sidebar keeps focus and scrolling within its editing area: focusing a
 field highlights matching page text without scrolling the document, and the
 sidebar's scroll does not chain to the page behind it (2026-09-24). This matters

@@ -86,6 +86,9 @@ function blocksFor(path, sections, known) {
      introduction plus the note under each chart actually on it. */
   const slug = (String(path).split('?')[0].replace(/\.html$/i, '')
                   .replace(/\/+$/, '').split('/')[2] || '');
+  if (!slug || slug === 'index') {
+    return all.filter((b) => b.id.startsWith('dash.page.index.'));
+  }
   const want = sections || [];
   const pick = (id) => all.filter((b) => b.id === id);
   /* Page furniture first, then each chart in the order it appears. The lock

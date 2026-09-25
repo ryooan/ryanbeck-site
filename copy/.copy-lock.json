@@ -7,7 +7,7 @@
   "public/park-guides.html": "2cbbdb00367edbfa",
   "public/projects.html": "b9b5d72be292ab31",
   "public/writing.html": "2e9318e2c486e0b9",
-  "tools/forecasting/build_page.py": "c8972ad20838e25e"
+  "tools/forecasting/build_page.py": "388b7711b5613e21"
  },
  "blocks": [
   {
@@ -2270,6 +2270,138 @@
     "&middot;",
     "&larr;"
    ],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.index.title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Page heading",
+   "shape": "plain",
+   "start": 26126,
+   "end": 26143,
+   "text": "Data Dashboards",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.index.kicker",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Data Dashboards — page kicker",
+   "shape": "plain",
+   "start": 26159,
+   "end": 26183,
+   "text": "Through the first door",
+   "ents": [],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.index.blurb",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Data Dashboards — page introduction",
+   "shape": "p-list",
+   "start": 26208,
+   "end": 26457,
+   "text": "Data I use for forecasting, collected in one place and kept current. Pick a subject from the list.\n\nEach chart shows the last date present in its data, links to its source, and can be downloaded as CSV.",
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.index.overview_title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Overview heading",
+   "shape": "plain",
+   "start": 26482,
+   "end": 26508,
+   "text": "Every series at a glance",
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.index.overview_note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Overview explanation",
+   "shape": "plain",
+   "start": 26541,
+   "end": 26659,
+   "text": "<strong>Every date below is the last date present in the data</strong>, not the last time it was fetched.",
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.index.downloads_title",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Downloads heading",
+   "shape": "plain",
+   "start": 26685,
+   "end": 26701,
+   "text": "Using the data",
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.index.downloads_note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Downloads explanation",
+   "shape": "plain",
+   "start": 26735,
+   "end": 26999,
+   "text": "Every series can be downloaded as CSV from its own section. The files are tidy — one row per period, one column per measure, ISO dates — so they open straight into a spreadsheet or load in one line of pandas or readr.",
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.index.manifest_note",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Manifest explanation",
+   "shape": "plain",
+   "start": 27033,
+   "end": 27215,
+   "text": "<a href=\"/data/forecasting/manifest.json\">manifest.json</a> carries the same information machine-readably: row count, last date and source for every series.",
+   "ents": [
+    "&mdash;",
+    "&middot;",
+    "&larr;"
+   ],
+   "py": true,
+   "indent": 12
+  },
+  {
+   "id": "dash.page.index.description",
+   "file": "tools/forecasting/build_page.py",
+   "label": "Search + social description",
+   "shape": "plain",
+   "start": 27247,
+   "end": 27424,
+   "text": "Live data series maintained for forecasting: the debt limit, respiratory illness, refugee admissions, big-tech revenue, semiconductor trade and bird flu.",
+   "ents": [],
    "py": true,
    "indent": 12
   }

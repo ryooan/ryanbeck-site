@@ -173,3 +173,50 @@ Two days are wrong at the source. On 21 February 2023 VDH published every row tw
 
 For an age-stratified Virginia series, the HHS hospitalization panel on the <a href="/forecasting/respiratory">respiratory page</a> carries admissions broken down by age band from 2020 to 2023.
 
+## Page heading
+<!-- id: dash.page.index.title -->
+
+Data Dashboards
+
+## Data Dashboards — page kicker
+<!-- id: dash.page.index.kicker -->
+
+Through the first door
+
+## Data Dashboards — page introduction
+<!-- id: dash.page.index.blurb -->
+
+Data I use for forecasting, collected in one place and kept current. Pick a subject from the list.
+
+Each chart shows the last date present in its data, links to its source, and can be downloaded as CSV.
+
+## Overview heading
+<!-- id: dash.page.index.overview_title -->
+
+Every series at a glance
+
+## Overview explanation
+<!-- id: dash.page.index.overview_note -->
+
+<strong>Every date below is the last date present in the data</strong>, not the last time it was fetched.
+
+## Downloads heading
+<!-- id: dash.page.index.downloads_title -->
+
+Using the data
+
+## Downloads explanation
+<!-- id: dash.page.index.downloads_note -->
+
+Every series can be downloaded as CSV from its own section. The files are tidy — one row per period, one column per measure, ISO dates — so they open straight into a spreadsheet or load in one line of pandas or readr.
+
+## Manifest explanation
+<!-- id: dash.page.index.manifest_note -->
+
+<a href="/data/forecasting/manifest.json">manifest.json</a> carries the same information machine-readably: row count, last date and source for every series.
+
+## Search + social description
+<!-- id: dash.page.index.description -->
+
+Live data series maintained for forecasting: the debt limit, respiratory illness, refugee admissions, big-tech revenue, semiconductor trade and bird flu.
+

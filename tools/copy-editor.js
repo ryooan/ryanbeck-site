@@ -165,9 +165,9 @@
           + (d.file ? ' (<code>' + d.file + '</code>)' : '')
           + '.<br><br>'
           + (/forecasting/.test(location.pathname)
-              ? 'On the dashboards, chart titles, &ldquo;data to&rdquo; dates, '
-                + 'status words and row counts are read from the data on every '
-                + 'build, so they are deliberately not editable here.'
+              ? 'No copy fields were found for this dashboard page. '
+                + 'Page introductions and chart titles should be editable; '
+                + 'data dates, status words and row counts are computed.'
               : 'If you can see copy on this page, that is a bug \u2014 say so.')
           + '</p>';
         return;
