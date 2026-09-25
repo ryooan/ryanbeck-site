@@ -467,9 +467,6 @@ body.dash-page{ --maxw:1460px; }
 .status-table .status-group a{color:inherit;text-decoration:none}
 .status-table .status-group a:hover{text-decoration:underline}
 .status-table td:first-child{white-space:normal;min-width:180px}
-.archive-files{padding:12px 0;border-bottom:1px solid var(--rule);font-family:var(--sans)}
-.archive-files summary{cursor:pointer;font-weight:600}
-.archive-files li{margin:8px 0;overflow-wrap:anywhere}
 
 /* ---- narrow ---- */
 

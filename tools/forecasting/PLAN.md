@@ -21,7 +21,7 @@ Python (§5.2), charts are the custom module (§3.3).
 | **Series on the page** | 11 — seven current, four preserved as history |
 | **Fetchers written** | 10 Python scripts + a page builder, in `tools/forecasting/` |
 | **Chart module** | `public/assets/js/plot.js`, ~21 KB, no dependencies |
-| **Archive committed** | 124 files, 18 MB, `public/data/forecasting/archive/` |
+| **Archive committed** | 124 files, 18 MB, `private-data/forecasting/archive/` |
 | **Schedules** | `.github/workflows/forecasting.yml`, cadence per source |
 
 **Three dashboards came back from the dead.** Debt limit (six months dark, and

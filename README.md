@@ -51,8 +51,8 @@ public/               everything that gets served
   css/site.css        all styling except the book
   css/plot.css        the forecasting charts
   js/plot.js          the chart module — no dependencies, ~21 KB
-  data/forecasting/   committed CSV: one file per series, plus manifest.json
-                      and archive/ (124 files rescued from old R workspaces)
+  data/forecasting/   only the 16 CSVs linked by dashboard pages
+                      (manifest and recovered archive are outside public/)
   css/tome-lib.css    the book that ships
   css/tome.css        shared book furniture (about.html needs it) AND the
                       hand-built book's geometry (compare.html only) — see

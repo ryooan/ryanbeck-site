@@ -90,7 +90,7 @@ jobs:
         run: |
           git config user.name  "forecasting-bot"
           git config user.email "noreply@ryanbeck.com"
-          git add public/data/forecasting public/forecasting-data.html
+          git add public/data/forecasting private-data/forecasting public/forecasting public/_redirects
           if git diff --cached --quiet; then
             echo "No change."
             exit 0

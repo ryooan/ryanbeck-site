@@ -308,6 +308,18 @@ Everything honors `prefers-reduced-motion`.
 
 ## The forecasting data
 
+**Publication boundary, 2026-09-25:** the data archive page and downloads were
+removed at Ryan's request because they exposed unrelated Metaculus and
+expert-elicitation datasets. Only the 16 CSVs linked from actual subject
+dashboards remain under `public/data/forecasting/`. The recovered archive,
+unpublished Virginia cases-by-age CSVs and `manifest.json` are retained in
+`private-data/forecasting/`, outside the Cloudflare asset root. `_common.py`
+uses `public-csvs.json` to publish only approved outputs; other fetcher outputs
+stay private. `tools/check-public-data.mjs` enforces exact agreement between
+served datasets and dashboard download links, and runs in `npm test` and
+before `npm run deploy`. Do not reintroduce archive links or copy private data
+into public assets. This is separate from the preserved author-site archive.
+
 Eleven series, fetched by Python, committed as CSV, drawn by
 `assets/js/plot.js`. Six fetchers run on a schedule; four are one-time rescues
 of sources that have since frozen, and are on no cron.
@@ -1417,7 +1429,7 @@ The `/forecasting` landing page exposes four copy fields from the builder's
 description. The introduction is "Overview of data series available" followed
 by a table grouped by dashboard page, with Series, State and Data through
 columns. The old explanatory sections and Rows column were removed. Dashboard
-introductions, chart notes, archive copy and interactive chart guidance are
+introductions, chart notes and interactive chart guidance are
 brief, direct and free of em dashes. `/forecasting/` and
 `/forecasting/index.html` map to the same fields. Edit these through the copy
 editor, never the generated HTML. Data-derived counts and dates stay computed.

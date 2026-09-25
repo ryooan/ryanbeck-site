@@ -1,8 +1,8 @@
 """Shared pieces for the forecasting fetchers.
 
 Every fetcher does the same four things: pull from an upstream API, tidy the
-result, write a CSV under public/data/forecasting/, and record what happened
-in the manifest the page reads. This module is those four things, so a
+result, write approved CSVs under public/data/forecasting/ (other outputs stay
+private), and record what happened in the private build manifest. This module is those four things, so a
 fetcher is only the part that is actually specific to its source.
 
 The design rule behind all of it: **a fetcher never destroys data it cannot
@@ -27,7 +27,10 @@ import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA = os.path.join(ROOT, "public", "data", "forecasting")
-MANIFEST = os.path.join(DATA, "manifest.json")
+PRIVATE_DATA = os.path.join(ROOT, "private-data", "forecasting")
+MANIFEST = os.path.join(PRIVATE_DATA, "manifest.json")
+with open(os.path.join(os.path.dirname(__file__), "public-csvs.json"), encoding="utf-8") as _f:
+    PUBLIC_CSVS = set(json.load(_f))
 
 # The site's address lives in exactly one place. Everything that needs it
 # reads it from there, so changing the domain is a one-line edit plus
@@ -134,15 +137,16 @@ def _replace(tmp, path, retries=10):
 
 
 def write_csv(name, rows, fields, *, allow_shrink=False):
-    """Write rows to public/data/forecasting/<name>.csv, atomically.
+    """Write approved dashboard CSVs publicly; keep all other output private.
 
     Refuses to shrink an existing file unless told to. A source that starts
     returning a truncated response is far more common than a series that
     genuinely gets shorter, and the truncated version overwriting a good file
     is unrecoverable once the source is gone.
     """
-    os.makedirs(DATA, exist_ok=True)
-    path = os.path.join(DATA, name + ".csv")
+    directory = DATA if name + ".csv" in PUBLIC_CSVS else PRIVATE_DATA
+    os.makedirs(directory, exist_ok=True)
+    path = os.path.join(directory, name + ".csv")
 
     if os.path.exists(path) and not allow_shrink:
         with open(path, newline="", encoding="utf-8") as f:
@@ -186,6 +190,7 @@ def record(slug, *, rows, last_date, status, source, note=""):
         "fetched": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     }
     m["generated"] = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    os.makedirs(PRIVATE_DATA, exist_ok=True)
     tmp = MANIFEST + ".tmp"
     with open(tmp, "w", encoding="utf-8") as f:
         json.dump(m, f, indent=2, sort_keys=True)

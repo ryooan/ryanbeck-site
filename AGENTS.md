@@ -50,6 +50,13 @@ The git history is a decision log — commit messages say why, not just what.
 
 ## Workspace notes
 
+- Data publication boundary (2026-09-25): no data archive page. Only CSVs
+  linked by actual dashboard pages may be served. Recovered datasets and the
+  build manifest belong in `private-data/forecasting/`, never `public/`.
+  `tools/forecasting/public-csvs.json` controls fetcher publication;
+  `npm test` rejects any extra served dataset. The old author-site archive
+  is separate and remains available.
+
 - As of 2026-09-25, `npm run blog-build` generates modern versions of the
   19 archived posts under `public/posts/`, preserving their prose and media.
   Sources stay in `public/ryanbeckauthor/`; Python dependencies are in
