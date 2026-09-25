@@ -41,7 +41,7 @@ enabled, and the domain is not yet present in the personal Cloudflare account.
 - Confirm personal account ownership and existing services before creating D1
   and private R2. Back up and preserve the existing MTG feedback Durable Object.
 - Complete gitignored deployment.local.json (domain/account recorded; database
-  ID and Google client ID blank). Generate real configs only after IDs exist.
+  ID and Google client ID now supplied). Generate real configs only after IDs exist.
 - Prepare accurate privacy/support information, canonical www redirect and
   HTTPS routing for the root site, /mtg-cheat-sheet and /march-madness.
 - Configure production secrets, apply migrations, preserve existing 2026 data,
@@ -64,3 +64,8 @@ Launch preparation 2026-09-25: private D1 march-madness created and seeded
 Production secrets are generated in the March Madness gitignored private-data
 directory and not uploaded yet. Privacy page prepared locally at /privacy.
 Workers plan could not be read with the CLI token; Ryan must confirm it.
+
+Google web client ID received from Ryan on September 25 and saved to gitignored
+deployment.local.json. All three production Worker configs generated locally.
+Google origin/audience/branding configuration and real login still need verification.
+/privacy exists locally and is routed, but is not publicly deployed yet.
