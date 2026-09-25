@@ -1395,6 +1395,11 @@ node tools/copy.mjs check   # do these files still match the site?
 
 ### Editing copy in the browser
 
+The sidebar keeps focus and scrolling within its editing area: focusing a
+field highlights matching page text without scrolling the document, and the
+sidebar's scroll does not chain to the page behind it (2026-09-24). This matters
+on narrow viewports where the project cards are covered by the editor.
+
 `npm run edit` puts a tab on the right edge of every page. Open it and you get
 that page's copy as text areas; save and the words are written into
 `copy/*.md`, applied to the source, the dashboards rebuilt, and the page

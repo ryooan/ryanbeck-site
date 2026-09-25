@@ -46,7 +46,7 @@
     '.hd h2{margin:0;font-size:15px;color:#241c14}',
     '.hd p{margin:4px 0 0;font-size:11.5px;color:#6b5a45}',
     '.hd code{font:11px ui-monospace,Menlo,Consolas,monospace;color:#4a3d30}',
-    '.body{flex:1;overflow:auto;padding:6px 18px 18px}',
+    '.body{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:6px 18px 18px}',
     '.blk{padding:13px 0;border-bottom:1px solid #ece2d0}',
     '.blk label{display:block;font-size:11px;font-weight:700;color:#4a3d30;',
     ' text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}',
@@ -132,7 +132,9 @@
         lit = els[i];
         lit.style.outline = '2px solid #c8722a';
         lit.style.borderRadius = '3px';
-        lit.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        /* Keep editing stationary. Scrolling the document on focus fights
+           the browser's caret/selection scrolling, especially in a narrow
+           viewport where the drawer covers the highlighted project card. */
         return;
       }
     }
