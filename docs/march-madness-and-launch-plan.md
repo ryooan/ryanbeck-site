@@ -154,7 +154,9 @@ checks and cookies on the new domain. Old browser cookies do not transfer across
 origins. Keep its daily GitHub refresh/deploy workflow. Copying only static files
 would lose its API.
 
-The site has no remote or chosen domain. ryanbeck.com is an unchosen placeholder.
+The site has no remote. Ryan registered ryanrobertbeck.com on 2026-09-25;
+local canonical URLs are updated. Cloudflare login needs reconnection; DNS
+activation and production resources are pending.
 Its deployment workflow is now manual. At audit time, March Madness had
 no project Git repo; its recorded Vercel account is the work account. Current
 Vercel production availability was not reverified in this audit.

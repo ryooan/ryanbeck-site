@@ -19,7 +19,7 @@ enabled = true
 
 # Uncomment once the domain is pointed at Cloudflare:
 # [[routes]]
-# pattern = "ryanbeck.com"   # site-url
+# pattern = "ryanrobertbeck.com"   # site-url
 # custom_domain = true
 
 # The gateway also makes all apps available under one localhost origin.

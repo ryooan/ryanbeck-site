@@ -4,9 +4,9 @@ Ryan Beck's personal site. Six public pages plus one Cloudflare Worker, one of
 of which is a generated dashboard (`public/forecasting/`, eight pages plus an
 index) built from committed data and never hand-edited.
 It has never been deployed — that is still the first real task, and it is
-Ryan's call, not a default. Wrangler **is** logged in on this machine again
-(re-verified 2026-09-22; the token lost in the 2026-08-19 move to `RYANDESKTOP`
-was restored by 2026-08-22), so a deploy would succeed immediately.
+Ryan's call, not a default. Ryan registered ryanrobertbeck.com on 2026-09-25;
+local canonical URLs use it. Wrangler now reports unauthenticated, so reconnect
+the personal Cloudflare login before resource setup. DNS and OAuth are pending.
 
 Since 2026-08-18 this repo lives inside the **AI Wiki and Projects**
 workspace, at `projects/personal/personal-website/`. `AGENTS.md` is the
@@ -118,13 +118,13 @@ has been narrowed to what the list in "What is not done" says.
 
 Everything in "Known placeholders" in CLAUDE.md, but the short version:
 
-- it has never been deployed. Wrangler is logged in (re-verified 2026-09-22),
-  but deployment preflight requires a chosen domain/config. Publishing needs approval
+- it has never been deployed. Wrangler requires login again (2026-09-25);
+  production resources/config and launch review remain pending.
 - no git remote. Deployment CI is manual and requires reviewed configuration.
   `.github/workflows/forecasting.yml` refreshes the data on a schedule and
   cannot run at all until the repo has a remote
-- no domain: `ryanbeck.com` is a **placeholder** (it is taken, and will not be
-  the address), defined once in `site.config.json` with `"chosen": false`
+- registered domain: `ryanrobertbeck.com`, configured locally in `site.config.json`;
+  Cloudflare DNS activation remains unverified.
 - every project card uses the "light float" treatment Ryan chose from three
   lab rounds (`tools/make-project-thumbs.py`); the dashboard thumbs are real
   captures, Herder's is its real wordmark, and the projects/forecasting-data

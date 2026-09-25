@@ -24,12 +24,11 @@ an about page rendered as a book, and one Cloudflare Worker for `/api/*`.
 > is not reversible, so it still does here. Workspace rule: `AGENTS.md` →
 > "Never send email or Slack without explicit instruction".
 >
-> **Wrangler IS authenticated on this machine** (re-verified 2026-08-22 with
-> `npx wrangler whoami`): OAuth as ryooan@gmail.com, account
-> `0efbd4d43122e579508d8f3b649ed990`, credentials at
-> `%APPDATA%\xdg.config\.wrangler\config\default.toml`. This corrects the earlier
-> note here, which said the token had not survived the 2026-08-19 migration to
-> `RYANDESKTOP` — true when written, no longer true.
+> **Wrangler is not authenticated** as of 2026-09-25 (`npx wrangler whoami`).
+> Reconnect with `npx wrangler login` using the personal account ryooan@gmail.com,
+> expected account `0efbd4d43122e579508d8f3b649ed990`, before remote operations.
+> Ryan registered ryanrobertbeck.com; local canonical URLs now use it. DNS
+> activation, production resources and Google client remain unverified/pending.
 >
 > The npm deploy preflight now requires a chosen domain and generated config.
 > Direct Wrangler commands can bypass that check; the publication gate still applies.
@@ -86,8 +85,8 @@ The git history is a decision log — commit messages say why, not just what.
   `check-docs.mjs` asserts the docs still describe the code, so a doc edit
   that names a file has to name a real one.
 - The repo branch is `master`; deployment CI is manual workflow_dispatch.
-  Generated reviewed configs and a chosen origin are required. No remote or
-  domain is configured and nothing is deployed.
+  Generated reviewed configs and a chosen origin are required. No remote is configured and nothing is deployed. The registered domain is
+  ryanrobertbeck.com; DNS activation remains unverified.
 - The hosting approach is written up as a reusable pattern at
   `hub/wiki/architecture/patterns/cloudflare-workers-static-site.md` — read it
   before starting another Cloudflare project, especially the `html_handling`

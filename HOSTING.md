@@ -19,8 +19,9 @@ sessions. Old Vercel brackets need an explicit transfer before retirement.
 
 Budget a $5/month Workers Paid base for the full account/backup app, plus domain and metered usage. [Current pricing](https://developers.cloudflare.com/workers/platform/pricing/).
 
-Before launch: select domain (ryanbeck.com is an unchosen placeholder), verify
-personal account, configure private Git remotes, configure manual CI, set real
+Registered domain: ryanrobertbeck.com (2026-09-25). Canonical URLs are prepared
+locally. Before launch: reconnect the expired personal Cloudflare login, confirm
+DNS activation, configure private Git remotes, configure manual CI, set real
 origin, test routes and inspect public assets. Only public/ ships. Private data,
 source snapshots and bracket backups must stay outside it. First publication
 still needs Ryan's explicit go-ahead.
@@ -33,7 +34,7 @@ acceptance checks. No need for a new Postgres vendor or an Astro/Next.js rewrite
 
 Implementation: npm run dev starts the integrated local site. Use
 `tools/configure-app-deploy.py` and `deployment.example.json` to prepare reviewed
-configs after choosing the domain. Production resources and Google OAuth are
+configs with the registered domain. Production resources and Google OAuth are
 not configured. See `../March Madness 2026/docs/OPERATIONS.md` for the exact
 release order, annual field review, archive locks and local backup activation.
 Detailed costs: [cost scenarios](docs/cloudflare-costs.md).

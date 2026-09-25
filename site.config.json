@@ -1,20 +1,10 @@
 {
   "_comment": [
-    "THE site URL. Every place the domain appears is generated from here.",
-    "",
-    "The domain is NOT chosen yet. ryanbeck.com is taken and Ryan's name is",
-    "common enough that the eventual address will be something else. Nothing",
-    "below is a decision -- it is a stand-in that keeps the markup valid.",
-    "",
-    "To change it: edit `origin` (and `name` if the wordmark changes), then",
-    "run `npm run site-url`. That rewrites the canonical tags, OG tags,",
-    "sitemap, robots.txt, wrangler route and the fetchers' user-agent, and",
-    "regenerates the dashboard. `npm test` fails if any file has drifted from",
-    "this file, so a stray hardcoded domain cannot survive CI.",
-    "",
-    "Set `chosen` to true once the real domain is registered and pointed."
+    "Canonical site origin. Ryan registered ryanrobertbeck.com on 2026-09-25.",
+    "Registration does not mean DNS is active or the site is deployed.",
+    "Run npm run site-url after changing origin, then rebuild dashboards and run npm test."
   ],
-  "origin": "https://ryanbeck.com",
+  "origin": "https://ryanrobertbeck.com",
   "name": "Ryan Beck",
-  "chosen": false
+  "chosen": true
 }

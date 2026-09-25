@@ -1587,12 +1587,11 @@ Cloudflare Workers with static assets. Static files are served by the asset
 layer and never invoke the Worker, so they're free and unlimited; only `/api/*`
 costs anything against the 100k/day free tier.
 
-**Wrangler is authenticated on this machine** (re-verified 2026-09-22 with
-`npx wrangler whoami`: OAuth as ryooan@gmail.com, account `0efbd4d4…d990`,
-credential in `%APPDATA%\xdg.config\.wrangler\config\default.toml`). The
-2026-08-18 token did not survive the 2026-08-19 migration, but a later login
-restored it by 2026-08-22. So a deploy would succeed immediately. It has still
-never been deployed — publishing is Ryan's call, not a default.
+**Wrangler requires login again** (verified 2026-09-25). Use the personal
+ryooan@gmail.com account, expected account ID `0efbd4d43122e579508d8f3b649ed990`.
+Ryan registered ryanrobertbeck.com; canonical URLs are configured locally.
+Production resources, DNS activation and Google sign-in remain pending.
+Nothing has been deployed.
 
 Two things to know before wiring up CI:
 
