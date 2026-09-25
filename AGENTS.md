@@ -50,6 +50,11 @@ The git history is a decision log — commit messages say why, not just what.
 
 ## Workspace notes
 
+- Dashboard copy/layout updated 2026-09-25: the landing page has a short
+  overview and a table grouped by subject page (Series, State, Data through).
+  Explanations across all dashboard pages are concise; avoid em dashes and
+  rhetorical contrasts. Keep generated HTML and editable copy in sync.
+
 - Dev server: `.claude/launch.json` at the workspace root has a
   `personal-website` entry running `wrangler dev` on port 8787 (serves the
   static site *and* `/api/*`). Prefer it over `npm run serve` (python, :8000),

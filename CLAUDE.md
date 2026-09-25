@@ -1395,9 +1395,13 @@ node tools/copy.mjs check   # do these files still match the site?
 
 ### Editing copy in the browser
 
-The `/forecasting` landing page exposes nine copy fields from the builder's
-`LANDING` dictionary (2026-09-24), including its introduction, section headings,
-explanations and search description. `/forecasting/` and
+The `/forecasting` landing page exposes four copy fields from the builder's
+`LANDING` dictionary (2026-09-25): heading, kicker, introduction and search
+description. The introduction is "Overview of data series available" followed
+by a table grouped by dashboard page, with Series, State and Data through
+columns. The old explanatory sections and Rows column were removed. Dashboard
+introductions, chart notes, archive copy and interactive chart guidance are
+brief, direct and free of em dashes. `/forecasting/` and
 `/forecasting/index.html` map to the same fields. Edit these through the copy
 editor, never the generated HTML. Data-derived counts and dates stay computed.
 

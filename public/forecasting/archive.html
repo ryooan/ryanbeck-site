@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The archive &middot; Data Dashboards &middot; Ryan Beck</title>
-<meta name="description" content="The rescued historical data behind the forecasting dashboards: 124 files pulled out of old R session files.">
+<meta name="description" content="Historical forecasting data recovered from saved R sessions.">
 <link rel="canonical" href="https://ryanbeck.com/forecasting/archive">
 <meta name="theme-color" content="#f4ead9">
 
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ryan Beck">
 <meta property="og:title" content="The archive &middot; Data Dashboards &middot; Ryan Beck">
-<meta property="og:description" content="The rescued historical data behind the forecasting dashboards: 124 files pulled out of old R session files.">
+<meta property="og:description" content="Historical forecasting data recovered from saved R sessions.">
 <meta property="og:url" content="https://ryanbeck.com/forecasting/archive">
 <meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -58,29 +58,19 @@
     <header class="dash-head">
       <span class="runic">historical data</span>
       <h1>The archive</h1>
-      <div class="dash-blurb"><p>Historical data for series whose sources have since been retired, kept as plain gzipped CSV so it stays readable without any particular tool.</p></div>
+      <div class="dash-blurb"><p>Historical data preserved as compressed CSV files.</p></div>
     </header>
 
   <section class="series">
-    <h2>What is in it</h2>
-    <p class="series-note">124 files, about 18 MB, one CSV per table, gzipped.
-    <a href="/data/forecasting/archive/MANIFEST.csv">The manifest</a> lists
-    every one with its row count, column count and date range.</p>
-    <p class="series-note" style="margin-top:14px">The largest single item is
-    the HHS hospital-capacity panel &mdash; 66,966 rows by 135 columns, every
-    state, 2020 to 2023, including admissions broken down by age band. It is
-    the most detailed age-stratified COVID series here.</p>
+    <h2>Downloads</h2>
+    <p class="series-note"><a href="/data/forecasting/archive/MANIFEST.csv">The manifest</a>
+    lists the files, fields and date ranges. The HHS hospital-capacity files
+    include state totals and admissions by age.</p>
   </section>
   <section class="series">
-    <h2>Provenance and caveats</h2>
-    <p class="series-note">These were extracted from R session files saved
-    while the series were being maintained. For several of them the upstream
-    source has since been retired, so this is the only copy I am aware of.</p>
-    <p class="series-note" style="margin-top:14px">Figures are as the sources
-    reported them at the time and have not been adjusted. Agencies restate, so
-    a few values differ from what the same source returns today &mdash; in the
-    HHS hospitalization panel about 2% of Virginia dates differ, all by under
-    1% and in both directions.</p>
+    <h2>Source notes</h2>
+    <p class="series-note">Recovered from saved R sessions. Values reflect the
+    original releases and may differ from later agency revisions.</p>
   </section>
 
   </main>

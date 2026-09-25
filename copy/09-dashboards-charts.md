@@ -7,9 +7,8 @@
      When you are done: node tools/copy.mjs apply -->
 
 
-> These are the notes printed under each chart. A chart also draws its
-> own title, source and "data to" date — those come from the data every
-> time it is built, so they are not editable here.
+> Chart titles and notes are editable here. Source labels and data dates
+> are generated from the dataset metadata.
 
 ---
 
@@ -23,9 +22,7 @@ US debt limit
 ## US debt limit — chart explanation
 <!-- id: dash.chart.debt-limit.note -->
 
-Shaded bands are the eight suspensions. The ceiling line breaks inside each one because there is no ceiling to plot; hovering a suspended date reads “no data” rather than zero.
-
-The <strong>trend</strong> is a least-squares fit to the run since the most recent change in the ceiling — a raise, or a suspension starting or ending — projected to the date that pace would reach the current ceiling. It is solid over the stretch it was fitted to and dashed beyond the last observation. During a suspension there is nothing to reach, so it runs a year out instead. It disappears when debt is already at the ceiling, as through the first half of 2025, when a projection would imply room that does not exist. Turn it off to fit the chart back to the data.
+Shading marks periods when the debt limit was suspended. The trend projects debt growth since the latest limit change; toggle it in the legend.
 
 ## Chart title
 <!-- id: dash.chart.refugee-admissions.title -->
@@ -35,7 +32,7 @@ US refugee admissions by month
 ## US refugee admissions by month — chart explanation
 <!-- id: dash.chart.refugee-admissions.note -->
 
-People admitted to the United States as refugees each month, from the State Department's Refugee Processing Center. Fiscal years run October to September; the annual ceiling is set by presidential determination and is a cap, not a target.
+Monthly refugee admissions. US fiscal years run from October through September.
 
 ## Chart title
 <!-- id: dash.chart.refugee-admissions-annual.title -->
@@ -45,7 +42,7 @@ Refugee admissions by fiscal year
 ## Refugee admissions by fiscal year — chart explanation
 <!-- id: dash.chart.refugee-admissions-annual.note -->
 
-The same arrivals totaled by fiscal year. The dashed line is the annual ceiling, which is only published for recent years.
+Annual admissions and the statutory ceiling. Ceiling data is available for recent years.
 
 ## Chart title
 <!-- id: dash.chart.faamg-revenues.title -->
@@ -55,7 +52,7 @@ Big-tech revenue by fiscal year
 ## Big-tech revenue by fiscal year — chart explanation
 <!-- id: dash.chart.faamg-revenues.note -->
 
-Each company's full fiscal year, and the five added together. The combined line is blank for a year any of them has not finished reporting.
+Revenue by company fiscal year. The combined total appears once all five companies have reported.
 
 ## Chart title
 <!-- id: dash.chart.faamg-revenues-quarterly.title -->
@@ -65,9 +62,7 @@ Big-tech revenue by quarter
 ## Big-tech revenue by quarter — chart explanation
 <!-- id: dash.chart.faamg-revenues-quarterly.note -->
 
-The same five by quarter, which is where the seasonality lives — Amazon and Apple both spike every December.
-
-Two notes on the derivation. Quarters are selected by the length of the reporting period rather than by filing type, because a 10-K carries both the twelve-month total and three-month figures, and mixing them puts an annual number in the quarterly line. The fourth quarter is calculated as the annual total minus the three reported quarters, since a 10-K frequently reports the year without ever stating Q4 on its own.
+Fiscal quarters are aligned by their midpoint. Fourth-quarter revenue is calculated from annual revenue minus the first three quarters.
 
 ## Chart title
 <!-- id: dash.chart.covid-weekly-admissions.title -->
@@ -77,11 +72,7 @@ US respiratory hospital admissions, weekly
 ## US respiratory hospital admissions, weekly — chart explanation
 <!-- id: dash.chart.covid-weekly-admissions.note -->
 
-New hospital admissions each week with a laboratory-confirmed diagnosis. Influenza and RSV are reported in the same returns.
-
-<strong>The shaded stretch is not a drop in admissions.</strong> Reporting to NHSN was mandatory under the public health emergency, became voluntary on 1 May 2024, and was made mandatory again by CMS on 1 November 2024. Hospital participation followed exactly: about 93% either side, and a low of 31% in October 2024. Counts inside that window are drawn from roughly a third of the hospitals, so they are not comparable with the rest of the line. The share reporting each week is in the download.
-
-A different series for the same measure, from the archived reichlab forecast hub, was widely used up to April 2024 and runs about 4% lower at the median. Figures read off older charts will not match these; that series is in the download for comparison.
+Reporting was voluntary from May through October 2024. Hospital participation fell to about 31%, limiting comparisons across the shaded period. Reporting coverage and the older Reichlab series are included in the downloads.
 
 ## Chart title
 <!-- id: dash.chart.flu-hospitalizations.title -->
@@ -91,7 +82,7 @@ US influenza hospitalizations
 ## US influenza hospitalizations — chart explanation
 <!-- id: dash.chart.flu-hospitalizations.note -->
 
-Weekly hospital admissions with a confirmed influenza diagnosis, from the CDC's FluSight forecasting hub. Per-state figures are in the companion file.
+Weekly confirmed influenza admissions from CDC FluSight. State totals are available in the companion CSV.
 
 ## Chart title
 <!-- id: dash.chart.flu-hospitalizations-states.title -->
@@ -101,11 +92,7 @@ Influenza admissions, state by state
 ## Influenza admissions, state by state — chart explanation
 <!-- id: dash.chart.flu-hospitalizations-states.note -->
 
-Influenza admissions state by state, laid out roughly as the map is, so a bad week across one region reads as a block of color. It opens on percentage change against four weeks earlier, which is what makes a small state climbing fast as visible as a large one; the buttons switch to admissions per 100,000 over a window.
-
-Every panel shares one vertical scale. Per head rather than raw counts is what makes that readable — on raw admissions the spread between the largest and smallest states is more than fiftyfold, and most of the grid flattens into slivers.
-
-These come from the CDC’s FluSight hub, which republishes NHSN’s figures. They will not match the influenza line above to the digit: FluSight snapshots NHSN and does not always carry its later revisions, so recent weeks can differ by a few percent.
+Compare changes over four weeks or admissions per 100,000 residents. All states share a scale. FluSight snapshots may differ from revised national figures.
 
 ## Chart title
 <!-- id: dash.chart.semiconductors-us-exports-china.title -->
@@ -115,7 +102,7 @@ US semiconductor exports to China
 ## US semiconductor exports to China — chart explanation
 <!-- id: dash.chart.semiconductors-us-exports-china.note -->
 
-Six-month rolling averages. The monthly lines behind them are in the legend, switched off to start with. The download also carries a twelve-month rolling sum.
+Six-month averages. Use the legend to show monthly values. The CSV includes twelve-month totals.
 
 ## Chart title
 <!-- id: dash.chart.semiconductors-china-imports.title -->
@@ -125,7 +112,7 @@ China's semiconductor imports
 ## China's semiconductor imports — chart explanation
 <!-- id: dash.chart.semiconductors-china-imports.note -->
 
-Annual, and reported by China rather than by its trading partners, so this is the whole of what China buys from the world in the same two categories the chart above tracks for the US alone.
+Annual imports from all countries, reported by China.
 
 ## Chart title
 <!-- id: dash.chart.hpai-depopulations.title -->
@@ -135,7 +122,7 @@ Birds killed in the bird-flu outbreak
 ## Birds killed in the bird-flu outbreak — chart explanation
 <!-- id: dash.chart.hpai-depopulations.note -->
 
-Weekly count on the right-hand axis, running total on the left. They differ by two orders of magnitude, so on a shared scale the weeks would be a flat line along the bottom. The download splits each week into commercial and backyard birds, and carries the state, county and production type of every confirmed flock.
+Weekly count on the right axis; cumulative total on the left. Downloads include flock location, production type, and commercial or backyard status.
 
 ## Chart title
 <!-- id: dash.chart.covid-hospitalizations.title -->
@@ -145,7 +132,7 @@ COVID and flu patients in the hospital
 ## COVID and flu patients in the hospital — chart explanation
 <!-- id: dash.chart.covid-hospitalizations.note -->
 
-Patients in the hospital on a given day, summed across reporting states, from the HHS hospital-capacity dataset. This is a census rather than a count of admissions — everyone in a bed that day, however long they have been there — so it runs far higher than the admissions series above and should not be read against it. HHS ended the reporting requirement behind it, so the series stops in April 2024.
+Daily hospitalized patients across reporting states. Counts include patients admitted on earlier days. Reporting ended in April 2024.
 
 ## Chart title
 <!-- id: dash.chart.va-vaccinations.title -->
@@ -155,5 +142,5 @@ Virginia COVID vaccinations
 ## Virginia COVID vaccinations — chart explanation
 <!-- id: dash.chart.va-vaccinations.note -->
 
-Counts rather than percentages, from the state’s open-data platform. The companion file carries the same figures split by age group.
+People by vaccination status. Age-group counts are included in the companion CSV.
 

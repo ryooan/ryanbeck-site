@@ -810,7 +810,7 @@
       sw3.className = 'plot-swatch is-dash';
       sw3.style.setProperty('--c', TREND);
       b3.appendChild(sw3);
-      var txt = (opt.trend.label || 'Trend') + ' — ';
+      var txt = (opt.trend.label || 'Trend') + ': ';
       if (trend.suspended) {
         txt += 'no ceiling in force, projected a year out';
       } else if (trend.hitsT) {
@@ -1551,35 +1551,19 @@
       var gaps = names.filter(function (n) { return !series[n]; }).length;
       var K = opt.shrink == null ? 5 : opt.shrink;
       note.innerHTML = isChange
-        ? ('Change against ' + LAG_WEEKS + ' weeks earlier, '
-           + '<span class="key key-up"></span> up and '
-           + '<span class="key key-dn"></span> down, against the shared scale '
-           + 'marked on the grid. Small counts are damped, so a state going '
-           + 'from one '
-           + 'admission to two does not read as a surge; the admissions '
-           + 'behind each number are printed under it.'
-           + (gaps ? ' ' + gaps + ' gray: no data that week.' : '')
-           + '<details class="panel-how"><summary>How this is '
-           + 'calculated</summary>Every point is measured against one fixed '
-           + 'reference week &mdash; the week ' + (LAG_WEEKS * 7) + ' days '
-           + 'before the latest &mdash; so each line starts at zero and '
-           + 'traces where the state has got to since, rather than being a '
-           + 'series of unrelated week-on-week comparisons.<br><br>The ratio '
-           + 'is (b + ' + K + ') / (a + ' + K + '), not b / a, where a and b '
-           + 'are admissions in the reference and current weeks. Adding ' + K
-           + ' does two things at once: it is defined when a state reported '
-           + 'zero that week, and it pulls a change built on a handful of '
-           + 'admissions toward no-change while leaving a large state alone. '
-           + '1&rarr;2 reads +17%; 400&rarr;800 still reads +99%.<br><br>'
-           + 'Color follows the value continuously, gray at the crossing, so '
-           + 'a state that fell and then turned back up shows both. All '
-           + 'panels share one scale, symmetric about zero and never narrower '
-           + 'than &plusmn;10% &mdash; currently &plusmn;' + Math.round(hi)
-           + '%.</details>')
-        : ('Weekly admissions per 100,000 residents, against the shared scale '
-           + 'marked on the grid &mdash; every panel is drawn to the same height, '
-           + 'topping out at ' + fmt(hi) + ', so a small state and a large '
-           + 'one can be read against each other.');
+        ? ('Change from ' + LAG_WEEKS + ' weeks earlier. '
+           + '<span class="key key-up"></span> Increase; '
+           + '<span class="key key-dn"></span> decrease. Small counts are damped.'
+           + (gaps ? ' ' + gaps + ' gray panels have no data.' : '')
+           + '<details class="panel-how"><summary>Calculation</summary>'
+           + 'Each point uses the same reference week, ' + (LAG_WEEKS * 7)
+           + ' days before the latest date. Change = ((b + ' + K + ') / (a + '
+           + K + ') - 1) × 100%, where a is reference admissions and b is '
+           + 'current admissions. Adding ' + K + ' reduces swings from small '
+           + 'counts and handles zero admissions. All panels share a color '
+           + 'scale of &plusmn;' + Math.round(hi) + '%.</details>')
+        : ('Weekly admissions per 100,000 residents. All panels share a scale '
+           + 'from zero to ' + fmt(hi) + '.');
 
       var W = 100, H = 46, m = 3;
       var order = geo

@@ -310,11 +310,6 @@ function extractDashboards() {
     { key: 'kicker', label: 'Page kicker', from: G },
     { key: 'blurb', label: 'Page introduction', from: G, shape: 'p-list' },
     ...[
-      ['overview_title', 'Overview heading'],
-      ['overview_note', 'Overview explanation'],
-      ['downloads_title', 'Downloads heading'],
-      ['downloads_note', 'Downloads explanation'],
-      ['manifest_note', 'Manifest explanation'],
       ['description', 'Search + social description'],
     ].map(([key, label]) => ({ key, label, from: L })),
   ];
@@ -387,9 +382,8 @@ const NOTES = {
     '> them are permanent, and are excerpts of the posts themselves.',
   ].join('\n'),
   '09-dashboards-charts.md': [
-    '> These are the notes printed under each chart. A chart also draws its',
-    '> own title, source and "data to" date — those come from the data every',
-    '> time it is built, so they are not editable here.',
+    '> Chart titles and notes are editable here. Source labels and data dates',
+    '> are generated from the dataset metadata.',
   ].join('\n'),
 };
 

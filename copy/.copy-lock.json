@@ -7,7 +7,7 @@
   "public/park-guides.html": "2cbbdb00367edbfa",
   "public/projects.html": "b9b5d72be292ab31",
   "public/writing.html": "2e9318e2c486e0b9",
-  "tools/forecasting/build_page.py": "388b7711b5613e21"
+  "tools/forecasting/build_page.py": "82eb4587f97e7279"
  },
  "blocks": [
   {
@@ -1414,11 +1414,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Chart title",
    "shape": "plain",
-   "start": 1666,
-   "end": 1681,
+   "start": 1708,
+   "end": 1723,
    "text": "US debt limit",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1430,11 +1429,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "US debt limit — chart explanation",
    "shape": "br-list",
-   "start": 2455,
-   "end": 3376,
-   "text": "Shaded bands are the eight suspensions. The ceiling line breaks inside each one because there is no ceiling to plot; hovering a suspended date reads “no data” rather than zero.\n\nThe <strong>trend</strong> is a least-squares fit to the run since the most recent change in the ceiling — a raise, or a suspension starting or ending — projected to the date that pace would reach the current ceiling. It is solid over the stretch it was fitted to and dashed beyond the last observation. During a suspension there is nothing to reach, so it runs a year out instead. It disappears when debt is already at the ceiling, as through the first half of 2025, when a projection would imply room that does not exist. Turn it off to fit the chart back to the data.",
+   "start": 2518,
+   "end": 2663,
+   "text": "Shading marks periods when the debt limit was suspended. The trend projects debt growth since the latest limit change; toggle it in the legend.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1446,11 +1444,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Chart title",
    "shape": "plain",
-   "start": 3628,
-   "end": 3660,
+   "start": 2921,
+   "end": 2953,
    "text": "US refugee admissions by month",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1462,11 +1459,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "US refugee admissions by month — chart explanation",
    "shape": "br-list",
-   "start": 3972,
-   "end": 4257,
-   "text": "People admitted to the United States as refugees each month, from the State Department's Refugee Processing Center. Fiscal years run October to September; the annual ceiling is set by presidential determination and is a cap, not a target.",
+   "start": 3275,
+   "end": 3356,
+   "text": "Monthly refugee admissions. US fiscal years run from October through September.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1478,11 +1474,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Chart title",
    "shape": "plain",
-   "start": 4528,
-   "end": 4563,
+   "start": 3634,
+   "end": 3669,
    "text": "Refugee admissions by fiscal year",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1494,11 +1489,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Refugee admissions by fiscal year — chart explanation",
    "shape": "br-list",
-   "start": 5026,
-   "end": 5165,
-   "text": "The same arrivals totaled by fiscal year. The dashed line is the annual ceiling, which is only published for recent years.",
+   "start": 4146,
+   "end": 4236,
+   "text": "Annual admissions and the statutory ceiling. Ceiling data is available for recent years.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1510,11 +1504,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Chart title",
    "shape": "plain",
-   "start": 5371,
-   "end": 5404,
+   "start": 4448,
+   "end": 4481,
    "text": "Big-tech revenue by fiscal year",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1526,11 +1519,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Big-tech revenue by fiscal year — chart explanation",
    "shape": "br-list",
-   "start": 6052,
-   "end": 6223,
-   "text": "Each company's full fiscal year, and the five added together. The combined line is blank for a year any of them has not finished reporting.",
+   "start": 5147,
+   "end": 5246,
+   "text": "Revenue by company fiscal year. The combined total appears once all five companies have reported.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1542,11 +1534,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Chart title",
    "shape": "plain",
-   "start": 6417,
-   "end": 6446,
+   "start": 5446,
+   "end": 5475,
    "text": "Big-tech revenue by quarter",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1558,11 +1549,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Big-tech revenue by quarter — chart explanation",
    "shape": "br-list",
-   "start": 7033,
-   "end": 7689,
-   "text": "The same five by quarter, which is where the seasonality lives — Amazon and Apple both spike every December.\n\nTwo notes on the derivation. Quarters are selected by the length of the reporting period rather than by filing type, because a 10-K carries both the twelve-month total and three-month figures, and mixing them puts an annual number in the quarterly line. The fourth quarter is calculated as the annual total minus the three reported quarters, since a 10-K frequently reports the year without ever stating Q4 on its own.",
+   "start": 6079,
+   "end": 6216,
+   "text": "Fiscal quarters are aligned by their midpoint. Fourth-quarter revenue is calculated from annual revenue minus the first three quarters.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1574,11 +1564,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Chart title",
    "shape": "plain",
-   "start": 7882,
-   "end": 7926,
+   "start": 6415,
+   "end": 6459,
    "text": "US respiratory hospital admissions, weekly",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1590,11 +1579,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "US respiratory hospital admissions, weekly — chart explanation",
    "shape": "br-list",
-   "start": 8508,
-   "end": 9608,
-   "text": "New hospital admissions each week with a laboratory-confirmed diagnosis. Influenza and RSV are reported in the same returns.\n\n<strong>The shaded stretch is not a drop in admissions.</strong> Reporting to NHSN was mandatory under the public health emergency, became voluntary on 1 May 2024, and was made mandatory again by CMS on 1 November 2024. Hospital participation followed exactly: about 93% either side, and a low of 31% in October 2024. Counts inside that window are drawn from roughly a third of the hospitals, so they are not comparable with the rest of the line. The share reporting each week is in the download.\n\nA different series for the same measure, from the archived reichlab forecast hub, was widely used up to April 2024 and runs about 4% lower at the median. Figures read off older charts will not match these; that series is in the download for comparison.",
+   "start": 7056,
+   "end": 7281,
+   "text": "Reporting was voluntary from May through October 2024. Hospital participation fell to about 31%, limiting comparisons across the shaded period. Reporting coverage and the older Reichlab series are included in the downloads.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1606,11 +1594,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Chart title",
    "shape": "plain",
-   "start": 9863,
-   "end": 9894,
+   "start": 7543,
+   "end": 7574,
    "text": "US influenza hospitalizations",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1622,11 +1609,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "US influenza hospitalizations — chart explanation",
    "shape": "br-list",
-   "start": 10183,
-   "end": 10365,
-   "text": "Weekly hospital admissions with a confirmed influenza diagnosis, from the CDC's FluSight forecasting hub. Per-state figures are in the companion file.",
+   "start": 7872,
+   "end": 7979,
+   "text": "Weekly confirmed influenza admissions from CDC FluSight. State totals are available in the companion CSV.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1638,11 +1624,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Chart title",
    "shape": "plain",
-   "start": 10621,
-   "end": 10659,
+   "start": 8242,
+   "end": 8280,
    "text": "Influenza admissions, state by state",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1654,11 +1639,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Influenza admissions, state by state — chart explanation",
    "shape": "br-list",
-   "start": 11097,
-   "end": 12115,
-   "text": "Influenza admissions state by state, laid out roughly as the map is, so a bad week across one region reads as a block of color. It opens on percentage change against four weeks earlier, which is what makes a small state climbing fast as visible as a large one; the buttons switch to admissions per 100,000 over a window.\n\nEvery panel shares one vertical scale. Per head rather than raw counts is what makes that readable — on raw admissions the spread between the largest and smallest states is more than fiftyfold, and most of the grid flattens into slivers.\n\nThese come from the CDC’s FluSight hub, which republishes NHSN’s figures. They will not match the influenza line above to the digit: FluSight snapshots NHSN and does not always carry its later revisions, so recent weeks can differ by a few percent.",
+   "start": 8732,
+   "end": 8889,
+   "text": "Compare changes over four weeks or admissions per 100,000 residents. All states share a scale. FluSight snapshots may differ from revised national figures.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1670,11 +1654,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Chart title",
    "shape": "plain",
-   "start": 12368,
-   "end": 12403,
+   "start": 9149,
+   "end": 9184,
    "text": "US semiconductor exports to China",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1686,11 +1669,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "US semiconductor exports to China — chart explanation",
    "shape": "br-list",
-   "start": 13364,
-   "end": 13554,
-   "text": "Six-month rolling averages. The monthly lines behind them are in the legend, switched off to start with. The download also carries a twelve-month rolling sum.",
+   "start": 10166,
+   "end": 10264,
+   "text": "Six-month averages. Use the legend to show monthly values. The CSV includes twelve-month totals.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1702,11 +1684,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Chart title",
    "shape": "plain",
-   "start": 13722,
-   "end": 13753,
+   "start": 10438,
+   "end": 10469,
    "text": "China's semiconductor imports",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1718,11 +1699,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "China's semiconductor imports — chart explanation",
    "shape": "br-list",
-   "start": 14165,
-   "end": 14401,
-   "text": "Annual, and reported by China rather than by its trading partners, so this is the whole of what China buys from the world in the same two categories the chart above tracks for the US alone.",
+   "start": 10894,
+   "end": 10949,
+   "text": "Annual imports from all countries, reported by China.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1734,11 +1714,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Chart title",
    "shape": "plain",
-   "start": 14559,
-   "end": 14598,
+   "start": 11113,
+   "end": 11152,
    "text": "Birds killed in the bird-flu outbreak",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1750,11 +1729,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Birds killed in the bird-flu outbreak — chart explanation",
    "shape": "br-list",
-   "start": 15048,
-   "end": 15425,
-   "text": "Weekly count on the right-hand axis, running total on the left. They differ by two orders of magnitude, so on a shared scale the weeks would be a flat line along the bottom. The download splits each week into commercial and backyard birds, and carries the state, county and production type of every confirmed flock.",
+   "start": 11615,
+   "end": 11764,
+   "text": "Weekly count on the right axis; cumulative total on the left. Downloads include flock location, production type, and commercial or backyard status.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1766,11 +1744,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Chart title",
    "shape": "plain",
-   "start": 15696,
-   "end": 15736,
+   "start": 12041,
+   "end": 12081,
    "text": "COVID and flu patients in the hospital",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1782,11 +1759,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "COVID and flu patients in the hospital — chart explanation",
    "shape": "br-list",
-   "start": 16198,
-   "end": 16691,
-   "text": "Patients in the hospital on a given day, summed across reporting states, from the HHS hospital-capacity dataset. This is a census rather than a count of admissions — everyone in a bed that day, however long they have been there — so it runs far higher than the admissions series above and should not be read against it. HHS ended the reporting requirement behind it, so the series stops in April 2024.",
+   "start": 12556,
+   "end": 12691,
+   "text": "Daily hospitalized patients across reporting states. Counts include patients admitted on earlier days. Reporting ended in April 2024.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1798,11 +1774,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Chart title",
    "shape": "plain",
-   "start": 16931,
-   "end": 16960,
+   "start": 12938,
+   "end": 12967,
    "text": "Virginia COVID vaccinations",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1814,11 +1789,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Virginia COVID vaccinations — chart explanation",
    "shape": "br-list",
-   "start": 17338,
-   "end": 17502,
-   "text": "Counts rather than percentages, from the state’s open-data platform. The companion file carries the same figures split by age group.",
+   "start": 13357,
+   "end": 13440,
+   "text": "People by vaccination status. Age-group counts are included in the companion CSV.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1830,11 +1804,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Respiratory illness — sidebar label",
    "shape": "plain",
-   "start": 18170,
-   "end": 18191,
+   "start": 14130,
+   "end": 14151,
    "text": "Respiratory illness",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1846,11 +1819,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Page heading",
    "shape": "plain",
-   "start": 18210,
-   "end": 18231,
+   "start": 14171,
+   "end": 14192,
    "text": "Respiratory illness",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1862,11 +1834,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Respiratory illness — page kicker",
    "shape": "plain",
-   "start": 18251,
-   "end": 18277,
+   "start": 14213,
+   "end": 14239,
    "text": "COVID, influenza and RSV",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1878,11 +1849,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Respiratory illness — page introduction",
    "shape": "p-list",
-   "start": 18310,
-   "end": 19282,
-   "text": "Weekly hospital admissions for COVID-19, influenza and RSV, nationally and state by state.\n\nNational figures come from the CDC’s National Healthcare Safety Network. This is meant to be a census rather than a sample — CMS requires every acute care and critical access hospital to report weekly — but the requirement has lapsed once, and participation moves with it. Around 93% of hospitals report in a normal week, and the share behind each week is in the download. State-level influenza comes from the CDC’s FluSight forecasting hub.\n\nAll of these count <em>laboratory-confirmed</em> admissions rather than everyone admitted with the illness, so they undercount by a margin that moves with how much testing is being done. They read more reliably as a trend than as a total.",
+   "start": 14274,
+   "end": 14425,
+   "text": "Weekly confirmed COVID-19, influenza and RSV hospital admissions from CDC NHSN and FluSight. Testing and reporting coverage affect the totals.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1894,11 +1864,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "The US debt limit — sidebar label",
    "shape": "plain",
-   "start": 20003,
-   "end": 20019,
+   "start": 15159,
+   "end": 15175,
    "text": "The debt limit",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1910,11 +1879,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Page heading",
    "shape": "plain",
-   "start": 20038,
-   "end": 20057,
+   "start": 15195,
+   "end": 15214,
    "text": "The US debt limit",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1926,11 +1894,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "The US debt limit — page kicker",
    "shape": "plain",
-   "start": 20077,
-   "end": 20094,
+   "start": 15235,
+   "end": 15252,
    "text": "Treasury, daily",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1942,11 +1909,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "The US debt limit — page introduction",
    "shape": "p-list",
-   "start": 20127,
-   "end": 20792,
-   "text": "Federal debt subject to the statutory ceiling, against the ceiling itself, from Treasury’s Daily Treasury Statement. Millions of dollars, updated each business day.\n\nThe shaded stretches are the eight occasions Congress has suspended the limit rather than raised it. There is no ceiling during a suspension, so the line stops rather than running flat — Treasury publishes a zero in that field, and plotting it would send the ceiling to the floor. When a suspension ends, the limit is reset to whatever the debt has reached by then.",
+   "start": 15287,
+   "end": 15428,
+   "text": "Federal debt subject to the statutory limit and the limit itself, from the Daily Treasury Statement. Values are millions of dollars.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1958,11 +1924,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Big-tech revenue — sidebar label",
    "shape": "plain",
-   "start": 20895,
-   "end": 20913,
+   "start": 15536,
+   "end": 15554,
    "text": "Big-tech revenue",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1974,11 +1939,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Page heading",
    "shape": "plain",
-   "start": 20932,
-   "end": 20950,
+   "start": 15574,
+   "end": 15592,
    "text": "Big-tech revenue",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -1990,11 +1954,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Big-tech revenue — page kicker",
    "shape": "plain",
-   "start": 20970,
-   "end": 20983,
+   "start": 15613,
+   "end": 15626,
    "text": "SEC filings",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2006,11 +1969,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Big-tech revenue — page introduction",
    "shape": "p-list",
-   "start": 21016,
-   "end": 21680,
-   "text": "Revenue for Alphabet, Amazon, Apple, Meta and Microsoft, read out of their SEC filings, annually and by quarter. Billions of US dollars.\n\nThe five do not share a fiscal calendar — Apple’s year ends in September and Microsoft’s in June — so the combined line is blank for any period where they have not all filed yet. Quarters are placed in the calendar quarter they <em>end</em> in, which is what lets the five line up; the consequence is that adding four calendar quarters for Apple or Microsoft will not equal their fiscal year.",
+   "start": 15661,
+   "end": 15810,
+   "text": "Annual and quarterly revenue for Alphabet, Amazon, Apple, Meta and Microsoft, in billions of US dollars. Fiscal calendars differ by company.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2022,11 +1984,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "US refugee admissions — sidebar label",
    "shape": "plain",
-   "start": 21817,
-   "end": 21837,
+   "start": 15952,
+   "end": 15972,
    "text": "Refugee admissions",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2038,11 +1999,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Page heading",
    "shape": "plain",
-   "start": 21856,
-   "end": 21879,
+   "start": 15992,
+   "end": 16015,
    "text": "US refugee admissions",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2054,11 +2014,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "US refugee admissions — page kicker",
    "shape": "plain",
-   "start": 21899,
-   "end": 21926,
+   "start": 16036,
+   "end": 16063,
    "text": "State Department, monthly",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2070,11 +2029,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "US refugee admissions — page introduction",
    "shape": "p-list",
-   "start": 21959,
-   "end": 22677,
-   "text": "People admitted to the United States as refugees, from the State Department’s Refugee Processing Center. Fiscal years run October to September, so the monthly series maps October through December onto the previous calendar year.\n\nThe annual ceiling is set by presidential determination and is a cap rather than a target: admissions have come in well under it far more often than they have approached it. The long view reaches back to 1975 — the two peaks are the Indochinese resettlement after the fall of Saigon and the Soviet and Southeast Asian programs around 1990.",
+   "start": 16098,
+   "end": 16204,
+   "text": "US refugee admissions and annual ceilings, from the State Department’s Refugee Processing Center.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2086,11 +2044,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Semiconductor trade — sidebar label",
    "shape": "plain",
-   "start": 22815,
-   "end": 22836,
+   "start": 16347,
+   "end": 16368,
    "text": "Semiconductor trade",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2102,11 +2059,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Page heading",
    "shape": "plain",
-   "start": 22855,
-   "end": 22876,
+   "start": 16388,
+   "end": 16409,
    "text": "Semiconductor trade",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2118,11 +2074,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Semiconductor trade — page kicker",
    "shape": "plain",
-   "start": 22896,
-   "end": 22909,
+   "start": 16430,
+   "end": 16443,
    "text": "UN Comtrade",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2134,11 +2089,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Semiconductor trade — page introduction",
    "shape": "p-list",
-   "start": 22942,
-   "end": 23779,
-   "text": "US exports of chips and chipmaking equipment to China, and what China buys from the whole world, from UN Comtrade. Values are US dollars.\n\nChips are HS 8542. Equipment is HS 8486, 903082, 903141, 854311 and 901041, summed. Monthly trade is noisy enough that the raw line is hard to read a trend off, so a six-month rolling average is carried alongside it.\n\nThe two charts are measured independently and will not reconcile. US exports are monthly and reported by the United States; China’s imports are annual and reported by China. Trading partners routinely disagree about the same shipments, since they classify goods differently and record them at different moments.",
+   "start": 16478,
+   "end": 16681,
+   "text": "US exports to China and China’s worldwide imports, from UN Comtrade. Chips: HS 8542. Equipment: HS 8486, 903082, 903141, 854311 and 901041. Values are US dollars; countries report independently.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2150,11 +2104,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Bird flu — sidebar label",
    "shape": "plain",
-   "start": 23948,
-   "end": 23958,
+   "start": 16856,
+   "end": 16866,
    "text": "Bird flu",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2166,11 +2119,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Page heading",
    "shape": "plain",
-   "start": 23977,
-   "end": 23987,
+   "start": 16886,
+   "end": 16896,
    "text": "Bird flu",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2182,11 +2134,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Bird flu — page kicker",
    "shape": "plain",
-   "start": 24007,
-   "end": 24019,
+   "start": 16917,
+   "end": 16929,
    "text": "USDA APHIS",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2198,11 +2149,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Bird flu — page introduction",
    "shape": "p-list",
-   "start": 24052,
-   "end": 24674,
-   "text": "Birds killed in confirmed commercial and backyard flocks during the H5N1 outbreak, from USDA APHIS detection records.\n\nA flock is counted on the date its infection was confirmed, and confirmation means the entire flock is depopulated — so a single commercial layer operation can add several million birds in one week. That makes the weekly figure extremely spiky and the running total the more readable line.\n\nBackyard flocks are a large share of the detections and a very small share of the birds.",
+   "start": 16964,
+   "end": 17126,
+   "text": "Birds in flocks depopulated during the H5N1 outbreak, from USDA APHIS. Counts use the confirmation date; large commercial flocks can cause weekly spikes.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2214,11 +2164,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Virginia COVID — sidebar label",
    "shape": "plain",
-   "start": 24783,
-   "end": 24799,
+   "start": 17240,
+   "end": 17256,
    "text": "Virginia COVID",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2230,11 +2179,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Page heading",
    "shape": "plain",
-   "start": 24818,
-   "end": 24834,
+   "start": 17276,
+   "end": 17292,
    "text": "Virginia COVID",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2246,11 +2194,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Virginia COVID — page kicker",
    "shape": "plain",
-   "start": 24854,
-   "end": 24868,
+   "start": 17313,
+   "end": 17327,
    "text": "VDH, retired",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2262,11 +2209,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Virginia COVID — page introduction",
    "shape": "p-list",
-   "start": 24901,
-   "end": 25882,
-   "text": "People in Virginia by vaccination status, from the Virginia Department of Health. March 2021 to September 2023, when VDH stopped publishing; the history is complete for that window — nearly ten million rows, by locality, age group and vaccination status.\n\nTwo days are wrong at the source. On 21 February 2023 VDH published every row two and three times over, which is collapsed here by taking one value per locality, age band and status. On 24 July 2021 the values themselves are exactly doubled with no duplicate rows to collapse, so that day is left blank and the line breaks there.\n\nFor an age-stratified Virginia series, the HHS hospitalization panel on the <a href=\"/forecasting/respiratory\">respiratory page</a> carries admissions broken down by age band from 2020 to 2023.",
+   "start": 17362,
+   "end": 17546,
+   "text": "Virginia vaccination counts, March 2021 to September 2023. Duplicate records on February 21, 2023 were removed. July 24, 2021 is omitted because the source doubled its counts.",
    "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2278,8 +2224,8 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Page heading",
    "shape": "plain",
-   "start": 26126,
-   "end": 26143,
+   "start": 17800,
+   "end": 17817,
    "text": "Data Dashboards",
    "ents": [],
    "py": true,
@@ -2290,8 +2236,8 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Data Dashboards — page kicker",
    "shape": "plain",
-   "start": 26159,
-   "end": 26183,
+   "start": 17834,
+   "end": 17858,
    "text": "Through the first door",
    "ents": [],
    "py": true,
@@ -2302,91 +2248,10 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Data Dashboards — page introduction",
    "shape": "p-list",
-   "start": 26208,
-   "end": 26457,
-   "text": "Data I use for forecasting, collected in one place and kept current. Pick a subject from the list.\n\nEach chart shows the last date present in its data, links to its source, and can be downloaded as CSV.",
+   "start": 17885,
+   "end": 17927,
+   "text": "Overview of data series available",
    "ents": [
-    "&mdash;",
-    "&middot;",
-    "&larr;"
-   ],
-   "py": true,
-   "indent": 12
-  },
-  {
-   "id": "dash.page.index.overview_title",
-   "file": "tools/forecasting/build_page.py",
-   "label": "Overview heading",
-   "shape": "plain",
-   "start": 26482,
-   "end": 26508,
-   "text": "Every series at a glance",
-   "ents": [
-    "&mdash;",
-    "&middot;",
-    "&larr;"
-   ],
-   "py": true,
-   "indent": 12
-  },
-  {
-   "id": "dash.page.index.overview_note",
-   "file": "tools/forecasting/build_page.py",
-   "label": "Overview explanation",
-   "shape": "plain",
-   "start": 26541,
-   "end": 26659,
-   "text": "<strong>Every date below is the last date present in the data</strong>, not the last time it was fetched.",
-   "ents": [
-    "&mdash;",
-    "&middot;",
-    "&larr;"
-   ],
-   "py": true,
-   "indent": 12
-  },
-  {
-   "id": "dash.page.index.downloads_title",
-   "file": "tools/forecasting/build_page.py",
-   "label": "Downloads heading",
-   "shape": "plain",
-   "start": 26685,
-   "end": 26701,
-   "text": "Using the data",
-   "ents": [
-    "&mdash;",
-    "&middot;",
-    "&larr;"
-   ],
-   "py": true,
-   "indent": 12
-  },
-  {
-   "id": "dash.page.index.downloads_note",
-   "file": "tools/forecasting/build_page.py",
-   "label": "Downloads explanation",
-   "shape": "plain",
-   "start": 26735,
-   "end": 26999,
-   "text": "Every series can be downloaded as CSV from its own section. The files are tidy — one row per period, one column per measure, ISO dates — so they open straight into a spreadsheet or load in one line of pandas or readr.",
-   "ents": [
-    "&mdash;",
-    "&middot;",
-    "&larr;"
-   ],
-   "py": true,
-   "indent": 12
-  },
-  {
-   "id": "dash.page.index.manifest_note",
-   "file": "tools/forecasting/build_page.py",
-   "label": "Manifest explanation",
-   "shape": "plain",
-   "start": 27033,
-   "end": 27215,
-   "text": "<a href=\"/data/forecasting/manifest.json\">manifest.json</a> carries the same information machine-readably: row count, last date and source for every series.",
-   "ents": [
-    "&mdash;",
     "&middot;",
     "&larr;"
    ],
@@ -2398,8 +2263,8 @@
    "file": "tools/forecasting/build_page.py",
    "label": "Search + social description",
    "shape": "plain",
-   "start": 27247,
-   "end": 27424,
+   "start": 17961,
+   "end": 18140,
    "text": "Live data series maintained for forecasting: the debt limit, respiratory illness, refugee admissions, big-tech revenue, semiconductor trade and bird flu.",
    "ents": [],
    "py": true,

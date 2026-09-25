@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Virginia COVID &middot; Data Dashboards &middot; Ryan Beck</title>
-<meta name="description" content="People in Virginia by vaccination status, from the Virginia Department of Health. March 2021 to September 2023, when VDH stopped publishing; the history is complete for that window">
+<meta name="description" content="Virginia vaccination counts, March 2021 to September 2023. Duplicate records on February 21, 2023 were removed. July 24, 2021 is omitted because the source doubled its counts.">
 <link rel="canonical" href="https://ryanbeck.com/forecasting/virginia-covid">
 <meta name="theme-color" content="#f4ead9">
 
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ryan Beck">
 <meta property="og:title" content="Virginia COVID &middot; Data Dashboards &middot; Ryan Beck">
-<meta property="og:description" content="People in Virginia by vaccination status, from the Virginia Department of Health. March 2021 to September 2023, when VDH stopped publishing; the history is complete for that window">
+<meta property="og:description" content="Virginia vaccination counts, March 2021 to September 2023. Duplicate records on February 21, 2023 were removed. July 24, 2021 is omitted because the source doubled its counts.">
 <meta property="og:url" content="https://ryanbeck.com/forecasting/virginia-covid">
 <meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -58,13 +58,13 @@
     <header class="dash-head">
       <span class="runic">VDH, retired</span>
       <h1>Virginia COVID</h1>
-      <div class="dash-blurb"><p>People in Virginia by vaccination status, from the Virginia Department of Health. March 2021 to September 2023, when VDH stopped publishing; the history is complete for that window — nearly ten million rows, by locality, age group and vaccination status.</p><p>Two days are wrong at the source. On 21 February 2023 VDH published every row two and three times over, which is collapsed here by taking one value per locality, age band and status. On 24 July 2021 the values themselves are exactly doubled with no duplicate rows to collapse, so that day is left blank and the line breaks there.</p><p>For an age-stratified Virginia series, the HHS hospitalization panel on the <a href="/forecasting/respiratory">respiratory page</a> carries admissions broken down by age band from 2020 to 2023.</p></div>
+      <div class="dash-blurb"><p>Virginia vaccination counts, March 2021 to September 2023. Duplicate records on February 21, 2023 were removed. July 24, 2021 is omitted because the source doubled its counts.</p></div>
     </header>
 
   <section class="series" id="va-vaccinations">
     <h2 class="sr-only">Virginia COVID vaccinations</h2>
     <div class="plot-mount" data-plot='{&quot;yLabel&quot;:&quot;People&quot;,&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;at_least_one_dose&quot;,&quot;label&quot;:&quot;At least one dose&quot;},{&quot;col&quot;:&quot;fully_vaccinated&quot;,&quot;label&quot;:&quot;Fully vaccinated&quot;}],&quot;csv&quot;:&quot;/data/forecasting/va-vaccinations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Virginia COVID vaccinations&quot;,&quot;slug&quot;:&quot;va-vaccinations&quot;,&quot;credit&quot;:&quot;ryanbeck.com/forecasting&quot;,&quot;embed&quot;:&quot;/forecasting/embed/va-vaccinations&quot;,&quot;sourceUrl&quot;:&quot;https://data.virginia.gov/&quot;,&quot;title&quot;:&quot;Virginia COVID vaccinations&quot;,&quot;subtitle&quot;:&quot;data.virginia.gov (VDH) \u00b7 data to 19 September 2023&quot;}'></div>
-    <p class="series-note">Counts rather than percentages, from the state’s open-data platform. The companion file carries the same figures split by age group.</p>
+    <p class="series-note">People by vaccination status. Age-group counts are included in the companion CSV.</p>
     <p class="series-source"><span class="status is-historical">Historical</span>
       909 rows, latest about 3.0 years ago &middot;
       source: <a href="https://data.virginia.gov/" rel="noopener">data.virginia.gov (VDH)</a> &middot;
