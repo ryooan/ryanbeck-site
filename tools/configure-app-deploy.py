@@ -26,3 +26,6 @@ for folder,prefix in [(root,None),(root.parent/'March Madness 2026','march-madne
     (dest/'wrangler.json').write_text(json.dumps(data,indent=2)+'\n')
 site=json.loads((root/'site.config.json').read_text());site.update(origin='https://'+domain,chosen=True);(root/'site.config.json').write_text(json.dumps(site,indent=2)+'\n')
 print('Prepared three configs and site origin. Next: site-url, builds, tests, personal-account check, secrets, and deployment approval.')
+
+redirect={'name':'ryanbeck-www-redirect','main':'../worker/redirect.js','compatibility_date':'2026-08-01','workers_dev':False,'account_id':config['account_id'],'routes':[{'pattern':'www.'+domain,'custom_domain':True}]}
+(root/'.deploy/wrangler-www.json').write_text(json.dumps(redirect,indent=2)+'\n')

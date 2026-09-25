@@ -230,3 +230,6 @@ Launch preparation 2026-09-25: private D1 march-madness created and seeded
 Production secrets are generated in the March Madness gitignored private-data
 directory and not uploaded yet. Privacy page prepared locally at /privacy.
 Workers plan could not be read with the CLI token; Ryan must confirm it.
+
+Ryan explicitly deferred the pending MTG definitions and Help Improve empty-list
+wording on 2026-09-25: launch first, keep both as post-launch follow-ups.
