@@ -20,7 +20,7 @@ sessions. Old Vercel brackets need an explicit transfer before retirement.
 Budget a $5/month Workers Paid base for the full account/backup app, plus domain and metered usage. [Current pricing](https://developers.cloudflare.com/workers/platform/pricing/).
 
 Registered domain: ryanrobertbeck.com (2026-09-25). Canonical URLs are prepared
-locally. Before launch: reconnect the expired personal Cloudflare login, confirm
+locally. Before launch: add the domain to the verified personal Cloudflare account, confirm
 DNS activation, configure private Git remotes, configure manual CI, set real
 origin, test routes and inspect public assets. Only public/ ships. Private data,
 source snapshots and bracket backups must stay outside it. First publication
@@ -34,7 +34,12 @@ acceptance checks. No need for a new Postgres vendor or an Astro/Next.js rewrite
 
 Implementation: npm run dev starts the integrated local site. Use
 `tools/configure-app-deploy.py` and `deployment.example.json` to prepare reviewed
-configs with the registered domain. Production resources and Google OAuth are
-not configured. See `../March Madness 2026/docs/OPERATIONS.md` for the exact
+configs with the registered domain. March Madness D1 is initialized; R2 activation and Google OAuth are pending. See `../March Madness 2026/docs/OPERATIONS.md` for the exact
 release order, annual field review, archive locks and local backup activation.
 Detailed costs: [cost scenarios](docs/cloudflare-costs.md).
+
+Launch preparation 2026-09-25: private D1 march-madness created and seeded
+(a3530b66-c736-4728-9a80-d7b7da106fc6), finalized 2026 revision 2, 68 teams.
+Production secrets are generated in the March Madness gitignored private-data
+directory and not uploaded yet. Privacy page prepared locally at /privacy.
+Workers plan could not be read with the CLI token; Ryan must confirm it.

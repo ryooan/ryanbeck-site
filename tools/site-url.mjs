@@ -51,7 +51,7 @@ const RULES = [
 
 const FILES = [
   'public/index.html', 'public/projects.html', 'public/writing.html',
-  'public/blog.html', 'public/about.html', 'public/about-plain.html',
+  'public/blog.html', 'public/about.html', 'public/about-plain.html', 'public/privacy.html',
   'public/park-guides.html', 'public/404.html', 'public/compare.html',
   'public/dust-lab.html', 'public/not-human.html',
   'public/sitemap.xml', 'public/robots.txt',

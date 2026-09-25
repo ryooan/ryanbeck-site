@@ -5,8 +5,8 @@ of which is a generated dashboard (`public/forecasting/`, eight pages plus an
 index) built from committed data and never hand-edited.
 It has never been deployed — that is still the first real task, and it is
 Ryan's call, not a default. Ryan registered ryanrobertbeck.com on 2026-09-25;
-local canonical URLs use it. Wrangler now reports unauthenticated, so reconnect
-the personal Cloudflare login before resource setup. DNS and OAuth are pending.
+local canonical URLs use it. Personal Cloudflare login is restored and verified. March Madness D1 is
+initialized; domain onboarding, R2 activation and Google OAuth are pending.
 
 Since 2026-08-18 this repo lives inside the **AI Wiki and Projects**
 workspace, at `projects/personal/personal-website/`. `AGENTS.md` is the
@@ -118,7 +118,7 @@ has been narrowed to what the list in "What is not done" says.
 
 Everything in "Known placeholders" in CLAUDE.md, but the short version:
 
-- it has never been deployed. Wrangler requires login again (2026-09-25);
+- it has never been deployed. Wrangler login is restored (2026-09-25);
   production resources/config and launch review remain pending.
 - no git remote. Deployment CI is manual and requires reviewed configuration.
   `.github/workflows/forecasting.yml` refreshes the data on a schedule and
@@ -177,3 +177,9 @@ describe the prepared Cloudflare launch. No public deployment was performed.
 ## September 25, 2026 interface refinements
 
 Projects now appears in this order: MTG Cheat Sheet, Herder, Data Dashboards, National Park Guides, March Madness. MTG previews its actual rendered cheat sheet at public/assets/cards/mtg-cheat-sheet-preview.jpg using the existing light-float treatment. Capture and rebuild instructions: docs/mtg-project-artwork.md. Copy-editor mappings were regenerated after reordering.
+
+Launch preparation 2026-09-25: private D1 march-madness created and seeded
+(a3530b66-c736-4728-9a80-d7b7da106fc6), finalized 2026 revision 2, 68 teams.
+Production secrets are generated in the March Madness gitignored private-data
+directory and not uploaded yet. Privacy page prepared locally at /privacy.
+Workers plan could not be read with the CLI token; Ryan must confirm it.

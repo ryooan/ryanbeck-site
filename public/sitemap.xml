@@ -34,4 +34,5 @@
   <url><loc>https://ryanrobertbeck.com/posts/2019/10/03/uploading-the-brain</loc><changefreq>yearly</changefreq></url>
   <url><loc>https://ryanrobertbeck.com/posts/2019/09/25/not-human-cover-breakdown</loc><changefreq>yearly</changefreq></url>
   <url><loc>https://ryanrobertbeck.com/posts/2019/09/14/welcome-to-my-website</loc><changefreq>yearly</changefreq></url>
+  <url><loc>https://ryanrobertbeck.com/privacy</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
 </urlset>

@@ -1587,7 +1587,7 @@ Cloudflare Workers with static assets. Static files are served by the asset
 layer and never invoke the Worker, so they're free and unlimited; only `/api/*`
 costs anything against the 100k/day free tier.
 
-**Wrangler requires login again** (verified 2026-09-25). Use the personal
+**Wrangler login is restored** (verified 2026-09-25). It uses the personal
 ryooan@gmail.com account, expected account ID `0efbd4d43122e579508d8f3b649ed990`.
 Ryan registered ryanrobertbeck.com; canonical URLs are configured locally.
 Production resources, DNS activation and Google sign-in remain pending.
@@ -1793,3 +1793,9 @@ Projects links /mtg-cheat-sheet/ and /march-madness/. npm run dev builds the
 sibling apps, applies local D1 migrations and starts all three Workers. The
 8788 text editor proxies the app APIs too. HOSTING.md and docs/cloudflare-costs.md
 describe the prepared Cloudflare launch. No public deployment was performed.
+
+Launch preparation 2026-09-25: private D1 march-madness created and seeded
+(a3530b66-c736-4728-9a80-d7b7da106fc6), finalized 2026 revision 2, 68 teams.
+Production secrets are generated in the March Madness gitignored private-data
+directory and not uploaded yet. Privacy page prepared locally at /privacy.
+Workers plan could not be read with the CLI token; Ryan must confirm it.

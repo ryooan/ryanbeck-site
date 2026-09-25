@@ -155,8 +155,8 @@ origins. Keep its daily GitHub refresh/deploy workflow. Copying only static file
 would lose its API.
 
 The site has no remote. Ryan registered ryanrobertbeck.com on 2026-09-25;
-local canonical URLs are updated. Cloudflare login needs reconnection; DNS
-activation and production resources are pending.
+local canonical URLs are updated. Cloudflare login is restored; D1 is initialized. Domain onboarding, R2
+activation and Google OAuth are pending.
 Its deployment workflow is now manual. At audit time, March Madness had
 no project Git repo; its recorded Vercel account is the work account. Current
 Vercel production availability was not reverified in this audit.
@@ -224,3 +224,9 @@ deferred by Ryan. A thread reminder also checks for approaching publication.
 - [D1 recovery](https://developers.cloudflare.com/d1/reference/time-travel/)
 - [R2 retention locks](https://developers.cloudflare.com/r2/buckets/bucket-locks/)
 - [Google identity verification](https://developers.google.com/identity/gsi/web/guides/verify-google-id-token)
+
+Launch preparation 2026-09-25: private D1 march-madness created and seeded
+(a3530b66-c736-4728-9a80-d7b7da106fc6), finalized 2026 revision 2, 68 teams.
+Production secrets are generated in the March Madness gitignored private-data
+directory and not uploaded yet. Privacy page prepared locally at /privacy.
+Workers plan could not be read with the CLI token; Ryan must confirm it.

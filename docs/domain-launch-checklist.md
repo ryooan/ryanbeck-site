@@ -2,7 +2,9 @@
 
 Updated September 25, 2026. Domain registered by Ryan at Namecheap. Canonical
 URLs, social metadata, sitemap, robots and dashboard credits updated locally;
-site tests pass. Nothing is deployed. Wrangler reports unauthenticated.
+site tests pass. Nothing is deployed. Wrangler login is restored. The private
+production D1 database is initialized with migrations 0001-0004. R2 is not
+enabled, and the domain is not yet present in the personal Cloudflare account.
 
 ## Ryan: account steps
 
@@ -20,8 +22,7 @@ site tests pass. Nothing is deployed. Wrangler reports unauthenticated.
    Free website plan) and activate R2 billing. Complete billing/agreements.
    Workers: https://dash.cloudflare.com/0efbd4d43122e579508d8f3b649ed990/workers-and-pages
    R2: https://dash.cloudflare.com/0efbd4d43122e579508d8f3b649ed990/r2/overview
-5. Reconnect the local deployment CLI with npx wrangler login from this project
-   directory. Authorize the personal account and confirm npx wrangler whoami.
+5. DONE: personal CLI login authorized and verified on September 25.
 6. Personal Google Cloud: create/select a project, configure External audience,
    basic identity scopes only, required app/support/homepage/privacy information,
    and a Web application client. Authorized JavaScript origin is exactly
@@ -57,3 +58,9 @@ Sources and account links were checked against official setup guidance. Dashboar
 labels can change; account links may redirect to login. No passwords or API tokens
 should be pasted into chat. No purchases, account changes or remote deployments
 were performed in the domain preparation step.
+
+Launch preparation 2026-09-25: private D1 march-madness created and seeded
+(a3530b66-c736-4728-9a80-d7b7da106fc6), finalized 2026 revision 2, 68 teams.
+Production secrets are generated in the March Madness gitignored private-data
+directory and not uploaded yet. Privacy page prepared locally at /privacy.
+Workers plan could not be read with the CLI token; Ryan must confirm it.

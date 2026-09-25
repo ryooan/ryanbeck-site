@@ -24,9 +24,9 @@ an about page rendered as a book, and one Cloudflare Worker for `/api/*`.
 > is not reversible, so it still does here. Workspace rule: `AGENTS.md` →
 > "Never send email or Slack without explicit instruction".
 >
-> **Wrangler is not authenticated** as of 2026-09-25 (`npx wrangler whoami`).
-> Reconnect with `npx wrangler login` using the personal account ryooan@gmail.com,
-> expected account `0efbd4d43122e579508d8f3b649ed990`, before remote operations.
+> **Wrangler is authenticated** as of 2026-09-25 after Ryan approved login.
+> Verified personal account ryooan@gmail.com,
+> expected account `0efbd4d43122e579508d8f3b649ed990`, for remote operations.
 > Ryan registered ryanrobertbeck.com; local canonical URLs now use it. DNS
 > activation, production resources and Google client remain unverified/pending.
 >
@@ -95,3 +95,9 @@ The git history is a decision log — commit messages say why, not just what.
 - Launch follow-up requested 2026-09-25: before completing publication, remind
   Ryan to implement the previously discussed MTG definitions and revise the Help
   Improve empty-list wording. Track completion in docs/march-madness-and-launch-plan.md.
+
+Launch preparation 2026-09-25: private D1 march-madness created and seeded
+(a3530b66-c736-4728-9a80-d7b7da106fc6), finalized 2026 revision 2, 68 teams.
+Production secrets are generated in the March Madness gitignored private-data
+directory and not uploaded yet. Privacy page prepared locally at /privacy.
+Workers plan could not be read with the CLI token; Ryan must confirm it.
