@@ -176,4 +176,4 @@ describe the prepared Cloudflare launch. No public deployment was performed.
 
 ## September 25, 2026 interface refinements
 
-Projects now appears in this order: MTG Cheat Sheet, Herder, Data Dashboards, National Park Guides, March Madness. MTG has a generated paper-and-cards thumbnail at public/assets/cards/mtg-cheat-sheet.png. Prompt and provenance: docs/mtg-project-artwork.md. Copy-editor mappings were regenerated after reordering.
+Projects now appears in this order: MTG Cheat Sheet, Herder, Data Dashboards, National Park Guides, March Madness. MTG previews its actual rendered cheat sheet at public/assets/cards/mtg-cheat-sheet-preview.jpg using the existing light-float treatment. Capture and rebuild instructions: docs/mtg-project-artwork.md. Copy-editor mappings were regenerated after reordering.
