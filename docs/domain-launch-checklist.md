@@ -59,8 +59,8 @@ email or Slack. Cloud collection continues when the PC is off.
 
 ## Follow-ups
 
-- Implement reviewed MTG definition proposals after approval.
-- Revise Help Improve wording for an empty suggestion list.
+- Completed 2026-09-25: approved MTG definitions published; four terms excluded.
+- Completed 2026-09-25: Help Improve redesigned and empty-list wording revised.
 - Review private website Git history before adding a remote source backup.
 - Preserve original raw historical sports inputs in private remote storage.
 - Verify the first nonempty NCAA availability feed during tournament season.
