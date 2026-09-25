@@ -1,0 +1,2 @@
+import {spawnSync} from 'node:child_process';
+for(const [cmd,args,cwd] of [['npm',['run','build'],'../March Madness 2026'],['python',['scripts/prepare_domain_path.py'],'../mtg-mechanics-cheatsheet']]){const result=spawnSync(process.platform==='win32'&&cmd==='npm'?'npm.cmd':cmd,args,{cwd,stdio:'inherit',shell:process.platform==='win32'&&cmd==='npm'});if(result.status!==0)process.exit(result.status||1);}

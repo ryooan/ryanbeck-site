@@ -1,8 +1,6 @@
 name: Deploy
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -15,9 +13,19 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
 
-      - run: npm ci || npm install
+      - run: npm ci
+
+      - name: Load reviewed domain configuration
+        env:
+          SITE_DEPLOYMENT_CONFIG: ${{ vars.SITE_DEPLOYMENT_CONFIG }}
+        run: node tools/ci-deploy-config.mjs
+      - run: npm run site-url
+      - run: npm test
+
+      # Deploy is intentionally manual until domain/resource configuration is complete.
+      - run: node tools/check-deploy.mjs
 
       # Fails the build if a page links to a file that isn't there.
       - name: Check internal links
@@ -31,3 +39,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --config .deploy/wrangler.json

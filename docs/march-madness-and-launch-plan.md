@@ -1,3 +1,10 @@
+# Historical audit and implementation plan
+
+This records the pre-implementation audit on September 25, 2026. The proposed
+changes are now implemented locally; the current status and remaining launch
+steps are in HOSTING.md and the sibling March Madness docs/OPERATIONS.md. The
+requested MTG address is /mtg-cheat-sheet/. No public cutover has occurred.
+
 # March Madness audit and website launch plan
 
 September 25, 2026. Investigation and proposed implementation. No app behavior,
@@ -132,7 +139,7 @@ Use Ryan's personal Cloudflare account and separate deployments:
 | New-domain path | Service |
 | --- | --- |
 | / and existing website pages | Existing website Worker and static assets |
-| /mtg/* | Existing MTG Worker and feedback Durable Object |
+| /mtg-cheat-sheet/* | Existing MTG Worker and feedback Durable Object |
 | /march-madness/* | React/Vite assets, new Worker API and D1 |
 
 Keep both tools in Projects. No website framework rewrite is needed. Cloudflare
@@ -148,7 +155,7 @@ origins. Keep its daily GitHub refresh/deploy workflow. Copying only static file
 would lose its API.
 
 The site has no remote or chosen domain. ryanbeck.com is an unchosen placeholder.
-Its branch is master while the deploy workflow watches main. March Madness has
+Its deployment workflow is now manual. At audit time, March Madness had
 no project Git repo; its recorded Vercel account is the work account. Current
 Vercel production availability was not reverified in this audit.
 

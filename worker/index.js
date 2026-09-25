@@ -1,6 +1,6 @@
 /**
  * Everything static is served by Cloudflare's asset layer before this runs.
- * The Worker only wakes up for /api/* routes.
+ * The Worker handles /api/* and forwards the two integrated project apps.
  */
 
 /* The site's address comes from site.config.json, the one place it is
@@ -13,6 +13,9 @@ const SUBSTACK_FEED = 'https://themissingnuance.substack.com/feed';
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+
+    if (url.pathname === '/mtg-cheat-sheet' || url.pathname.startsWith('/mtg-cheat-sheet/')) return env.MTG.fetch(request);
+    if (url.pathname === '/march-madness' || url.pathname.startsWith('/march-madness/')) return env.MARCH_MADNESS.fetch(request);
 
     if (url.pathname === '/api/substack') return substack(request, ctx);
     if (url.pathname === '/api/subscribe') return subscribe(request, env);

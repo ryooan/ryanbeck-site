@@ -3,18 +3,20 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev",
+    "dev": "node tools/dev-apps.mjs",
     "serve": "python3 -m http.server 8000 --directory public",
-    "deploy": "wrangler deploy",
+    "deploy": "wrangler deploy --config .deploy/wrangler.json",
     "tail": "wrangler tail",
     "test": "node tools/check-links.mjs && node tools/check-docs.mjs && node tools/site-url.mjs && node tools/check-public-data.mjs",
-    "predeploy": "npm test",
+    "predeploy": "npm test && node tools/check-deploy.mjs",
     "site-url": "node tools/site-url.mjs --write",
     "copy": "node tools/copy.mjs extract",
     "copy-apply": "node tools/copy.mjs apply",
     "edit": "node tools/copy-server.mjs",
     "about-plain": "node tools/build-about-plain.mjs",
-    "blog-build": "python tools/build-blog.py"
+    "blog-build": "python tools/build-blog.py",
+    "apps-build": "node tools/build-apps.mjs",
+    "apps-setup": "node tools/setup-apps.mjs"
   },
   "devDependencies": {
     "wrangler": "^4"

@@ -213,9 +213,14 @@ const server = createServer(async (req, res) => {
   }
 
   /* Everything else is the real site, proxied. */
+  const proxyHeaders = { ...req.headers };
+  // Translate only this trusted local editor's own origin. Foreign origins
+  // remain foreign and are rejected by the project APIs.
+  if ([`http://localhost:${PORT}`, `http://127.0.0.1:${PORT}`].includes(proxyHeaders.origin))
+    proxyHeaders.origin = `http://127.0.0.1:${UPSTREAM}`;
   const up = httpRequest({
     host: '127.0.0.1', port: UPSTREAM, path: req.url, method: req.method,
-    headers: { ...req.headers, host: `127.0.0.1:${UPSTREAM}`,
+    headers: { ...proxyHeaders, host: `127.0.0.1:${UPSTREAM}`,
                /* Ask for plain bytes so the HTML can be rewritten. */
                'accept-encoding': 'identity' },
   }, (r) => {
@@ -275,8 +280,8 @@ const already = await portOpen(UPSTREAM);
 let child = null;
 if (!already) {
   console.log(`Starting wrangler dev on :${UPSTREAM} …`);
-  child = spawn('npx', ['wrangler', 'dev', '--port', String(UPSTREAM)],
-    { cwd: ROOT, stdio: 'ignore', shell: process.platform === 'win32' });
+  child = spawn(process.execPath, ['tools/dev-apps.mjs'],
+    { cwd: ROOT, stdio: 'ignore', env: {...process.env, SITE_PORT:String(UPSTREAM)} });
   /* 90s, not 30. _redirects grew by forty rules when the ryanbeckauthor
      archive landed, and wrangler parses every one of them at boot --
      it now takes well over half a minute to answer, and the shorter

@@ -7,6 +7,7 @@ compatibility_date = "2026-08-01"
 [assets]
 directory = "./public"
 binding = "ASSETS"
+run_worker_first = ["/march-madness", "/march-madness/*", "/mtg-cheat-sheet", "/mtg-cheat-sheet/*"]
 not_found_handling = "404-page"
 # "none", because _redirects owns the pretty URLs. The default
 # (auto-trailing-slash) 307s /about.html back to /about, which combines with
@@ -21,8 +22,10 @@ enabled = true
 # pattern = "ryanbeck.com"   # site-url
 # custom_domain = true
 
-# A Postgres connection (Neon) for the first project that needs one.
-# Create it with:  npx wrangler hyperdrive create ryanbeck-db --connection-string="postgres://..."
-# [[hyperdrive]]
-# binding = "DB"
-# id = "<hyperdrive-id>"
+# The gateway also makes all apps available under one localhost origin.
+[[services]]
+binding = "MTG"
+service = "mtg-mechanics-cheatsheet"
+[[services]]
+binding = "MARCH_MADNESS"
+service = "ryanbeck-march-madness"

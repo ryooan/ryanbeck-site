@@ -119,9 +119,8 @@ has been narrowed to what the list in "What is not done" says.
 Everything in "Known placeholders" in CLAUDE.md, but the short version:
 
 - it has never been deployed. Wrangler is logged in (re-verified 2026-09-22),
-  so `npm run deploy` would work — publishing is Ryan's call, never a default
-- no git remote, and `.github/workflows/deploy.yml` triggers on `main` while
-  the branch here is `master`. This now blocks more than deployment:
+  but deployment preflight requires a chosen domain/config. Publishing needs approval
+- no git remote. Deployment CI is manual and requires reviewed configuration.
   `.github/workflows/forecasting.yml` refreshes the data on a schedule and
   cannot run at all until the repo has a remote
 - no domain: `ryanbeck.com` is a **placeholder** (it is taken, and will not be
@@ -167,3 +166,10 @@ description over your reading of the source: twice it was correct about
 behavior that the current code could no longer produce, because his browser
 was running cached JavaScript. Assets now answer `no-cache`, which should
 retire that particular ghost.
+
+## Integrated project apps (2026-09-25)
+
+Projects links /mtg-cheat-sheet/ and /march-madness/. npm run dev builds the
+sibling apps, applies local D1 migrations and starts all three Workers. The
+8788 text editor proxies the app APIs too. HOSTING.md and docs/cloudflare-costs.md
+describe the prepared Cloudflare launch. No public deployment was performed.

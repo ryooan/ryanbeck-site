@@ -17,6 +17,7 @@ const ROOT = resolve('public');
    walked. Links INTO it from the live pages are still checked, because those
    are ours. */
 const ARCHIVE = 'ryanbeckauthor';
+const SERVICE_ROUTES = new Set(['/mtg-cheat-sheet/', '/march-madness/']);
 
 function walk(dir) {
   const out = [];
@@ -35,6 +36,7 @@ for (const page of pages) {
   const html = readFileSync(join(ROOT, page), 'utf8');
   const refs = [...html.matchAll(/(?:href|src)="([^"]+)"/g)].map((m) => m[1]);
   for (const ref of refs) {
+    if (SERVICE_ROUTES.has(ref)) continue;
     if (/^(https?:|mailto:|data:|#|\/api\/)/.test(ref)) continue;
     let clean = ref.split('#')[0].split('?')[0];
     if (!clean) continue;

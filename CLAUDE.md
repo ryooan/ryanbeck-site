@@ -1596,9 +1596,8 @@ never been deployed — publishing is Ryan's call, not a default.
 
 Two things to know before wiring up CI:
 
-- `.github/workflows/deploy.yml` triggers on push to **`main`**, but this repo's
-  branch is **`master`**. Rename the branch or the trigger, or the workflow
-  silently never runs.
+- `.github/workflows/deploy.yml` runs only by manual workflow_dispatch.
+  It requires SITE_DEPLOYMENT_CONFIG, the reviewed root Worker configuration.
 - It needs two GitHub secrets, `CLOUDFLARE_API_TOKEN` and
   `CLOUDFLARE_ACCOUNT_ID`. There is no remote configured yet, so none of this
   is live.
@@ -1608,9 +1607,8 @@ content-hashed filenames — they are on `no-cache` today so swapped artwork
 shows up immediately in review (see the note at the top of `public/_headers`).
 
 `public/_redirects` already maps the old ryanbeckauthor.com paths and gives the
-pages extensionless URLs. `wrangler.toml` has commented-out blocks for the
-custom domain and a Hyperdrive/Neon binding — uncomment when they exist, and
-note `html_handling = "none"` there is load-bearing (see "Running it").
+pages extensionless URLs. `tools/configure-app-deploy.py` generates custom-domain/path configs for
+the root and both app Workers after a domain is selected. Note `html_handling = "none"` there is load-bearing (see "Running it").
 
 ## Known placeholders
 
@@ -1789,3 +1787,10 @@ Roughly in the order they unblock things.
 7. **Decide on Astro** before the site grows past ~8 pages. The header is
    duplicated across six files, which is fine at six and annoying at ten.
    HOSTING.md has the argument, including the case against.
+
+## Integrated project apps (2026-09-25)
+
+Projects links /mtg-cheat-sheet/ and /march-madness/. npm run dev builds the
+sibling apps, applies local D1 migrations and starts all three Workers. The
+8788 text editor proxies the app APIs too. HOSTING.md and docs/cloudflare-costs.md
+describe the prepared Cloudflare launch. No public deployment was performed.
