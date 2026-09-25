@@ -1327,6 +1327,22 @@ Worker implements it: fetch, parse, decode entities, cache 30 minutes.
 
 ## The ryanbeckauthor.com archive
 
+**Modern posts (2026-09-25):** `python tools/build-blog.py` generates all
+19 posts under `public/posts/` using `tools/templates/blog-post.html` and the
+original `.post` content in the preserved HTML. Install dependencies with
+`pip install -r tools/requirements.txt`. Prose, dates, images, embeds and
+quotes are preserved; internal post links use the modern routes. Validate
+with `python tools/check-blog.py`. These generated pages are not copy-editor
+fields; edit the archived article source and rebuild when changing a post.
+
+Blog's Earlier writing list and incoming dated URLs lead to the modern
+versions. Each article links its original version; Blog also has an
+"Explore the original author site" link. Prefixed archive routes keep the
+original site's design and navigation. `/ryanbeckauthor/` now explicitly
+rewrites to its index, fixing Home links that previously returned 404.
+Run the blog builder after re-mirroring the old site to restore modern dated
+redirects. `tools/site-url.mjs` includes generated posts in domain checks.
+
 `public/ryanbeckauthor/` is the whole old site, captured live and served at
 the same paths under a prefix. Regenerate with:
 
@@ -1338,9 +1354,10 @@ node tools/mirror-old-site.mjs --dry   # report, write nothing
 **Why it exists.** Ryan is pointing ryanbeckauthor.com at this site. The
 moment that DNS changes the old site stops answering, and every inbound link
 to nineteen posts breaks. So it is captured here first, and `_redirects` sends
-the paths that only ever existed on the old site into the archive — a request
+the paths that only ever existed on the old site into local pages. Since the
+2026-09-25 migration, dated post paths lead to the modern articles; a request
 for `/2021/08/27/Afghanistan-Uncertainty.html` arriving on the repointed
-domain 301s to `/ryanbeckauthor/2021/08/27/…`. **`/about`, `/blog` and
+domain 301s to `/posts/2021/08/27/afghanistan-uncertainty`. **`/about`, `/blog` and
 `/writing` are deliberately NOT redirected**: they exist on both sites, and a
 visitor is better served by the current one.
 

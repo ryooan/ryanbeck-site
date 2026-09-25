@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Noob&#x27;s Guide to Github Actions · Ryan Beck</title>
+<meta name="description" content="I have a few Rmarkdown scripts that I’ve created to visualize data for forecasting. I host them on Github so they appear as html pages on my website . I’ve been looking for a way t">
+<link rel="canonical" href="https://ryanbeck.com/posts/2022/02/10/a-noob-s-guide-to-github-actions">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Noob&#x27;s Guide to Github Actions · Ryan Beck">
+<meta property="og:description" content="I have a few Rmarkdown scripts that I’ve created to visualize data for forecasting. I host them on Github so they appear as html pages on my website . I’ve been looking for a way t">
+<meta property="og:url" content="https://ryanbeck.com/posts/2022/02/10/a-noob-s-guide-to-github-actions">
+<meta property="og:image" content="https://ryanbeck.com/assets/og.jpg">
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/projects">Projects</a>
+      <a href="/writing">Fiction</a>
+      <a href="/blog" aria-current="page">Blog</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <article class="blog-article wrap">
+    <header class="page-head">
+      <p><a href="/blog">← All writing</a></p>
+      <h1>A Noob&#x27;s Guide to Github Actions</h1>
+      <time datetime="2022-02-10">February 10, 2022</time>
+    </header>
+    <div class="article-body">
+
+
+<p>I have a few Rmarkdown scripts that I’ve created to visualize data for forecasting. I host them on Github so they appear as html <a href="/ryanbeckauthor/forecasting/Virginia_Vaccinations.html">pages</a> on my <a href="/ryanbeckauthor/forecasting/Virginia_Vaccinations.html">website</a>. I’ve been looking for a way to automatically render those Rmarkdown files every day instead of manually running and uploading the updated html file to Github, and someone suggested I try Github Actions. This turned out to be the perfect solution, but it took a lot of head scratching and confusion on my part to get it going. So here I’m documenting in detail everything I learned from the perspective of a novice muddling through it. There are other guides out there from people who have more knowledge of Github, Github Actions, and R, but as I looked at these guides I felt that there were gaps where they were either discussing things above my level of understanding or things didn’t apply to my situation. I’m hoping that by documenting what I’ve learned here it will help other noobs learn and setup their own Github Actions more quickly, and also that I’ll be able to use this guide myself when I inevitably forget how my setup works.</p>
+<h1 id="references-and-helpful-sources">References and Helpful Sources</h1>
+<p>Before digging in, a few things are worth mentioning and linking up front so they can be referred to. First are the guides I used to piece this all together. I’ve included a TL;DR as well, if the TL;DR sounds like it fits perfectly with what you need to do feel free to jump on over and ignore everything else I have to say.</p>
+<ul>
+<li>Source: <a href="https://blog--simonpcouch.netlify.app/blog/r-github-actions-commit/">Running R Scripts on a Schedule with GitHub Actions</a>
+<ul>
+<li>TL;DR: A great overview of all the steps of creating an R script, putting it into a package, uploading the package to Github, and creating a Github action to schedule it. It gave me a great starting point but it was too light on explanation, didn’t really specify what was actually happening at a basic level, and used a procedure that at the end I felt was more complicated than I needed.</li>
+</ul>
+</li>
+<li>Source: <a href="https://fromthebottomoftheheap.net/2020/04/30/rendering-your-readme-with-github-actions/">Rendering your README with GitHub Actions</a>
+<ul>
+<li>TL;DR: This one is based around creating an Rmarkdown file that will be used to update the README in their Github repository automatically. This one filled in a few more pieces about syntax and helpfully describes what’s happening in certain parts of the process, but there were still parts that I didn’t understand, background I felt like I was missing, and it didn’t give me all the information I needed to complete my Github Action.</li>
+</ul>
+</li>
+<li>Source: <a href="https://github.com/r-lib/actions">R-lib Actions</a>
+<ul>
+<li>TL;DR: A Github repository with a bunch of actions and examples for using Github Actions to run R scripts and files. This one was particularly useful for figuring out syntax or what specific commands were doing, but it’s somewhat light on descriptions so is mostly useful for templates and added context.<br/>
+<br/></li>
+</ul>
+</li>
+</ul>
+<p>Those are the main sources of useful information related to Github Actions I found. But there are some additional helpful tools and sources I’ve mentioned in the following guide that I’ll link here. These might be meaningless to anyone reading this who isn’t familiar with this stuff, but I think it will be useful to have some of the more important links up front and all in one place for referring back to later.</p>
+<ul>
+<li>Cron scheduling tools
+    <ul>
+<li><a href="https://crontab.guru/">A tool that helps explain Cron syntax and can generate Cron expressions</a></li>
+<li><a href="https://crontab.cronhub.io/">Another one, similar to above</a>. I prefer the one above but this one may be helpful too.</li>
+</ul>
+</li>
+<li>Creating an R package. I ultimately didn’t end up using any of these. They’re more in-depth than is necessary to make a simple Github Action that runs R code. But I found all these when trying to figure out what an R package was in the first place and I’ll provide them in case anyone needs a more advanced understanding of R packages for their use.
+    <ul>
+<li><a href="https://r-pkgs.org/package-structure-state.html">A useful explainer on different types of R packages</a>. I wish I had found this earlier, because it seems like people commonly refer to R packages without explaining what type they mean or what an R package actually is.</li>
+<li><a href="https://tinyheero.github.io/jekyll/update/2015/07/26/making-your-first-R-package.html">Making Your First R Package</a></li>
+<li><a href="https://support.rstudio.com/hc/en-us/articles/200486488-Developing-Packages-with-the-RStudio-IDE">Developing Packages with the RStudio IDE</a></li>
+<li><a href="http://web.mit.edu/insong/www/pdf/rpackage_instructions.pdf">Instructions for Creating Your Own R Package (pdf)</a></li>
+<li><a href="https://kbroman.org/pkg_primer/pages/github.html">Putting your R package on GitHub</a></li>
+</ul>
+</li>
+<li>Miscellaneous stuff I found useful
+    <ul>
+<li><a href="https://explainshell.com/explain?cmd=git+commit+-am">Explainshell.com</a> this is handy for understanding what the shell commands used in the Github Actions .yaml file actually mean.</li>
+<li><a href="https://download-directory.github.io/">Download a Github file or folder</a>. Super useful since Github can be a bit of a pain to work with on the web (and I’m too ignorant/lazy to try to figure out Git). You just simply paste the address of the Github repository, folder, or file you want into that website and it’ll create a download for you.</li>
+<li><a href="https://superuser.com/questions/153165/what-does-represent-while-giving-path">Path syntax explainer on Stack Overflow</a>. A helpful explainer on Stack Overflow of how you can create a path to root, parent, and current directories using “/” , “./”, or “../”.</li>
+</ul>
+</li>
+<li><a href="https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions">Github Actions documentation</a>. Extremely helpful for looking up commands, syntax, and available options. Entries give really good explanations of what’s actually happening and what options are available to you.</li>
+<li><a href="https://github.com/ryooan/ryooan.github.io/tree/master/.github/workflows">My Github workflows</a>. That’s a link to my Workflows folder containing the .yaml files that are my Github Actions. This may be handy if you want to follow along with an existing example.<br/>
+<br/></li>
+</ul>
+<h1 id="first-step---making-a-simple-package">First Step - Making a Simple Package</h1>
+<p>Once you have an R file you want to regularly run using Github Actions, whether it’s a script or an Rmarkdown document, the first thing you need to do is make a package. This is simpler than it might sound. There are <a href="https://r-pkgs.org/package-structure-state.html">several different package formats</a>, but we only care about the simplest one. It’s essentially your R file placed in a folder with a few other basic files nearby. You make a folder, name it what you want your package name to be, and the inside of that folder will end up looking like this:</p>
+<figure>
+<img alt="Package Folder Structure" src="/ryanbeckauthor/assets/github-1.png" style="width:50%; margin:auto; display:block"/>
+<figcaption>Package Folder Structure</figcaption>
+</figure>
+<p>Your R script or Rmarkdown file will go inside the “R” folder shown. The DESCRIPTION and NAMESPACE files just contain information about the package. We probably don’t even need the NAMESPACE file, but it doesn’t hurt to keep it either. We do need the DESCRIPTION file though, because we’ll use that for telling our Github Action what packages our R code needs.</p>
+<p>To build your package you can either just manually create or copy the folder structure I’ve shown, or follow one of the procedures to generate a package I linked in the references section above. I recommend just copying and editing, feel free to <a href="https://github.com/ryooan/ryooan.github.io/tree/master/forecasting/FluPackage">download and copy my files</a> (you can use the <a href="https://download-directory.github.io/">Github directory downloader</a> I mentioned in the references section to download them).</p>
+<p>The DESCRIPTION and NAMESPACE files can be edited as text documents in Notepad or your preferred text editor. One of my DESCRIPTION files looks like this:</p>
+<figure>
+<img alt="DESCRIPTION File Contents" src="/ryanbeckauthor/assets/github-2.png" style="width:95%; margin:auto; display:block"/>
+<figcaption>DESCRIPTION File Contents</figcaption>
+</figure>
+<p>You can edit the yellow highlighted information as you please, that’s just stuff that’s supposed to be information if someone else were to use or look at the package. The “Package” line should be changed to the name of the folder you put the DESCRIPTION and NAMESPACE files and “R” folder in because that’s the name of your package. The green highlighted lines under imports is what we really care about. We’re going to reference this stuff in our Github Action to tell Github what packages it needs to load to run our R file. Anything you call in your R script or Rmarkdown document with library() (e.g. library(tidyverse)), should go here. Otherwise you won’t have the proper libraries loaded to run your script.</p>
+<p>Once you’re done editing the DESCRIPTION file you can save it as a .txt file and then rename it to delete the .txt extension. The NAMESPACE file in my packages just contains this: exportPattern(“^[[:alpha:]]+”). I don’t know what that means or what that does. <a href="https://methodsblog.com/2015/11/30/building-your-first-r-package/#:~:text=The%20NAMESPACE%20file%20allows%20R,use%20them%20in%20your%20code.">According to this</a> it’s just something that helps R packages talk to each other. The text in that file was just what was there when I generated a package in RStudio. I don’t think we really need the file, but it doesn’t seem to be hurting anything either so I left it there.</p>
+<p>Side note: When creating a typical R package for others to use, you’re generally <a href="https://stackoverflow.com/questions/64737686/why-library-or-require-should-not-be-used-in-a-r-package">not supposed to leave library() calls in your R script</a>. It sounds like this can create errors for package users. However, I don’t think we care about this because our intent isn’t to distribute the package for others to use, we just want to put our R file in a package so it will be run automatically. If you intend to create a more traditional R package for distribution and others to use you probably need to take a deeper look at whether you’re following the appropriate best practices.</p>
+<p>Once the files are edited, your package folder is named appropriately, and your R file is placed in the “R” folder the next step is to upload the package to Github. Just place it wherever in your Github repository you like.</p>
+<h1 id="create-a-githubworkflows-directory">Create a .Github/Workflows Directory</h1>
+<p>Make a new folder called “.Github” in the root directory of your repository. It has to be in the root, otherwise it won’t work. Then in the “.Github” folder make a folder called “Workflows”. This is where the .yaml files that define the workflows to be completed automatically will go. You can see the .Github/Workflows directory in <a href="https://github.com/ryooan/ryooan.github.io">my repository</a> for an example.</p>
+<h1 id="create-a-github-action">Create a Github Action</h1>
+<p>Next we’ll create the .yaml file that will define the Github Action. I’ll walk line by line through mine and try to explain my understanding of what each is doing.</p>
+<figure>
+<img alt="Github Action Lines 1 through 16" src="/ryanbeckauthor/assets/github-3.png" style="width:95%; margin:auto; display:block"/>
+<figcaption>Github Action Lines 1 through 16</figcaption>
+</figure>
+<p>First up, line 1. The “on:” line tells Github what will <a href="https://docs.github.com/en/actions/using-workflows/triggering-a-workflow">trigger the action</a>. There are multiple ways to trigger your action, such as by looking for a recent push to your repository or many other types of events. Mine is using a <a href="https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows">schedule</a>, which runs at specified intervals based on <a href="https://crontab.guru/">cron syntax</a>. My lines 1 through 3 tell the Github Action to trigger at 7 PM every day (in UTC, the timezone used on Github). You can tell it to run at time intervals instead if you want, such as by entering “*/10 * * * *” which would tell it to run every ten minutes (the most frequent Github allows is every 5 minutes).</p>
+<p>At line 5 I define a <a href="https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow">job</a>. Each Github Action can have multiple jobs if you want, and the jobs will run in parallel (at the same time) if you define more than one. Line 6 is just what I’ve decided to call this job. Instead of “render’ you can put anything you want there, like “create-pizza-order” or whatever you want to describe your job as. Line 7 defines what <a href="https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners">Github runner</a> will be used. But instead of directly defining it on this line the “${{“ syntax means it’s referring to a variable defined elsewhere, in this case it’s referring to “matrix.config.os” which is a variable defined on lines 13 through 15. Line 7 is telling the Github Action to run on the <a href="https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners">Github runner</a> “windows-latest”. That means that you’re choosing which virtual environment to run your commands on, in this case it means our R script or Rmarkdown file will run on that environment. You can choose from <a href="https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners">several options</a> such as different Mac, Ubuntu, and Windows environments. I suggest using what you run locally. The example I followed used an Ubuntu environment, and I initially just kept that as is until I realized it was giving me errors because I didn’t have a certain package defined in my Rmarkdown document that it needed to work on an Ubuntu system.</p>
+<p>I’m not entirely sure of the purpose of the “name” entry on line 9, but I think all it does is set the <a href="https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#setting-a-name-for-a-job">name for the job</a> for display somewhere on Github. In this case the name is set to show the operating system and the release of R used for the job.</p>
+<p>Next up is lines 11 through 15. I don’t fully understand the purpose of the “strategy” section here. According to the Github documentation it’s one of the “<a href="https://docs.github.com/en/actions/learn-github-actions/contexts">contexts</a>” available that can be used for different purposes. In this case I’m not sure if it’s really necessary, but within the strategy section several variables are defined for use elsewhere, such as the OS and R version. The “fail-fast” option seems to be something that could <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstrategyfail-fast">cancel all in-progress jobs if one of your matrix jobs fails</a>. I don’t know what that means and as far as I can tell there isn’t a matrix job actually happening here, so I’m not sure if this section is really necessary but I left it in from the example I modified since it seems to work fine without removing it.</p>
+<figure>
+<img alt="Github Action Lines 17 through 34" src="/ryanbeckauthor/assets/github-4.png" style="width:95%; margin:auto; display:block"/>
+<figcaption>Github Action Lines 17 through 34</figcaption>
+</figure>
+<p>Onto line 17. The “env” portion is <a href="https://docs.github.com/en/actions/learn-github-actions/contexts#env-context">another context</a> where certain variables are set. Some of these variables just seem to be what I’ll call “trust me” variables, as in “a bunch of examples do it this way so just trust that they’re right”. If you care about why or are suspicious they’re causing you trouble here’s some more info I found about each:</p>
+<ul>
+<li>R_REMOTES_NO_ERRORS_FROM_WARNINGS: If you’ve installed packages in R before you’ve probably seen some warnings pop up, this keeps those warnings <a href="https://github.com/r-lib/remotes#environment-variables">from turning into errors</a> that could <a href="https://github.com/r-lib/remotes/issues/403">mess up your Github Action</a>.</li>
+<li>RSPM: RSPM seems to stand for “<a href="https://github.com/r-lib/actions/tree/v2/setup-r">R Studio Package Manager</a>”. I don’t think this line is necessary, but also it’s not hurting anything so I’m leaving it in. In <a href="https://github.com/r-lib/actions/actions/runs/431266692/workflow">other examples</a> it seems to be calling a variable set under the matrix section, like we did with the OS. But the example I followed didn’t set an RSPM variable so I’m fairly sure it’s doing nothing, but I also haven’t tried to take it out. ¯\_(ツ)_/¯</li>
+<li>GITHUB_PAT: This line seems to work some Github Actions magic that I don’t know the reason for, <a href="https://github.com/r-lib/actions/issues/208">other people say that it helps</a> and to <a href="https://github.com/DoubleML/doubleml-docs/issues/38">put it there</a> so why not.<br/>
+<br/></li>
+</ul>
+<p>The variables on lines 21 through 24 are ones I created. You’ll see how I use them later on, but basically I’m just putting the path and filename I want up front so I can copy this workflow and change only those variables the next time I want to automate an R file. I don’t actually use the variables on lines 23 and 24, they’re commented out using “#”.</p>
+<p>Line 26 begins the <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idsteps">“steps” section</a>. Actions run as steps, and in this section you can give each action a name and run that action. First it defines some of the tools it “<a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsuses">uses</a>”. That’s what’s happening on lines 27 and 29. Line 27 uses a tool that lets this workflow <a href="https://github.community/t/what-is-actions-checkout-v2-in-github-action/191110">check out a repository</a> and line 29 sets up the <a href="https://github.com/r-lib/actions/tree/v2/setup-r">R environment for use in actions</a>. Note that the “@master” portion seems to specify what branch of the “setup-r” tool we’re looking at, it’s kind of like a version signifier. The current version seems to be “v2”, but according to <a href="https://github.com/r-lib/actions/issues/374">this thread</a> since the branch was renamed from “master” and has eventually become “v2” Github automatically redirects from “master” to “v2”. So that’s why “master” still seems to work. It sounds like the proper naming might be “v2” but master seems to work fine. If you have trouble and trace it back to that being the source it might be good to try “v2” instead.</p>
+<p>Lines 30 through 32 define some settings for the “setup-r” action. “With” means line 29 will use info provided on lines 31 and 32. Line 31 sets the version of R we want to use and references the variable previously defined under the matrix section on line 15. I’m just using “release”, which seems to default to the latest available version, but you can specify other versions if desired. Line 32 sets an “<a href="https://github.com/r-lib/actions/tree/v2-branch/setup-r">http-user-agent</a>” setting used by the “r-setup” tool, but references a variable under the matrix section that we never defined, so I’m not sure if it’s actually doing anything but I’m leaving it in there in case it is.</p>
+<p>Line 34 sets up Pandoc, which is something used to generate Rmarkdown output. If you want to know more about it <a href="https://stackoverflow.com/questions/40563479/relationship-between-r-markdown-knitr-pandoc-and-bookdown">this is a useful explanation</a>.</p>
+<figure>
+<img alt="Github Action Lines 36 through 57" src="/ryanbeckauthor/assets/github-5.png" style="width:95%; margin:auto; display:block"/>
+<figcaption>Github Action Lines 36 through 57</figcaption>
+</figure>
+<p>Finally we’re getting to the interesting stuff. Line 36 is our first named step that will start doing something useful. I mostly just left the names as-is from the example I followed. In this case we’re querying dependencies, which means looking at what packages our R file needs. First this step gets a name on line 36. Then we define the working directory. This line references the variable in the “env” section we set. We want to set the working directory to the folder of our R package. In my example my R package is called “FluPackage”, so I set the working directory to “./forecasting/FluPackage”.</p>
+<p>When we’re defining paths and directories, it’s important to know how to start them. The “./” at the beginning means we’re starting in the current working directory. For our Github action that means we’re starting in the root directory of our repository. That’s where we want to start, but I use other starting locations elsewhere so we’ll want to know what they mean. Based on <a href="https://superuser.com/questions/153165/what-does-represent-while-giving-path">this resource</a> here’s the important ones to know:</p>
+<ul>
+<li>”/” = root directory (top level of all your folders)</li>
+<li>”./” = current working directory</li>
+<li>”../” = parent directory (one folder up from the current working directory)<br/>
+<br/></li>
+</ul>
+<p>On line 38 we enter the <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun">run command</a> which tells our action to execute commands. The | after “run:” just means there are multiple lines to this run command and tells it to look at the lines below. Something important to know is that the “shell: Rscript {0}” on line 43 tells this step what <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell">shell to use</a>. I don’t fully understand it, but my impression is that the different shells are just the core computer languages you can choose from. Specifically, line 43 is using a command to <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#custom-shell">specify a custom shell</a> for R files. That’s all we need to know, since we setup the R environment in previous commands it’ll recognize that we want to run R commands.</p>
+<p>The actual contents of this step on lines 39 through 40 are just installing two packages that are needed. Those lines are important. The lines 41 and 42 aren’t really being used. What they’re doing is using some R commands to look at the dependencies in our package (based on the DESCRIPTION file) and writing them to a “depends.Rds” file that can be referenced later. But this file only gets used in the “Cache R Packages” step on lines 51 through 57, which I’ve commented out because I wasn’t able to get it working and it’s not critical unless you really care about how long your Github Action is taking to run. If you do care about that you’ll have to do some more digging because I couldn’t figure it out, I suggest starting with <a href="https://blog--simonpcouch.netlify.app/blog/r-github-actions-commit/">this article</a> that I started from, he succeeds at getting his packages to cache.</p>
+<p>I’m keeping lines 41 and 42 in because I don’t want to accidentally break anything if I take them out, and I want them there in case I decide to try to fix the caching section someday. But lines 39 and 40 are important, they’re packages that do get used later, so if you tweak stuff don’t delete those. You can see where packages have been used when you see the name of the package followed by “::”, such as “remotes::dev_package…” on line 41.</p>
+<p>Lines 45 through 49 constitute the next step, where we install another package we need, the “rmarkdown” package. If you aren’t using Rmarkdown files for this you probably don’t need that installed, and some of the later steps may need modified since you won’t actually be rendering an .Rmd files.</p>
+<figure>
+<img alt="Github Action Lines 59 through 80" src="/ryanbeckauthor/assets/github-6.png" style="width:95%; margin:auto; display:block"/>
+<figcaption>Github Action Lines 59 through 80</figcaption>
+</figure>
+<p>Next on lines 59 through 63 we install dependencies. This section will look in our working directory, find the package there, and look in the DESCRIPTION file to see which dependencies are there. It does that on line 62, where it uses the “remotes” package to look for and install these dependencies. Again, the working directory on line 60 should point to our package so that the install dependencies command is looking in the correct place.</p>
+<p>Lines 65 through 69 are where the Rmarkdown file in the package actually gets rendered. I set the working directory to the package location, then it runs the render command and I specify the <a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">necessary inputs to that command</a>. First I specify the file to be rendered. On line 22 I had set that as “R/Flu_Hospitalizations.rmd”. The working directory is already set to the package, so all this is doing is say go to the file in the “R” folder in the package. Then I specify that I want the output to be html, and that I want the output directory to be in the parent directory, which means one folder above the working directory. You may have to adjust these if you want it to output elsewhere.</p>
+<p>Lines 71 through 80 commit the files. When the files are run and output is created the output needs to be committed to appear in your Github repository. Initially my strategy here was to commit the specific output file by name, but that didn’t seem to be working so I just made it commit all the files. Because it’s just committing everything I commented out the working directory, since I believe this will commit everything in my repository that needs committed regardless of where it is. Line 74 is just a command to output the <a href="https://git-scm.com/docs/git-rev-parse">top level</a> of the “<a href="https://craftquest.io/articles/what-is-the-working-tree-in-git">working tree</a>”. I don’t fully understand what a working tree is, but basically it just outputs what the current working tree is so that I could check and make sure I was operating in the right place when I was having issues committing my files, but ultimately it didn’t end up being all that useful. Lines 75 and 76 were in the example I followed, and I believe they basically just create a bot that will do the committing. Not sure exactly, but I suggest leaving them as-is.</p>
+<p>Line 77 adds all files with changes to the “<a href="https://dev.to/sublimegeek/git-staging-area-explained-like-im-five-1anh">staging area</a>”. There are different add commands <a href="https://stackoverflow.com/questions/572549/difference-between-git-add-a-and-git-add">as described in detail here</a>, but the “–all” just adds everything with changes. The staging area basically means stuff that’s ready to be committed. Line 78 will just <a href="https://www.atlassian.com/git/tutorials/inspecting-a-repository">output the status</a>, which means it’ll show what the status of the uncommitted files is in the working directory and staging area.</p>
+<p>Line 79 commits the changes. The output files should now show up in the repository. The “<a href="https://explainshell.com/explain?cmd=git+commit+-am">-am</a>” is a combination of “-a” and “-m”. The “a” essentially means all and the “m” means message, which means it’ll make “Scheduled Update” appear as the message in Github. The “||” was hard to figure out at first because Google isn’t the best with symbols, but this is called a “<a href="https://stackoverflow.com/questions/35301/what-is-the-difference-between-the-and-or-operators">double pipe</a>” and basically means “OR”. Commit the files OR if there’s nothing to commit output (I believe that’s what “echo” means) “No changes to commit”.</p>
+<p>Line 80 pushes the commit to the remote server. That’s kind of gibberish to me, but I think (<a href="https://stackoverflow.com/questions/2745076/what-are-the-differences-between-git-commit-and-git-push">based on a handy explanation here</a>) it means that the files we’ve committed have been committed on the virtual environment we created (the “windows-server” or whatever), but still need to be pushed to Github itself. The “origin” part of this is confusing to me, but it has <a href="https://stackoverflow.com/questions/12462481/what-is-the-difference-between-git-push-origin-and-git-push-origin-master">something to do with Github branches</a>. And again, if there’s nothing to push we get the echo output “No changes to commit”.</p>
+<figure>
+<img alt="Github Action Lines 82 through 88" src="/ryanbeckauthor/assets/github-7.png" style="width:95%; margin:auto; display:block"/>
+<figcaption>Github Action Lines 82 through 88</figcaption>
+</figure>
+<p>Finally, the last step starting on line 82 just creates some session info logging for us. Not entirely sure how it works and I don’t think I’ve really used it, but might be helpful for anyone trying to troubleshoot stuff.</p>
+<h1 id="monitoring-and-troubleshooting">Monitoring and Troubleshooting</h1>
+<p>That’s pretty much the breakdown of the Github actions. The last useful thing to know is that Github logs each step of your action as it executes, and you can look through that to see where things went wrong. The top menu on Github has an “Actions” tab that you can look at to see the status of your actions.</p>
+<figure>
+<img alt="Github Actions Tab" src="/ryanbeckauthor/assets/github-8.png" style="width:95%; margin:auto; display:block"/>
+<figcaption>Github Actions Tab</figcaption>
+</figure>
+<p>You can see your workflows there, and if you click on one of the completed workflows you see this:</p>
+<figure>
+<img alt="Github Workflow Summary" src="/ryanbeckauthor/assets/github-9.png" style="width:95%; margin:auto; display:block"/>
+<figcaption>Github Workflow Summary</figcaption>
+</figure>
+<p>You can click on “1 job completed” and then again on the name of the virtual environment it ran in and you’ll see this:</p>
+<figure>
+<img alt="Github Workflow Log" src="/ryanbeckauthor/assets/github-10.png" style="width:95%; margin:auto; display:block"/>
+<figcaption>Github Workflow Log</figcaption>
+</figure>
+<p>You can expand each step and see a log of what happened. If your Github action failed you can check out the first one that shows up with a red X and try to diagnose why from that. If you’re having trouble I suggest making changes and then setting a cron schedule to run the action every 10 minutes so the action will trigger again soon and you can see if your changes have managed to fix things.</p>
+<h1 id="okay-bye">Okay Bye</h1>
+<p>That’s pretty much everything I’ve managed to figure out when trying to make a working Github Action. So far it’s been successful, I have two Github Actions in my “workflows” folder and they run without errors once per day on their own. If you’ve made it this far I hope this has helped you!</p>
+</div>
+    <nav class="article-neighbors" aria-label="Other posts"><a href="/posts/2021/08/27/afghanistan-uncertainty">Older: Afghanistan Uncertainty</a>
+<a href="/posts/2023/04/10/the-library-of-congress-tells-me-about-corporal-punishment">Newer: The Library of Congress Tells Me About Corporal Punishment</a></nav>
+    <p class="article-original"><a href="/ryanbeckauthor/2022/02/10/A-Noob%27s-Guide-to-Github-Actions.html">View this post on the original site</a></p>
+  </article>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <span>© 2026 Ryan Beck</span>
+    <span><a href="/">← back to the hall</a></span>
+    <span><a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a></span>
+  </div>
+</footer>
+</body>
+</html>

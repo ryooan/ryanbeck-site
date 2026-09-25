@@ -53,6 +53,7 @@
 # Part one: a page whose URL has no extension needs an explicit rewrite,
 # because wrangler.toml sets html_handling = "none".
 /ryanbeckauthor                                            /ryanbeckauthor/index.html   200
+/ryanbeckauthor/                                           /ryanbeckauthor/index.html   200
 /ryanbeckauthor/about                                      /ryanbeckauthor/about.html   200
 /ryanbeckauthor/blog                                       /ryanbeckauthor/blog.html   200
 /ryanbeckauthor/index                                      /ryanbeckauthor/index.html   200
@@ -102,3 +103,25 @@
 /tags/*                                                  /ryanbeckauthor/tags/:splat   301
 /vaccines/*                                              /ryanbeckauthor/vaccines/:splat   301
 # <<< ryanbeckauthor archive
+
+# >>> migrated blog
+/posts/2023/04/10/the-library-of-congress-tells-me-about-corporal-punishment /posts/2023/04/10/the-library-of-congress-tells-me-about-corporal-punishment.html 200
+/posts/2022/02/10/a-noob-s-guide-to-github-actions /posts/2022/02/10/a-noob-s-guide-to-github-actions.html 200
+/posts/2021/08/27/afghanistan-uncertainty /posts/2021/08/27/afghanistan-uncertainty.html 200
+/posts/2021/03/17/degeneracy-and-jefferson-and-a-moose /posts/2021/03/17/degeneracy-and-jefferson-and-a-moose.html 200
+/posts/2021/03/16/new-vaccine-page /posts/2021/03/16/new-vaccine-page.html 200
+/posts/2021/01/31/why-robinhood-halted-gamestop-reject-the-simple-narrative /posts/2021/01/31/why-robinhood-halted-gamestop-reject-the-simple-narrative.html 200
+/posts/2020/11/23/coronavirus-vaccine-information /posts/2020/11/23/coronavirus-vaccine-information.html 200
+/posts/2020/11/20/predicting-the-biden-presidency /posts/2020/11/20/predicting-the-biden-presidency.html 200
+/posts/2020/08/13/the-logic-or-lack-of-behind-third-party-voting /posts/2020/08/13/the-logic-or-lack-of-behind-third-party-voting.html 200
+/posts/2020/08/03/vice-president-discourse-usually-neglects-a-big-factor /posts/2020/08/03/vice-president-discourse-usually-neglects-a-big-factor.html 200
+/posts/2020/07/12/robot-sumo /posts/2020/07/12/robot-sumo.html 200
+/posts/2020/07/03/why-citizens-united-was-a-reasonable-decision /posts/2020/07/03/why-citizens-united-was-a-reasonable-decision.html 200
+/posts/2020/03/02/why-nations-fail /posts/2020/03/02/why-nations-fail.html 200
+/posts/2020/02/13/technology-and-jobs /posts/2020/02/13/technology-and-jobs.html 200
+/posts/2019/10/15/robots-and-rubik-s-cubes /posts/2019/10/15/robots-and-rubik-s-cubes.html 200
+/posts/2019/10/09/putting-a-price-on-carbon /posts/2019/10/09/putting-a-price-on-carbon.html 200
+/posts/2019/10/03/uploading-the-brain /posts/2019/10/03/uploading-the-brain.html 200
+/posts/2019/09/25/not-human-cover-breakdown /posts/2019/09/25/not-human-cover-breakdown.html 200
+/posts/2019/09/14/welcome-to-my-website /posts/2019/09/14/welcome-to-my-website.html 200
+# <<< migrated blog

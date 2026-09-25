@@ -21,7 +21,7 @@
  * only ever appears in a canonical tag, an og: tag, a <loc>, robots' Sitemap
  * line, or a marked constant -- so those are the only things touched.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -59,6 +59,11 @@ const FILES = [
 ];
 
 const HOST = ORIGIN.replace(/^https?:\/\//, '');
+if (existsSync(join(ROOT, 'public/posts'))) {
+  for (const file of readdirSync(join(ROOT, 'public/posts'), { recursive: true })) {
+    if (file.endsWith('.html')) FILES.push('public/posts/' + file.replaceAll('\\', '/'));
+  }
+}
 const write = process.argv.includes('--write');
 const stale = [];
 

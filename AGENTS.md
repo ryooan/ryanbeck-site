@@ -50,6 +50,12 @@ The git history is a decision log — commit messages say why, not just what.
 
 ## Workspace notes
 
+- As of 2026-09-25, `npm run blog-build` generates modern versions of the
+  19 archived posts under `public/posts/`, preserving their prose and media.
+  Sources stay in `public/ryanbeckauthor/`; Python dependencies are in
+  `tools/requirements.txt`. Validate with `python tools/check-blog.py`.
+  The Blog page links both the modern posts and the explorable original site.
+
 - Dashboard copy/layout updated 2026-09-25: the landing page has a short
   overview and a table grouped by subject page (Series, State, Data through).
   Explanations across all dashboard pages are concise; avoid em dashes and

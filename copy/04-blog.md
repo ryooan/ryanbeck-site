@@ -56,8 +56,13 @@ Pulled live from <a class="quiet" href="https://themissingnuance.substack.com">S
 
 Earlier writing
 
-## Earlier writing — intro paragraph
+## Earlier writing — body paragraph
 <!-- id: blog.p.4 -->
+
+<a href="/ryanbeckauthor/">Explore the original author site</a>
+
+## Earlier writing — intro paragraph
+<!-- id: blog.p.5 -->
 
 Posts from 2019–2023, written before the newsletter shared on my old site.
 

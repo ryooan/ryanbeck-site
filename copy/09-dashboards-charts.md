@@ -52,17 +52,17 @@ Big-tech revenue by fiscal year
 ## Big-tech revenue by fiscal year — chart explanation
 <!-- id: dash.chart.faamg-revenues.note -->
 
-Revenue by company fiscal year. The combined total appears once all five companies have reported.
+Company fiscal years ending in the labeled year: Apple ends in September, Microsoft in June, and the others in December. The combined total spans different reporting periods.
 
 ## Chart title
 <!-- id: dash.chart.faamg-revenues-quarterly.title -->
 
-Big-tech revenue by quarter
+Big-tech revenue by calendar quarter
 
-## Big-tech revenue by quarter — chart explanation
+## Big-tech revenue by calendar quarter — chart explanation
 <!-- id: dash.chart.faamg-revenues-quarterly.note -->
 
-Fiscal quarters are aligned by their midpoint. Fourth-quarter revenue is calculated from annual revenue minus the first three quarters.
+Calendar-quarter labels group reported fiscal quarters by their midpoint. Apple uses roughly 13-week periods, so dates can differ slightly. Missing fourth quarters are derived from annual totals.
 
 ## Chart title
 <!-- id: dash.chart.covid-weekly-admissions.title -->

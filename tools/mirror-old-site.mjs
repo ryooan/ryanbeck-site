@@ -276,6 +276,7 @@ function writeRedirects(lines, incoming) {
     '# Part one: a page whose URL has no extension needs an explicit rewrite,',
     '# because wrangler.toml sets html_handling = "none".',
     ...lines,
+    '/ryanbeckauthor/ /ryanbeckauthor/index.html 200',
     '#',
     '# Part two: once ryanbeckauthor.com points HERE, a request for',
     '# ryanbeckauthor.com/2021/08/27/Foo.html arrives carrying that exact',

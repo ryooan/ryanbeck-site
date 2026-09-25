@@ -192,6 +192,12 @@ it gets a warm `drop-shadow`, so he appears to glow. Adjust the polygon in
 
 ## Substack
 
+Earlier writing now links to 19 posts in the current site layout. Run
+`npm run blog-build` to regenerate them from the preserved author-site HTML
+after installing `tools/requirements.txt`. Check content preservation with
+`python tools/check-blog.py`. Blog's "Explore the original author site" link
+opens `/ryanbeckauthor/`, and each modern post links to its original version.
+
 Substack's RSS feed sends no CORS headers, so a browser can't read it directly.
 `assets/js/substack.js` calls `/api/substack` on your own origin and silently
 falls back to the hand-written list if that route doesn't exist yet. The file

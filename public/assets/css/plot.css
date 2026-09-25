@@ -211,7 +211,7 @@
   color:var(--ink);
 }
 .series .series-note{
-  max-width:66ch;
+  max-width:none;
   margin:8px 0 0;
   color:var(--ink-soft);
   font:400 15.5px/1.65 var(--sans);
@@ -333,7 +333,7 @@
 .panel .panel-peak{color:var(--ink-faint);font-variant-numeric:tabular-nums}
 .panel svg{display:block;width:100%;height:52px}
 .panel-note{
-  max-width:66ch;
+  max-width:none;
   margin:12px 0 0;
   color:var(--ink-faint);
   font:400 13px/1.55 var(--sans);
@@ -427,7 +427,7 @@ body.dash-page{ --maxw:1460px; }
   color:var(--ink);
   text-wrap:balance;
 }
-.dash-blurb{max-width:72ch}
+.dash-blurb{max-width:none}
 .dash-blurb p{
   margin:0 0 12px;
   color:var(--ink-soft);
@@ -467,6 +467,9 @@ body.dash-page{ --maxw:1460px; }
 .status-table .status-group a{color:inherit;text-decoration:none}
 .status-table .status-group a:hover{text-decoration:underline}
 .status-table td:first-child{white-space:normal;min-width:180px}
+.archive-files{padding:12px 0;border-bottom:1px solid var(--rule);font-family:var(--sans)}
+.archive-files summary{cursor:pointer;font-weight:600}
+.archive-files li{margin:8px 0;overflow-wrap:anywhere}
 
 /* ---- narrow ---- */
 

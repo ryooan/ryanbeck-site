@@ -12,7 +12,8 @@
     "copy": "node tools/copy.mjs extract",
     "copy-apply": "node tools/copy.mjs apply",
     "edit": "node tools/copy-server.mjs",
-    "about-plain": "node tools/build-about-plain.mjs"
+    "about-plain": "node tools/build-about-plain.mjs",
+    "blog-build": "python tools/build-blog.py"
   },
   "devDependencies": {
     "wrangler": "^4"

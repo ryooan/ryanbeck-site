@@ -122,13 +122,13 @@ SECTIONS = [
             ],
         },
         "note": (
-            "Revenue by company fiscal year. The combined total appears once all five companies have reported."),
+            "Company fiscal years ending in the labeled year: Apple ends in September, Microsoft in June, and the others in December. The combined total spans different reporting periods."),
         "source": "SEC XBRL company facts",
         "source_url": "https://www.sec.gov/edgar/sec-api-documentation",
     },
     {
         "slug": "faamg-revenues-quarterly",
-        "title": "Big-tech revenue by quarter",
+        "title": "Big-tech revenue by calendar quarter",
         "csv": "faamg-revenues-quarterly.csv",
         "plot": {
             "yLabel": "Revenue",
@@ -145,7 +145,7 @@ SECTIONS = [
             ],
         },
         "note": (
-            "Fiscal quarters are aligned by their midpoint. Fourth-quarter revenue is calculated from annual revenue minus the first three quarters."),
+            "Calendar-quarter labels group reported fiscal quarters by their midpoint. Apple uses roughly 13-week periods, so dates can differ slightly. Missing fourth quarters are derived from annual totals."),
         "source": "SEC XBRL company facts",
         "source_url": "https://www.sec.gov/edgar/sec-api-documentation",
     },
@@ -599,6 +599,36 @@ def page(*, slug, title, kicker, blurb, body, meta, desc):
     }
 
 
+def archive_downloads():
+    """Only link files actually included in the published archive."""
+    base = os.path.join(DATA, "archive")
+    with open(os.path.join(base, "MANIFEST.csv"), encoding="utf-8-sig", newline="") as f:
+        rows = list(csv.DictReader(f))
+    groups = {}
+    for row in rows:
+        relative = row["file"]
+        if relative.startswith("../") or not os.path.isfile(os.path.join(base, relative)):
+            continue
+        groups.setdefault(row["workspace"], []).append(row)
+    sections = []
+    labels = {
+        "bls white collar": "BLS employment data",
+        "CDC Plot Experimentation": "CDC data and chart experiments",
+        "CDC Plots": "CDC chart data",
+        "metac-cdc-data/Animations/Animation_Scripts/R": "CDC snapshots for animations",
+    }
+    for group, entries in groups.items():
+        links = []
+        for row in entries:
+            dates = " (%s)" % row["date_span"] if row["date_span"] else ""
+            links.append('<li><a href="/data/forecasting/archive/%s">%s</a>%s</li>'
+                         % (e(row["file"]), e(row["object"]), e(dates)))
+        sections.append('<details class="archive-files"><summary>%s (%d %s)</summary>'
+                        '<ul>%s</ul></details>' % (e(labels.get(group, group)), len(entries),
+                                                 "file" if len(entries) == 1 else "files", "".join(links)))
+    return "".join(sections)
+
+
 def build():
     meta = load_manifest().get("series", {})
     outdir = os.path.join(ROOT, "public", "forecasting")
@@ -624,16 +654,20 @@ def build():
     archive_body = """
   <section class="series">
     <h2>Downloads</h2>
-    <p class="series-note"><a href="/data/forecasting/archive/MANIFEST.csv">The manifest</a>
-    lists the files, fields and date ranges. The HHS hospital-capacity files
-    include state totals and admissions by age.</p>
+    <p class="series-note">Browse the preserved CSV files below. Some are overlapping
+    snapshots or intermediate tables. The
+    <a href="/data/forecasting/archive/virginia-hospitalizations/df.csv.gz">HHS hospital-capacity dataset</a>
+    includes state totals and admissions by age from 2020 to July 2023.</p>
+    %(downloads)s
   </section>
   <section class="series">
     <h2>Source notes</h2>
     <p class="series-note">Recovered from saved R sessions. Values reflect the
-    original releases and may differ from later agency revisions.</p>
+    original releases and may differ from later agency revisions.
+    The <a href="/data/forecasting/archive/MANIFEST.csv">original inventory</a>
+    also lists derived files kept outside this website; only hosted files are linked above.</p>
   </section>
-"""
+""" % {"downloads": archive_downloads()}
     arch = page(slug="archive", title="The archive",
                 kicker="historical data", blurb=(
                     "<p>Historical data preserved as compressed CSV files.</p>"),
