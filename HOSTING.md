@@ -1,45 +1,44 @@
-# Hosting recommendation
+# Production hosting
 
-Reviewed September 25, 2026. The architecture is implemented locally; deployment is pending.
+## Live release, September 25, 2026
 
-Use Ryan's personal Cloudflare account for the website and both project apps.
-Keep the site's HTML/CSS/JS, MTG's Worker and March Madness's React/Vite app in
-separate deployments. Adding a database does not require a website framework
-conversion.
+Live at https://ryanrobertbeck.com on personal Cloudflare account
+`0efbd4d43122e579508d8f3b649ed990` (ryooan@gmail.com), with Ryan's launch authorization.
+Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
-| Path on the chosen domain | Service |
-| --- | --- |
-| / and existing pages | Personal website Worker and static assets |
-| /mtg-cheat-sheet/* | Existing MTG Worker, preserving its feedback Durable Object |
-| /march-madness/* | March Madness Worker, React assets, D1 database |
+| Service | Deployed source | Worker version |
+| --- | --- | --- |
+| Website / | 8e0967e | b9bef9c1-e866-4d83-a474-4a1561065a91 |
+| www redirect | 8e0967e | 88431447-62a8-4c56-8ed6-296cb9b60011 |
+| /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
+| /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |
 
-Projects links directly to both tools. Use D1 for brackets/seasons, private R2
-for sports snapshots, and Google sign-in with verified identity and remembered
-sessions. Old Vercel brackets need an explicit transfer before retirement.
+D1 `march-madness` (a3530b66-c736-4728-9a80-d7b7da106fc6) has migrations
+0001-0004 and finalized 2026 revision 2. Private R2 `march-madness-private`
+has indefinite retention on `final/`. Production secrets are installed. The
+15-minute Worker cron is active. A production refresh, immutable final archive,
+encrypted backup, hash-checked local download and offline restore into a new
+SQLite database succeeded (one season and two snapshots). MTG keeps its existing
+FeedbackStore/community queue and daily update workflow. No feedback was submitted
+by the launch checks. Only dashboard-linked CSVs are publicly downloadable.
 
-Budget a $5/month Workers Paid base for the full account/backup app, plus domain and metered usage. [Current pricing](https://developers.cloudflare.com/workers/platform/pricing/).
+Verified HTTPS root, projects, blog, old author site, dashboards, privacy, both app
+routes and www path/query redirect. Browser checks show the live MTG About copy,
+archived bracket and Google sign-in button. Ryan confirmed production Google login works. Cross-device account saving still needs an owner check. Google client ID is configured;
+production demo login is disabled. Historical availability coverage remains empty.
 
-Registered domain: ryanrobertbeck.com (2026-09-25). Canonical URLs are prepared
-locally. Before launch: add the domain to the verified personal Cloudflare account, confirm
-DNS activation, configure private Git remotes, configure manual CI, set real
-origin, test routes and inspect public assets. Only public/ ships. Private data,
-source snapshots and bracket backups must stay outside it. First publication
-still needs Ryan's explicit go-ahead.
+Local automatic backup registration was denied by Windows. The first backup is
+already downloaded; the recurring task is NOT installed. Run the installer once
+from an Administrator PowerShell under Ryan's account (see domain-launch-checklist).
+The cloud cron/backups do not depend on that Windows task. Original Vercel remains
+available for old-browser bracket transfers. Website has local Git only; its
+history contains private recovered data and must be reviewed before any remote push.
 
-See [the full audit and implementation plan](docs/march-madness-and-launch-plan.md)
-for source accuracy, annual archiving, account migration, release order and
-acceptance checks. No need for a new Postgres vendor or an Astro/Next.js rewrite.
+Ryan was reminded before publication and explicitly deferred MTG pending definitions
+and Help Improve empty-list wording until after launch. Both remain follow-ups;
+the acknowledged prepublication reminder is paused.
 
-[Cloudflare path routing documentation](https://developers.cloudflare.com/workers/static-assets/routing/advanced/serving-a-subdirectory/).
-
-Implementation: npm run dev starts the integrated local site. Use
-`tools/configure-app-deploy.py` and `deployment.example.json` to prepare reviewed
-configs with the registered domain. March Madness D1 is initialized; R2 activation and Google OAuth are pending. See `../March Madness 2026/docs/OPERATIONS.md` for the exact
-release order, annual field review, archive locks and local backup activation.
-Detailed costs: [cost scenarios](docs/cloudflare-costs.md).
-
-Launch preparation 2026-09-25: private D1 march-madness created and seeded
-(a3530b66-c736-4728-9a80-d7b7da106fc6), finalized 2026 revision 2, 68 teams.
-Production secrets are generated in the March Madness gitignored private-data
-directory and not uploaded yet. Privacy page prepared locally at /privacy.
-Workers plan could not be read with the CLI token; Ryan must confirm it.
+Generate configs with tools/configure-app-deploy.py and gitignored deployment.local.json.
+Website and www redirect use separate configs. MTG daily deployments retain custom routes.
+Use npm run dev locally; only public assets ship. See
+[launch checklist](docs/domain-launch-checklist.md) and [costs](docs/cloudflare-costs.md).

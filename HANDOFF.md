@@ -3,10 +3,7 @@
 Ryan Beck's personal site. Six public pages plus one Cloudflare Worker, one of
 of which is a generated dashboard (`public/forecasting/`, eight pages plus an
 index) built from committed data and never hand-edited.
-It has never been deployed — that is still the first real task, and it is
-Ryan's call, not a default. Ryan registered ryanrobertbeck.com on 2026-09-25;
-local canonical URLs use it. Personal Cloudflare login is restored and verified. March Madness D1 is
-initialized; domain onboarding, R2 activation and Google OAuth are pending.
+Live at https://ryanrobertbeck.com since September 25, 2026. Personal Cloudflare hosts the site and both apps; see HOSTING.md for versions and remaining owner checks.
 
 Since 2026-08-18 this repo lives inside the **AI Wiki and Projects**
 workspace, at `projects/personal/personal-website/`. `AGENTS.md` is the
@@ -119,7 +116,7 @@ has been narrowed to what the list in "What is not done" says.
 Everything in "Known placeholders" in CLAUDE.md, but the short version:
 
 - it has never been deployed. Wrangler login is restored (2026-09-25);
-  production resources/config and launch review remain pending.
+  production resources/config are live; account verification and Windows backup registration remain.
 - no git remote. Deployment CI is manual and requires reviewed configuration.
   `.github/workflows/forecasting.yml` refreshes the data on a schedule and
   cannot run at all until the repo has a remote
@@ -172,7 +169,7 @@ retire that particular ghost.
 Projects links /mtg-cheat-sheet/ and /march-madness/. npm run dev builds the
 sibling apps, applies local D1 migrations and starts all three Workers. The
 8788 text editor proxies the app APIs too. HOSTING.md and docs/cloudflare-costs.md
-describe the prepared Cloudflare launch. No public deployment was performed.
+describe the live Cloudflare release recorded below.
 
 ## September 25, 2026 interface refinements
 
@@ -183,3 +180,41 @@ Launch preparation 2026-09-25: private D1 march-madness created and seeded
 Production secrets are generated in the March Madness gitignored private-data
 directory and not uploaded yet. Privacy page prepared locally at /privacy.
 Workers plan could not be read with the CLI token; Ryan must confirm it.
+
+## Live release, September 25, 2026
+
+Live at https://ryanrobertbeck.com on personal Cloudflare account
+`0efbd4d43122e579508d8f3b649ed990` (ryooan@gmail.com), with Ryan's launch authorization.
+Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
+
+| Service | Deployed source | Worker version |
+| --- | --- | --- |
+| Website / | 8e0967e | b9bef9c1-e866-4d83-a474-4a1561065a91 |
+| www redirect | 8e0967e | 88431447-62a8-4c56-8ed6-296cb9b60011 |
+| /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
+| /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |
+
+D1 `march-madness` (a3530b66-c736-4728-9a80-d7b7da106fc6) has migrations
+0001-0004 and finalized 2026 revision 2. Private R2 `march-madness-private`
+has indefinite retention on `final/`. Production secrets are installed. The
+15-minute Worker cron is active. A production refresh, immutable final archive,
+encrypted backup, hash-checked local download and offline restore into a new
+SQLite database succeeded (one season and two snapshots). MTG keeps its existing
+FeedbackStore/community queue and daily update workflow. No feedback was submitted
+by the launch checks. Only dashboard-linked CSVs are publicly downloadable.
+
+Verified HTTPS root, projects, blog, old author site, dashboards, privacy, both app
+routes and www path/query redirect. Browser checks show the live MTG About copy,
+archived bracket and Google sign-in button. Ryan confirmed production Google login works. Cross-device account saving still needs an owner check. Google client ID is configured;
+production demo login is disabled. Historical availability coverage remains empty.
+
+Local automatic backup registration was denied by Windows. The first backup is
+already downloaded; the recurring task is NOT installed. Run the installer once
+from an Administrator PowerShell under Ryan's account (see domain-launch-checklist).
+The cloud cron/backups do not depend on that Windows task. Original Vercel remains
+available for old-browser bracket transfers. Website has local Git only; its
+history contains private recovered data and must be reviewed before any remote push.
+
+Ryan was reminded before publication and explicitly deferred MTG pending definitions
+and Help Improve empty-list wording until after launch. Both remain follow-ups;
+the acknowledged prepublication reminder is paused.
