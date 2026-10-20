@@ -7,8 +7,9 @@
 # bird-flu mirror are weekly. Refugee admissions and Comtrade are monthly. SEC
 # filings are quarterly at best.
 #
-# A data commit is a deploy: pushing to main triggers deploy.yml, which is the
-# whole reason the data lives in the site repo.
+# A data commit is a deploy, which is the whole reason the data lives in the
+# site repo. The push below uses GITHUB_TOKEN, which does not trigger other
+# workflows, so the deploy job calls deploy.yml directly.
 
 name: Forecasting data
 
@@ -34,6 +35,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
     steps:
       - uses: actions/checkout@v4
 
@@ -87,16 +90,19 @@ jobs:
           fi
 
       - name: Commit
+        id: commit
         run: |
           git config user.name  "forecasting-bot"
-          git config user.email "noreply@ryanbeck.com"
+          git config user.email "forecasting-bot@users.noreply.github.com"
           git add public/data/forecasting private-data/forecasting public/forecasting public/_redirects
           if git diff --cached --quiet; then
             echo "No change."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git commit -m "Forecasting data: refresh ${{ steps.pick.outputs.list }}"
           git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
 
       # Surface a partial failure as a failed run, but only after the sources
       # that did work have been committed.
@@ -105,3 +111,13 @@ jobs:
         run: |
           echo "These fetchers failed:$FAILED"
           exit 1
+
+  # Runs even when a fetcher failed, so the sources that did update go live.
+  deploy:
+    needs: refresh
+    if: ${{ !cancelled() && needs.refresh.outputs.changed == 'true' }}
+    uses: ./.github/workflows/deploy.yml
+    with:
+      ref: ${{ github.ref_name }}
+    secrets:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

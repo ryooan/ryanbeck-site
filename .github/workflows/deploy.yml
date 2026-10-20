@@ -1,7 +1,33 @@
 name: Deploy
 
+# Deploys the ryanbeck-site Worker (pages, /api/*, the two app bindings).
+# Runs on every push to master, by hand, and from forecasting.yml after a
+# data commit: a push made with GITHUB_TOKEN does not trigger other
+# workflows, so that one calls this file directly.
+#
+# Needs one Actions secret, CLOUDFLARE_API_TOKEN, for the personal account
+# 0efbd4d43122e579508d8f3b649ed990. The account ID and the domain come from
+# the committed wrangler.toml and site.config.json, by way of
+# tools/site-deploy-config.py.
+
 on:
+  push:
+    branches: [master]
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      ref:
+        description: 'Branch or commit to deploy'
+        type: string
+        required: false
+        default: ''
+    secrets:
+      CLOUDFLARE_API_TOKEN:
+        required: true
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -10,33 +36,27 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          # A called run would otherwise check out the commit that started
+          # the caller -- the one *before* the data commit it just pushed.
+          ref: ${{ inputs.ref || github.ref }}
 
       - uses: actions/setup-node@v4
         with:
           node-version: 24
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - run: npm ci
 
-      - name: Load reviewed domain configuration
-        env:
-          SITE_DEPLOYMENT_CONFIG: ${{ vars.SITE_DEPLOYMENT_CONFIG }}
-        run: node tools/ci-deploy-config.mjs
-      - run: npm run site-url
-      - run: npm test
-
-      # Deploy is intentionally manual until domain/resource configuration is complete.
-      - run: node tools/check-deploy.mjs
-
-      # Fails the build if a page links to a file that isn't there.
-      - name: Check internal links
-        run: node tools/check-links.mjs
-
-      - name: Check the docs still match the code
-        run: node tools/check-docs.mjs
+      # Regenerates .deploy/wrangler.json from wrangler.toml, then runs
+      # npm test (links, docs, site URL, public data) and check-deploy.
+      - run: npm run predeploy
 
       - name: Deploy to Cloudflare
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy --config .deploy/wrangler.json

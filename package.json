@@ -8,7 +8,7 @@
     "deploy": "wrangler deploy --config .deploy/wrangler.json",
     "tail": "wrangler tail",
     "test": "node tools/check-links.mjs && node tools/check-docs.mjs && node tools/site-url.mjs && node tools/check-public-data.mjs",
-    "predeploy": "npm test && node tools/check-deploy.mjs",
+    "predeploy": "python tools/site-deploy-config.py && npm test && node tools/check-deploy.mjs",
     "site-url": "node tools/site-url.mjs --write",
     "copy": "node tools/copy.mjs extract",
     "copy-apply": "node tools/copy.mjs apply",
