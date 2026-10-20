@@ -178,6 +178,12 @@ def run():
            status="live", source="State Dept Refugee Processing Center",
            note=("Monthly arrivals. Fiscal years run October-September; the "
                  "annual file carries the presidential ceiling."))
+    # The fiscal-year file has its own entry, which otherwise kept the date
+    # of the first run.
+    record("refugee-admissions-annual", rows=len(annual),
+           last_date=annual[-1]["date"], status="live",
+           source="State Dept Refugee Processing Center",
+           note="Fiscal-year totals back to 1975, with the presidential ceiling.")
     print("refugee-admissions: %d months %s -> %s; %d fiscal years %d-%d "
           "(report as of %s)"
           % (len(monthly), monthly[0]["date"], last, len(annual),

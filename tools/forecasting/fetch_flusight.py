@@ -59,6 +59,12 @@ def run():
     record("flu-hospitalizations", rows=len(national), last_date=last,
            status="live", source="CDC FluSight forecast hub",
            note="Weekly hospital admissions with a confirmed influenza diagnosis.")
+    # Recorded separately: the dashboard gives the state grid its own status
+    # line, and without this its entry kept the date of the first run.
+    record("flu-hospitalizations-states", rows=len(states),
+           last_date=states[-1]["date"], status="live",
+           source="CDC FluSight forecast hub",
+           note="Weekly admissions by state.")
     print("flu-hospitalizations: %d weeks %s -> %s (+%d state rows)"
           % (len(national), national[0]["date"], last, len(states)))
 
