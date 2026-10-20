@@ -39,6 +39,14 @@ for (const s of ['serve', 'dev', 'deploy', 'test']) check(pkg.scripts[s], `packa
 const wrangler = read('wrangler.toml');
 check(wrangler.includes('directory = "./public"'), 'wrangler assets directory is wrong');
 check(read('worker/index.js').includes('/api/substack'), 'worker no longer serves /api/substack');
+// not_found_handling = "404-page" answers unmatched paths before the Worker
+// runs, so /api/* has to be listed or every API route returns the 404 page.
+check(/run_worker_first\s*=\s*\[[^\]]*"\/api\/\*"/.test(wrangler),
+  'wrangler.toml run_worker_first lost "/api/*" — /api/substack will 404');
+if (existsSync('.deploy/wrangler.json')) {
+  const deployed = JSON.parse(read('.deploy/wrangler.json')).assets?.run_worker_first || [];
+  check(deployed.includes('/api/*'), '.deploy/wrangler.json run_worker_first lacks "/api/*" — regenerate it');
+}
 
 // html_handling = "none" is load-bearing: the platform default fights the
 // _redirects 200-rewrites and every pretty URL dies in a 307 loop. The docs
