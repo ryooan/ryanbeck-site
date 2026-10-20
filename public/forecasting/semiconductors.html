@@ -43,12 +43,12 @@
 <nav class="dash-nav" aria-label="Data dashboard sections">
   <p class="dash-nav-head"><a href="/forecasting">Data Dashboards</a></p>
   <ul>
-    <li><a href="/forecasting/respiratory">Respiratory illness<span class="dot is-live" aria-hidden="true"></span></a></li>
-    <li><a href="/forecasting/debt-limit">The debt limit<span class="dot is-live" aria-hidden="true"></span></a></li>
-    <li><a href="/forecasting/big-tech-revenue">Big-tech revenue<span class="dot is-live" aria-hidden="true"></span></a></li>
-    <li><a href="/forecasting/refugee-admissions">Refugee admissions<span class="dot is-live" aria-hidden="true"></span></a></li>
-    <li><a href="/forecasting/semiconductors" aria-current="page">Semiconductor trade<span class="dot is-live" aria-hidden="true"></span></a></li>
-    <li><a href="/forecasting/bird-flu">Bird flu<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/respiratory">Respiratory illness<span class="dot is-overdue" data-checks="2026-08-15:45 2026-07-04:60" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/debt-limit">The debt limit<span class="dot is-overdue" data-checks="2026-08-20:10" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/big-tech-revenue">Big-tech revenue<span class="dot is-live" data-checks="2025-01-01:800 2026-06-01:200" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/refugee-admissions">Refugee admissions<span class="dot is-overdue" data-checks="2026-07-01:100 2025-10-01:430" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/semiconductors" aria-current="page">Semiconductor trade<span class="dot is-overdue" data-checks="2026-06-01:120 2024-01-01:1100" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/bird-flu">Bird flu<span class="dot is-live" data-checks="2026-08-17:120" aria-hidden="true"></span></a></li>
     <li><a href="/forecasting/virginia-covid">Virginia COVID<span class="dot is-historical" aria-hidden="true"></span></a></li>
   </ul>
   <p class="dash-nav-foot"><a href="/projects">&larr; All projects</a></p>
@@ -64,8 +64,8 @@
     <h2 class="sr-only">US semiconductor exports to China</h2>
     <div class="plot-mount" data-plot='{&quot;yLabel&quot;:&quot;Export value&quot;,&quot;format&quot;:&quot;usd&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;chips_avg6&quot;,&quot;label&quot;:&quot;Chips, 6-month average&quot;,&quot;color&quot;:&quot;#a8481f&quot;},{&quot;col&quot;:&quot;equipment_avg6&quot;,&quot;label&quot;:&quot;Equipment, 6-month average&quot;,&quot;color&quot;:&quot;#2f6b7a&quot;},{&quot;col&quot;:&quot;chips&quot;,&quot;label&quot;:&quot;Chips, monthly (HS 8542)&quot;,&quot;color&quot;:&quot;#d59a72&quot;,&quot;width&quot;:1.2,&quot;off&quot;:true},{&quot;col&quot;:&quot;equipment&quot;,&quot;label&quot;:&quot;Equipment, monthly&quot;,&quot;color&quot;:&quot;#8fb6bf&quot;,&quot;width&quot;:1.2,&quot;off&quot;:true}],&quot;csv&quot;:&quot;/data/forecasting/semiconductors-us-exports-china.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US semiconductor exports to China&quot;,&quot;slug&quot;:&quot;semiconductors-us-exports-china&quot;,&quot;credit&quot;:&quot;ryanrobertbeck.com/forecasting&quot;,&quot;embed&quot;:&quot;/forecasting/embed/semiconductors-us-exports-china&quot;,&quot;sourceUrl&quot;:&quot;https://comtradeplus.un.org/&quot;,&quot;title&quot;:&quot;US semiconductor exports to China&quot;,&quot;subtitle&quot;:&quot;UN Comtrade \u00b7 data to 1 June 2026&quot;}'></div>
     <p class="series-note">Six-month averages. Use the legend to show monthly values. The CSV includes twelve-month totals.</p>
-    <p class="series-source"><span class="status is-live">Live</span>
-      198 rows, latest about 4 months ago &middot;
+    <p class="series-source"><span class="status is-overdue" data-last="2026-06-01" data-expect="120">Out of date</span>
+      198 rows, latest <span data-age-of="2026-06-01">about 5 months ago</span> &middot;
       source: <a href="https://comtradeplus.un.org/" rel="noopener">UN Comtrade</a> &middot;
       download: <a href="/data/forecasting/semiconductors-us-exports-china.csv">semiconductors-us-exports-china.csv</a></p>
   </section>
@@ -74,8 +74,8 @@
     <h2 class="sr-only">China&#x27;s semiconductor imports</h2>
     <div class="plot-mount" data-plot='{&quot;yLabel&quot;:&quot;Import value&quot;,&quot;format&quot;:&quot;usd&quot;,&quot;zero&quot;:true,&quot;labelCol&quot;:&quot;year&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;chips&quot;,&quot;label&quot;:&quot;Chips (HS 8542)&quot;},{&quot;col&quot;:&quot;equipment&quot;,&quot;label&quot;:&quot;Manufacturing equipment&quot;}],&quot;csv&quot;:&quot;/data/forecasting/semiconductors-china-imports.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;China&#x27;s semiconductor imports&quot;,&quot;slug&quot;:&quot;semiconductors-china-imports&quot;,&quot;credit&quot;:&quot;ryanrobertbeck.com/forecasting&quot;,&quot;embed&quot;:&quot;/forecasting/embed/semiconductors-china-imports&quot;,&quot;sourceUrl&quot;:&quot;https://comtradeplus.un.org/&quot;,&quot;title&quot;:&quot;China&#x27;s semiconductor imports&quot;,&quot;subtitle&quot;:&quot;UN Comtrade \u00b7 data to 2024&quot;}'></div>
     <p class="series-note">Annual imports from all countries, reported by China.</p>
-    <p class="series-source"><span class="status is-live">Live</span>
-      25 rows, latest about 2.7 years ago &middot;
+    <p class="series-source"><span class="status is-live" data-last="2024-01-01" data-expect="1100">Live</span>
+      25 rows, latest <span data-age-of="2024-01-01">about 2.8 years ago</span> &middot;
       source: <a href="https://comtradeplus.un.org/" rel="noopener">UN Comtrade</a> &middot;
       download: <a href="/data/forecasting/semiconductors-china-imports.csv">semiconductors-china-imports.csv</a></p>
   </section>
@@ -91,5 +91,6 @@
 </footer>
 <script src="/assets/js/nav.js" defer></script>
 <script src="/assets/js/plot.js" defer></script>
+<script src="/assets/js/freshness.js" defer></script>
 </body>
 </html>

@@ -43,12 +43,12 @@
 <nav class="dash-nav" aria-label="Data dashboard sections">
   <p class="dash-nav-head"><a href="/forecasting">Data Dashboards</a></p>
   <ul>
-    <li><a href="/forecasting/respiratory">Respiratory illness<span class="dot is-live" aria-hidden="true"></span></a></li>
-    <li><a href="/forecasting/debt-limit">The debt limit<span class="dot is-live" aria-hidden="true"></span></a></li>
-    <li><a href="/forecasting/big-tech-revenue">Big-tech revenue<span class="dot is-live" aria-hidden="true"></span></a></li>
-    <li><a href="/forecasting/refugee-admissions">Refugee admissions<span class="dot is-live" aria-hidden="true"></span></a></li>
-    <li><a href="/forecasting/semiconductors">Semiconductor trade<span class="dot is-live" aria-hidden="true"></span></a></li>
-    <li><a href="/forecasting/bird-flu">Bird flu<span class="dot is-live" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/respiratory">Respiratory illness<span class="dot is-overdue" data-checks="2026-08-15:45 2026-07-04:60" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/debt-limit">The debt limit<span class="dot is-overdue" data-checks="2026-08-20:10" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/big-tech-revenue">Big-tech revenue<span class="dot is-live" data-checks="2025-01-01:800 2026-06-01:200" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/refugee-admissions">Refugee admissions<span class="dot is-overdue" data-checks="2026-07-01:100 2025-10-01:430" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/semiconductors">Semiconductor trade<span class="dot is-overdue" data-checks="2026-06-01:120 2024-01-01:1100" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/bird-flu">Bird flu<span class="dot is-live" data-checks="2026-08-17:120" aria-hidden="true"></span></a></li>
     <li><a href="/forecasting/virginia-covid" aria-current="page">Virginia COVID<span class="dot is-historical" aria-hidden="true"></span></a></li>
   </ul>
   <p class="dash-nav-foot"><a href="/projects">&larr; All projects</a></p>
@@ -65,7 +65,7 @@
     <div class="plot-mount" data-plot='{&quot;yLabel&quot;:&quot;People&quot;,&quot;format&quot;:&quot;number&quot;,&quot;zero&quot;:true,&quot;series&quot;:[{&quot;col&quot;:&quot;at_least_one_dose&quot;,&quot;label&quot;:&quot;At least one dose&quot;},{&quot;col&quot;:&quot;fully_vaccinated&quot;,&quot;label&quot;:&quot;Fully vaccinated&quot;}],&quot;csv&quot;:&quot;/data/forecasting/va-vaccinations.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;Virginia COVID vaccinations&quot;,&quot;slug&quot;:&quot;va-vaccinations&quot;,&quot;credit&quot;:&quot;ryanrobertbeck.com/forecasting&quot;,&quot;embed&quot;:&quot;/forecasting/embed/va-vaccinations&quot;,&quot;sourceUrl&quot;:&quot;https://data.virginia.gov/&quot;,&quot;title&quot;:&quot;Virginia COVID vaccinations&quot;,&quot;subtitle&quot;:&quot;data.virginia.gov (VDH) \u00b7 data to 19 September 2023&quot;}'></div>
     <p class="series-note">People by vaccination status. Age-group counts are included in the companion CSV.</p>
     <p class="series-source"><span class="status is-historical">Historical</span>
-      909 rows, latest about 3.0 years ago &middot;
+      909 rows, latest <span data-age-of="2023-09-19">about 3.1 years ago</span> &middot;
       source: <a href="https://data.virginia.gov/" rel="noopener">data.virginia.gov (VDH)</a> &middot;
       download: <a href="/data/forecasting/va-vaccinations.csv">va-vaccinations.csv</a> &middot; <a href="/data/forecasting/va-vaccinations-by-age.csv">va-vaccinations-by-age.csv</a></p>
   </section>
@@ -81,5 +81,6 @@
 </footer>
 <script src="/assets/js/nav.js" defer></script>
 <script src="/assets/js/plot.js" defer></script>
+<script src="/assets/js/freshness.js" defer></script>
 </body>
 </html>

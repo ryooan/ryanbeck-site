@@ -253,6 +253,7 @@
   width:9px;height:9px;
 }
 .status.is-stale::before{background:var(--ember)}
+.status.is-overdue::before{background:var(--ember)}
 
 @media (prefers-reduced-motion:reduce){
   .plot-canvas{transition:none}
@@ -398,7 +399,7 @@ body.dash-page{ --maxw:1460px; }
 }
 .dash-nav li a:focus-visible{outline:2px solid var(--ember);outline-offset:-2px}
 
-/* The same three states as the status chips, shrunk to a dot — so the
+/* The same states as the status chips, shrunk to a dot — so the
    sidebar says where something has stopped without being opened. */
 .dash-nav .dot{
   flex:none;
@@ -408,6 +409,7 @@ body.dash-page{ --maxw:1460px; }
 }
 .dash-nav .dot.is-live{background:#3f7d4e}
 .dash-nav .dot.is-stale{background:var(--ember)}
+.dash-nav .dot.is-overdue{background:var(--ember)}
 .dash-nav .dot.is-historical{background:transparent;border:1.5px solid var(--ink-faint)}
 
 .dash-nav-foot{

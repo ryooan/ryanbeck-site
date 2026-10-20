@@ -317,8 +317,34 @@ SECTIONS = [
 
 STATUS_WORDS = {
     "live": "Live",
+    "overdue": "Out of date",
     "stale": "Source stalled",
     "historical": "Historical",
+}
+
+# How old the newest row of a "live" series may get, in days, before the page
+# stops calling it Live. The fetchers set "live" when they run, so without this
+# a series whose refresh stopped kept its green Live label indefinitely --
+# which is what happened from late August to October 2026, when nothing ran.
+# Measured from the data's own last date, never from when anything ran. Each
+# allows for how often the source publishes plus its usual reporting lag, and
+# for how series are dated (monthly rows sit on the 1st, fiscal years on
+# 1 October of the previous year, annual rows on 1 January).
+#
+# The page repeats the check in the browser (assets/js/freshness.js) from the
+# same numbers, so a page nobody rebuilds still goes Out of date on its own.
+EXPECT_DAYS = {
+    "debt-limit": 10,                       # Treasury, daily
+    "covid-weekly-admissions": 45,          # weekly; same bound the fetcher uses
+    "flu-hospitalizations": 60,             # FluSight target data, weekly
+    "flu-hospitalizations-states": 60,
+    "hpai-depopulations": 120,              # sporadic; fetch_hpai STALE_AFTER_DAYS
+    "refugee-admissions": 100,              # monthly, a few weeks behind
+    "refugee-admissions-annual": 430,       # one row per fiscal year
+    "faamg-revenues-quarterly": 200,        # quarters by midpoint, 10-Q lag
+    "faamg-revenues": 800,                  # calendar years, complete after Q4 filings
+    "semiconductors-us-exports-china": 120, # Comtrade monthly, ~2 months behind
+    "semiconductors-china-imports": 1100,   # Comtrade annual, China reports late
 }
 
 # The sidebar. Each entry becomes its own page at /forecasting/<slug>, so a
@@ -427,6 +453,7 @@ def human(iso):
 
 
 def age_phrase(iso):
+    # Mirrored in assets/js/freshness.js; change both together.
     days = (dt.date.today() - dt.date.fromisoformat(iso[:10])).days
     if days <= 10:
         return "up to date"
@@ -439,6 +466,28 @@ def age_phrase(iso):
 
 def e(s):
     return html.escape(str(s), quote=True)
+
+
+def data_age(iso):
+    return (dt.date.today() - dt.date.fromisoformat(iso[:10])).days
+
+
+def status_of(slug, info):
+    """The status to print: the fetcher's, unless a live series' data is now
+    older than its source should allow."""
+    status = info["status"]
+    limit = EXPECT_DAYS.get(slug)
+    if status == "live" and limit is not None and data_age(info["last_date"]) > limit:
+        return "overdue"
+    return status
+
+
+def freshness_attrs(slug, info):
+    """What assets/js/freshness.js needs to redo status_of() in the browser."""
+    limit = EXPECT_DAYS.get(slug)
+    if info["status"] != "live" or limit is None:
+        return ""
+    return ' data-last="%s" data-expect="%d"' % (e(info["last_date"][:10]), limit)
 
 
 SECTION_BY_SLUG = {s["slug"]: s for s in SECTIONS}
@@ -471,7 +520,7 @@ def section_html(sec, meta):
     if not info:
         return ""
 
-    status = info["status"]
+    status = status_of(sec["slug"], info)
     plot = dict(sec["plot"])
     plot["csv"] = "/data/forecasting/" + sec["csv"]
     plot["x"] = "date"
@@ -505,13 +554,15 @@ def section_html(sec, meta):
     <h2 class="sr-only">%(title)s</h2>
     <div class="plot-mount" data-plot='%(cfg)s'></div>
     %(note)s
-    <p class="series-source"><span class="status is-%(status)s">%(word)s</span>
-      %(rows)s rows, latest %(age)s &middot;
+    <p class="series-source"><span class="status is-%(status)s"%(fresh)s>%(word)s</span>
+      %(rows)s rows, latest <span data-age-of="%(last)s">%(age)s</span> &middot;
       source: <a href="%(surl)s" rel="noopener">%(source)s</a> &middot;
       download: %(dl)s</p>
   </section>
 """ % {
         "slug": e(sec["slug"]), "status": e(status),
+        "fresh": freshness_attrs(sec["slug"], info),
+        "last": e(info["last_date"][:10]),
         "word": e(STATUS_WORDS.get(status, status.title())),
         "last_h": e(label or human(info["last_date"])), "title": e(sec["title"]),
         # A blanked note leaves no element at all rather than an empty one.
@@ -532,16 +583,23 @@ def sidebar(active, meta):
     the sidebar itself says where something has stopped without being opened."""
     items = []
     for g in GROUPS:
-        states = [meta[s]["status"] for s in g["sections"] if s in meta]
+        states = [status_of(s, meta[s]) for s in g["sections"] if s in meta]
         worst = ("stale" if "stale" in states
+                 else "overdue" if "overdue" in states
                  else "historical" if states and all(x == "historical" for x in states)
                  else "live" if states else "")
+        # Every live series in the group, so the browser can turn the dot
+        # Out of date as soon as any one of them is.
+        checks = " ".join("%s:%d" % (meta[s]["last_date"][:10], EXPECT_DAYS[s])
+                          for s in g["sections"]
+                          if s in meta and meta[s]["status"] == "live" and s in EXPECT_DAYS)
         items.append(
             '    <li><a href="/forecasting/%s"%s>%s'
-            '<span class="dot is-%s" aria-hidden="true"></span></a></li>'
+            '<span class="dot is-%s"%s aria-hidden="true"></span></a></li>'
             % (e(g["slug"]),
                ' aria-current="page"' if g["slug"] == active else "",
-               e(g["nav"]), e(worst or "live")))
+               e(g["nav"]), e(worst or "live"),
+               ' data-checks="%s"' % checks if checks else ""))
     return """
 <nav class="dash-nav" aria-label="Data dashboard sections">
   <p class="dash-nav-head"><a href="/forecasting">Data Dashboards</a></p>
@@ -560,12 +618,14 @@ def status_table(meta):
             sec, info = SECTION_BY_SLUG.get(slug), meta.get(slug)
             if not sec or not info:
                 continue
+            status = status_of(slug, info)
             rows.append(
                 '<tr><td><a href="/forecasting/%s#%s">%s</a></td>'
-                '<td><span class="status is-%s">%s</span></td>'
+                '<td><span class="status is-%s"%s>%s</span></td>'
                 '<td>%s</td></tr>'
-                % (e(g["slug"]), e(slug), e(sec["title"]), e(info["status"]),
-                   e(STATUS_WORDS.get(info["status"], info["status"])),
+                % (e(g["slug"]), e(slug), e(sec["title"]), e(status),
+                   freshness_attrs(slug, info),
+                   e(STATUS_WORDS.get(status, status)),
                    e(period_label(sec, info) or human(info["last_date"]))))
         if rows:
             groups.append(
@@ -620,7 +680,7 @@ def build():
         written.append(g["slug"])
 
     # --- the index ---
-    live = sum(1 for s in meta.values() if s["status"] == "live")
+    live = sum(1 for slug, s in meta.items() if status_of(slug, s) == "live")
     idx_body = status_table(meta)
 
     idx = page(slug="", title=LANDING["title"], kicker=LANDING["kicker"],
@@ -799,6 +859,7 @@ PAGE = """<!doctype html>
 </footer>
 <script src="/assets/js/nav.js" defer></script>
 <script src="/assets/js/plot.js" defer></script>
+<script src="/assets/js/freshness.js" defer></script>
 </body>
 </html>
 """
