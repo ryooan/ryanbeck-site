@@ -115,13 +115,17 @@ has been narrowed to what the list in "What is not done" says.
 
 Everything in "Known placeholders" in CLAUDE.md, but the short version:
 
-- it has never been deployed. Wrangler login is restored (2026-09-25);
-  production resources/config are live; account verification and Windows backup registration remain.
+- live since 2026-09-25 at https://ryanrobertbeck.com (Worker version
+  `cc0958c7`, source `c9f8a9f`, still current on 2026-10-20). Open: an owner
+  check of March Madness cross-device saving, the Windows backup task
+  registration, and `/api/substack`, which returns the 404 page in production
+  because `run_worker_first` in `wrangler.toml` omits `/api/*`.
 - no git remote. Deployment CI is manual and requires reviewed configuration.
   `.github/workflows/forecasting.yml` refreshes the data on a schedule and
-  cannot run at all until the repo has a remote
-- registered domain: `ryanrobertbeck.com`, configured locally in `site.config.json`;
-  Cloudflare DNS activation remains unverified.
+  cannot run at all until the repo has a remote — so the dashboard data has
+  not been refreshed since late August 2026
+- domain: `ryanrobertbeck.com`, set in `site.config.json` (`chosen: true`),
+  on Cloudflare DNS.
 - every project card uses the "light float" treatment Ryan chose from three
   lab rounds (`tools/make-project-thumbs.py`); the dashboard thumbs are real
   captures, Herder's is its real wordmark, and the projects/forecasting-data
@@ -215,6 +219,6 @@ The cloud cron/backups do not depend on that Windows task. Original Vercel remai
 available for old-browser bracket transfers. Website has local Git only; its
 history contains private recovered data and must be reviewed before any remote push.
 
-Ryan was reminded before publication and explicitly deferred MTG pending definitions
-and Help Improve empty-list wording until after launch. Both remain follow-ups;
-the acknowledged prepublication reminder is paused.
+Ryan was reminded before publication and deferred the MTG definitions and the Help
+Improve empty-list wording until after launch; both were completed later on
+2026-09-25 (see docs/domain-launch-checklist.md).

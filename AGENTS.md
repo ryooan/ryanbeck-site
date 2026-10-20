@@ -48,9 +48,23 @@ The cloud cron/backups do not depend on that Windows task. Original Vercel remai
 available for old-browser bracket transfers. Website has local Git only; its
 history contains private recovered data and must be reviewed before any remote push.
 
-Ryan was reminded before publication and explicitly deferred MTG pending definitions
-and Help Improve empty-list wording until after launch. Both remain follow-ups;
-the acknowledged prepublication reminder is paused.
+Ryan was reminded before publication and deferred the MTG definitions and the Help
+Improve empty-list wording until after launch; both were completed later on
+2026-09-25 (see docs/domain-launch-checklist.md).
+
+## Known problems (checked 2026-10-20)
+
+- **`/api/substack` returns the 404 page in production.** `wrangler.toml` lists
+  `run_worker_first` paths without `/api/*`, and `not_found_handling = "404-page"`
+  answers before the Worker runs. `public/assets/js/substack.js` depends on it.
+  Adding `/api/*` to `run_worker_first` and redeploying should fix it.
+- **Dashboard data is frozen at late August 2026** (newest rows: debt limit
+  2026-08-20). `.github/workflows/forecasting.yml` cannot run without a remote and
+  there is no local schedule, yet the generated `/forecasting` overview still
+  labels those series Live.
+- **No commits or deploys since 2026-09-25.** The live `ryanbeck-site` version is
+  still `cc0958c7` (source `c9f8a9f`). MTG has since been redeployed from its own
+  project; its row in the table above is the launch-day version.
 
 ## Read these, in order
 
@@ -103,21 +117,21 @@ The git history is a decision log — commit messages say why, not just what.
   `check-docs.mjs` asserts the docs still describe the code, so a doc edit
   that names a file has to name a real one.
 - The repo branch is `master`; deployment CI is manual workflow_dispatch.
-  Generated reviewed configs and a chosen origin are required. No remote is configured and nothing is deployed. The registered domain is
-  ryanrobertbeck.com; DNS activation remains unverified.
+  Generated reviewed configs and a chosen origin are required. No remote is
+  configured, so deploys are manual from this machine (live since 2026-09-25 on
+  ryanrobertbeck.com, Cloudflare DNS active).
 - The hosting approach is written up as a reusable pattern at
   `hub/wiki/architecture/patterns/cloudflare-workers-static-site.md` — read it
   before starting another Cloudflare project, especially the `html_handling`
   and cache-header traps.
 
-- Launch follow-up requested 2026-09-25: before completing publication, remind
-  Ryan to implement the previously discussed MTG definitions and revise the Help
-  Improve empty-list wording. Track completion in docs/march-madness-and-launch-plan.md.
+- Launch follow-up requested 2026-09-25 (MTG definitions, Help Improve empty-list
+  wording): completed 2026-09-25, recorded in docs/domain-launch-checklist.md.
 
 Launch preparation 2026-09-25: private D1 march-madness created and seeded
 (a3530b66-c736-4728-9a80-d7b7da106fc6), finalized 2026 revision 2, 68 teams.
-Production secrets are generated in the March Madness gitignored private-data
-directory and not uploaded yet. Privacy page prepared locally at /privacy.
+Production secrets were generated in the March Madness gitignored private-data
+directory and installed at launch. The privacy page is live at /privacy.
 Workers plan could not be read with the CLI token; Ryan must confirm it.
 
 Homepage URL (2026-09-25): navigation links use `/`; `/index.html` permanently redirects to `/`, retaining query parameters. Verified live root returns 200 and old links redirect.

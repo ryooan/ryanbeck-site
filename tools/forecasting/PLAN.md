@@ -1,11 +1,15 @@
 # Forecasting Data — investigation and plan
 
-**Status:** plan awaiting Ryan's review. Nothing has been changed in
-`ryooan/ryooan.github.io`; everything below is findings plus a proposal.
+**Status:** built 2026-08-23 (see §0); live on https://ryanrobertbeck.com/forecasting
+since 2026-09-25. **Data not refreshed since late August** (checked 2026-10-20):
+`.github/workflows/forecasting.yml` cannot run without a remote, and there is no
+local schedule. Nothing was ever changed in `ryooan/ryooan.github.io`, whose own
+scheduled workflows were still running on GitHub on 2026-10-20. §1-§5 below are
+the original investigation and proposal, kept as written.
 
-Reference clone (shallow, read-only): `../forecasting-source/`
-Recovered source that had been deleted upstream:
-`recovered-INFER_Trade_Data.Rmd` (see §2.4).
+Reference clone (shallow, read-only): `projects/personal/forecasting-source/`
+Recovered source that had been deleted upstream: kept here as
+`reference-INFER_Trade_Data.Rmd` (see §2.4).
 
 ---
 

@@ -345,8 +345,13 @@ setup would ever have said so.
 So: **status comes from the last date in the data, never from the run time.**
 `_common.record()` takes `last_date`, the page builder renders it, and
 `fetch_hpai.py` flips itself to `stale` when its newest row is over 120 days
-old. That is why the bird-flu chart currently says "Source stalled · data to
-9 June 2025" instead of showing a tick.
+old. That is how the bird-flu chart came to say "Source stalled · data to
+9 June 2025" until the APHIS export below revived it on 2026-08-24.
+
+**The flip side, as of 2026-10-20:** the status is computed when the page is
+*built*. With no remote, `forecasting.yml` has never run, so nothing has been
+fetched or rebuilt since late August and the live overview still calls those
+series Live. Status-from-data only works if something rebuilds the page.
 
 ### Traps found the hard way, all of which return silently wrong numbers
 
@@ -1337,6 +1342,11 @@ directly. `assets/js/substack.js` calls `/api/substack` on your own origin and
 silently falls back to the hand-written list if that route is missing. The
 Worker implements it: fetch, parse, decode entities, cache 30 minutes.
 
+⚠️ **In production the route is missing (checked 2026-10-20).** `wrangler.toml`
+sets `run_worker_first` to a list that does not include `/api/*`, so the asset
+layer answers `/api/substack` with the 404 page and the blog shows only the
+fallback list. Add `/api/*` to that list and redeploy.
+
 ## The ryanbeckauthor.com archive
 
 **Modern posts (2026-09-25):** `python tools/build-blog.py` generates all
@@ -1600,9 +1610,10 @@ Two things to know before wiring up CI:
   `CLOUDFLARE_ACCOUNT_ID`. There is no remote configured yet, so none of this
   is live.
 
-Before launch, put `/assets/*` images back on a long `max-age` and give them
-content-hashed filenames — they are on `no-cache` today so swapped artwork
-shows up immediately in review (see the note at the top of `public/_headers`).
+Still not done (it was a "before launch" item and launch went ahead without it):
+put `/assets/*` images back on a long `max-age` and give them content-hashed
+filenames — they are on `no-cache` so swapped artwork shows up immediately in
+review (see the note at the top of `public/_headers`).
 
 `public/_redirects` already maps the old ryanbeckauthor.com paths and gives the
 pages extensionless URLs. `tools/configure-app-deploy.py` generates custom-domain/path configs for
@@ -1679,14 +1690,13 @@ is left:
   calling it; see task 3.
 - **The blog page's post lists** are hand-written. The Substack half is
   replaced at runtime once `/api/substack` is live.
-- ⛔ **THE DOMAIN IS NOT CHOSEN, AND IT WILL NOT BE `ryanbeck.com`.** That one
-  is taken and Ryan's name is common enough that the real address will be
-  something else entirely. Everything currently says `ryanbeck.com` as a
-  stand-in.
+- **The domain is `ryanrobertbeck.com`** — chosen and registered 2026-09-25
+  (`"chosen": true`), live since that day. It was a placeholder `ryanbeck.com`
+  until then; that one belongs to someone else.
 
   **It is defined in exactly one place: `site.config.json`.** To change it,
   edit `origin` there, run `npm run site-url`, then
-  `python tools/forecasting/build_page.py`, and flip `chosen` to `true`.
+  `python tools/forecasting/build_page.py`, and keep `chosen` at `true`.
   `npm test` fails if any file has drifted from the config, so a stray
   hardcoded domain cannot survive CI.
 
@@ -1732,19 +1742,13 @@ loads on `about.html`.
 
 Roughly in the order they unblock things.
 
-0. ⛔ **Pick the domain before launch.** `ryanbeck.com` is taken; the real
-   address is undecided. Nothing else on this list should happen first,
-   because the domain is baked into canonical tags, OG tags, the sitemap, the
-   fetchers' user-agent and the credit line stamped on every chart PNG people
-   share. It is a one-line edit — `origin` in `site.config.json`, then
-   `npm run site-url` — but it has to be a real decision.
-   **Remind Ryan of this as launch gets close.** `npm test` prints a
-   placeholder warning on every run until `chosen` is set to `true`.
-1. **Deploy it.** It is a static site plus one Worker and has never been put
-   online. On this machine that is `npx wrangler login` and then
-   `npm run deploy` — but it publishes under Ryan's name, so wait for him to
-   ask. Then point the domain. HOSTING.md covers why Cloudflare and what the
-   free tier gives you.
+0. ~~**Pick the domain before launch.**~~ **Done 2026-09-25:**
+   `ryanrobertbeck.com`, `chosen: true` in `site.config.json`.
+1. ~~**Deploy it.**~~ **Done 2026-09-25**, on Ryan's authorization — live at
+   https://ryanrobertbeck.com (see "Live release" below). New open items from
+   the 2026-10-20 check: `/api/substack` 404s in production (see "Substack"),
+   and the dashboard data has not been refreshed since late August because the
+   repo still has no remote.
 2. ~~**Put *Not Human* somewhere better than the old site.**~~ **Done
    2026-09-15.** It is `public/not-human.html` (`/not-human`), the story
    copied verbatim from the archived `ryanbeckauthor/writing/NotHuman.html` —
@@ -1762,12 +1766,10 @@ Roughly in the order they unblock things.
    into the current personal-projects repo, fix what has drifted, and polish
    the presentation — Ryan's ask, 2026-08-20. **Done**: the dashboard
    lives at `public/forecasting/`. Until then they stay linked where they live.
-4a. **March Madness is behind Vercel deployment protection.** Its card
-   links the stable alias
-   (`march-madness-2026-ryan-8339s-projects.vercel.app`), but every URL on
-   the project currently serves Vercel's SSO login page. Ryan has to turn
-   off Deployment Protection in the Vercel dashboard (project settings)
-   before the card works for visitors. Remaining candidates if wanted:
+4a. ~~**March Madness is behind Vercel deployment protection.**~~ Moot since
+   2026-09-25: the card links `/march-madness/` on this origin, served by the
+   `ryanbeck-march-madness` Worker; the original Vercel project stays only for
+   old-browser bracket transfers. Remaining project-card candidates if wanted:
    Wordle Analysis, Ballot Research 2026, Desktop Build 2026. Real captures
    for app-type projects still need a compositing browser; Herder's card
    uses its actual wordmark re-inked gilt, March Madness a drawn bracket.
@@ -1795,8 +1797,8 @@ describe the live release below.
 
 Launch preparation 2026-09-25: private D1 march-madness created and seeded
 (a3530b66-c736-4728-9a80-d7b7da106fc6), finalized 2026 revision 2, 68 teams.
-Production secrets are generated in the March Madness gitignored private-data
-directory and not uploaded yet. Privacy page prepared locally at /privacy.
+Production secrets were generated in the March Madness gitignored private-data
+directory and installed at launch. The privacy page is live at /privacy.
 Workers plan could not be read with the CLI token; Ryan must confirm it.
 
 ## Live release, September 25, 2026
@@ -1807,7 +1809,7 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | 8e0967e | b9bef9c1-e866-4d83-a474-4a1561065a91 |
+| Website / | c9f8a9f | cc0958c7-77a0-4bb8-bea6-97c675c0123e (still current per `wrangler deployments list`, 2026-10-20) |
 | www redirect | 8e0967e | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |
@@ -1833,6 +1835,6 @@ The cloud cron/backups do not depend on that Windows task. Original Vercel remai
 available for old-browser bracket transfers. Website has local Git only; its
 history contains private recovered data and must be reviewed before any remote push.
 
-Ryan was reminded before publication and explicitly deferred MTG pending definitions
-and Help Improve empty-list wording until after launch. Both remain follow-ups;
-the acknowledged prepublication reminder is paused.
+Ryan was reminded before publication and deferred the MTG definitions and the Help
+Improve empty-list wording until after launch; both were completed later on
+2026-09-25 (see docs/domain-launch-checklist.md).
