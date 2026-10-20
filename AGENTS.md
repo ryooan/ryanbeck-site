@@ -3,7 +3,7 @@ project: personal-website
 domain: personal
 group:
 stack: HTML/CSS/JS, Cloudflare Worker + app service bindings; sibling React/Vite March Madness with D1/R2 and MTG Worker; StPageFlip
-hosting: Cloudflare personal 0efbd4d43122e579508d8f3b649ed990; ryanrobertbeck.com; live source c9f8a9f on 2026-09-25
+hosting: Cloudflare personal 0efbd4d43122e579508d8f3b649ed990; ryanrobertbeck.com; live source 96f2160 on 2026-10-20
 status: active
 patterns: cloudflare-workers-static-site
 shared-env: none — this project uses no keys from _shared/.env
@@ -22,7 +22,7 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | c9f8a9f | cc0958c7-77a0-4bb8-bea6-97c675c0123e |
+| Website / | 96f2160 (2026-10-20) | 680a7201-6fd9-469f-ba13-ef9d66dc638a |
 | www redirect | 8e0967e | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |
@@ -54,17 +54,19 @@ Improve empty-list wording until after launch; both were completed later on
 
 ## Known problems (checked 2026-10-20)
 
-- **`/api/substack` returns the 404 page in production.** `wrangler.toml` lists
-  `run_worker_first` paths without `/api/*`, and `not_found_handling = "404-page"`
-  answers before the Worker runs. `public/assets/js/substack.js` depends on it.
-  Adding `/api/*` to `run_worker_first` and redeploying should fix it.
+- ~~`/api/substack` returned the 404 page in production.~~ **Fixed 2026-10-20**
+  (`96f2160`, Worker version `680a7201`): `/api/*` is now in `run_worker_first`
+  in both `wrangler.toml` and the generated `.deploy/wrangler.json`, and
+  `npm test` fails if it drops out of either. Verified live: `/api/substack`
+  returns JSON and the blog renders it. `/api/subscribe` is now reachable too;
+  it answers GET with 405 and still does nothing with a POSTed address
+  (CLAUDE.md task 3 is Ryan's call).
 - **Dashboard data is frozen at late August 2026** (newest rows: debt limit
   2026-08-20). `.github/workflows/forecasting.yml` cannot run without a remote and
   there is no local schedule, yet the generated `/forecasting` overview still
   labels those series Live.
-- **No commits or deploys since 2026-09-25.** The live `ryanbeck-site` version is
-  still `cc0958c7` (source `c9f8a9f`). MTG has since been redeployed from its own
-  project; its row in the table above is the launch-day version.
+- The www, March Madness and MTG rows in the table above are launch-day
+  versions. MTG has since been redeployed from its own project.
 
 ## Read these, in order
 

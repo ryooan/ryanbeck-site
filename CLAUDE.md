@@ -1342,10 +1342,13 @@ directly. `assets/js/substack.js` calls `/api/substack` on your own origin and
 silently falls back to the hand-written list if that route is missing. The
 Worker implements it: fetch, parse, decode entities, cache 30 minutes.
 
-⚠️ **In production the route is missing (checked 2026-10-20).** `wrangler.toml`
-sets `run_worker_first` to a list that does not include `/api/*`, so the asset
-layer answers `/api/substack` with the 404 page and the blog shows only the
-fallback list. Add `/api/*` to that list and redeploy.
+⚠️ **`/api/*` must stay in `run_worker_first`.** `not_found_handling =
+"404-page"` lets the asset layer answer any path that is not listed before the
+Worker runs, so without it `/api/substack` returns the 404 page and the blog
+shows only the fallback list. That is how production ran from launch until
+2026-10-20 (fixed in `96f2160`). The list lives in `wrangler.toml` *and* in the
+generated `.deploy/wrangler.json` that `npm run deploy` actually uses;
+`check-docs.mjs` checks both.
 
 ## The ryanbeckauthor.com archive
 
@@ -1745,10 +1748,10 @@ Roughly in the order they unblock things.
 0. ~~**Pick the domain before launch.**~~ **Done 2026-09-25:**
    `ryanrobertbeck.com`, `chosen: true` in `site.config.json`.
 1. ~~**Deploy it.**~~ **Done 2026-09-25**, on Ryan's authorization — live at
-   https://ryanrobertbeck.com (see "Live release" below). New open items from
-   the 2026-10-20 check: `/api/substack` 404s in production (see "Substack"),
-   and the dashboard data has not been refreshed since late August because the
-   repo still has no remote.
+   https://ryanrobertbeck.com (see "Live release" below). Open item from
+   the 2026-10-20 check: the dashboard data has not been refreshed since late
+   August because the repo still has no remote. (`/api/substack` 404ing in
+   production, found the same day, was fixed in `96f2160`; see "Substack".)
 2. ~~**Put *Not Human* somewhere better than the old site.**~~ **Done
    2026-09-15.** It is `public/not-human.html` (`/not-human`), the story
    copied verbatim from the archived `ryanbeckauthor/writing/NotHuman.html` —
@@ -1759,8 +1762,9 @@ Roughly in the order they unblock things.
    `/writing/NotHuman` path there (ahead of the `/writing/*` catch-all). It is
    not in the copy editor.
 3. **Decide what happens to `/api/subscribe`.** The form that posted to it is
-   gone (removed 2026-08-31 with the mailing-list block), so the route is now
-   live but unreferenced. Either wire it to a real list if the list comes
+   gone (removed 2026-08-31 with the mailing-list block), so the route is
+   reachable in production (since 2026-10-20) but unreferenced: a POST gets
+   `{ok: true}` and the address goes nowhere. Either wire it to a real list if the list comes
    back, or delete it from `worker/index.js`.
 4. **Fork the fourteen dashboards** out of the old `ryooan.github.io` repo
    into the current personal-projects repo, fix what has drifted, and polish
@@ -1809,7 +1813,7 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | c9f8a9f | cc0958c7-77a0-4bb8-bea6-97c675c0123e (still current per `wrangler deployments list`, 2026-10-20) |
+| Website / | 96f2160 (2026-10-20; launch was c9f8a9f / cc0958c7) | 680a7201-6fd9-469f-ba13-ef9d66dc638a |
 | www redirect | 8e0967e | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |
