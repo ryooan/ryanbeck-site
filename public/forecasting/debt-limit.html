@@ -43,12 +43,12 @@
 <nav class="dash-nav" aria-label="Data dashboard sections">
   <p class="dash-nav-head"><a href="/forecasting">Data Dashboards</a></p>
   <ul>
-    <li><a href="/forecasting/respiratory">Respiratory illness<span class="dot is-overdue" data-checks="2026-08-15:45 2026-07-04:60" aria-hidden="true"></span></a></li>
-    <li><a href="/forecasting/debt-limit" aria-current="page">The debt limit<span class="dot is-overdue" data-checks="2026-08-20:10" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/respiratory">Respiratory illness<span class="dot is-live" data-checks="2026-10-10:45 2026-10-10:60" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/debt-limit" aria-current="page">The debt limit<span class="dot is-live" data-checks="2026-10-19:10" aria-hidden="true"></span></a></li>
     <li><a href="/forecasting/big-tech-revenue">Big-tech revenue<span class="dot is-live" data-checks="2025-01-01:800 2026-06-01:200" aria-hidden="true"></span></a></li>
-    <li><a href="/forecasting/refugee-admissions">Refugee admissions<span class="dot is-overdue" data-checks="2026-07-01:100 2025-10-01:430" aria-hidden="true"></span></a></li>
-    <li><a href="/forecasting/semiconductors">Semiconductor trade<span class="dot is-overdue" data-checks="2026-06-01:120 2024-01-01:1100" aria-hidden="true"></span></a></li>
-    <li><a href="/forecasting/bird-flu">Bird flu<span class="dot is-live" data-checks="2026-08-17:120" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/refugee-admissions">Refugee admissions<span class="dot is-live" data-checks="2026-09-01:100 2025-10-01:430" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/semiconductors">Semiconductor trade<span class="dot is-live" data-checks="2026-07-01:120 2025-01-01:1100" aria-hidden="true"></span></a></li>
+    <li><a href="/forecasting/bird-flu">Bird flu<span class="dot is-live" data-checks="2026-10-12:120" aria-hidden="true"></span></a></li>
     <li><a href="/forecasting/virginia-covid">Virginia COVID<span class="dot is-historical" aria-hidden="true"></span></a></li>
   </ul>
   <p class="dash-nav-foot"><a href="/projects">&larr; All projects</a></p>
@@ -62,10 +62,10 @@
 
   <section class="series" id="debt-limit">
     <h2 class="sr-only">US debt limit</h2>
-    <div class="plot-mount" data-plot='{&quot;yLabel&quot;:&quot;Debt outstanding&quot;,&quot;format&quot;:&quot;usd-millions&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;debt_subject_to_limit&quot;,&quot;label&quot;:&quot;Debt subject to limit&quot;},{&quot;col&quot;:&quot;statutory_limit&quot;,&quot;label&quot;:&quot;Statutory ceiling&quot;,&quot;dash&quot;:true}],&quot;band&quot;:{&quot;col&quot;:&quot;suspended&quot;,&quot;label&quot;:&quot;Limit suspended&quot;},&quot;trend&quot;:{&quot;col&quot;:&quot;debt_subject_to_limit&quot;,&quot;limitCol&quot;:&quot;statutory_limit&quot;,&quot;suspendedCol&quot;:&quot;suspended&quot;,&quot;label&quot;:&quot;Trend&quot;,&quot;atLimitPct&quot;:0.5,&quot;suspendedMonths&quot;:12,&quot;maxMonths&quot;:36},&quot;csv&quot;:&quot;/data/forecasting/debt-limit.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US debt limit&quot;,&quot;slug&quot;:&quot;debt-limit&quot;,&quot;credit&quot;:&quot;ryanrobertbeck.com/forecasting&quot;,&quot;embed&quot;:&quot;/forecasting/embed/debt-limit&quot;,&quot;sourceUrl&quot;:&quot;https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/debt-subject-to-limit&quot;,&quot;title&quot;:&quot;US debt limit&quot;,&quot;subtitle&quot;:&quot;Treasury Fiscal Data, Daily Treasury Statement \u00b7 data to 20 August 2026&quot;}'></div>
+    <div class="plot-mount" data-plot='{&quot;yLabel&quot;:&quot;Debt outstanding&quot;,&quot;format&quot;:&quot;usd-millions&quot;,&quot;series&quot;:[{&quot;col&quot;:&quot;debt_subject_to_limit&quot;,&quot;label&quot;:&quot;Debt subject to limit&quot;},{&quot;col&quot;:&quot;statutory_limit&quot;,&quot;label&quot;:&quot;Statutory ceiling&quot;,&quot;dash&quot;:true}],&quot;band&quot;:{&quot;col&quot;:&quot;suspended&quot;,&quot;label&quot;:&quot;Limit suspended&quot;},&quot;trend&quot;:{&quot;col&quot;:&quot;debt_subject_to_limit&quot;,&quot;limitCol&quot;:&quot;statutory_limit&quot;,&quot;suspendedCol&quot;:&quot;suspended&quot;,&quot;label&quot;:&quot;Trend&quot;,&quot;atLimitPct&quot;:0.5,&quot;suspendedMonths&quot;:12,&quot;maxMonths&quot;:36},&quot;csv&quot;:&quot;/data/forecasting/debt-limit.csv&quot;,&quot;x&quot;:&quot;date&quot;,&quot;alt&quot;:&quot;US debt limit&quot;,&quot;slug&quot;:&quot;debt-limit&quot;,&quot;credit&quot;:&quot;ryanrobertbeck.com/forecasting&quot;,&quot;embed&quot;:&quot;/forecasting/embed/debt-limit&quot;,&quot;sourceUrl&quot;:&quot;https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/debt-subject-to-limit&quot;,&quot;title&quot;:&quot;US debt limit&quot;,&quot;subtitle&quot;:&quot;Treasury Fiscal Data, Daily Treasury Statement \u00b7 data to 19 October 2026&quot;}'></div>
     <p class="series-note">Shading marks periods when the debt limit was suspended. The trend projects debt growth since the latest limit change; toggle it in the legend.</p>
-    <p class="series-source"><span class="status is-overdue" data-last="2026-08-20" data-expect="10">Out of date</span>
-      5,246 rows, latest <span data-age-of="2026-08-20">61 days ago</span> &middot;
+    <p class="series-source"><span class="status is-live" data-last="2026-10-19" data-expect="10">Live</span>
+      5,286 rows, latest <span data-age-of="2026-10-19">up to date</span> &middot;
       source: <a href="https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/debt-subject-to-limit" rel="noopener">Treasury Fiscal Data, Daily Treasury Statement</a> &middot;
       download: <a href="/data/forecasting/debt-limit.csv">debt-limit.csv</a></p>
   </section>

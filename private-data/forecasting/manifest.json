@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-27T05:42:49Z",
+  "generated": "2026-10-20T22:41:44Z",
   "series": {
     "covid-hospitalizations": {
       "fetched": "2026-08-24T03:05:10Z",
@@ -18,10 +18,10 @@
       "status": "historical"
     },
     "covid-weekly-admissions": {
-      "fetched": "2026-08-27T05:15:17Z",
-      "last_date": "2026-08-15",
+      "fetched": "2026-10-20T22:39:28Z",
+      "last_date": "2026-10-10",
       "note": "Weekly new hospital admissions with a laboratory-confirmed diagnosis, national. Carries the share of hospitals reporting each week, which is not constant.",
-      "rows": 315,
+      "rows": 323,
       "source": "CDC NHSN Hospital Respiratory Data",
       "status": "live"
     },
@@ -34,15 +34,15 @@
       "status": "historical"
     },
     "debt-limit": {
-      "fetched": "2026-08-24T02:35:43Z",
-      "last_date": "2026-08-20",
+      "fetched": "2026-10-20T22:39:26Z",
+      "last_date": "2026-10-19",
       "note": "Millions of dollars. Ceiling is blank while suspended.",
-      "rows": 5246,
+      "rows": 5286,
       "source": "Treasury Fiscal Data - Daily Treasury Statement",
       "status": "live"
     },
     "faamg-revenues": {
-      "fetched": "2026-08-27T05:42:49Z",
+      "fetched": "2026-10-20T22:41:01Z",
       "last_date": "2025-01-01",
       "note": "Billions of US dollars, by each company's own fiscal year. Combined is blank for years where not all five have filed.",
       "rows": 20,
@@ -50,7 +50,7 @@
       "status": "live"
     },
     "faamg-revenues-quarterly": {
-      "fetched": "2026-08-27T05:42:49Z",
+      "fetched": "2026-10-20T22:41:01Z",
       "last_date": "2026-06-01",
       "note": "Billions of US dollars per quarter, aligned by the calendar quarter each fiscal quarter ends in.",
       "rows": 76,
@@ -58,39 +58,39 @@
       "status": "live"
     },
     "flu-hospitalizations": {
-      "fetched": "2026-08-24T02:41:45Z",
-      "last_date": "2026-07-04",
+      "fetched": "2026-10-20T22:41:42Z",
+      "last_date": "2026-10-10",
       "note": "Weekly hospital admissions with a confirmed influenza diagnosis.",
-      "rows": 231,
+      "rows": 245,
       "source": "CDC FluSight forecast hub",
       "status": "live"
     },
     "flu-hospitalizations-states": {
-      "fetched": "2026-08-24T03:11:38Z",
-      "last_date": "2026-07-04",
+      "fetched": "2026-10-20T22:41:42Z",
+      "last_date": "2026-10-10",
       "note": "Weekly admissions by state.",
-      "rows": 11976,
+      "rows": 12704,
       "source": "CDC FluSight forecast hub",
       "status": "live"
     },
     "hpai-depopulations": {
-      "fetched": "2026-08-24T15:24:17Z",
-      "last_date": "2026-08-17",
+      "fetched": "2026-10-20T22:39:27Z",
+      "last_date": "2026-10-12",
       "note": "Birds killed in confirmed commercial and backyard flocks, from the full detection export behind the APHIS dashboard.",
-      "rows": 202,
+      "rows": 210,
       "source": "USDA APHIS confirmed detections",
       "status": "live"
     },
     "refugee-admissions": {
-      "fetched": "2026-08-24T04:03:04Z",
-      "last_date": "2026-07-01",
+      "fetched": "2026-10-20T22:41:44Z",
+      "last_date": "2026-09-01",
       "note": "Monthly arrivals. Fiscal years run October-September; the annual file carries the presidential ceiling.",
-      "rows": 310,
+      "rows": 312,
       "source": "State Dept Refugee Processing Center",
       "status": "live"
     },
     "refugee-admissions-annual": {
-      "fetched": "2026-08-24T04:03:28Z",
+      "fetched": "2026-10-20T22:41:44Z",
       "last_date": "2025-10-01",
       "note": "Fiscal-year totals back to 1975, with the presidential ceiling.",
       "rows": 52,
@@ -98,18 +98,18 @@
       "status": "live"
     },
     "semiconductors-china-imports": {
-      "fetched": "2026-08-24T14:26:27Z",
-      "last_date": "2024-01-01",
+      "fetched": "2026-10-20T22:40:56Z",
+      "last_date": "2025-01-01",
       "note": "US dollars. Chips are HS 8542; equipment is HS 8486, 903082, 903141, 854311 and 901041, summed.",
-      "rows": 25,
+      "rows": 26,
       "source": "UN Comtrade",
       "status": "live"
     },
     "semiconductors-us-exports-china": {
-      "fetched": "2026-08-24T14:26:27Z",
-      "last_date": "2026-06-01",
+      "fetched": "2026-10-20T22:40:56Z",
+      "last_date": "2026-07-01",
       "note": "US dollars. Chips are HS 8542; equipment is HS 8486, 903082, 903141, 854311 and 901041, summed.",
-      "rows": 198,
+      "rows": 199,
       "source": "UN Comtrade",
       "status": "live"
     },
