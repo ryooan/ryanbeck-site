@@ -1,11 +1,15 @@
 # Forecasting Data — investigation and plan
 
 **Status:** built 2026-08-23 (see §0); live on https://ryanrobertbeck.com/forecasting
-since 2026-09-25. **Data not refreshed since late August** (checked 2026-10-20):
-`.github/workflows/forecasting.yml` cannot run without a remote, and there is no
-local schedule. Nothing was ever changed in `ryooan/ryooan.github.io`, whose own
-scheduled workflows were still running on GitHub on 2026-10-20. §1-§5 below are
-the original investigation and proposal, kept as written.
+since 2026-09-25. The data sat frozen from late August to 2026-10-20 because the
+repo had no remote, so `forecasting.yml` never ran, while the page still said
+Live. Fixed 2026-10-20: refreshed by hand, public remote `ryooan/ryanbeck-site`
+added, and the workflow now deploys after a data commit (it needs the
+`CLOUDFLARE_API_TOKEN` secret). A live series also shows **Out of date** once
+its data is older than `EXPECT_DAYS` allows. The two scheduled workflows still
+active in `ryooan/ryooan.github.io` (refugee admissions, HPAI) were disabled on
+2026-10-20. Its Pages site still serves www.ryanbeckauthor.com, frozen. §1-§5
+below are the original investigation and proposal, kept as written.
 
 Reference clone (shallow, read-only): `projects/personal/forecasting-source/`
 Recovered source that had been deleted upstream: kept here as
@@ -75,9 +79,9 @@ status is computed from the data's own last date.
 
 ### Still to do
 
-1. **The repo has no git remote and has never been deployed.** The schedules
-   cannot run until it does, and `COMTRADE_API_KEY` needs adding as an Actions
-   secret. This was already the site's top open task.
+1. ~~**The repo has no git remote.**~~ Public remote since 2026-10-20, and
+   `COMTRADE_API_KEY` is an Actions secret. `CLOUDFLARE_API_TOKEN` is still
+   needed before a scheduled refresh can deploy.
 2. Chart module has no small-multiples mode yet; the 50-state flu data is
    committed and waiting for it.
 3. Ledes on `projects.html` and the page intro still want Ryan's voice.

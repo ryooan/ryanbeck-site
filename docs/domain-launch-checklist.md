@@ -31,8 +31,9 @@ Local automatic backup registration was denied by Windows. The first backup is
 already downloaded; the recurring task is NOT installed. Run the installer once
 from an Administrator PowerShell under Ryan's account (see domain-launch-checklist).
 The cloud cron/backups do not depend on that Windows task. Original Vercel remains
-available for old-browser bracket transfers. Website has local Git only; its
-history contains private recovered data and must be reviewed before any remote push.
+available for old-browser bracket transfers. Website source is public at
+github.com/ryooan/ryanbeck-site (since 2026-10-20); Metaculus work data in the
+recovered archive was purged from the history first (see private-data/README.md).
 
 Ryan was reminded before publication and explicitly deferred MTG pending definitions
 and Help Improve empty-list wording until after launch. Both remain follow-ups;

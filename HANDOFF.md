@@ -116,14 +116,16 @@ has been narrowed to what the list in "What is not done" says.
 Everything in "Known placeholders" in CLAUDE.md, but the short version:
 
 - live since 2026-09-25 at https://ryanrobertbeck.com (Worker version
-  `680a7201`, source `755b4e0`, deployed 2026-10-20 to fix `/api/substack`,
-  which had returned the 404 page since launch because `run_worker_first`
-  omitted `/api/*`). Open: an owner check of March Madness cross-device saving
+  `6aca3636`, source `b70f391`, 2026-10-20; the `/api/substack` fix went out
+  just before in `680a7201`/`755b4e0`; that route had returned the 404 page
+  since launch because `run_worker_first` omitted `/api/*`). Open: an owner check of March Madness cross-device saving
   and the Windows backup task registration.
-- no git remote. Deployment CI is manual and requires reviewed configuration.
-  `.github/workflows/forecasting.yml` refreshes the data on a schedule and
-  cannot run at all until the repo has a remote — so the dashboard data has
-  not been refreshed since late August 2026
+- public remote `ryooan/ryanbeck-site` since 2026-10-20 (history rewritten first
+  to drop Metaculus work data, so the hashes changed). `deploy.yml` deploys on
+  push to master and after `forecasting.yml` commits data. It needs the
+  `CLOUDFLARE_API_TOKEN` Actions secret, which Ryan has to add.
+  `COMTRADE_API_KEY` is set. The data was refreshed by hand on 2026-10-20,
+  after being frozen since late August
 - domain: `ryanrobertbeck.com`, set in `site.config.json` (`chosen: true`),
   on Cloudflare DNS.
 - every project card uses the "light float" treatment Ryan chose from three
@@ -134,8 +136,7 @@ Everything in "Known placeholders" in CLAUDE.md, but the short version:
   fourteen series across a generated dashboard at `public/forecasting/`,
   eleven Python fetchers in
   `tools/forecasting/`, committed CSV under `public/data/forecasting/`. Three
-  were revived from dead. What remains: `COMTRADE_API_KEY` has to be added as
-  an Actions secret before the scheduled workflow can run, and the chart
+  were revived from dead. What remains: the chart
   module has no small-multiples view, so the committed 50-state flu file is
   not drawn yet
 - the March Madness card links a deployment that is behind Vercel SSO —
@@ -193,7 +194,7 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | 755b4e0 (2026-10-20; launch was 764b631) | 680a7201-6fd9-469f-ba13-ef9d66dc638a |
+| Website / | b70f391 (2026-10-20; launch was 764b631) | 6aca3636-14ac-4e07-97f8-38164f9c334e |
 | www redirect | c38b0ce | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |
@@ -216,8 +217,9 @@ Local automatic backup registration was denied by Windows. The first backup is
 already downloaded; the recurring task is NOT installed. Run the installer once
 from an Administrator PowerShell under Ryan's account (see domain-launch-checklist).
 The cloud cron/backups do not depend on that Windows task. Original Vercel remains
-available for old-browser bracket transfers. Website has local Git only; its
-history contains private recovered data and must be reviewed before any remote push.
+available for old-browser bracket transfers. Website source is public at
+github.com/ryooan/ryanbeck-site (since 2026-10-20); Metaculus work data in the
+recovered archive was purged from the history first (see private-data/README.md).
 
 Ryan was reminded before publication and deferred the MTG definitions and the Help
 Improve empty-list wording until after launch; both were completed later on

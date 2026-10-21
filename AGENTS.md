@@ -3,10 +3,10 @@ project: personal-website
 domain: personal
 group:
 stack: HTML/CSS/JS, Cloudflare Worker + app service bindings; sibling React/Vite March Madness with D1/R2 and MTG Worker; StPageFlip
-hosting: Cloudflare personal 0efbd4d43122e579508d8f3b649ed990; ryanrobertbeck.com; live source 755b4e0 on 2026-10-20
+hosting: Cloudflare personal 0efbd4d43122e579508d8f3b649ed990; ryanrobertbeck.com; live source b70f391 on 2026-10-20 (Worker 6aca3636)
 status: active
 patterns: cloudflare-workers-static-site
-shared-env: none — this project uses no keys from _shared/.env
+shared-env: COMTRADE_API_KEY (fetch_semiconductors.py; also an Actions secret)
 -->
 
 # personal-website (ryanbeck-site)
@@ -22,7 +22,7 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | 755b4e0 (2026-10-20) | 680a7201-6fd9-469f-ba13-ef9d66dc638a |
+| Website / | b70f391 (2026-10-20, data refresh + Out of date label) | 6aca3636-14ac-4e07-97f8-38164f9c334e |
 | www redirect | c38b0ce | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |
@@ -45,8 +45,9 @@ Local automatic backup registration was denied by Windows. The first backup is
 already downloaded; the recurring task is NOT installed. Run the installer once
 from an Administrator PowerShell under Ryan's account (see domain-launch-checklist).
 The cloud cron/backups do not depend on that Windows task. Original Vercel remains
-available for old-browser bracket transfers. Website has local Git only; its
-history contains private recovered data and must be reviewed before any remote push.
+available for old-browser bracket transfers. Website source is public at
+github.com/ryooan/ryanbeck-site (since 2026-10-20); Metaculus work data in the
+recovered archive was purged from the history first (see private-data/README.md).
 
 Ryan was reminded before publication and deferred the MTG definitions and the Help
 Improve empty-list wording until after launch; both were completed later on
@@ -61,10 +62,14 @@ Improve empty-list wording until after launch; both were completed later on
   returns JSON and the blog renders it. `/api/subscribe` is now reachable too;
   it answers GET with 405 and still does nothing with a POSTed address
   (CLAUDE.md task 3 is Ryan's call).
-- **Dashboard data is frozen at late August 2026** (newest rows: debt limit
-  2026-08-20). `.github/workflows/forecasting.yml` cannot run without a remote and
-  there is no local schedule, yet the generated `/forecasting` overview still
-  labels those series Live.
+- ~~Dashboard data frozen at late August 2026 while labeled Live.~~ **Fixed
+  2026-10-20.** The data was refreshed by hand and deployed (Worker `6aca3636`),
+  and the repo now has a public remote so `forecasting.yml` can run on GitHub.
+  A live series now drops to **Out of date** once its newest row is older than
+  its source allows (`EXPECT_DAYS` in `build_page.py`, repeated in the browser by
+  `public/assets/js/freshness.js`), so a stopped refresh shows on the page.
+  **Still needed: Ryan adds the `CLOUDFLARE_API_TOKEN` Actions secret.** Until
+  then the scheduled runs commit fresh data, but the deploy step fails.
 - The www, March Madness and MTG rows in the table above are launch-day
   versions. MTG has since been redeployed from its own project.
 
@@ -118,10 +123,17 @@ The git history is a decision log — commit messages say why, not just what.
 - Checks: `npm test` checks links, docs, origin consistency and public datasets.
   `check-docs.mjs` asserts the docs still describe the code, so a doc edit
   that names a file has to name a real one.
-- The repo branch is `master`; deployment CI is manual workflow_dispatch.
-  Generated reviewed configs and a chosen origin are required. No remote is
-  configured, so deploys are manual from this machine (live since 2026-09-25 on
-  ryanrobertbeck.com, Cloudflare DNS active).
+- The repo branch is `master`, pushed to the **public** GitHub repo
+  `ryooan/ryanbeck-site` (2026-10-20). `deploy.yml` deploys on every push to
+  master, by hand, and after a forecasting data commit. `npm run deploy` from
+  this machine still works. Both paths regenerate `.deploy/wrangler.json` from
+  `wrangler.toml` (`tools/site-deploy-config.py`, run by `predeploy`).
+  Secrets: `CLOUDFLARE_API_TOKEN` (personal account) and `COMTRADE_API_KEY`.
+  Nothing secret may be committed, and `private-data/local/` stays gitignored.
+- **The history was rewritten on 2026-10-20** (git filter-repo, before the first
+  push) to remove Metaculus work data, so every commit hash changed. The docs
+  cite the new hashes. The old history is in
+  `%USERPROFILE%\backups\personal-website\personal-website-pre-public-2026-10-20.bundle`.
 - The hosting approach is written up as a reusable pattern at
   `hub/wiki/architecture/patterns/cloudflare-workers-static-site.md` — read it
   before starting another Cloudflare project, especially the `html_handling`

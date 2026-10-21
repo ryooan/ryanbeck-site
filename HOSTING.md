@@ -8,7 +8,7 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | 755b4e0 (2026-10-20; launch was 764b631) | 680a7201-6fd9-469f-ba13-ef9d66dc638a |
+| Website / | b70f391 (2026-10-20; launch was 764b631) | 6aca3636-14ac-4e07-97f8-38164f9c334e |
 | www redirect | c38b0ce | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |
@@ -31,8 +31,9 @@ Local automatic backup registration was denied by Windows. The first backup is
 already downloaded; the recurring task is NOT installed. Run the installer once
 from an Administrator PowerShell under Ryan's account (see domain-launch-checklist).
 The cloud cron/backups do not depend on that Windows task. Original Vercel remains
-available for old-browser bracket transfers. Website has local Git only; its
-history contains private recovered data and must be reviewed before any remote push.
+available for old-browser bracket transfers. Website source is public at
+github.com/ryooan/ryanbeck-site (since 2026-10-20); Metaculus work data in the
+recovered archive was purged from the history first (see private-data/README.md).
 
 Ryan was reminded before publication and explicitly deferred MTG pending definitions
 and Help Improve empty-list wording until after launch. Both remain follow-ups;

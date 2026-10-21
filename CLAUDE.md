@@ -348,10 +348,16 @@ So: **status comes from the last date in the data, never from the run time.**
 old. That is how the bird-flu chart came to say "Source stalled · data to
 9 June 2025" until the APHIS export below revived it on 2026-08-24.
 
-**The flip side, as of 2026-10-20:** the status is computed when the page is
-*built*. With no remote, `forecasting.yml` has never run, so nothing has been
-fetched or rebuilt since late August and the live overview still calls those
-series Live. Status-from-data only works if something rebuilds the page.
+**The flip side, found 2026-10-20:** the fetchers write `live` when they run,
+so a refresh that stops leaves `live` in the manifest. With no remote,
+`forecasting.yml` never ran, and from late August to 2026-10-20 the live
+overview called every series Live. Now `build_page.py` downgrades a live
+series to **Out of date** once its newest row is older than `EXPECT_DAYS[slug]`
+allows. Each limit is set per source: cadence plus reporting lag, plus how rows
+are dated. `public/assets/js/freshness.js` repeats the same check in the
+browser, so a page nobody rebuilds still downgrades itself. Still measured
+from the data's last date, never from a run time. A new live series needs an
+`EXPECT_DAYS` entry. Without one it can never show Out of date.
 
 ### Traps found the hard way, all of which return silently wrong numbers
 
@@ -1605,13 +1611,18 @@ ryooan@gmail.com account, expected account ID `0efbd4d43122e579508d8f3b649ed990`
 Ryan registered ryanrobertbeck.com; canonical URLs are configured locally.
 Production resources and DNS are live; Ryan verified production Google sign-in.
 
-Two things to know before wiring up CI:
+CI (since 2026-10-20, public repo `ryooan/ryanbeck-site`):
 
-- `.github/workflows/deploy.yml` runs only by manual workflow_dispatch.
-  It requires SITE_DEPLOYMENT_CONFIG, the reviewed root Worker configuration.
-- It needs two GitHub secrets, `CLOUDFLARE_API_TOKEN` and
-  `CLOUDFLARE_ACCOUNT_ID`. There is no remote configured yet, so none of this
-  is live.
+- `.github/workflows/deploy.yml` deploys on every push to `master`, on manual
+  dispatch, and when `forecasting.yml` calls it after a data commit. A push
+  made with `GITHUB_TOKEN` triggers no other workflow, so the call is explicit.
+- `npm run deploy` deploys `.deploy/wrangler.json`, not `wrangler.toml`. Its
+  `predeploy` regenerates that file from `wrangler.toml` and `site.config.json`
+  with `tools/site-deploy-config.py`. A hand-generated copy had drifted:
+  `/api/*` was missing from launch until 2026-10-20.
+- Secrets: `CLOUDFLARE_API_TOKEN` (personal account; the account ID comes from
+  the generated config) and `COMTRADE_API_KEY`. The repo is public, so nothing
+  secret may be committed.
 
 Still not done (it was a "before launch" item and launch went ahead without it):
 put `/assets/*` images back on a long `max-age` and give them content-hashed
@@ -1748,10 +1759,11 @@ Roughly in the order they unblock things.
 0. ~~**Pick the domain before launch.**~~ **Done 2026-09-25:**
    `ryanrobertbeck.com`, `chosen: true` in `site.config.json`.
 1. ~~**Deploy it.**~~ **Done 2026-09-25**, on Ryan's authorization — live at
-   https://ryanrobertbeck.com (see "Live release" below). Open item from
-   the 2026-10-20 check: the dashboard data has not been refreshed since late
-   August because the repo still has no remote. (`/api/substack` 404ing in
-   production, found the same day, was fixed in `755b4e0`; see "Substack".)
+   https://ryanrobertbeck.com (see "Live release" below). Both items
+   from the 2026-10-20 check are fixed: `/api/substack` 404ing in production
+   (`755b4e0`; see "Substack"), and dashboard data frozen since late August.
+   That one was refreshed and deployed, and the repo now has a public remote so
+   `forecasting.yml` can run. It still needs the `CLOUDFLARE_API_TOKEN` secret.
 2. ~~**Put *Not Human* somewhere better than the old site.**~~ **Done
    2026-09-15.** It is `public/not-human.html` (`/not-human`), the story
    copied verbatim from the archived `ryanbeckauthor/writing/NotHuman.html` —
@@ -1813,7 +1825,7 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | 755b4e0 (2026-10-20; launch was 764b631 / cc0958c7) | 680a7201-6fd9-469f-ba13-ef9d66dc638a |
+| Website / | b70f391 (2026-10-20; launch was 764b631 / cc0958c7) | 6aca3636-14ac-4e07-97f8-38164f9c334e |
 | www redirect | c38b0ce | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |
@@ -1836,8 +1848,9 @@ Local automatic backup registration was denied by Windows. The first backup is
 already downloaded; the recurring task is NOT installed. Run the installer once
 from an Administrator PowerShell under Ryan's account (see domain-launch-checklist).
 The cloud cron/backups do not depend on that Windows task. Original Vercel remains
-available for old-browser bracket transfers. Website has local Git only; its
-history contains private recovered data and must be reviewed before any remote push.
+available for old-browser bracket transfers. Website source is public at
+github.com/ryooan/ryanbeck-site (since 2026-10-20); Metaculus work data in the
+recovered archive was purged from the history first (see private-data/README.md).
 
 Ryan was reminded before publication and deferred the MTG definitions and the Help
 Improve empty-list wording until after launch; both were completed later on

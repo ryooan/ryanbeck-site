@@ -247,7 +247,8 @@ npx wrangler login
 npm run deploy
 ```
 
-Or push to `main` — `.github/workflows/deploy.yml` does it, given
-`CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` as repo secrets.
+Or push to `master` — `.github/workflows/deploy.yml` does it, given the
+`CLOUDFLARE_API_TOKEN` repo secret. Either way `predeploy` regenerates
+`.deploy/wrangler.json` from `wrangler.toml` first.
 
 See HOSTING.md for why Cloudflare, and CLAUDE.md for how the doors actually work.
