@@ -1,0 +1,5 @@
+# Store text with LF endings whatever wrote it. Python's csv module writes
+# CRLF, so without this every CI data commit rewrote whole files whose
+# Windows-made copies had been normalized to LF.
+* text=auto
+*.gz binary
