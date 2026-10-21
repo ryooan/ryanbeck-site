@@ -96,14 +96,14 @@ Two commits after the docs were last synced replaced most of the invented
 content with real material, so anything below that still reads "placeholder"
 has been narrowed to what the list in "What is not done" says.
 
-- **Fiction, blog and portrait** (`0c6da10`) came from Ryan's own author site
+- **Fiction, blog and portrait** (`4bd8746`) came from Ryan's own author site
   (`github.com/ryooan/ryooan.github.io`): real SEER and *Not Human* covers at
   their true 0.625 ratio with his own blurbs, a real Amazon link, all nineteen
   archive posts 2019-2023 with real dates and excerpts, his actual headshot,
   and the SEER cover art behind the fiction door. An invented pull-quote
   attributed to the novel was deleted outright — that was a fabrication, not a
   placeholder. SEER's publication year was corrected to 2019.
-- **Projects** (`275f764`) replaced the six invented cards with the fourteen
+- **Projects** (`ad6c4e9`) replaced the six invented cards with the fourteen
   real forecasting dashboards from `ryooan.github.io`, all verified 200. The
   lede marks itself a draft for Ryan to prune. **Thumbnails are still the six
   generated placeholders**, reused across fourteen cards.
@@ -116,7 +116,7 @@ has been narrowed to what the list in "What is not done" says.
 Everything in "Known placeholders" in CLAUDE.md, but the short version:
 
 - live since 2026-09-25 at https://ryanrobertbeck.com (Worker version
-  `680a7201`, source `96f2160`, deployed 2026-10-20 to fix `/api/substack`,
+  `680a7201`, source `755b4e0`, deployed 2026-10-20 to fix `/api/substack`,
   which had returned the 404 page since launch because `run_worker_first`
   omitted `/api/*`). Open: an owner check of March Madness cross-device saving
   and the Windows backup task registration.
@@ -193,8 +193,8 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | 96f2160 (2026-10-20; launch was c9f8a9f) | 680a7201-6fd9-469f-ba13-ef9d66dc638a |
-| www redirect | 8e0967e | 88431447-62a8-4c56-8ed6-296cb9b60011 |
+| Website / | 755b4e0 (2026-10-20; launch was 764b631) | 680a7201-6fd9-469f-ba13-ef9d66dc638a |
+| www redirect | c38b0ce | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |
 

@@ -1346,7 +1346,7 @@ Worker implements it: fetch, parse, decode entities, cache 30 minutes.
 "404-page"` lets the asset layer answer any path that is not listed before the
 Worker runs, so without it `/api/substack` returns the 404 page and the blog
 shows only the fallback list. That is how production ran from launch until
-2026-10-20 (fixed in `96f2160`). The list lives in `wrangler.toml` *and* in the
+2026-10-20 (fixed in `755b4e0`). The list lives in `wrangler.toml` *and* in the
 generated `.deploy/wrangler.json` that `npm run deploy` actually uses;
 `check-docs.mjs` checks both.
 
@@ -1678,7 +1678,7 @@ is left:
   ones — matching a mean built from dark rooms crushes a uniformly lit
   picture into a murky band. Match highlights, keep the subject readable. The
   puzzle sits at paper 163 / piece 63, which is 199 / 77 at hover exposure.
-- ~~**The about-page copy**~~ is Ryan's own words since 2026-09-15 (`aeb51f5`,
+- ~~**The about-page copy**~~ is Ryan's own words since 2026-09-15 (`7a1ab01`,
   his rewrite of the book chapters); `about-plain.html` is generated from it.
 - **Not placeholders any more:** both book covers, the about-page portrait, the
   blog archive (nineteen real posts), the Substack fallback list, and every
@@ -1751,7 +1751,7 @@ Roughly in the order they unblock things.
    https://ryanrobertbeck.com (see "Live release" below). Open item from
    the 2026-10-20 check: the dashboard data has not been refreshed since late
    August because the repo still has no remote. (`/api/substack` 404ing in
-   production, found the same day, was fixed in `96f2160`; see "Substack".)
+   production, found the same day, was fixed in `755b4e0`; see "Substack".)
 2. ~~**Put *Not Human* somewhere better than the old site.**~~ **Done
    2026-09-15.** It is `public/not-human.html` (`/not-human`), the story
    copied verbatim from the archived `ryanbeckauthor/writing/NotHuman.html` —
@@ -1813,8 +1813,8 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | 96f2160 (2026-10-20; launch was c9f8a9f / cc0958c7) | 680a7201-6fd9-469f-ba13-ef9d66dc638a |
-| www redirect | 8e0967e | 88431447-62a8-4c56-8ed6-296cb9b60011 |
+| Website / | 755b4e0 (2026-10-20; launch was 764b631 / cc0958c7) | 680a7201-6fd9-469f-ba13-ef9d66dc638a |
+| www redirect | c38b0ce | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |
 

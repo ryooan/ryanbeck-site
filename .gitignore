@@ -8,3 +8,8 @@ __pycache__/
 
 .deploy/
 deployment.local.json
+
+# Never committed: Metaculus work data recovered with the R archive
+# (CDC project workspaces, the expert-elicitation survey). Purged from the
+# history before the repo went public on 2026-10-20.
+private-data/local/

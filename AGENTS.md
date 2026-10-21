@@ -3,7 +3,7 @@ project: personal-website
 domain: personal
 group:
 stack: HTML/CSS/JS, Cloudflare Worker + app service bindings; sibling React/Vite March Madness with D1/R2 and MTG Worker; StPageFlip
-hosting: Cloudflare personal 0efbd4d43122e579508d8f3b649ed990; ryanrobertbeck.com; live source 96f2160 on 2026-10-20
+hosting: Cloudflare personal 0efbd4d43122e579508d8f3b649ed990; ryanrobertbeck.com; live source 755b4e0 on 2026-10-20
 status: active
 patterns: cloudflare-workers-static-site
 shared-env: none — this project uses no keys from _shared/.env
@@ -22,8 +22,8 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | 96f2160 (2026-10-20) | 680a7201-6fd9-469f-ba13-ef9d66dc638a |
-| www redirect | 8e0967e | 88431447-62a8-4c56-8ed6-296cb9b60011 |
+| Website / | 755b4e0 (2026-10-20) | 680a7201-6fd9-469f-ba13-ef9d66dc638a |
+| www redirect | c38b0ce | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |
 
@@ -55,7 +55,7 @@ Improve empty-list wording until after launch; both were completed later on
 ## Known problems (checked 2026-10-20)
 
 - ~~`/api/substack` returned the 404 page in production.~~ **Fixed 2026-10-20**
-  (`96f2160`, Worker version `680a7201`): `/api/*` is now in `run_worker_first`
+  (`755b4e0`, Worker version `680a7201`): `/api/*` is now in `run_worker_first`
   in both `wrangler.toml` and the generated `.deploy/wrangler.json`, and
   `npm test` fails if it drops out of either. Verified live: `/api/substack`
   returns JSON and the blog renders it. `/api/subscribe` is now reachable too;
