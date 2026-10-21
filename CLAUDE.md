@@ -1607,7 +1607,7 @@ layer and never invoke the Worker, so they're free and unlimited; only `/api/*`
 costs anything against the 100k/day free tier.
 
 **Wrangler login is restored** (verified 2026-09-25). It uses the personal
-ryooan@gmail.com account, expected account ID `0efbd4d43122e579508d8f3b649ed990`.
+personal Cloudflare account (ID in `deployment.local.json` / `CLOUDFLARE_ACCOUNT_ID`, never committed).
 Ryan registered ryanrobertbeck.com; canonical URLs are configured locally.
 Production resources and DNS are live; Ryan verified production Google sign-in.
 
@@ -1820,7 +1820,7 @@ Workers plan could not be read with the CLI token; Ryan must confirm it.
 ## Live release, September 25, 2026
 
 Live at https://ryanrobertbeck.com on personal Cloudflare account
-`0efbd4d43122e579508d8f3b649ed990` (ryooan@gmail.com), with Ryan's launch authorization.
+Ryan's personal Cloudflare account, with Ryan's launch authorization.
 Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |

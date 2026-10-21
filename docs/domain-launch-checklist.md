@@ -3,7 +3,7 @@
 ## Live release, September 25, 2026
 
 Live at https://ryanrobertbeck.com on personal Cloudflare account
-`0efbd4d43122e579508d8f3b649ed990` (ryooan@gmail.com), with Ryan's launch authorization.
+Ryan's personal Cloudflare account, with Ryan's launch authorization.
 Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |

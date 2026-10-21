@@ -3,7 +3,7 @@ project: personal-website
 domain: personal
 group:
 stack: HTML/CSS/JS, Cloudflare Worker + app service bindings; sibling React/Vite March Madness with D1/R2 and MTG Worker; StPageFlip
-hosting: Cloudflare personal 0efbd4d43122e579508d8f3b649ed990; ryanrobertbeck.com; live source b70f391 on 2026-10-20 (Worker 6aca3636)
+hosting: Cloudflare personal account; ryanrobertbeck.com; live source b70f391 on 2026-10-20 (Worker 6aca3636)
 status: active
 patterns: cloudflare-workers-static-site
 shared-env: COMTRADE_API_KEY (fetch_semiconductors.py; also an Actions secret)
@@ -17,7 +17,7 @@ an about page rendered as a book, and one Cloudflare Worker for `/api/*`.
 ## Live release, September 25, 2026
 
 Live at https://ryanrobertbeck.com on personal Cloudflare account
-`0efbd4d43122e579508d8f3b649ed990` (ryooan@gmail.com), with Ryan's launch authorization.
+Ryan's personal Cloudflare account, with Ryan's launch authorization.
 Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |

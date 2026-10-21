@@ -8,7 +8,8 @@ required=['domain','account_id','database_id','google_client_id']
 if any(not config.get(k) for k in required): raise SystemExit('Supply '+', '.join(required))
 domain=config['domain']
 if not re.fullmatch(r'[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,}',domain) or domain in ['ryanbeck.com','example.com','yourdomain.com']: raise SystemExit('Choose the real domain first')
-if config['account_id']!='0efbd4d43122e579508d8f3b649ed990': raise SystemExit('Expected the documented personal Cloudflare account; verify account ownership before changing this check')
+expected=__import__('os').environ.get('CLOUDFLARE_ACCOUNT_ID')
+if expected and config['account_id']!=expected: raise SystemExit('account_id does not match CLOUDFLARE_ACCOUNT_ID; verify account ownership first')
 if not re.fullmatch(r'[0-9a-f-]{36}',config['database_id']) or config['database_id']=='00000000-0000-0000-0000-000000000000': raise SystemExit('A real D1 database ID is required')
 for folder,prefix in [(root,None),(root.parent/'March Madness 2026','march-madness'),(root.parent/'mtg-mechanics-cheatsheet','mtg-cheat-sheet')]:
     data=tomllib.loads((folder/'wrangler.toml').read_text())

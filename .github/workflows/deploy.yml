@@ -5,9 +5,9 @@ name: Deploy
 # data commit: a push made with GITHUB_TOKEN does not trigger other
 # workflows, so that one calls this file directly.
 #
-# Needs one Actions secret, CLOUDFLARE_API_TOKEN, for the personal account
-# 0efbd4d43122e579508d8f3b649ed990. The account ID and the domain come from
-# the committed wrangler.toml and site.config.json, by way of
+# Needs two Actions secrets for the personal Cloudflare account:
+# CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID (kept out of this public repo).
+# The domain comes from the committed site.config.json, by way of
 # tools/site-deploy-config.py.
 
 on:
@@ -23,6 +23,8 @@ on:
         default: ''
     secrets:
       CLOUDFLARE_API_TOKEN:
+        required: true
+      CLOUDFLARE_ACCOUNT_ID:
         required: true
 
 concurrency:
@@ -54,9 +56,12 @@ jobs:
       # Regenerates .deploy/wrangler.json from wrangler.toml, then runs
       # npm test (links, docs, site URL, public data) and check-deploy.
       - run: npm run predeploy
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: Deploy to Cloudflare
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy --config .deploy/wrangler.json
