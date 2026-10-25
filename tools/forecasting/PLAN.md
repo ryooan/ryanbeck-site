@@ -6,9 +6,12 @@ repo had no remote, so `forecasting.yml` never ran, while the page still said
 Live. Fixed 2026-10-20: refreshed by hand, public remote `ryooan/ryanbeck-site`
 added, and the workflow now deploys after a data commit (it needs the
 `CLOUDFLARE_API_TOKEN` secret). A live series also shows **Out of date** once
-its data is older than `EXPECT_DAYS` allows. The two scheduled workflows still
-active in `ryooan/ryooan.github.io` (refugee admissions, HPAI) were disabled on
-2026-10-20. Its Pages site still serves www.ryanbeckauthor.com, frozen. §1-§5
+its data is older than `EXPECT_DAYS` allows. All nine scheduled workflows in
+`ryooan/ryooan.github.io` are disabled (re-disabled 2026-10-24: the 2026-10-21
+delete-and-restore commits `584a671`/`3ab8c3c` re-registered every workflow file
+as active, and they ran again for three days). Deleting and restoring a workflow
+file re-enables it, so check `gh workflow list --all` after any such push. Its
+Pages site still serves www.ryanbeckauthor.com, frozen. §1-§5
 below are the original investigation and proposal, kept as written.
 
 Reference clone (shallow, read-only): `projects/personal/forecasting-source/`
