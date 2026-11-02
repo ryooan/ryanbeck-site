@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-01T17:07:44Z",
+  "generated": "2026-11-02T20:46:36Z",
   "series": {
     "covid-hospitalizations": {
       "fetched": "2026-08-24T03:05:10Z",
@@ -34,7 +34,7 @@
       "status": "historical"
     },
     "debt-limit": {
-      "fetched": "2026-11-01T17:07:44Z",
+      "fetched": "2026-11-02T20:46:36Z",
       "last_date": "2026-10-29",
       "note": "Millions of dollars. Ceiling is blank while suspended.",
       "rows": 5294,
