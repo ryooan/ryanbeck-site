@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-03T19:45:03Z",
+  "generated": "2026-11-03T20:19:51Z",
   "series": {
     "covid-hospitalizations": {
       "fetched": "2026-08-24T03:05:10Z",
@@ -82,7 +82,7 @@
       "status": "live"
     },
     "refugee-admissions": {
-      "fetched": "2026-10-20T22:41:44Z",
+      "fetched": "2026-11-03T20:18:29Z",
       "last_date": "2026-09-01",
       "note": "Monthly arrivals. Fiscal years run October-September; the annual file carries the presidential ceiling.",
       "rows": 312,
@@ -90,7 +90,7 @@
       "status": "live"
     },
     "refugee-admissions-annual": {
-      "fetched": "2026-10-20T22:41:44Z",
+      "fetched": "2026-11-03T20:18:29Z",
       "last_date": "2025-10-01",
       "note": "Fiscal-year totals back to 1975, with the presidential ceiling.",
       "rows": 52,
@@ -98,7 +98,7 @@
       "status": "live"
     },
     "semiconductors-china-imports": {
-      "fetched": "2026-10-20T22:40:56Z",
+      "fetched": "2026-11-03T20:19:51Z",
       "last_date": "2025-01-01",
       "note": "US dollars. Chips are HS 8542; equipment is HS 8486, 903082, 903141, 854311 and 901041, summed.",
       "rows": 26,
@@ -106,10 +106,10 @@
       "status": "live"
     },
     "semiconductors-us-exports-china": {
-      "fetched": "2026-10-20T22:40:56Z",
-      "last_date": "2026-07-01",
+      "fetched": "2026-11-03T20:19:51Z",
+      "last_date": "2026-08-01",
       "note": "US dollars. Chips are HS 8542; equipment is HS 8486, 903082, 903141, 854311 and 901041, summed.",
-      "rows": 199,
+      "rows": 200,
       "source": "UN Comtrade",
       "status": "live"
     },
