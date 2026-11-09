@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-08T17:02:36Z",
+  "generated": "2026-11-09T21:26:10Z",
   "series": {
     "covid-hospitalizations": {
       "fetched": "2026-08-24T03:05:10Z",
@@ -34,10 +34,10 @@
       "status": "historical"
     },
     "debt-limit": {
-      "fetched": "2026-11-08T17:02:36Z",
-      "last_date": "2026-11-05",
+      "fetched": "2026-11-09T21:26:10Z",
+      "last_date": "2026-11-06",
       "note": "Millions of dollars. Ceiling is blank while suspended.",
-      "rows": 5299,
+      "rows": 5300,
       "source": "Treasury Fiscal Data - Daily Treasury Statement",
       "status": "live"
     },
