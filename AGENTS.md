@@ -3,7 +3,7 @@ project: personal-website
 domain: personal
 group:
 stack: HTML/CSS/JS, Cloudflare Worker + app service bindings; sibling React/Vite March Madness with D1/R2 and MTG Worker; StPageFlip
-hosting: Cloudflare personal account; ryanrobertbeck.com; live source b70f391 on 2026-10-20 (Worker 6aca3636)
+hosting: Cloudflare personal account; ryanrobertbeck.com; live source 6d53442 since 2026-10-21 (Worker 23cec4a9); CI deploys fail until CLOUDFLARE_API_TOKEN is set
 status: active
 patterns: cloudflare-workers-static-site
 shared-env: COMTRADE_API_KEY (fetch_semiconductors.py; also an Actions secret)
@@ -22,7 +22,7 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | b70f391 (2026-10-20, data refresh + Out of date label) | 6aca3636-14ac-4e07-97f8-38164f9c334e |
+| Website / | 6d53442 (2026-10-21, `npm run deploy` from this machine: resume removed; built from its pre-amend twin `f1870ab`, which differs only in `private-data/forecasting/manifest.json`) | 23cec4a9-110b-438c-b1be-49545854bc13 |
 | www redirect | c38b0ce | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |
@@ -53,7 +53,7 @@ Ryan was reminded before publication and deferred the MTG definitions and the He
 Improve empty-list wording until after launch; both were completed later on
 2026-09-25 (see docs/domain-launch-checklist.md).
 
-## Known problems (checked 2026-10-20)
+## Known problems (checked 2026-11-10)
 
 - ~~`/api/substack` returned the 404 page in production.~~ **Fixed 2026-10-20**
   (`755b4e0`, Worker version `680a7201`): `/api/*` is now in `run_worker_first`
@@ -69,7 +69,12 @@ Improve empty-list wording until after launch; both were completed later on
   its source allows (`EXPECT_DAYS` in `build_page.py`, repeated in the browser by
   `public/assets/js/freshness.js`), so a stopped refresh shows on the page.
   **Still needed: Ryan adds the `CLOUDFLARE_API_TOKEN` Actions secret.** Until
-  then the scheduled runs commit fresh data, but the deploy step fails.
+  then the scheduled runs commit fresh data, but the deploy step fails. As of
+  2026-11-10 every `Forecasting data` run since 2026-10-21 has ended red on its
+  deploy job (the fetch-and-commit half works: about 20 bot data commits sit on
+  `master` undeployed), every push-triggered `Deploy` run has failed the same
+  way, and production still serves the 2026-10-21 data, so the live series will
+  read Out of date as they age past their `EXPECT_DAYS` limits.
 - The www, March Madness and MTG rows in the table above are launch-day
   versions. MTG has since been redeployed from its own project.
 

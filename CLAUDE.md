@@ -1825,7 +1825,7 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | b70f391 (2026-10-20; launch was 764b631 / cc0958c7) | 6aca3636-14ac-4e07-97f8-38164f9c334e |
+| Website / | 6d53442 (2026-10-21; launch was 764b631 / cc0958c7) | 23cec4a9-110b-438c-b1be-49545854bc13 |
 | www redirect | c38b0ce | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |

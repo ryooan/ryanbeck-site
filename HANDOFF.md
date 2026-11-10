@@ -116,7 +116,8 @@ has been narrowed to what the list in "What is not done" says.
 Everything in "Known placeholders" in CLAUDE.md, but the short version:
 
 - live since 2026-09-25 at https://ryanrobertbeck.com (Worker version
-  `6aca3636`, source `b70f391`, 2026-10-20; the `/api/substack` fix went out
+  `23cec4a9`, source `6d53442`, 2026-10-21, deployed by hand; CI deploys fail
+  until `CLOUDFLARE_API_TOKEN` is set; the `/api/substack` fix went out
   just before in `680a7201`/`755b4e0`; that route had returned the 404 page
   since launch because `run_worker_first` omitted `/api/*`). Open: an owner check of March Madness cross-device saving
   and the Windows backup task registration.
@@ -194,7 +195,7 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | b70f391 (2026-10-20; launch was 764b631) | 6aca3636-14ac-4e07-97f8-38164f9c334e |
+| Website / | 6d53442 (2026-10-21; launch was 764b631) | 23cec4a9-110b-438c-b1be-49545854bc13 |
 | www redirect | c38b0ce | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |
