@@ -4,8 +4,8 @@
 since 2026-09-25. The data sat frozen from late August to 2026-10-20 because the
 repo had no remote, so `forecasting.yml` never ran, while the page still said
 Live. Fixed 2026-10-20: refreshed by hand, public remote `ryooan/ryanbeck-site`
-added, and the workflow now deploys after a data commit (it needs the
-`CLOUDFLARE_API_TOKEN` secret). A live series also shows **Out of date** once
+added, and the workflow now deploys after a data commit (working since the
+`CLOUDFLARE_API_TOKEN` secret was added on 2026-11-10). A live series also shows **Out of date** once
 its data is older than `EXPECT_DAYS` allows. All nine scheduled workflows in
 `ryooan/ryooan.github.io` are disabled (re-disabled 2026-10-24: the 2026-10-21
 delete-and-restore commits `584a671`/`3ab8c3c` re-registered every workflow file
@@ -83,8 +83,8 @@ status is computed from the data's own last date.
 ### Still to do
 
 1. ~~**The repo has no git remote.**~~ Public remote since 2026-10-20, and
-   `COMTRADE_API_KEY` is an Actions secret. `CLOUDFLARE_API_TOKEN` is still
-   needed before a scheduled refresh can deploy.
+   `COMTRADE_API_KEY` is an Actions secret. `CLOUDFLARE_API_TOKEN` was added
+   2026-11-10, and scheduled refreshes now deploy.
 2. Chart module has no small-multiples mode yet; the 50-state flu data is
    committed and waiting for it.
 3. Ledes on `projects.html` and the page intro still want Ryan's voice.

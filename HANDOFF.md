@@ -115,17 +115,16 @@ has been narrowed to what the list in "What is not done" says.
 
 Everything in "Known placeholders" in CLAUDE.md, but the short version:
 
-- live since 2026-09-25 at https://ryanrobertbeck.com (Worker version
-  `23cec4a9`, source `6d53442`, 2026-10-21, deployed by hand; CI deploys fail
-  until `CLOUDFLARE_API_TOKEN` is set; the `/api/substack` fix went out
+- live since 2026-09-25 at https://ryanrobertbeck.com (CI deploys `master`
+  on every push and data commit since 2026-11-10, when the `CLOUDFLARE_API_TOKEN`
+  secret was added; last hand deploy `6d53442` on 2026-10-21; the `/api/substack` fix went out
   just before in `680a7201`/`755b4e0`; that route had returned the 404 page
   since launch because `run_worker_first` omitted `/api/*`). Open: an owner check of March Madness cross-device saving
   and the Windows backup task registration.
 - public remote `ryooan/ryanbeck-site` since 2026-10-20 (history rewritten first
   to drop Metaculus work data, so the hashes changed). `deploy.yml` deploys on
-  push to master and after `forecasting.yml` commits data. It needs the
-  `CLOUDFLARE_API_TOKEN` Actions secret, which Ryan has to add.
-  `COMTRADE_API_KEY` is set. The data was refreshed by hand on 2026-10-20,
+  push to master and after `forecasting.yml` commits data. Both secrets
+  (`CLOUDFLARE_API_TOKEN`, added 2026-11-10, and `COMTRADE_API_KEY`) are set. The data was refreshed by hand on 2026-10-20,
   after being frozen since late August
 - domain: `ryanrobertbeck.com`, set in `site.config.json` (`chosen: true`),
   on Cloudflare DNS.
@@ -195,7 +194,7 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | 6d53442 (2026-10-21; launch was 764b631) | 23cec4a9-110b-438c-b1be-49545854bc13 |
+| Website / | `master`, deployed by `deploy.yml` on every push and after each forecasting data commit (CI working since 2026-11-10; verified `cb364ce` → Worker `b88b6b3c`, 2026-11-11 02:34 UTC); last hand deploy `6d53442` on 2026-10-21 | follows `master` |
 | www redirect | c38b0ce | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |

@@ -1763,7 +1763,8 @@ Roughly in the order they unblock things.
    from the 2026-10-20 check are fixed: `/api/substack` 404ing in production
    (`755b4e0`; see "Substack"), and dashboard data frozen since late August.
    That one was refreshed and deployed, and the repo now has a public remote so
-   `forecasting.yml` can run. It still needs the `CLOUDFLARE_API_TOKEN` secret.
+   `forecasting.yml` can run; its deploys work since the `CLOUDFLARE_API_TOKEN` secret
+   was added on 2026-11-10.
 2. ~~**Put *Not Human* somewhere better than the old site.**~~ **Done
    2026-09-15.** It is `public/not-human.html` (`/not-human`), the story
    copied verbatim from the archived `ryanbeckauthor/writing/NotHuman.html` —
@@ -1825,7 +1826,7 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | 6d53442 (2026-10-21; launch was 764b631 / cc0958c7) | 23cec4a9-110b-438c-b1be-49545854bc13 |
+| Website / | `master`, deployed by `deploy.yml` on every push and after each forecasting data commit (CI working since 2026-11-10; verified `cb364ce` → Worker `b88b6b3c`, 2026-11-11 02:34 UTC); last hand deploy `6d53442` on 2026-10-21 | follows `master` |
 | www redirect | c38b0ce | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |

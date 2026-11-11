@@ -3,7 +3,7 @@ project: personal-website
 domain: personal
 group:
 stack: HTML/CSS/JS, Cloudflare Worker + app service bindings; sibling React/Vite March Madness with D1/R2 and MTG Worker; StPageFlip
-hosting: Cloudflare personal account; ryanrobertbeck.com; live source 6d53442 since 2026-10-21 (Worker 23cec4a9); CI deploys fail until CLOUDFLARE_API_TOKEN is set
+hosting: Cloudflare personal account; ryanrobertbeck.com; live = master, deployed by GitHub Actions on every push and data commit (working since 2026-11-10)
 status: active
 patterns: cloudflare-workers-static-site
 shared-env: COMTRADE_API_KEY (fetch_semiconductors.py; also an Actions secret)
@@ -22,7 +22,7 @@ Namecheap registration uses Cloudflare DNS; www redirects to the canonical host.
 
 | Service | Deployed source | Worker version |
 | --- | --- | --- |
-| Website / | 6d53442 (2026-10-21, `npm run deploy` from this machine: resume removed; built from its pre-amend twin `f1870ab`, which differs only in `private-data/forecasting/manifest.json`) | 23cec4a9-110b-438c-b1be-49545854bc13 |
+| Website / | `master`, deployed by `deploy.yml` on every push and after each forecasting data commit (CI working since 2026-11-10; verified `cb364ce` → Worker `b88b6b3c`, 2026-11-11 02:34 UTC); last hand deploy `6d53442` on 2026-10-21 | follows `master` |
 | www redirect | c38b0ce | 88431447-62a8-4c56-8ed6-296cb9b60011 |
 | /march-madness/ | 4e7fadf | 373eebb9-9922-4a43-9f33-b69fe33175ab |
 | /mtg-cheat-sheet/ | f10af98 | b50c5e21-ef54-453b-9631-4bd98a287fa2 |
@@ -68,13 +68,14 @@ Improve empty-list wording until after launch; both were completed later on
   A live series now drops to **Out of date** once its newest row is older than
   its source allows (`EXPECT_DAYS` in `build_page.py`, repeated in the browser by
   `public/assets/js/freshness.js`), so a stopped refresh shows on the page.
-  **Still needed: Ryan adds the `CLOUDFLARE_API_TOKEN` Actions secret.** Until
-  then the scheduled runs commit fresh data, but the deploy step fails. As of
-  2026-11-10 every `Forecasting data` run since 2026-10-21 has ended red on its
-  deploy job (the fetch-and-commit half works: about 20 bot data commits sit on
-  `master` undeployed), every push-triggered `Deploy` run has failed the same
-  way, and production still serves the 2026-10-21 data, so the live series will
-  read Out of date as they age past their `EXPECT_DAYS` limits.
+  ~~CI deploys failing.~~ **Fixed 2026-11-10:** every `Deploy` and `Forecasting data`
+  run from 2026-10-21 failed at its deploy step because the `CLOUDFLARE_API_TOKEN`
+  Actions secret did not exist (the fetch-and-commit half worked, so ~20 bot data
+  commits sat undeployed). Ryan created the token ("Edit Cloudflare Workers" template,
+  scoped to the personal account and the `ryanrobertbeck.com` zone; no DNS permission
+  needed) and added it. Manual `Deploy` run 42946222862 shipped `cf3a30b`; the files
+  changed since 10-21 matched live; then `Forecasting data` run 42946509386 committed
+  `cb364ce` and deployed it (Worker `b88b6b3c`), proving the daily chain.
 - The www, March Madness and MTG rows in the table above are launch-day
   versions. MTG has since been redeployed from its own project.
 
