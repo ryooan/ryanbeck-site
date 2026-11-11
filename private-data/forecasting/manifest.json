@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-10T19:57:27Z",
+  "generated": "2026-11-11T02:34:33Z",
   "series": {
     "covid-hospitalizations": {
       "fetched": "2026-08-24T03:05:10Z",
@@ -18,7 +18,7 @@
       "status": "historical"
     },
     "covid-weekly-admissions": {
-      "fetched": "2026-11-10T19:57:27Z",
+      "fetched": "2026-11-11T02:31:05Z",
       "last_date": "2026-10-31",
       "note": "Weekly new hospital admissions with a laboratory-confirmed diagnosis, national. Carries the share of hospitals reporting each week, which is not constant.",
       "rows": 326,
@@ -34,15 +34,15 @@
       "status": "historical"
     },
     "debt-limit": {
-      "fetched": "2026-11-10T18:40:08Z",
-      "last_date": "2026-11-06",
+      "fetched": "2026-11-11T02:31:02Z",
+      "last_date": "2026-11-09",
       "note": "Millions of dollars. Ceiling is blank while suspended.",
-      "rows": 5300,
+      "rows": 5301,
       "source": "Treasury Fiscal Data - Daily Treasury Statement",
       "status": "live"
     },
     "faamg-revenues": {
-      "fetched": "2026-10-20T22:41:01Z",
+      "fetched": "2026-11-11T02:34:33Z",
       "last_date": "2025-01-01",
       "note": "Billions of US dollars, by each company's own fiscal year. Combined is blank for years where not all five have filed.",
       "rows": 20,
@@ -50,15 +50,15 @@
       "status": "live"
     },
     "faamg-revenues-quarterly": {
-      "fetched": "2026-10-20T22:41:01Z",
-      "last_date": "2026-06-01",
+      "fetched": "2026-11-11T02:34:33Z",
+      "last_date": "2026-09-01",
       "note": "Billions of US dollars per quarter, aligned by the calendar quarter each fiscal quarter ends in.",
-      "rows": 76,
+      "rows": 77,
       "source": "SEC XBRL company facts",
       "status": "live"
     },
     "flu-hospitalizations": {
-      "fetched": "2026-11-10T19:57:24Z",
+      "fetched": "2026-11-11T02:31:03Z",
       "last_date": "2026-10-31",
       "note": "Weekly hospital admissions with a confirmed influenza diagnosis.",
       "rows": 248,
@@ -66,7 +66,7 @@
       "status": "live"
     },
     "flu-hospitalizations-states": {
-      "fetched": "2026-11-10T19:57:24Z",
+      "fetched": "2026-11-11T02:31:03Z",
       "last_date": "2026-10-31",
       "note": "Weekly admissions by state.",
       "rows": 12860,
@@ -74,7 +74,7 @@
       "status": "live"
     },
     "hpai-depopulations": {
-      "fetched": "2026-11-10T19:57:26Z",
+      "fetched": "2026-11-11T02:31:04Z",
       "last_date": "2026-11-02",
       "note": "Birds killed in confirmed commercial and backyard flocks, from the full detection export behind the APHIS dashboard.",
       "rows": 213,
@@ -82,23 +82,23 @@
       "status": "live"
     },
     "refugee-admissions": {
-      "fetched": "2026-11-03T20:18:29Z",
-      "last_date": "2026-09-01",
+      "fetched": "2026-11-11T02:31:07Z",
+      "last_date": "2026-10-01",
       "note": "Monthly arrivals. Fiscal years run October-September; the annual file carries the presidential ceiling.",
-      "rows": 312,
+      "rows": 313,
       "source": "State Dept Refugee Processing Center",
       "status": "live"
     },
     "refugee-admissions-annual": {
-      "fetched": "2026-11-03T20:18:29Z",
-      "last_date": "2025-10-01",
+      "fetched": "2026-11-11T02:31:07Z",
+      "last_date": "2026-10-01",
       "note": "Fiscal-year totals back to 1975, with the presidential ceiling.",
-      "rows": 52,
+      "rows": 53,
       "source": "State Dept Refugee Processing Center",
       "status": "live"
     },
     "semiconductors-china-imports": {
-      "fetched": "2026-11-03T20:19:51Z",
+      "fetched": "2026-11-11T02:34:30Z",
       "last_date": "2025-01-01",
       "note": "US dollars. Chips are HS 8542; equipment is HS 8486, 903082, 903141, 854311 and 901041, summed.",
       "rows": 26,
@@ -106,7 +106,7 @@
       "status": "live"
     },
     "semiconductors-us-exports-china": {
-      "fetched": "2026-11-03T20:19:51Z",
+      "fetched": "2026-11-11T02:34:30Z",
       "last_date": "2026-08-01",
       "note": "US dollars. Chips are HS 8542; equipment is HS 8486, 903082, 903141, 854311 and 901041, summed.",
       "rows": 200,
