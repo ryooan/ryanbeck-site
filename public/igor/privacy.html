@@ -19,6 +19,8 @@
 </li><li>
 <strong>Characters you claim</strong> with <code>/wow claim</code>: which characters are yours, which is your main, and whether you verified them. Several people can claim the same character until one of them verifies it. Your claims show only in servers you approve: where you claimed, tracked or looked up the character yourself, or where you said yes when Igor asked you by direct message. There they appear in <code>/wow list</code>, <code>/wow mine</code> and next to the character's posts. <code>/wow here</code> changes this for one server, and <code>/wow sharing new_servers:everywhere</code> skips the asking. If someone else claims a character you've claimed, Igor tells you privately how many other accounts claim it (never who), and remembers when it last told you so it doesn't repeat itself more than weekly.
 </li><li>
+<strong>Battle.net sign-in</strong>, only if you choose it in <code>/wow verify</code>: you sign in on Blizzard's own page, never Igor's, so Igor never sees your password or email. Blizzard then lets Igor read your account's list of WoW characters (names, game versions, realms or surnames, levels) once. Igor uses that access right away and throws it away; it is never stored. The character list is kept only until you confirm or cancel on Igor's page (at most 20 minutes), then deleted. Afterward Igor keeps only which characters you verified, as with any claim. A record that the sign-in link was made and used is deleted after a day.
+</li><li>
 <strong>Live WoW events</strong>, for players who use the DOINK add-on with Igor: the character name and what happened (a level, loot, a death, a boss kill and similar), with the time.
 </li><li>
 <strong>Daily-game results</strong>, only in a channel a server picks as its daily-games channel: Igor reads the messages there to find shared game results (Wordle, Anno, Clues by Sam and similar, including Anno's screenshot card, which it reads with text recognition). It keeps what it read from each message (the game and the score) for 30 days, to post each day's head-to-head and the week's game links. It doesn't keep the messages themselves.
@@ -52,7 +54,7 @@ which voice channel you were in, with join and leave times.
 <code>/forget-me</code> deletes your activity, the characters you added or claimed, and your settings, everywhere. Copies in backups age out within 7 days.
 </li></ul>
 <h2>Sharing</h2>
-<p>Igor's data is never sold or shared. The only outside service Igor sends requests to is Blizzard's API (character lookups), and those requests contain nothing about you. Screenshots in a daily-games channel are downloaded from Discord itself and read on Igor's own server; they aren't sent anywhere else.</p>
+<p>Igor's data is never sold or shared. The only outside service Igor sends requests to is Blizzard's API: character lookups, which contain nothing about you, and, if you sign in with Battle.net, the one read of your character list described above. Igor's sign-in pages (igor.ryanrobertbeck.com) are served through Cloudflare, which sees the visit like any website host. Screenshots in a daily-games channel are downloaded from Discord itself and read on Igor's own server; they aren't sent anywhere else.</p>
 <h2>Contact</h2>
 <p>Questions or removal requests: email <a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a>.</p>
 <p><a href="/igor/doink.html">Igor + DOINK setup guide</a> · <a href="/igor/privacy.html">Igor privacy policy</a> · <a href="/igor/terms.html">Igor terms of service</a> · <a href="/">Back to the website</a></p>
