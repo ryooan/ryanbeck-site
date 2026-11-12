@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Igor, a Discord bot (beta) · Ryan Beck</title>
+<meta name="description" content="Igor, a free Discord bot for gaming groups (beta): WoW level-ups and live events, character cards, daily game head-to-heads.">
+<link rel="canonical" href="https://ryanrobertbeck.com/igor/">
+<link rel="stylesheet" href="/assets/css/site.css">
+</head><body>
+<header class="topbar"><div class="wrap"><a class="brand" href="/"><img src="/assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a><nav class="nav" aria-label="Main"><a href="/projects">Projects</a><a href="/blog">Blog</a><a href="/about">About</a></nav></div></header>
+<main class="wrap" style="padding-top:40px;padding-bottom:60px;max-width:900px">
+<style>
+  .igor-hero { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; }
+  .igor-hero img { width: 112px; height: 112px; border-radius: 50%; border: 3px solid var(--gold); }
+  .igor-hero h1 { margin: 0; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .igor-beta { font-family: var(--sans); font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; border: 1.5px solid var(--gold); color: var(--ink); border-radius: 999px; padding: 3px 10px; }
+  .igor-lede { font-size: 1.15rem; margin: 6px 0 0; }
+  .igor-note { background: var(--parchment-2); border-left: 3px solid var(--gold); padding: 12px 16px; margin: 18px 0; }
+  .igor-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 18px 0 8px; }
+  .igor-features section { border-top: 2px solid var(--rule); padding-top: 12px; }
+  .igor-features h3 { margin: 0 0 6px; font-size: 1.1rem; }
+  .igor-features ul { margin: 0; padding-left: 18px; }
+  .igor-features li { margin: 4px 0; }
+  .igor-home code { font-size: .92em; }
+  .igor-small { color: var(--ink-faint); font-size: .9rem; }
+  .igor-home ol li { margin: 6px 0; }
+</style>
+<div class="igor-home">
+<div class="igor-hero">
+  <img src="/igor/igor.png" alt="Igor's avatar: a hunched lab assistant">
+  <div>
+    <h1>Igor <span class="igor-beta">Beta</span></h1>
+    <p class="igor-lede">A Discord bot for gaming groups, with a lab assistant's manners. Free to add to your server.</p>
+  </div>
+</div>
+<div class="btn-row"><a class="btn" href="https://discord.com/oauth2/authorize?client_id=1570299717928091709&amp;scope=bot+applications.commands&amp;permissions=536988672">Add Igor to Discord</a><a class="btn ghost" href="/igor/doink.html">Live WoW events setup</a></div>
+
+<p class="igor-note"><strong>Igor is in beta.</strong> It runs in a handful of servers while I find what breaks. Features may change, and things will occasionally go wrong. If something does, or you have an idea, email <a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a>.</p>
+
+<h2>What Igor does</h2>
+<div class="igor-features">
+  <section>
+    <h3>World of Warcraft</h3>
+    <ul>
+      <li>Announces level-ups for the characters your server tracks, with a portrait card at milestones (10, 15, 20…).</li>
+      <li>Character cards: gear, stats and render, with <code>/wow card</code>.</li>
+      <li>Claim your characters, and prove they're yours by signing in with Battle.net.</li>
+      <li>Live deaths, loot, boss kills and level-ups within seconds, through the <a href="https://github.com/ryan-flan/DOINK">DOINK</a> addon, in every server you choose.</li>
+    </ul>
+    <p class="igor-small">Built for WoW Forever on US servers first.</p>
+  </section>
+  <section>
+    <h3>Daily games</h3>
+    <ul>
+      <li>Reads the results people share in your daily-games channel (Wordle, Clues by Sam, Anno and others).</li>
+      <li>Posts each morning's head-to-head for the day before, and the week's game links.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Around the server</h3>
+    <ul>
+      <li>Auto-responders: a keyword, a reply, a reaction.</li>
+      <li>A weekly digest of what people played and who hung out in voice (each person can opt out).</li>
+    </ul>
+  </section>
+</div>
+
+<h2>Getting started</h2>
+<ol>
+  <li><a href="https://discord.com/oauth2/authorize?client_id=1570299717928091709&amp;scope=bot+applications.commands&amp;permissions=536988672">Add Igor</a> to your server. It posts a short welcome with the setup steps.</li>
+  <li>Pick its channels: <code>/config channel</code> for daily games, level-ups and the weekly digest.</li>
+  <li>WoW players: <code>/wow claim</code> your characters, then <code>/wow doink</code> for live events (<a href="/igor/doink.html">setup guide</a>).</li>
+  <li><code>/help</code> lists everything else.</li>
+</ol>
+
+<h2>Privacy</h2>
+<p>Igor keeps only what its features need, deletes activity after 90 days, and never sells or shares anything. Your claimed characters show only in servers you approve, and <code>/forget-me</code> deletes your data everywhere. The details are in the <a href="/igor/privacy.html">privacy policy</a> and <a href="/igor/terms.html">terms of service</a>.</p>
+
+<h2>Thanks</h2>
+<p>Live WoW events come from <a href="https://github.com/ryan-flan/DOINK">DOINK</a> by Ryan Flanagan, a free, MIT-licensed addon and companion. Igor reads the posts DOINK sends. Character data comes from Blizzard's API.</p>
+<p class="igor-small">Igor is a personal project by <a href="/about">Ryan Beck</a>. It isn't affiliated with or endorsed by Blizzard Entertainment or Discord.</p>
+</div>
+<p><a href="/igor/">About Igor</a> · <a href="/igor/doink.html">Igor + DOINK setup guide</a> · <a href="/igor/privacy.html">Igor privacy policy</a> · <a href="/igor/terms.html">Igor terms of service</a> · <a href="/">Back to the website</a></p>
+</main></body></html>

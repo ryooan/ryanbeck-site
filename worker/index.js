@@ -21,6 +21,16 @@ export default {
     if (url.pathname === '/mtg-cheat-sheet' || url.pathname.startsWith('/mtg-cheat-sheet/')) return env.MTG.fetch(request);
     if (url.pathname === '/march-madness' || url.pathname.startsWith('/march-madness/')) return env.MARCH_MADNESS.fetch(request);
 
+    // Igor's homepage. _redirects is at Cloudflare's 100-rewrite limit, so the clean
+    // address lives here: /igor -> /igor/, which serves public/igor/index.html.
+    if (url.pathname === '/igor') {
+      url.pathname = '/igor/';
+      return Response.redirect(url.href, 308);
+    }
+    if (url.pathname === '/igor/') {
+      return env.ASSETS.fetch(new Request(new URL('/igor/index.html', url), request));
+    }
+
     if (url.pathname === '/api/substack') return substack(request, ctx);
     if (url.pathname === '/api/subscribe') return subscribe(request, env);
 

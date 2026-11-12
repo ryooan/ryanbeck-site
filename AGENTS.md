@@ -152,8 +152,9 @@ Launch preparation 2026-09-25: private D1 march-madness created and seeded
 (a3530b66-c736-4728-9a80-d7b7da106fc6), finalized 2026 revision 2, 68 teams.
 Production secrets were generated in the March Madness gitignored private-data
 directory and installed at launch. The privacy page is live at /privacy.
-Igor's (the Discord bot's) privacy policy, terms and DOINK setup guide are at /igor/privacy.html, /igor/terms.html and /igor/doink.html
-(added 2026-11-12). They're generated from `projects/personal/igor-discord-bot/docs/*.md`:
+Igor's (the Discord bot's) homepage is /igor/ (served by `worker/index.js`, since `_redirects` is full: `/igor` and `/igor/` are in `run_worker_first`, and `/igor` 308s to `/igor/`).
+Its privacy policy, terms and DOINK setup guide are at /igor/privacy.html, /igor/terms.html and /igor/doink.html
+(added 2026-11-12). They're generated from `projects/personal/igor-discord-bot/docs/` (the homepage from `docs/igor-home.html`):
 run `npm run build-site -- --site ../personal-website` there; don't edit `public/igor/` by hand.
 **`_redirects` is at Cloudflare's limit of 100 dynamic rules** (rewrites count): adding one more failed the
 deploy on 2026-11-12 (`cb0d1d9`, reverted). New pages use their `.html` address or replace an existing rule.

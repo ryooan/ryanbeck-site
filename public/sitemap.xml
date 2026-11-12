@@ -35,6 +35,7 @@
   <url><loc>https://ryanrobertbeck.com/posts/2019/09/25/not-human-cover-breakdown</loc><changefreq>yearly</changefreq></url>
   <url><loc>https://ryanrobertbeck.com/posts/2019/09/14/welcome-to-my-website</loc><changefreq>yearly</changefreq></url>
   <url><loc>https://ryanrobertbeck.com/privacy</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://ryanrobertbeck.com/igor/</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://ryanrobertbeck.com/igor/privacy.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
   <url><loc>https://ryanrobertbeck.com/igor/doink.html</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
   <url><loc>https://ryanrobertbeck.com/igor/terms.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
