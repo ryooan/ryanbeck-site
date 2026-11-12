@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Igor + DOINK setup guide · Ryan Beck</title>
+<meta name="description" content="Igor + DOINK setup guide: the Igor Discord bot.">
+<link rel="canonical" href="https://ryanrobertbeck.com/igor/doink.html">
+<link rel="stylesheet" href="/assets/css/site.css">
+</head><body>
+<header class="topbar"><div class="wrap"><a class="brand" href="/"><img src="/assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a><nav class="nav" aria-label="Main"><a href="/projects">Projects</a><a href="/blog">Blog</a><a href="/about">About</a></nav></div></header>
+<main class="wrap" style="padding-top:40px;padding-bottom:60px;max-width:900px">
+<style>
+  .igor-steps { counter-reset: step; padding: 0; list-style: none; }
+  .igor-steps > li { counter-increment: step; position: relative; padding: 18px 0 18px 54px; border-top: 1px solid var(--rule); }
+  .igor-steps > li::before { content: counter(step); position: absolute; left: 0; top: 18px; width: 36px; height: 36px; border-radius: 50%; background: var(--ink); color: var(--parchment); display: grid; place-items: center; font-family: var(--sans); font-weight: 600; }
+  .igor-steps h2 { margin: 2px 0 8px; font-size: 1.25rem; }
+  .igor-note { background: var(--parchment-2); border-left: 3px solid var(--gold); padding: 12px 16px; margin: 14px 0; }
+  .igor-guide pre { background: var(--void); color: var(--parchment); padding: 12px 14px; border-radius: 3px; overflow-x: auto; font-size: .9rem; }
+  .igor-guide code { font-size: .92em; }
+  .igor-guide .btn-row { margin-top: 12px; }
+  .igor-small { color: var(--ink-faint); font-size: .9rem; }
+</style>
+<div class="igor-guide">
+<h1>Live WoW events in Discord, with Igor and DOINK</h1>
+<p>Igor posts your WoW Forever level-ups, deaths, loot and boss kills in Discord a few seconds after they happen, in its lab-assistant voice. That takes two pieces from <a href="https://github.com/ryan-flan/DOINK">DOINK</a>, a free WoW addon:</p>
+<ul>
+  <li><strong>The DOINK addon</strong> notices what happens in the game.</li>
+  <li><strong>The DOINK companion</strong>, a small program on your PC, does the posting. WoW addons aren't allowed to use the internet, so something outside the game has to send the events. It runs on <strong>Windows</strong>, or <strong>Linux</strong> (Proton, Wine or Lutris). There's no Mac version.</li>
+</ul>
+<p class="igor-note">On a Mac, or don't want the companion? After playing, attach your <code>DOINK.lua</code> file with <code>/wow upload</code> in Discord and Igor posts what happened. Level-ups also post on their own a few minutes after you log out, without DOINK.</p>
+
+<ol class="igor-steps">
+  <li>
+    <h2>Get your link from Igor</h2>
+    <p>In your Discord server, type <code>/wow doink</code>. Igor replies privately with <strong>your own DOINK link</strong>. Keep it to yourself: anyone with it can post as you. You only ever need one link, even for several servers.</p>
+  </li>
+  <li>
+    <h2>Install the DOINK addon</h2>
+    <p>From CurseForge (or the CurseForge app, WowUp, or any addon manager), for WoW Forever.</p>
+    <div class="btn-row"><a class="btn" href="https://www.curseforge.com/wow/addons/doink">DOINK on CurseForge</a></div>
+  </li>
+  <li>
+    <h2>Download the DOINK companion</h2>
+    <p>The companion isn't on the addon sites, and DOINK's newest release doesn't always include it (sometimes only the addon is updated). These buttons point at the newest release that does:</p>
+    <div class="btn-row">
+      <a class="btn" id="dl-win" href="https://github.com/ryan-flan/DOINK/releases/download/v0.17.0/DOINK-v0.17.0.zip">Companion for Windows (v0.17.0)</a>
+      <a class="btn ghost" id="dl-linux" href="https://github.com/ryan-flan/DOINK/releases/download/v0.17.0/DOINK-v0.17.0-linux-amd64.tar.gz">Linux (v0.17.0)</a>
+    </div>
+    <p class="igor-small" id="dl-status">Or browse <a href="https://github.com/ryan-flan/DOINK/releases">all DOINK releases</a>: the companion is in the larger <code>DOINK-v…zip</code> (about 3.5 MB), not the small <code>-forever.zip</code>, which is the addon alone.</p>
+    <p>Unzip it, move the <code>Companion</code> folder somewhere permanent, like <code>Documents\DOINK</code>, and run <code>doink.exe</code>. A gold <strong>D</strong> appears in your system tray (click <code>^</code> by the clock if it's hidden). If Windows warns about an unrecognized app, choose <strong>More info → Run anyway</strong>.</p>
+    <p>In its settings, tick <strong>Start with Windows</strong>. The companion has to be running while you play.</p>
+  </li>
+  <li>
+    <h2>Give the companion your link</h2>
+    <p>Right-click the gold <strong>D</strong> → <strong>Settings</strong>, paste your link into the webhook box, and press <strong>Send test</strong>. A test post appears in Discord.</p>
+    <p class="igor-small">Or set it in game with <code>/doink webhook &lt;your link&gt;</code> followed by <code>/reload</code>. The companion only sees a link set in game after a reload or logout.</p>
+  </li>
+  <li>
+    <h2>Choose what to post</h2>
+    <p>Every event type starts off. In game, type these (or put them in one macro and click it once):</p>
+<pre>/doink enable level_up
+/doink enable death
+/doink enable loot
+/doink enable boss_kill
+/doink realtime on</pre>
+    <p>Also available: <code>quest</code>, <code>skill_up</code>, <code>mount</code>, <code>duel</code>, <code>battleground</code>. <code>realtime on</code> posts within seconds; you'll see the game's "Screen captured" message, which is how DOINK hands events to the companion. <code>/doink realtime image on</code> also attaches a screenshot.</p>
+    <p>Check it: <code>/doink test levelup</code>, then <code>/doink flush</code>. A test post appears in Igor's voice.</p>
+  </li>
+  <li>
+    <h2>More servers, and what each one shows</h2>
+    <p>Run <code>/wow doink</code> in any other server with Igor, and your events post there too, with no new link. Under that reply, a private menu picks which events each server shows, and buttons move them to another channel or stop them. The events you enable in game are the most any server can show.</p>
+  </li>
+</ol>
+
+<h2>Something not working?</h2>
+<ul>
+  <li><strong>Nothing posts:</strong> is the gold D in your tray? Did <strong>Send test</strong> post? If you set the link in game, did you <code>/reload</code>?</li>
+  <li><strong>Posts only when you log out:</strong> type <code>/doink realtime on</code>.</li>
+  <li><strong>Lots of "Screen captured" messages:</strong> that's normal with realtime on. The companion deletes those screenshots after reading them and never touches your own.</li>
+  <li>More detail is in <a href="https://github.com/ryan-flan/DOINK#readme">DOINK's guide</a>. Questions about Igor: <a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a>.</li>
+</ul>
+</div>
+<script>
+  // Point the buttons at the newest DOINK release that includes the companion.
+  fetch("https://api.github.com/repos/ryan-flan/DOINK/releases?per_page=20")
+    .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+    .then((releases) => {
+      for (const rel of releases) {
+        if (rel.draft || rel.prerelease) continue;
+        const win = rel.assets.find((a) => /^DOINK-v[\d.]+\.zip$/.test(a.name));
+        const linux = rel.assets.find((a) => /linux-amd64\.tar\.gz$/.test(a.name));
+        if (!win) continue;
+        const w = document.getElementById("dl-win");
+        w.href = win.browser_download_url;
+        w.textContent = "Companion for Windows (" + rel.tag_name + ")";
+        if (linux) {
+          const l = document.getElementById("dl-linux");
+          l.href = linux.browser_download_url;
+          l.textContent = "Linux (" + rel.tag_name + ")";
+        }
+        return;
+      }
+    })
+    .catch(() => {});
+</script>
+<p><a href="/igor/doink.html">Igor + DOINK setup guide</a> · <a href="/igor/privacy.html">Igor privacy policy</a> · <a href="/igor/terms.html">Igor terms of service</a> · <a href="/">Back to the website</a></p>
+</main></body></html>
