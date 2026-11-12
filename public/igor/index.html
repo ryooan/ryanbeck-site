@@ -23,6 +23,26 @@
   .igor-home code { font-size: .92em; }
   .igor-small { color: var(--ink-faint); font-size: .9rem; }
   .igor-home ol li { margin: 6px 0; }
+  .igor-examples { display: grid; gap: 28px; margin: 18px 0 8px; }
+  .igor-examples .dc { max-width: 560px; }
+  .igor-examples figure { margin: 0; }
+  .igor-examples figcaption { color: var(--ink-faint); font-size: .9rem; margin-top: 8px; }
+  .igor-examples .card-shot { width: 100%; height: auto; border-radius: 8px; display: block; }
+  /* A Discord message, drawn in Discord's dark theme. */
+  .dc { background: #313338; color: #dbdee1; border-radius: 8px; padding: 14px 16px; font-family: "gg sans", "Noto Sans", "Helvetica Neue", Arial, sans-serif; font-size: 15px; line-height: 1.375; }
+  .dc-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .dc-head img { width: 40px; height: 40px; border-radius: 50%; }
+  .dc-name { color: #f2f3f5; font-weight: 600; }
+  .dc-app { background: #5865f2; color: #fff; font-size: 10px; font-weight: 700; border-radius: 3px; padding: 1px 4px; margin-left: 4px; vertical-align: 2px; }
+  .dc-time { color: #949ba4; font-size: 12px; margin-left: 6px; }
+  .dc-embed { background: #2b2d31; border-left: 4px solid; border-radius: 4px; padding: 10px 14px 14px 12px; margin-left: 50px; }
+  .dc-title { color: #f2f3f5; font-weight: 700; margin-bottom: 6px; }
+  .dc-desc { margin-bottom: 8px; }
+  .dc-field { margin-top: 8px; }
+  .dc-field-name { color: #f2f3f5; font-weight: 600; font-size: 14px; }
+  .dc a { color: #00a8fc; text-decoration: none; }
+  .dc strong { color: #f2f3f5; }
+  @media (max-width: 520px) { .dc-embed { margin-left: 0; } }
 </style>
 <div class="igor-home">
 <div class="igor-hero">
@@ -62,6 +82,28 @@
       <li>A weekly digest of what people played and who hung out in voice (each person can opt out).</li>
     </ul>
   </section>
+</div>
+
+<h2>What it looks like</h2>
+<div class="igor-examples">
+  <figure>
+    <a href="/igor/example-card.png"><img class="card-shot" src="/igor/example-card.png" width="1000" height="890" alt="Igor's character card for Jarnathan Jaws, a level 18 Undead Rogue: portrait, equipped gear with stats, and a row of character stats" loading="lazy"></a>
+    <figcaption><code>/wow card</code> for Jarnathan Jaws, my rogue: gear, stats and portrait, from Blizzard's public data.</figcaption>
+  </figure>
+  <figure>
+    <div class="dc" role="img" aria-label="A Discord message from Igor">
+<div class="dc-head"><img src="/igor/igor.png" alt=""><div><span class="dc-name">Igor</span><span class="dc-app">APP</span><span class="dc-time">Today at 5:00 AM</span></div></div>
+<div class="dc-embed" style="border-color:#c9a227">
+<div class="dc-title">Yesterday's trials, master: Tuesday, November 10</div>
+<div class="dc-desc">Most devoted: <strong>Mira</strong>, <strong>Dex</strong>, <strong>Juniper</strong> (3 games). Igor approves.</div>
+<div class="dc-field"><div class="dc-field-name">Wordle</div><div>🥇 <strong>Hollis</strong> · 3/6<br>🥈 <strong>Mira</strong> · 4/6<br>🥈 <strong>Juniper</strong> · 4/6<br>4. <strong>Dex</strong> · 5/6</div></div>
+<div class="dc-field"><div class="dc-field-name">Anno №314</div><div>🥇 <strong>Mira</strong> · 480/500<br>🥈 <strong>Hollis</strong> · 448/500<br>🥉 <strong>Dex</strong> · 366/500</div></div>
+<div class="dc-field"><div class="dc-field-name">Clues by Sam</div><div>🥇 <strong>Mira</strong> · Tricky · clean · &lt;9 min<br>🥈 <strong>Juniper</strong> · Tricky · 1 mistake · &lt;14 min</div></div>
+<div class="dc-field"><div class="dc-field-name">MapTap</div><div>🥇 <strong>Juniper</strong> · 914<br>🥈 <strong>Dex</strong> · 862</div></div>
+<div class="dc-field"><div class="dc-field-name">This week's puzzles, master</div><div><a href="https://anno-game.netlify.app">Anno</a> · <a href="https://cluesbysam.com">Clues by Sam</a> · <a href="https://maptap.gg">MapTap</a> · <a href="https://www.nytimes.com/games/wordle">Wordle</a></div></div>
+</div></div>
+    <figcaption>The morning daily-games post. The names and scores here are made up.</figcaption>
+  </figure>
 </div>
 
 <h2>Getting started</h2>
