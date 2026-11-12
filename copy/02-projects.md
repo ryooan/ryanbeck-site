@@ -79,75 +79,100 @@ useherder.com
 ## Sub-heading
 <!-- id: projects.h3.3 -->
 
-Data Dashboards
+Igor
 
-## Data Dashboards — body paragraph
+## Igor — body paragraph
 <!-- id: projects.p.5 -->
 
-Most of these were initially created to help with forecasting, but they tend to be genuinely interesting and useful data sources that were in need of nice visuals. Up to date (where possible) dashboards on the debt limit, refugee admissions, respiratory disease trends, semiconductor trade, the bird-flu cull, and more.
+A Discord bot I built for my gaming group, free for anyone's server. It posts WoW Forever level-ups and live deaths, loot and boss kills, draws character cards, and every morning ranks everyone's daily puzzle scores (Wordle, Clues by Sam and more). Still in beta.
 
-## Data Dashboards — card tag
+## Igor — card tag
 <!-- id: projects.tag.5 -->
 
-Live data
+Discord bot
 
-## Data Dashboards — card tag
+## Igor — card tag
 <!-- id: projects.tag.6 -->
 
+WoW
 
-
-## Data Dashboards — card tag
+## Igor — card tag
 <!-- id: projects.tag.7 -->
 
-Exportable
+Beta
 
 ## Sub-heading
 <!-- id: projects.h3.4 -->
 
-National Park Guides
+Data Dashboards
 
-## National Park Guides — body paragraph
+## Data Dashboards — body paragraph
 <!-- id: projects.p.6 -->
 
-I love visiting Grand Teton National Park and Rocky Mountain national park, and wanted a reusable activity planning aid for families with small kids so I didn't have to recall anew each time what options there are. Short hikes, parking strategy, drive times, and more details.
+Most of these were initially created to help with forecasting, but they tend to be genuinely interesting and useful data sources that were in need of nice visuals. Up to date (where possible) dashboards on the debt limit, refugee admissions, respiratory disease trends, semiconductor trade, the bird-flu cull, and more.
 
-## National Park Guides — card tag
+## Data Dashboards — card tag
 <!-- id: projects.tag.8 -->
 
-Guides
+Live data
 
-## National Park Guides — card tag
+## Data Dashboards — card tag
 <!-- id: projects.tag.9 -->
 
-PDF
 
-## National Park Guides — card tag
+
+## Data Dashboards — card tag
 <!-- id: projects.tag.10 -->
 
-
+Exportable
 
 ## Sub-heading
 <!-- id: projects.h3.5 -->
 
+National Park Guides
+
+## National Park Guides — body paragraph
+<!-- id: projects.p.7 -->
+
+I love visiting Grand Teton National Park and Rocky Mountain national park, and wanted a reusable activity planning aid for families with small kids so I didn't have to recall anew each time what options there are. Short hikes, parking strategy, drive times, and more details.
+
+## National Park Guides — card tag
+<!-- id: projects.tag.11 -->
+
+Guides
+
+## National Park Guides — card tag
+<!-- id: projects.tag.12 -->
+
+PDF
+
+## National Park Guides — card tag
+<!-- id: projects.tag.13 -->
+
+
+
+## Sub-heading
+<!-- id: projects.h3.6 -->
+
 March Madness
 
 ## March Madness — body paragraph
-<!-- id: projects.p.7 -->
+<!-- id: projects.p.8 -->
 
 Making a bracket is fun, but if you're like me and know absolutely nothing about the teams involved or their general stats, this is for you. A bracket builder with relevant season stats, head to head histories, and some (shaky at best) power ratings all in one place.
 
 ## March Madness — card tag
-<!-- id: projects.tag.11 -->
+<!-- id: projects.tag.14 -->
 
 Web app
 
 ## March Madness — card tag
-<!-- id: projects.tag.12 -->
+<!-- id: projects.tag.15 -->
 
 
 
 ## March Madness — card tag
-<!-- id: projects.tag.13 -->
+<!-- id: projects.tag.16 -->
 
 Seasonal
 
@@ -157,7 +182,7 @@ Seasonal
 
 
 ## Intro paragraph
-<!-- id: projects.p.8 -->
+<!-- id: projects.p.9 -->
 
 
 

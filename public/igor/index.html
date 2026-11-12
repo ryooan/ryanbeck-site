@@ -9,40 +9,54 @@
 <header class="topbar"><div class="wrap"><a class="brand" href="/"><img src="/assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a><nav class="nav" aria-label="Main"><a href="/projects">Projects</a><a href="/blog">Blog</a><a href="/about">About</a></nav></div></header>
 <main class="wrap" style="padding-top:40px;padding-bottom:60px;max-width:900px">
 <style>
+  .igor-home { --dc-bg: #313338; }
   .igor-hero { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; }
   .igor-hero img { width: 112px; height: 112px; border-radius: 50%; border: 3px solid var(--gold); }
   .igor-hero h1 { margin: 0; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .igor-beta { font-family: var(--sans); font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; border: 1.5px solid var(--gold); color: var(--ink); border-radius: 999px; padding: 3px 10px; }
   .igor-lede { font-size: 1.15rem; margin: 6px 0 0; }
-  .igor-note { background: var(--parchment-2); border-left: 3px solid var(--gold); padding: 12px 16px; margin: 18px 0; }
-  .igor-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 18px 0 8px; }
-  .igor-features section { border-top: 2px solid var(--rule); padding-top: 12px; }
-  .igor-features h3 { margin: 0 0 6px; font-size: 1.1rem; }
-  .igor-features ul { margin: 0; padding-left: 18px; }
-  .igor-features li { margin: 4px 0; }
+  .igor-note { background: var(--parchment-2); border-left: 3px solid var(--gold); padding: 12px 16px; margin: 22px 0 8px; }
   .igor-home code { font-size: .92em; }
   .igor-small { color: var(--ink-faint); font-size: .9rem; }
   .igor-home ol li { margin: 6px 0; }
-  .igor-examples { display: grid; gap: 28px; margin: 18px 0 8px; }
-  .igor-examples .dc { max-width: 560px; }
-  .igor-examples figure { margin: 0; }
-  .igor-examples figcaption { color: var(--ink-faint); font-size: .9rem; margin-top: 8px; }
-  .igor-examples .card-shot { width: 100%; height: auto; border-radius: 8px; display: block; }
-  /* A Discord message, drawn in Discord's dark theme. */
-  .dc { background: #313338; color: #dbdee1; border-radius: 8px; padding: 14px 16px; font-family: "gg sans", "Noto Sans", "Helvetica Neue", Arial, sans-serif; font-size: 15px; line-height: 1.375; }
-  .dc-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+
+  /* Feature rows: the words on one side, what it looks like in Discord on the other. */
+  .igor-feature { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 36px; align-items: center; padding: 40px 0; border-top: 1px solid var(--rule); }
+  .igor-feature.flip { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+  .igor-feature.flip .igor-copy { order: 2; }
+  .igor-kicker { font-family: var(--sans); font-size: .75rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin: 0 0 6px; }
+  .igor-feature h2 { margin: 0 0 12px; border: 0; padding: 0; }
+  .igor-feature.wide { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); }
+  .igor-feature ul, .igor-plain ul { margin: 0; padding-left: 0; list-style: none; }
+  .igor-feature li, .igor-plain ul li { margin: 9px 0; padding-left: 22px; position: relative; }
+  .igor-feature li::before, .igor-plain ul li::before { content: "◆"; position: absolute; left: 0; top: .1em; color: var(--gold); font-size: .7rem; }
+  .igor-shot { margin: 0; }
+  .igor-shot figcaption { color: var(--ink-faint); font-size: .85rem; margin-top: 10px; text-align: center; }
+  .igor-plain { border-top: 1px solid var(--rule); padding: 36px 0 8px; }
+  .igor-plain .igor-pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px 36px; }
+  .igor-plain h2 { margin-top: 0; }
+  @media (max-width: 760px) {
+    .igor-feature, .igor-feature.flip, .igor-feature.wide { grid-template-columns: 1fr; gap: 22px; padding: 30px 0; }
+    .igor-feature.flip .igor-copy { order: 0; }
+  }
+
+  /* A Discord message, drawn in Discord's dark theme (markup from build-site's discordMessage). */
+  .dc { background: var(--dc-bg); color: #dbdee1; border-radius: 10px; padding: 14px 16px 16px; font-family: "gg sans", "Noto Sans", "Helvetica Neue", Arial, sans-serif; font-size: 15px; line-height: 1.375; box-shadow: 0 18px 40px -18px rgba(20, 12, 4, .55), 0 2px 6px rgba(20, 12, 4, .18); }
+  .dc-head { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
   .dc-head img { width: 40px; height: 40px; border-radius: 50%; }
   .dc-name { color: #f2f3f5; font-weight: 600; }
-  .dc-app { background: #5865f2; color: #fff; font-size: 10px; font-weight: 700; border-radius: 3px; padding: 1px 4px; margin-left: 4px; vertical-align: 2px; }
+  .dc-app { background: #5865f2; color: #fff; font-size: 10px; font-weight: 700; border-radius: 3px; padding: 1px 4px; margin-left: 5px; vertical-align: 2px; }
   .dc-time { color: #949ba4; font-size: 12px; margin-left: 6px; }
   .dc-embed { background: #2b2d31; border-left: 4px solid; border-radius: 4px; padding: 10px 14px 14px 12px; margin-left: 50px; }
   .dc-title { color: #f2f3f5; font-weight: 700; margin-bottom: 6px; }
-  .dc-desc { margin-bottom: 8px; }
+  .dc-desc { margin-bottom: 4px; }
   .dc-field { margin-top: 8px; }
   .dc-field-name { color: #f2f3f5; font-weight: 600; font-size: 14px; }
+  .dc-image { display: block; margin-top: 10px; }
+  .dc-image img { width: 100%; height: auto; display: block; border-radius: 4px; }
   .dc a { color: #00a8fc; text-decoration: none; }
   .dc strong { color: #f2f3f5; }
-  @media (max-width: 520px) { .dc-embed { margin-left: 0; } }
+  @media (max-width: 520px) { .dc-embed { margin-left: 0; } .dc { padding: 12px; } }
 </style>
 <div class="igor-home">
 <div class="igor-hero">
@@ -56,41 +70,41 @@
 
 <p class="igor-note"><strong>Igor is in beta.</strong> It runs in a handful of servers while I find what breaks. Features may change, and things will occasionally go wrong. If something does, or you have an idea, email <a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a>.</p>
 
-<h2>What Igor does</h2>
-<div class="igor-features">
-  <section>
-    <h3>World of Warcraft</h3>
+<section class="igor-feature wide">
+  <div class="igor-copy">
+    <p class="igor-kicker">World of Warcraft</p>
+    <h2>Your characters, in your Discord</h2>
     <ul>
-      <li>Announces level-ups for the characters your server tracks, with a portrait card at milestones (10, 15, 20…).</li>
-      <li>Character cards: gear, stats and render, with <code>/wow card</code>.</li>
-      <li>Claim your characters, and prove they're yours by signing in with Battle.net.</li>
-      <li>Live deaths, loot, boss kills and level-ups within seconds, through the <a href="https://github.com/ryan-flan/DOINK">DOINK</a> addon, in every server you choose.</li>
+      <li><strong>Character cards</strong> with gear, stats and portrait: <code>/wow card</code>.</li>
+      <li><strong>Level-ups</strong> announced for the characters your server follows, and a fresh card at milestones (10, 15, 20…).</li>
+      <li><strong>Live deaths, loot and boss kills</strong> within seconds, through the free <a href="https://github.com/ryan-flan/DOINK">DOINK</a> addon, in every server you choose.</li>
+      <li><strong>Claim your characters</strong>, and prove they're yours by signing in with Battle.net.</li>
     </ul>
     <p class="igor-small">Built for WoW Forever on US servers first.</p>
-  </section>
-  <section>
-    <h3>Daily games</h3>
-    <ul>
-      <li>Reads the results people share in your daily-games channel (Wordle, Clues by Sam, Anno and others).</li>
-      <li>Posts each morning's head-to-head for the day before, and the week's game links.</li>
-    </ul>
-  </section>
-  <section>
-    <h3>Around the server</h3>
-    <ul>
-      <li>Auto-responders: a keyword, a reply, a reaction.</li>
-      <li>A weekly digest of what people played and who hung out in voice (each person can opt out).</li>
-    </ul>
-  </section>
-</div>
+  </div>
+  <figure class="igor-shot">
+    <div class="dc" role="img" aria-label="A Discord message from Igor">
+<div class="dc-head"><img src="/igor/igor.png" alt=""><div><span class="dc-name">Igor</span><span class="dc-app">APP</span><span class="dc-time">Today at 9:41 PM</span></div></div>
+<div class="dc-embed" style="border-color:#c9a227">
 
-<h2>What it looks like</h2>
-<div class="igor-examples">
-  <figure>
-    <a href="/igor/example-card.png"><img class="card-shot" src="/igor/example-card.png" width="1000" height="890" alt="Igor's character card for Jarnathan Jaws, a level 18 Undead Rogue: portrait, equipped gear with stats, and a row of character stats" loading="lazy"></a>
-    <figcaption><code>/wow card</code> for Jarnathan Jaws, my rogue: gear, stats and portrait, from Blizzard's public data.</figcaption>
+<div class="dc-desc">I have exhumed the records of <strong>Jarnathan Jaws</strong>, master.</div>
+<a class="dc-image" href="/igor/example-card.png"><img src="/igor/example-card.png" width="1000" height="890" alt="Igor's card for Jarnathan Jaws, a level 18 Undead Rogue: portrait, gear with stats, and character stats" loading="lazy"></a>
+</div></div>
+    <figcaption>My rogue, Jarnathan Jaws, from Blizzard's public data.</figcaption>
   </figure>
-  <figure>
+</section>
+
+<section class="igor-feature flip">
+  <div class="igor-copy">
+    <p class="igor-kicker">Daily games</p>
+    <h2>A morning head-to-head</h2>
+    <ul>
+      <li>Reads the results people share in your daily-games channel: <strong>Wordle, Clues by Sam, Anno, MapTap</strong> and others.</li>
+      <li>Each morning, ranks everyone on the day before, with medals, and names who played the most.</li>
+      <li>Links the week's puzzles, so the next one is a tap away.</li>
+    </ul>
+  </div>
+  <figure class="igor-shot">
     <div class="dc" role="img" aria-label="A Discord message from Igor">
 <div class="dc-head"><img src="/igor/igor.png" alt=""><div><span class="dc-name">Igor</span><span class="dc-app">APP</span><span class="dc-time">Today at 5:00 AM</span></div></div>
 <div class="dc-embed" style="border-color:#c9a227">
@@ -101,25 +115,40 @@
 <div class="dc-field"><div class="dc-field-name">Clues by Sam</div><div>🥇 <strong>Mira</strong> · Tricky · clean · &lt;9 min<br>🥈 <strong>Juniper</strong> · Tricky · 1 mistake · &lt;14 min</div></div>
 <div class="dc-field"><div class="dc-field-name">MapTap</div><div>🥇 <strong>Juniper</strong> · 914<br>🥈 <strong>Dex</strong> · 862</div></div>
 <div class="dc-field"><div class="dc-field-name">This week's puzzles, master</div><div><a href="https://anno-game.netlify.app">Anno</a> · <a href="https://cluesbysam.com">Clues by Sam</a> · <a href="https://maptap.gg">MapTap</a> · <a href="https://www.nytimes.com/games/wordle">Wordle</a></div></div>
+
 </div></div>
-    <figcaption>The morning daily-games post. The names and scores here are made up.</figcaption>
+    <figcaption>Names and scores made up; the post is the real thing.</figcaption>
   </figure>
-</div>
+</section>
 
-<h2>Getting started</h2>
-<ol>
-  <li><a href="https://discord.com/oauth2/authorize?client_id=1570299717928091709&amp;scope=bot+applications.commands&amp;permissions=536988672">Add Igor</a> to your server. It posts a short welcome with the setup steps.</li>
-  <li>Pick its channels: <code>/config channel</code> for daily games, level-ups and the weekly digest.</li>
-  <li>WoW players: <code>/wow claim</code> your characters, then <code>/wow doink</code> for live events (<a href="/igor/doink.html">setup guide</a>).</li>
-  <li><code>/help</code> lists everything else.</li>
-</ol>
+<section class="igor-plain">
+  <div class="igor-pair">
+    <div>
+      <p class="igor-kicker">Around the server</p>
+      <ul>
+        <li>Auto-responders: a keyword, a reply, a reaction.</li>
+        <li>A weekly digest of what people played and who hung out in voice (anyone can opt out).</li>
+      </ul>
+    </div>
+    <div>
+      <p class="igor-kicker">Getting started</p>
+      <ol>
+        <li><a href="https://discord.com/oauth2/authorize?client_id=1570299717928091709&amp;scope=bot+applications.commands&amp;permissions=536988672">Add Igor</a> to your server. It posts a short welcome with the setup steps.</li>
+        <li><code>/config channel</code> picks its channels: daily games, level-ups, weekly digest.</li>
+        <li>WoW players: <code>/wow claim</code>, then <code>/wow doink</code> (<a href="/igor/doink.html">guide</a>).</li>
+        <li><code>/help</code> lists everything else.</li>
+      </ol>
+    </div>
+  </div>
+</section>
 
-<h2>Privacy</h2>
-<p>Igor keeps only what its features need, deletes activity after 90 days, and never sells or shares anything. Your claimed characters show only in servers you approve, and <code>/forget-me</code> deletes your data everywhere. The details are in the <a href="/igor/privacy.html">privacy policy</a> and <a href="/igor/terms.html">terms of service</a>.</p>
-
-<h2>Thanks</h2>
-<p>Live WoW events come from <a href="https://github.com/ryan-flan/DOINK">DOINK</a> by Ryan Flanagan, a free, MIT-licensed addon and companion. Igor reads the posts DOINK sends. Character data comes from Blizzard's API.</p>
-<p class="igor-small">Igor is a personal project by <a href="/about">Ryan Beck</a>. It isn't affiliated with or endorsed by Blizzard Entertainment or Discord.</p>
+<section class="igor-plain">
+  <h2>Privacy</h2>
+  <p>Igor keeps only what its features need, deletes activity after 90 days, and never sells or shares anything. Your claimed characters show only in servers you approve, and <code>/forget-me</code> deletes your data everywhere. The details are in the <a href="/igor/privacy.html">privacy policy</a> and <a href="/igor/terms.html">terms of service</a>.</p>
+  <h2>Thanks</h2>
+  <p>Live WoW events come from <a href="https://github.com/ryan-flan/DOINK">DOINK</a> by Ryan Flanagan, a free, MIT-licensed addon and companion. Igor reads the posts DOINK sends. Character data comes from Blizzard's API.</p>
+  <p class="igor-small">Igor is a personal project by <a href="/about">Ryan Beck</a>. It isn't affiliated with or endorsed by Blizzard Entertainment or Discord.</p>
+</section>
 </div>
 <p><a href="/igor/">About Igor</a> · <a href="/igor/doink.html">Igor + DOINK setup guide</a> · <a href="/igor/privacy.html">Igor privacy policy</a> · <a href="/igor/terms.html">Igor terms of service</a> · <a href="/">Back to the website</a></p>
 </main></body></html>

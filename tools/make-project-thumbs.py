@@ -20,7 +20,8 @@ Usage:
 
 --from-dir points at a directory of already-downloaded <page>.html files and
 skips the network. Writes public/assets/cards/fd-<slug>.jpg, the composite
-forecasting-data.jpg, em-herder.jpg, em-march-madness.jpg, park-guides.jpg.
+forecasting-data.jpg, em-herder.jpg, em-march-madness.jpg, park-guides.jpg, em-igor.jpg
+(from Igor's homepage example card, public/igor/example-card.png).
 Guide covers (guide-*-cover.jpg) are made separately with pypdfium2 from the
 PDFs in public/guides/ and are inputs here, not outputs.
 """
@@ -269,6 +270,29 @@ def guides_card(cover_paths):
     return bg.convert('RGB')
 
 
+def igor_card(card_path, avatar_path):
+    """Igor (the Discord bot): its real /wow card render floated as the panel,
+    with Igor's avatar in a gold ring pinned to the corner. The wash comes
+    from the avatar's purples and greens, so it isn't a dark smear."""
+    card = Image.open(card_path).convert('RGB')
+    avatar = Image.open(avatar_path).convert('RGB')
+    bg = ambient_bg(avatar).convert('RGBA')
+    ph = int(H * .80)
+    pw = int(ph * card.size[0] / card.size[1])
+    panel = rounded(card.resize((pw, ph), Image.LANCZOS), 18).rotate(-3, expand=True, resample=Image.BICUBIC)
+    x, y = (W - panel.size[0]) // 2 + 50, (H - panel.size[1]) // 2
+    bg = paste_panel(bg, panel, (x, y))
+    d = 200
+    ring = Image.new('RGBA', (d, d), (0, 0, 0, 0))
+    ImageDraw.Draw(ring).ellipse([0, 0, d - 1, d - 1], fill=(212, 175, 55, 255))
+    face = avatar.resize((d - 16, d - 16), Image.LANCZOS).convert('RGBA')
+    m = Image.new('L', face.size, 0)
+    ImageDraw.Draw(m).ellipse([0, 0, face.size[0] - 1, face.size[1] - 1], fill=255)
+    face.putalpha(m)
+    ring.alpha_composite(face, (8, 8))
+    return paste_panel(bg, ring, (x - 120, y + panel.size[1] - d - 10), shadow_dxy=(8, 14), blur=14, alpha=110).convert('RGB')
+
+
 # ------------------------------------------------------------------ main
 
 def main():
@@ -314,6 +338,12 @@ def main():
         path = os.path.join(OUT, 'park-guides.jpg')
         guides_card(covers).save(path, quality=86, optimize=True, progressive=True)
         print('park guides    -> %s' % os.path.relpath(path))
+
+    igor = [os.path.join(os.path.dirname(__file__), '..', 'public', 'igor', f) for f in ('example-card.png', 'igor.png')]
+    if all(os.path.exists(f) for f in igor):
+        path = os.path.join(OUT, 'em-igor.jpg')
+        igor_card(*igor).save(path, quality=86, optimize=True, progressive=True)
+        print('igor           -> %s' % os.path.relpath(path))
 
     print('%d/%d dashboards captured' % (len(charts), len(DASHBOARDS)))
 
