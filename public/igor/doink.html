@@ -40,7 +40,8 @@
   </li>
   <li>
     <h2>Download the DOINK companion</h2>
-    <p>The companion isn't on the addon sites, and DOINK's newest release doesn't always include it (sometimes only the addon is updated). These buttons point at the newest release that does:</p>
+    <p><strong>Easiest (Windows):</strong> press <strong>Download DOINK</strong> under Igor's <code>/wow doink</code> reply. Igor sends you, privately, DOINK's companion with your link already inside (taken from DOINK's own release and checked against its published checksum). Unzip it, open <code>DOINK\Companion</code>, run <code>doink.exe</code>, and skip step 4.</p>
+    <p><strong>Or download it yourself.</strong> The companion isn't on the addon sites, and DOINK's newest release doesn't always include it (sometimes only the addon is updated). These buttons point at the newest release that does:</p>
     <div class="btn-row">
       <a class="btn" id="dl-win" href="https://github.com/ryan-flan/DOINK/releases/download/v0.17.0/DOINK-v0.17.0.zip">Companion for Windows (v0.17.0)</a>
       <a class="btn ghost" id="dl-linux" href="https://github.com/ryan-flan/DOINK/releases/download/v0.17.0/DOINK-v0.17.0-linux-amd64.tar.gz">Linux (v0.17.0)</a>
@@ -50,18 +51,21 @@
     <p>In its settings, tick <strong>Start with Windows</strong>. The companion has to be running while you play.</p>
   </li>
   <li>
-    <h2>Give the companion your link</h2>
+    <h2>Give the companion your link (if you downloaded it yourself)</h2>
     <p>Right-click the gold <strong>D</strong> → <strong>Settings</strong>, paste your link into the webhook box, and press <strong>Send test</strong>. A test post appears in Discord.</p>
     <p class="igor-small">Or set it in game with <code>/doink webhook &lt;your link&gt;</code> followed by <code>/reload</code>. The companion only sees a link set in game after a reload or logout.</p>
   </li>
   <li>
     <h2>Choose what to post</h2>
-    <p>Every event type starts off. In game, type these (or put them in one macro and click it once):</p>
-<pre>/doink enable level_up
+    <p>Every event type starts off. In game, press <strong>Esc → Macros → New</strong>, paste this, and click the macro once. It also clears any link set in game earlier, so the companion's link is used:</p>
+<pre>/doink webhook clear
+/doink webhook here clear
+/doink enable level_up
 /doink enable death
 /doink enable loot
 /doink enable boss_kill
-/doink realtime on</pre>
+/doink realtime on
+/reload</pre>
     <p>Also available: <code>quest</code>, <code>skill_up</code>, <code>mount</code>, <code>duel</code>, <code>battleground</code>. <code>realtime on</code> posts within seconds; you'll see the game's "Screen captured" message, which is how DOINK hands events to the companion. <code>/doink realtime image on</code> also attaches a screenshot.</p>
     <p>Check it: <code>/doink test levelup</code>, then <code>/doink flush</code>. A test post appears in Igor's voice.</p>
   </li>
