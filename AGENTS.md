@@ -152,6 +152,9 @@ Launch preparation 2026-09-25: private D1 march-madness created and seeded
 (a3530b66-c736-4728-9a80-d7b7da106fc6), finalized 2026 revision 2, 68 teams.
 Production secrets were generated in the March Madness gitignored private-data
 directory and installed at launch. The privacy page is live at /privacy.
+Igor's (the Discord bot's) privacy policy and terms are at /igor/privacy and /igor/terms
+(added 2026-11-12). They're generated from `projects/personal/igor-discord-bot/docs/*.md`:
+run `npm run build-site -- --site ../personal-website` there; don't edit `public/igor/` by hand.
 Workers plan could not be read with the CLI token; Ryan must confirm it.
 
 Homepage URL (2026-09-25): navigation links use `/`; `/index.html` permanently redirects to `/`, retaining query parameters. Verified live root returns 200 and old links redirect.

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Igor: Privacy Policy · Ryan Beck</title>
+<meta name="description" content="Igor: Privacy Policy: the Igor Discord bot.">
+<link rel="canonical" href="https://ryanrobertbeck.com/igor/privacy">
+<link rel="stylesheet" href="/assets/css/site.css">
+</head><body>
+<header class="topbar"><div class="wrap"><a class="brand" href="/"><img src="/assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a><nav class="nav" aria-label="Main"><a href="/projects">Projects</a><a href="/blog">Blog</a><a href="/about">About</a></nav></div></header>
+<main class="wrap" style="padding-top:40px;padding-bottom:60px;max-width:900px">
+<h1>Igor: Privacy Policy</h1>
+<p>Last updated: November 12, 2026</p>
+<p>Igor is a Discord bot for gaming communities. This page explains what it stores, why, and how to remove it.</p>
+<h2>What Igor stores</h2>
+<ul><li>
+<strong>Server settings</strong>: the channels and options set with <code>/config</code>.
+</li><li>
+<strong>WoW characters a server tracks</strong>: name, game version and region, the latest public level and item level from Blizzard's API, and who added it.
+</li><li>
+<strong>Characters you claim</strong> with <code>/wow claim</code>: which characters are yours, which is your main, and whether you verified them. Several people can claim the same character until one of them verifies it. Your claims show only in servers you approve: where you claimed, tracked or looked up the character yourself, or where you said yes when Igor asked you by direct message. There they appear in <code>/wow list</code>, <code>/wow mine</code> and next to the character's posts. <code>/wow here</code> changes this for one server, and <code>/wow sharing new_servers:everywhere</code> skips the asking.
+</li><li>
+<strong>Live WoW events</strong>, for players who use the DOINK add-on with Igor: the character name and what happened (a level, loot, a death, a boss kill and similar), with the time.
+</li><li>
+<strong>Daily-game results</strong>, only in a channel a server picks as its daily-games channel: Igor reads the messages there to find shared game results (Wordle, Anno, Clues by Sam and similar, including Anno's screenshot card, which it reads with text recognition). It keeps what it read from each message (the game and the score) for 30 days, to post each day's head-to-head and the week's game links. It doesn't keep the messages themselves.
+</li><li>
+<strong>Auto-responders</strong> a server sets up with <code>/autoresponse</code>: the keyword, the reply and reactions, and who created it.
+</li><li>
+<strong>Activity for weekly stats</strong>, only if the server has the feature on and you haven't opted out:
+<ul><li>
+which game Discord shows you playing, with start and end times;
+</li><li>
+which voice channel you were in, with join and leave times.
+</li></ul>
+</li></ul>
+<p>Igor reads messages only for three things: the DOINK posts sent to Igor's own webhook; the daily-games channel a server chose; and, in servers with auto-responders, each message is checked against those keywords at the moment it's sent and then forgotten.</p>
+<h2>How long</h2>
+<ul><li>
+<strong>Activity and live WoW events:</strong> deleted after 90 days.
+</li><li>
+<strong>Daily-game results:</strong> deleted after 30 days.
+</li><li>
+<strong>Blizzard data:</strong> refreshed or deleted within 30 days, as Blizzard's API terms require.
+</li><li>
+<strong>Backups:</strong> nightly copies of the database are kept for 7 days.
+</li><li>
+<strong>Server removal:</strong> removing Igor from a server deletes that server's data.
+</li></ul>
+<h2>Your choices</h2>
+<ul><li>
+<code>/privacy tracking:false</code> stops recording your games and voice time in every server.
+</li><li>
+<code>/forget-me</code> deletes your activity, the characters you added or claimed, and your settings, everywhere. Copies in backups age out within 7 days.
+</li></ul>
+<h2>Sharing</h2>
+<p>Igor's data is never sold or shared. The only outside service Igor sends requests to is Blizzard's API (character lookups), and those requests contain nothing about you. Screenshots in a daily-games channel are downloaded from Discord itself and read on Igor's own server; they aren't sent anywhere else.</p>
+<h2>Contact</h2>
+<p>Questions or removal requests: email <a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a>.</p>
+<p><a href="/igor/privacy">Igor privacy policy</a> · <a href="/igor/terms">Igor terms of service</a> · <a href="/">Back to the website</a></p>
+</main></body></html>
