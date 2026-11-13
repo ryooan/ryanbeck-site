@@ -9,23 +9,25 @@
 <header class="topbar"><div class="wrap"><a class="brand" href="/"><img src="/assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a><nav class="nav" aria-label="Main"><a href="/projects">Projects</a><a href="/blog">Blog</a><a href="/about">About</a></nav></div></header>
 <main class="wrap" style="padding-top:40px;padding-bottom:60px;max-width:900px">
 <h1>Igor: Privacy Policy</h1>
-<p>Last updated: November 12, 2026</p>
-<p>Igor is a Discord bot for gaming communities. This page explains what it stores, why, and how to remove it.</p>
+<p>Last updated: November 13, 2026</p>
+<p>Igor is a free Discord bot for gaming communities. This page explains what it stores, why, where, for how long, and how to remove it.</p>
 <h2>What Igor stores</h2>
 <ul><li>
 <strong>Server settings</strong>: the channels and options set with <code>/config</code>.
 </li><li>
-<strong>WoW characters a server tracks</strong>: name, game version and region, the latest public level and item level from Blizzard's API, and who added it.
+<strong>WoW characters a server tracks</strong>: name, game version and region, and the latest public details from Blizzard's API: level, item level, race, class, faction, guild, equipped gear and last logout time. Igor uses these for level-up posts, character cards and the daily WoW roundup.
 </li><li>
 <strong>Characters you claim</strong> with <code>/wow claim</code>: which characters are yours, which is your main, and whether you verified them. Several people can claim the same character until one of them verifies it. Your claims show only in servers you approve: where you claimed, tracked or looked up the character yourself, or where you said yes when Igor asked you by direct message. There they appear in <code>/wow list</code>, <code>/wow mine</code> and next to the character's posts. <code>/wow here</code> changes this for one server, and <code>/wow sharing new_servers:everywhere</code> skips the asking. If someone else claims a character you've claimed, Igor tells you privately how many other accounts claim it (never who), and remembers when it last told you so it doesn't repeat itself more than weekly.
 </li><li>
 <strong>Battle.net sign-in</strong>, only if you choose it in <code>/wow verify</code>: you sign in on Blizzard's own page, never Igor's, so Igor never sees your password or email. Blizzard then lets Igor read your account's list of WoW characters (names, game versions, realms or surnames, levels) once. Igor uses that access right away and throws it away; it is never stored. The character list is kept only until you confirm or cancel on Igor's page (at most 20 minutes), then deleted. Afterward Igor keeps only which characters you verified, as with any claim. A record that the sign-in link was made and used is deleted after a day.
 </li><li>
-<strong>Live WoW events</strong>, for players who use the DOINK add-on with Igor: the character name and what happened (a level, loot, a death, a boss kill and similar), with the time.
+<strong>Live WoW events</strong>, for players who use the DOINK add-on with Igor: the character name and what happened (a level, loot, a death, a boss kill, a dungeon and party, and similar), with the time. When a death looks like it came from another player, Igor checks that name against Blizzard's public armory and keeps what it finds (level, race, class, faction, guild) to word the post and count repeat killers.
 </li><li>
-<strong>Daily-game results</strong>, only in a channel a server picks as its daily-games channel: Igor reads the messages there to find shared game results (Wordle, Anno, Clues by Sam and similar, including Anno's screenshot card, which it reads with text recognition). It keeps what it read from each message (the game and the score) for 30 days, to post each day's head-to-head and the week's game links. It doesn't keep the messages themselves.
+<strong>Steam</strong>, only if you run <code>/steam link</code>: your Steam ID and profile name, your recently played games with their total playtime, the achievements you unlock after linking (with how rare each one is), and the playtime you gain. Igor reads only what your profile shows publicly. Linking is your request for Igor to keep checking your profile, about every 30 minutes, until you unlink. Your Steam activity shows only in servers where you ran <code>/steam link</code>.
 </li><li>
-<strong>Auto-responders</strong> a server sets up with <code>/autoresponse</code>: the keyword, the reply and reactions, and who created it.
+<strong>Daily-game results</strong>, only in a channel a server picks as its daily-games channel: Igor reads the messages there to find shared game results (Wordle, Anno, Clues by Sam and similar, including Anno's screenshot card, which it reads with text recognition). It keeps what it read from each message (the game, the score and who posted it) and each day's ranking, to post the daily head-to-head and the week's champions. It doesn't keep the messages themselves.
+</li><li>
+<strong>Auto-responders</strong> a server sets up with <code>/autoresponse</code>: the keyword, the reply and reactions, who created it, and how often it fires.
 </li><li>
 <strong>Activity for weekly stats</strong>, only if the server has the feature on and you haven't opted out:
 <ul><li>
@@ -33,15 +35,27 @@ which game Discord shows you playing, with start and end times;
 </li><li>
 which voice channel you were in, with join and leave times.
 </li></ul>
+</li><li>
+<strong>Commands</strong>: which Igor command you ran, in which server, and when, so Igor's maker can see how many people use it.
+</li><li>
+<strong>Feedback</strong> you send with <code>/feedback</code>: your message, any screenshot, and the reply, if there is one.
 </li></ul>
 <p>Igor reads messages only for three things: the DOINK posts sent to Igor's own webhook; the daily-games channel a server chose; and, in servers with auto-responders, each message is checked against those keywords at the moment it's sent and then forgotten.</p>
+<h2>Where</h2>
+<p>Igor runs on a server in the United States (Google Cloud, Iowa), and its database is in the United States (Turso, on Amazon Web Services in Ohio). Nightly backups stay on Igor's server.</p>
 <h2>How long</h2>
 <ul><li>
-<strong>Activity and live WoW events:</strong> deleted after 90 days.
+<strong>Blizzard data</strong> (character details, gear, logout times, level-up history, and other players' armory details in PvP deaths): refreshed or deleted within 30 days, as Blizzard's API terms require. A character Blizzard no longer has is deleted with its history.
+</li><li>
+<strong>Activity, live WoW events and Steam activity:</strong> deleted after 90 days.
+</li><li>
+<strong>Commands:</strong> deleted after 90 days.
 </li><li>
 <strong>Daily-game results:</strong> deleted after 30 days.
 </li><li>
-<strong>Blizzard data:</strong> refreshed or deleted within 30 days, as Blizzard's API terms require.
+<strong>Feedback:</strong> deleted after a year.
+</li><li>
+<strong>Your Steam link and claims:</strong> until you remove them.
 </li><li>
 <strong>Backups:</strong> nightly copies of the database are kept for 7 days.
 </li><li>
@@ -51,11 +65,29 @@ which voice channel you were in, with join and leave times.
 <ul><li>
 <code>/privacy tracking:false</code> stops recording your games and voice time in every server.
 </li><li>
-<code>/forget-me</code> deletes your activity, the characters you added or claimed, and your settings, everywhere. Copies in backups age out within 7 days.
+<code>/steam unlink</code> stops Igor checking your Steam profile and deletes everything it stored about it.
+</li><li>
+<code>/wow unclaim</code> removes a claim. Verifying with Battle.net leaves nothing to unlink: Igor keeps no access to your account.
+</li><li>
+<code>/forget-me</code> deletes your activity, the characters you added or claimed, your Steam link and activity, your commands, your feedback and your settings, everywhere. Copies in backups age out within 7 days.
+</li><li>
+To ask for anything else to be deleted, email the address below.
 </li></ul>
 <h2>Sharing</h2>
-<p>Igor's data is never sold or shared. The only outside service Igor sends requests to is Blizzard's API: character lookups, which contain nothing about you, and, if you sign in with Battle.net, the one read of your character list described above. Igor's sign-in pages (igor.ryanrobertbeck.com) are served through Cloudflare, which sees the visit like any website host. Screenshots in a daily-games channel are downloaded from Discord itself and read on Igor's own server; they aren't sent anywhere else.</p>
+<p>Igor's data is never sold, shared or used for advertising. Igor sends requests to two outside services:</p>
+<ul><li>
+<strong>Blizzard's API</strong>: character lookups, which contain nothing about you, and, if you sign in with Battle.net, the one read of your character list described above.
+</li><li>
+<strong>Steam's Web API</strong>, only for profiles linked with <code>/steam link</code>: reads of the public games, playtime and achievements described above.
+</li></ul>
+<p>Igor's sign-in pages (igor.ryanrobertbeck.com) are served through Cloudflare, which sees the visit like any website host. Screenshots in a daily-games channel are downloaded from Discord itself and read on Igor's own server; they aren't sent anywhere else.</p>
+<h2>Game data is provided as is</h2>
+<p>World of Warcraft data comes from Blizzard Entertainment and Steam data from Valve. Both are shown as they come, with no promise from Igor, Blizzard or Valve that they are complete, accurate or current. Igor isn't affiliated with or endorsed by Blizzard Entertainment or Valve.</p>
+<h2>Children</h2>
+<p>Igor is not meant for anyone under 13, which is also Discord's minimum age.</p>
+<h2>Changes</h2>
+<p>When this policy changes, the date at the top changes, and big changes are announced in <a href="https://discord.gg/J7T2jFNheB">Igor's Lab</a>.</p>
 <h2>Contact</h2>
-<p>Questions or removal requests: email <a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a>.</p>
+<p>Questions or removal requests: email <a href="mailto:ryanbeckauthor@gmail.com">ryanbeckauthor@gmail.com</a>, or use <code>/feedback</code>.</p>
 <p><a href="/igor/">About Igor</a> · <a href="/igor/doink.html">Igor + DOINK setup guide</a> · <a href="/igor/privacy.html">Igor privacy policy</a> · <a href="/igor/terms.html">Igor terms of service</a> · <a href="/">Back to the website</a></p>
 </main></body></html>
