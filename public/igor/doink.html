@@ -57,7 +57,13 @@
   </li>
   <li>
     <h2>Choose what to post</h2>
-    <p>Every event type starts off. In game, press <strong>Esc → Macros → New</strong>, paste this, and click the macro once. It also clears any link set in game earlier, so the companion's link is used:</p>
+    <p>Every event type starts off. In game, type <code>/doink config</code> (or <strong>Esc → Options → AddOns → DOINK</strong>):</p>
+    <ul>
+      <li>Under <strong>Discord, via the companion app</strong>, tick <strong>Level-ups</strong>, <strong>Deaths</strong>, <strong>Loot</strong> and <strong>Boss kills</strong> (or whatever <code>/wow doink</code> lists for you). These are per character: tick them on each character you play.</li>
+      <li>Under <strong>Realtime posting</strong>, tick <strong>Post to Discord instantly</strong>. Leave <strong>Attach the screenshot to instant posts</strong> unticked unless you want screenshots (below).</li>
+    </ul>
+    <p>Changes apply right away; no reload needed.</p>
+    <p><strong>Or in one click:</strong> press <strong>Esc → Macros → New</strong>, paste this, and click the macro once. It sets the same things, and also clears any Discord link pasted into DOINK in game before (that would override the companion's link, so use the macro if posts don't show up):</p>
 <pre>/doink webhook clear
 /doink webhook here clear
 /doink enable level_up
@@ -68,7 +74,7 @@
 /doink realtime image off
 /reload</pre>
     <p><code>realtime on</code> posts within seconds; you'll see the game's "Screen captured" message, which is how DOINK hands events to the companion.</p>
-    <p><strong>More events or screenshots:</strong> in Discord, <code>/wow doink</code>'s first menu picks what shows in that server: quests, skill-ups, mounts, duels and battlegrounds too, and <strong>📸 Screenshots</strong>. When a pick needs DOINK to send something new, Igor gives you an updated macro to run once. Screenshots are off by default: each post then includes a picture of your screen at that moment, showing whatever is on it, <strong>including chat, whispers, party and guild chat</strong>. They show only in servers where you tick them.</p>
+    <p><strong>More events or screenshots:</strong> in Discord, <code>/wow doink</code>'s first menu picks what shows in that server: quests, skill-ups, mounts, duels and battlegrounds too, and <strong>📸 Screenshots</strong>. When a pick needs DOINK to send something new, Igor tells you which boxes to tick in <code>/doink config</code> (or gives you an updated macro). Unticking a box there stops that event in every server. Screenshots are off by default: each post then includes a picture of your screen at that moment, showing whatever is on it, <strong>including chat, whispers, party and guild chat</strong>. They show only in servers where you tick them.</p>
     <p>Check it: <code>/doink test levelup</code>, then <code>/doink flush</code>. A test post appears in Igor's voice.</p>
   </li>
   <li>
