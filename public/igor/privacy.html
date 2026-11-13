@@ -39,6 +39,8 @@ which voice channel you were in, with join and leave times.
 <strong>Commands</strong>: which Igor command you ran, in which server, and when, so Igor's maker can see how many people use it.
 </li><li>
 <strong>Feedback</strong> you send with <code>/feedback</code>: your message, any screenshot, and the reply, if there is one.
+</li><li>
+<strong>Igor's ledger</strong>: running totals per year, so Igor can post a year in review and show your year, five years or all time with <code>/stats</code> after the detailed records above are deleted. Totals only: hours per game and in voice, puzzles played and won, your characters' DOINK levels, deaths, bosses, epic loot, quests, mounts and duels won, your Steam hours, achievements, perfect games and milestones, and how many Igor commands you ran. Nothing from Blizzard's API goes into the ledger.
 </li></ul>
 <p>Igor reads messages only for three things: the DOINK posts sent to Igor's own webhook; the daily-games channel a server chose; and, in servers with auto-responders, each message is checked against those keywords at the moment it's sent and then forgotten.</p>
 <h2>Where</h2>
@@ -57,19 +59,21 @@ which voice channel you were in, with join and leave times.
 </li><li>
 <strong>Your Steam link and claims:</strong> until you remove them.
 </li><li>
+<strong>Ledger totals:</strong> kept until you, or the server, remove them (see below).
+</li><li>
 <strong>Backups:</strong> nightly copies of the database are kept for 7 days.
 </li><li>
-<strong>Server removal:</strong> removing Igor from a server deletes that server's data.
+<strong>Server removal:</strong> removing Igor from a server deletes that server's data, its ledger totals included.
 </li></ul>
 <h2>Your choices</h2>
 <ul><li>
 <code>/privacy tracking:false</code> stops recording your games and voice time in every server.
 </li><li>
-<code>/steam unlink</code> stops Igor checking your Steam profile and deletes everything it stored about it.
+<code>/steam unlink</code> stops Igor checking your Steam profile and deletes everything it stored about it, including your Steam totals in the ledger.
 </li><li>
 <code>/wow unclaim</code> removes a claim. Verifying with Battle.net leaves nothing to unlink: Igor keeps no access to your account.
 </li><li>
-<code>/forget-me</code> deletes your activity, the characters you added or claimed, your Steam link and activity, your commands, your feedback and your settings, everywhere. Copies in backups age out within 7 days.
+<code>/forget-me</code> deletes your activity, the characters you added or claimed, your Steam link and activity, your commands, your feedback, your ledger totals (and your claimed characters') and your settings, everywhere. Copies in backups age out within 7 days.
 </li><li>
 To ask for anything else to be deleted, email the address below.
 </li></ul>
