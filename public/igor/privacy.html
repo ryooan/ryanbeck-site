@@ -40,14 +40,14 @@ which voice channel you were in, with join and leave times.
 </li><li>
 <strong>Feedback</strong> you send with <code>/feedback</code>: your message, any screenshot, and the reply, if there is one.
 </li><li>
-<strong>Igor's ledger</strong>: running totals per year, so Igor can post a year in review and show your year, five years or all time with <code>/stats</code> after the detailed records above are deleted. Totals only: hours per game and in voice, puzzles played and won, your characters' DOINK levels, deaths, bosses, epic loot, quests, mounts and duels won, your Steam hours, achievements, perfect games and milestones, and how many Igor commands you ran. Nothing from Blizzard's API goes into the ledger.
+<strong>Igor's ledger</strong>: running totals per year, so Igor can post a year in review and show your year, five years or all time with <code>/stats</code> after the detailed records above are deleted. Totals only: hours per game and in voice, puzzles played and won, your characters' levels, deaths (and how many were to other players), bosses, epic loot, quests, mounts, duels won, item levels and gear upgrades, your Steam hours, achievements, perfect games and milestones, and how many Igor commands you ran. Some character totals are counted from Blizzard's API (levels and gear seen on the armory); only the counts are kept, never the details behind them. A day is added to the ledger two days after it ends.
 </li></ul>
 <p>Igor reads messages only for three things: the DOINK posts sent to Igor's own webhook; the daily-games channel a server chose; and, in servers with auto-responders, each message is checked against those keywords at the moment it's sent and then forgotten.</p>
 <h2>Where</h2>
-<p>Igor runs on a server in the United States (Google Cloud, Iowa), and its database is in the United States (Turso, on Amazon Web Services in Ohio). Nightly backups stay on Igor's server.</p>
+<p>Igor runs on a server in the United States (Google Cloud, Iowa), and its database is in the United States (Turso, on Amazon Web Services in Ohio). Turso keeps its own short-term recovery copies of the database, which age out on its schedule.</p>
 <h2>How long</h2>
 <ul><li>
-<strong>Blizzard data</strong> (character details, gear, logout times, level-up history, and other players' armory details in PvP deaths): refreshed or deleted within 30 days, as Blizzard's API terms require. A character Blizzard no longer has is deleted with its history.
+<strong>Blizzard data</strong> (character details, gear, item icons, logout times, level-up history, and other players' armory details in PvP deaths): refreshed or deleted within 30 days, as Blizzard's API terms require. A character Blizzard no longer has, or that a server stops tracking, is deleted with its history. The ledger's yearly counts are kept as described below.
 </li><li>
 <strong>Activity, live WoW events and Steam activity:</strong> deleted after 90 days.
 </li><li>
@@ -61,9 +61,11 @@ which voice channel you were in, with join and leave times.
 </li><li>
 <strong>Ledger totals:</strong> kept until you, or the server, remove them (see below).
 </li><li>
-<strong>Backups:</strong> nightly copies of the database are kept for 7 days.
+<strong>Notes for Igor's maker:</strong> when Igor joins or leaves a server, or someone first claims a character or sets up DOINK, Igor's maker gets a private message saying so. Igor keeps only a count of these, for 90 days.
 </li><li>
-<strong>Server removal:</strong> removing Igor from a server deletes that server's data, its ledger totals included.
+<strong>Backups:</strong> Turso's recovery copies, on Turso's schedule.
+</li><li>
+<strong>Server removal:</strong> removing Igor from a server deletes that server's data, its ledger totals included. Feedback sent from that server stays (it's the sender's), without the server.
 </li></ul>
 <h2>Your choices</h2>
 <ul><li>
@@ -73,7 +75,7 @@ which voice channel you were in, with join and leave times.
 </li><li>
 <code>/wow unclaim</code> removes a claim. Verifying with Battle.net leaves nothing to unlink: Igor keeps no access to your account.
 </li><li>
-<code>/forget-me</code> deletes your activity, the characters you added or claimed, your Steam link and activity, your commands, your feedback, your ledger totals (and your claimed characters') and your settings, everywhere. Copies in backups age out within 7 days.
+<code>/forget-me</code> deletes, everywhere: your activity, the characters you added or claimed, your Steam link and activity, your commands, your feedback, your ledger totals, your entries in recent daily-game results, and, for characters you verified with Battle.net, their live WoW events and ledger totals too. (A claim that wasn't verified doesn't prove a character is yours, so it can't erase that character's history.) If you'd opted out of tracking, that choice is kept so Igor still won't track you. Copies in Turso's recovery backups age out on its schedule.
 </li><li>
 To ask for anything else to be deleted, email the address below.
 </li></ul>
