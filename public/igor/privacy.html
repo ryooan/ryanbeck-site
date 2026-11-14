@@ -15,7 +15,7 @@
 <ul><li>
 <strong>Server settings</strong>: the channels and options set with <code>/config</code>.
 </li><li>
-<strong>WoW characters a server tracks</strong>: name, game version and region, and the latest public details from Blizzard's API: level, item level, race, class, faction, guild, equipped gear and last logout time. Igor uses these for level-up posts, character cards and the daily WoW roundup.
+<strong>WoW characters a server tracks</strong>: name, game version and region, and the latest public details from Blizzard's API: level, item level, race, class, faction, guild, equipped gear, last logout time, and a few lifetime statistics from the armory (creatures and critters killed, honorable kills, quests completed and abandoned, food, bandages and potions used, flight paths, hearthstones, dungeons entered, Need rolls, deaths from falling or drowning, waves). Igor uses these for level-up posts, character cards and the daily WoW roundup.
 </li><li>
 <strong>Characters you claim</strong> with <code>/wow claim</code>: which characters are yours, which is your main, and whether you verified them. Several people can claim the same character until one of them verifies it. Your claims show only in servers you approve: where you claimed, tracked or looked up the character yourself, or where you said yes when Igor asked you by direct message. There they appear in <code>/wow list</code>, <code>/wow mine</code> and next to the character's posts. <code>/wow here</code> changes this for one server, and <code>/wow sharing new_servers:everywhere</code> skips the asking. If someone else claims a character you've claimed, Igor tells you privately how many other accounts claim it (never who), and remembers when it last told you so it doesn't repeat itself more than weekly.
 </li><li>
@@ -47,7 +47,7 @@ which voice channel you were in, with join and leave times.
 <p>Igor runs on a server in the United States (Google Cloud, Iowa), and its database is in the United States (Turso, on Amazon Web Services in Ohio). Turso keeps its own short-term recovery copies of the database, which age out on its schedule.</p>
 <h2>How long</h2>
 <ul><li>
-<strong>Blizzard data</strong> (character details, gear, item icons, logout times, level-up history, and other players' armory details in PvP deaths): refreshed or deleted within 30 days, as Blizzard's API terms require. A character Blizzard no longer has, or that a server stops tracking, is deleted with its history. The ledger's yearly counts are kept as described below.
+<strong>Blizzard data</strong> (character details, gear, lifetime statistics and how much they grew each day, item icons, logout times, level-up history, and other players' armory details in PvP deaths): refreshed or deleted within 30 days, as Blizzard's API terms require. A character Blizzard no longer has, or that a server stops tracking, is deleted with its history. The ledger's yearly counts are kept as described below.
 </li><li>
 <strong>Activity, live WoW events and Steam activity:</strong> deleted after 90 days.
 </li><li>
