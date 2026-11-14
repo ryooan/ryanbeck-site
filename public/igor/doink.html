@@ -21,7 +21,7 @@
 </style>
 <div class="igor-guide">
 <h1>Live WoW events in Discord, with Igor and DOINK</h1>
-<p>Igor posts your WoW Forever level-ups, deaths, loot and boss kills (the first time each character beats a boss; repeat kills are a <code>/wow doink</code> option) in Discord a few seconds after they happen, in its lab-assistant voice. That takes two pieces from <a href="https://github.com/ryan-flan/DOINK">DOINK</a>, a free WoW addon:</p>
+<p>Igor posts your WoW Forever level-ups, deaths, loot, new mounts and boss kills (the first time each character beats a boss; repeat kills are a <code>/wow doink</code> option) in Discord a few seconds after they happen, in its lab-assistant voice. That takes two pieces from <a href="https://github.com/ryan-flan/DOINK">DOINK</a>, a free WoW addon:</p>
 <ul>
   <li><strong>The DOINK addon</strong> notices what happens in the game.</li>
   <li><strong>The DOINK companion</strong>, a small program on your PC, does the posting. WoW addons aren't allowed to use the internet, so something outside the game has to send the events. It runs on <strong>Windows</strong>, or <strong>Linux</strong> (Proton, Wine or Lutris). There's no Mac version.</li>
@@ -59,7 +59,7 @@
     <h2>Choose what to post</h2>
     <p>Every event type starts off. In game, type <code>/doink config</code> (or <strong>Esc → Options → AddOns → DOINK</strong>):</p>
     <ul>
-      <li>Under <strong>Discord, via the companion app</strong>, tick <strong>Level-ups</strong>, <strong>Deaths</strong>, <strong>Loot</strong> and <strong>Boss kills</strong> (or whatever <code>/wow doink</code> lists for you). These are per character: tick them on each character you play.</li>
+      <li>Under <strong>Discord, via the companion app</strong>, tick <strong>Level-ups</strong>, <strong>Deaths</strong>, <strong>Loot</strong>, <strong>Boss kills</strong> and <strong>New mounts</strong> (or whatever <code>/wow doink</code> lists for you). These are per character: tick them on each character you play.</li>
       <li>Under <strong>Realtime posting</strong>, tick <strong>Post to Discord instantly</strong>. Leave <strong>Attach the screenshot to instant posts</strong> unticked unless you want screenshots (below).</li>
     </ul>
     <p>Changes apply right away; no reload needed.</p>
@@ -70,11 +70,12 @@
 /doink enable death
 /doink enable loot
 /doink enable boss_kill
+/doink enable mount
 /doink realtime on
 /doink realtime image off
 /reload</pre>
     <p><code>realtime on</code> posts within seconds; you'll see the game's "Screen captured" message, which is how DOINK hands events to the companion.</p>
-    <p><strong>More events or screenshots:</strong> in Discord, <code>/wow doink</code>'s first menu picks what shows in that server: quests, skill-ups, mounts, duels and battlegrounds too, and <strong>📸 Screenshots</strong>. When a pick needs DOINK to send something new, Igor tells you which boxes to tick in <code>/doink config</code> (or gives you an updated macro). Unticking a box there stops that event in every server. Screenshots are off by default: each post then includes a picture of your screen at that moment, showing whatever is on it, <strong>including chat, whispers, party and guild chat</strong>. They show only in servers where you tick them.</p>
+    <p><strong>More events or screenshots:</strong> in Discord, <code>/wow doink</code>'s first menu picks what shows in that server: quests, skill-ups, duels and battlegrounds too, and <strong>📸 Screenshots</strong>. When a pick needs DOINK to send something new, Igor tells you which boxes to tick in <code>/doink config</code> (or gives you an updated macro). Unticking a box there stops that event in every server. Screenshots are off by default: each post then includes a picture of your screen at that moment, showing whatever is on it, <strong>including chat, whispers, party and guild chat</strong>. They show only in servers where you tick them.</p>
     <p>Check it: <code>/doink test levelup</code>, then <code>/doink flush</code>. A test post appears in Igor's voice.</p>
   </li>
   <li>
