@@ -9,7 +9,7 @@
 <header class="topbar"><div class="wrap"><a class="brand" href="/"><img src="/assets/wordmark.svg" alt="Ryan Beck" width="827" height="112"></a><nav class="nav" aria-label="Main"><a href="/projects">Projects</a><a href="/blog">Blog</a><a href="/about">About</a></nav></div></header>
 <main class="wrap" style="padding-top:40px;padding-bottom:60px;max-width:900px">
 <h1>Igor: Privacy Policy</h1>
-<p>Last updated: November 13, 2026</p>
+<p>Last updated: November 14, 2026</p>
 <p>Igor is a free Discord bot for gaming communities. This page explains what it stores, why, where, for how long, and how to remove it.</p>
 <h2>What Igor stores</h2>
 <ul><li>
@@ -23,7 +23,7 @@
 </li><li>
 <strong>Live WoW events</strong>, for players who use the DOINK add-on with Igor: the character name and what happened (a level, loot, a death, a boss kill, a dungeon and party, and similar), with the time. When a death looks like it came from another player, Igor checks that name against Blizzard's public armory and keeps what it finds (level, race, class, faction, guild) to word the post and count repeat killers.
 </li><li>
-<strong>Steam</strong>, only if you run <code>/steam link</code>: your Steam ID, profile name and the date your account was made (for a "years on Steam" post on its anniversary), your recently played games with their total playtime, the achievements you unlock after linking (with how rare each one is), the playtime you gain, hours milestones you pass in a game, and games you complete. Igor reads only what your profile shows publicly. Linking is your request for Igor to keep checking your profile, about every 30 minutes, until you unlink. Your Steam activity shows only in servers where you ran <code>/steam link</code>, and <code>/steam posts</code> turns off any kind of post about you.
+<strong>Steam</strong>, only if you run <code>/steam link</code>: your Steam ID, profile name and the date your account was made (for a "years on Steam" post on its anniversary), your recently played games with their total playtime, the achievements you unlock after linking (with how rare each one is), the playtime you gain, hours milestones you pass in a game, and games you complete. Igor reads only what your profile shows publicly, and about once a day notes whether your profile's "Game details" are public (achievements need them), so it can tell you how to show them. Linking is your request for Igor to keep checking your profile, about every 30 minutes, until you unlink. Your Steam activity shows only in servers where you ran <code>/steam link</code>, and <code>/steam posts</code> turns off any kind of post about you.
 </li><li>
 <strong>Daily-game results</strong>, only in a channel a server picks as its daily-games channel: Igor reads the messages there to find shared game results (Wordle, Anno, Clues by Sam and similar, including Anno's screenshot card, which it reads with text recognition). It keeps what it read from each message (the game, the score and who posted it) and each day's ranking, to post the daily head-to-head and the week's champions. It doesn't keep the messages themselves.
 </li><li>
@@ -39,6 +39,8 @@ which voice channel you were in, with join and leave times.
 <strong>Commands</strong>: which Igor command you ran, in which server, and when, so Igor's maker can see how many people use it.
 </li><li>
 <strong>Feedback</strong> you send with <code>/feedback</code>: your message, any screenshot, and the reply, if there is one.
+</li><li>
+<strong>Tips</strong>: which tip Igor showed under a server's daily roundup, about whom and when (so the same tip isn't repeated too often), and, for the one person a tip was meant for, the private version waiting to be shown under their next Igor command. Tips name nobody in public.
 </li><li>
 <strong>Igor's ledger</strong>: running totals per year, so Igor can post a year in review and show your year, five years or all time with <code>/stats</code> after the detailed records above are deleted. Totals only: hours per game and in voice, puzzles played and won, your characters' levels, deaths (and how many were to other players), bosses, epic loot, quests, mounts, duels won, item levels and gear upgrades, your Steam hours, achievements, perfect games and milestones, and how many Igor commands you ran. Some character totals are counted from Blizzard's API (levels and gear seen on the armory); only the counts are kept, never the details behind them. A day is added to the ledger two days after it ends.
 </li></ul>
@@ -57,6 +59,8 @@ which voice channel you were in, with join and leave times.
 </li><li>
 <strong>Feedback:</strong> deleted after a year.
 </li><li>
+<strong>Tips:</strong> a waiting private tip after a week; the record of tips shown after a year.
+</li><li>
 <strong>Your Steam link and claims:</strong> until you remove them.
 </li><li>
 <strong>Ledger totals:</strong> kept until you, or the server, remove them (see below).
@@ -69,20 +73,20 @@ which voice channel you were in, with join and leave times.
 </li></ul>
 <h2>Your choices</h2>
 <ul><li>
-<code>/privacy</code> lets you turn off each kind of reporting on its own, in every server, or all of them with <code>everything:false</code>: <code>game_time</code> (your games and voice time aren't recorded), <code>puzzles</code> (your daily-puzzle results are left out of the rankings), <code>steam</code> (your Steam isn't posted or counted in roundups and digests), <code>doink</code> (posts from your DOINK stop) and <code>wow_name</code> (you aren't named next to WoW characters). Run it with no options to see your settings. Characters a server tracks still get their public level-up posts.
+<code>/privacy</code> lets you turn off each kind of reporting on its own, in every server, or all of them with <code>everything:false</code>: <code>game_time</code> (your games and voice time aren't recorded), <code>puzzles</code> (your daily-puzzle results are left out of the rankings), <code>steam</code> (your Steam isn't posted or shown in roundups, digests or reviews; while you stay linked, Igor keeps reading your profile as before, so turning it back on picks up where you left off, and <code>/steam unlink</code> removes everything), <code>doink</code> (posts from your DOINK are removed and not copied) and <code>wow_name</code> (you aren't named next to WoW characters or on their cards). Run it with no options to see your settings. Characters a server tracks still get their public level-up posts. With <code>puzzles</code> off, results you post in a games channel are still read but left out of the rankings.
 </li><li>
 <code>/steam unlink</code> stops Igor checking your Steam profile and deletes everything it stored about it, including your Steam totals in the ledger.
 </li><li>
 <code>/wow unclaim</code> removes a claim. Verifying with Battle.net leaves nothing to unlink: Igor keeps no access to your account.
 </li><li>
-<code>/forget-me</code> deletes, everywhere: your activity, the characters you added or claimed, your Steam link and activity, your commands, your feedback, your ledger totals, your entries in recent daily-game results, and, for characters you verified with Battle.net, their live WoW events and ledger totals too. (A claim that wasn't verified doesn't prove a character is yours, so it can't erase that character's history.) If you'd opted out of tracking, that choice is kept so Igor still won't track you. Copies in Turso's recovery backups age out on its schedule.
+<code>/forget-me</code> deletes, everywhere: your activity, the characters you added or claimed, your Steam link and activity, your commands, your feedback, your ledger totals, your entries in recent daily-game results, and, for characters you verified with Battle.net, their live WoW events and ledger totals too. (A claim that wasn't verified doesn't prove a character is yours, so it can't erase that character's history.) Any <code>/privacy</code> opt-outs are kept, so Igor keeps honoring them. Copies in Turso's recovery backups age out on its schedule.
 </li><li>
 To ask for anything else to be deleted, email the address below.
 </li></ul>
 <h2>Sharing</h2>
 <p>Igor's data is never sold, shared or used for advertising. Igor sends requests to two outside services:</p>
 <ul><li>
-<strong>Blizzard's API</strong>: character lookups, which contain nothing about you, and, if you sign in with Battle.net, the one read of your character list described above.
+<strong>Blizzard's API</strong>: character and item lookups (an item's level, for loot posts), which contain nothing about you, and, if you sign in with Battle.net, the one read of your character list described above.
 </li><li>
 <strong>Steam's Web API</strong>, only for profiles linked with <code>/steam link</code>: reads of the public games, playtime and achievements described above; and, in servers that turn on patch notes, the public announcements of games their players played lately (nothing about anyone is sent).
 </li></ul>
