@@ -43,8 +43,8 @@
     <p><strong>Easiest (Windows):</strong> press <strong>Download DOINK</strong> under Igor's <code>/wow doink</code> reply. Igor sends you, privately, DOINK's companion with your link already inside (taken from DOINK's own release and checked against its published checksum). Unzip it, open <code>DOINK\Companion</code>, run <code>doink.exe</code>, and skip step 4.</p>
     <p><strong>Or download it yourself.</strong> The companion isn't on the addon sites, and DOINK's newest release doesn't always include it (sometimes only the addon is updated). These buttons point at the newest release that does:</p>
     <div class="btn-row">
-      <a class="btn" id="dl-win" href="https://github.com/ryan-flan/DOINK/releases/download/v0.17.0/DOINK-v0.17.0.zip">Companion for Windows (v0.17.0)</a>
-      <a class="btn ghost" id="dl-linux" href="https://github.com/ryan-flan/DOINK/releases/download/v0.17.0/DOINK-v0.17.0-linux-amd64.tar.gz">Linux (v0.17.0)</a>
+      <a class="btn" id="dl-win" href="https://github.com/ryan-flan/DOINK/releases/download/v0.19.0/DOINK-v0.19.0.zip">Companion for Windows (v0.19.0)</a>
+      <a class="btn ghost" id="dl-linux" href="https://github.com/ryan-flan/DOINK/releases/download/v0.19.0/DOINK-v0.19.0-linux-amd64.tar.gz">Linux (v0.19.0)</a>
     </div>
     <p class="igor-small" id="dl-status">Or browse <a href="https://github.com/ryan-flan/DOINK/releases">all DOINK releases</a>: the companion is in the larger <code>DOINK-v…zip</code> (about 3.5 MB), not the small <code>-forever.zip</code>, which is the addon alone.</p>
     <p>Unzip it, move the <code>Companion</code> folder somewhere permanent, like <code>Documents\DOINK</code>, and run <code>doink.exe</code>. A gold <strong>D</strong> appears in your system tray (click <code>^</code> by the clock if it's hidden). If Windows warns about an unrecognized app, choose <strong>More info → Run anyway</strong>.</p>
@@ -60,6 +60,7 @@
     <p>Every event type starts off. In game, type <code>/doink config</code> (or <strong>Esc → Options → AddOns → DOINK</strong>):</p>
     <ul>
       <li>Under <strong>Discord, via the companion app</strong>, tick <strong>Level-ups</strong>, <strong>Deaths</strong>, <strong>Loot</strong>, <strong>Boss kills</strong> and <strong>New mounts</strong> (or whatever <code>/wow doink</code> lists for you). These are per character: tick them on each character you play.</li>
+      <li>Tick <strong>Add time played to events</strong>. With it, Igor measures your WoW playtime exactly (needs DOINK 0.19 or later, and the companion from <code>/wow doink</code>'s download, which sends your events to Igor).</li>
       <li>Under <strong>Realtime posting</strong>, tick <strong>Post to Discord instantly</strong>. Leave <strong>Attach the screenshot to instant posts</strong> unticked unless you want screenshots (below).</li>
     </ul>
     <p>Changes apply right away; no reload needed.</p>
@@ -71,6 +72,7 @@
 /doink enable loot
 /doink enable boss_kill
 /doink enable mount
+/doink played on
 /doink realtime on
 /doink realtime image off
 /reload</pre>
