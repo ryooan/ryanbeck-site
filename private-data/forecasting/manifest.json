@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-17T19:50:29Z",
+  "generated": "2026-11-17T21:15:54Z",
   "series": {
     "covid-hospitalizations": {
       "fetched": "2026-08-24T03:05:10Z",
@@ -18,10 +18,10 @@
       "status": "historical"
     },
     "covid-weekly-admissions": {
-      "fetched": "2026-11-11T02:31:05Z",
-      "last_date": "2026-10-31",
+      "fetched": "2026-11-17T21:15:54Z",
+      "last_date": "2026-11-07",
       "note": "Weekly new hospital admissions with a laboratory-confirmed diagnosis, national. Carries the share of hospitals reporting each week, which is not constant.",
-      "rows": 326,
+      "rows": 327,
       "source": "CDC NHSN Hospital Respiratory Data",
       "status": "live"
     },
@@ -58,26 +58,26 @@
       "status": "live"
     },
     "flu-hospitalizations": {
-      "fetched": "2026-11-11T02:31:03Z",
-      "last_date": "2026-10-31",
+      "fetched": "2026-11-17T21:15:46Z",
+      "last_date": "2026-11-07",
       "note": "Weekly hospital admissions with a confirmed influenza diagnosis.",
-      "rows": 248,
+      "rows": 249,
       "source": "CDC FluSight forecast hub",
       "status": "live"
     },
     "flu-hospitalizations-states": {
-      "fetched": "2026-11-11T02:31:03Z",
-      "last_date": "2026-10-31",
+      "fetched": "2026-11-17T21:15:46Z",
+      "last_date": "2026-11-07",
       "note": "Weekly admissions by state.",
-      "rows": 12860,
+      "rows": 12912,
       "source": "CDC FluSight forecast hub",
       "status": "live"
     },
     "hpai-depopulations": {
-      "fetched": "2026-11-11T02:31:04Z",
-      "last_date": "2026-11-02",
+      "fetched": "2026-11-17T21:15:48Z",
+      "last_date": "2026-11-09",
       "note": "Birds killed in confirmed commercial and backyard flocks, from the full detection export behind the APHIS dashboard.",
-      "rows": 213,
+      "rows": 214,
       "source": "USDA APHIS confirmed detections",
       "status": "live"
     },
