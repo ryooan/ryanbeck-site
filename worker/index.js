@@ -30,6 +30,11 @@ export default {
     if (url.pathname === '/igor/') {
       return env.ASSETS.fetch(new Request(new URL('/igor/index.html', url), request));
     }
+    // Igor's Lab, his Discord server: a short address that outlives any one invite code.
+    // 302, not permanent, so a new invite only needs this line changed.
+    if (url.pathname === '/igor/discord') {
+      return Response.redirect('https://discord.gg/J7T2jFNheB', 302);
+    }
 
     if (url.pathname === '/api/substack') return substack(request, ctx);
     if (url.pathname === '/api/subscribe') return subscribe(request, env);
