@@ -42,7 +42,7 @@ which voice channel you were in, with join and leave times.
 </li><li>
 <strong>Feedback</strong> you send with <code>/feedback</code>: your message, any screenshot, and the reply, if there is one.
 </li><li>
-<strong>Tips</strong>: which tip Igor showed under a server's daily roundup, about whom and when (so the same tip isn't repeated too often), and, for the one person a tip was meant for, the private version waiting to be shown under their next Igor command. Tips name nobody in public.
+<strong>Tips</strong>: which tip Igor showed under a server's daily roundup, about whom and when (so the same tip isn't repeated too often), and, for the one person a tip was meant for, the private version waiting to be shown under their next Igor command. Tips name nobody in public. <strong>DOINK reminders</strong>: which private DOINK reminders Igor sent you by DM and when (an update reminder once per DOINK release; a setup reminder, at most twice, if your DOINK link never posted though you played), and whether you pressed <strong>No more DOINK reminders</strong>.
 </li><li>
 <strong>Igor's ledger</strong>: running totals per year, so Igor can post a year in review and show your year, five years or all time with <code>/stats</code> after the detailed records above are deleted. Totals only: hours per game and in voice, puzzles played and won, your characters' levels, deaths (and how many were to other players), bosses, epic loot, quests, mounts, duels won, item levels and gear upgrades, your Steam hours, achievements, perfect games and milestones, and how many Igor commands you ran. Some character totals are counted from Blizzard's API (levels and gear seen on the armory); only the counts are kept, never the details behind them. A day is added to the ledger two days after it ends.
 </li></ul>
@@ -63,7 +63,7 @@ which voice channel you were in, with join and leave times.
 </li><li>
 <strong>Feedback:</strong> deleted after a year.
 </li><li>
-<strong>Tips:</strong> a waiting private tip after a week; the record of tips shown after a year.
+<strong>Tips:</strong> a waiting private tip after a week; the record of tips shown after a year. DOINK reminders sent: deleted with <code>/forget-me</code>.
 </li><li>
 <strong>Your Steam link and claims:</strong> until you remove them.
 </li><li>
@@ -80,6 +80,8 @@ which voice channel you were in, with join and leave times.
 <code>/privacy</code> lets you turn off each kind of reporting on its own, in every server, or all of them with <code>everything:false</code>: <code>game_time</code> (your games and voice time aren't recorded), <code>puzzles</code> (your daily-puzzle results are left out of the rankings), <code>steam</code> (your Steam isn't posted or shown in roundups, digests or reviews; while you stay linked, Igor keeps reading your profile as before, so turning it back on picks up where you left off, and <code>/steam unlink</code> removes everything), <code>doink</code> (posts from your DOINK are removed and not copied, and you aren't named in or credited from other players' party posts) and <code>wow_name</code> (you aren't named next to WoW characters or on their cards). Run it with no options to see your settings. Characters a server tracks still get their public level-up posts. With <code>puzzles</code> off, results you post in a games channel are still read but left out of the rankings.
 </li><li>
 <code>/steam unlink</code> stops Igor checking your Steam profile and deletes everything it stored about it, including your Steam totals in the ledger.
+</li><li>
+<strong>No more DOINK reminders</strong>, a button under any DOINK reminder, stops Igor's DOINK update and setup reminders (DMs and tips). Turning DOINK off in <code>/privacy</code> stops them too.
 </li><li>
 <code>/wow unclaim</code> removes a claim. Verifying with Battle.net leaves nothing to unlink: Igor keeps no access to your account.
 </li><li>
